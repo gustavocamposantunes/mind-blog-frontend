@@ -11,7 +11,7 @@ import { CustomAvatar } from "@/presentation/components/molecule/CustomAvatar";
 
 import logoDark from "../assets/logo-dark.svg";
 
-export const NewArticleTemplate = () => (
+export const NewPostTemplate = () => (
   <>
     <header className="w-full flex justify-between px-[10%] pt-4">
       <img src={logoDark} alt="" />

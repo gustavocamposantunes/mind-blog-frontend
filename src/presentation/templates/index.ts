@@ -1,5 +1,5 @@
-export * from "./ArticlesTemplate";
+export * from "./PostsTemplate";
 export * from "./ForgotPasswordTemplate";
 export * from "./LoginTemplate";
-export * from "./NewArticleTemplate";
+export * from "./NewPostTemplate";
 export * from "./RegisterUserTemplate";

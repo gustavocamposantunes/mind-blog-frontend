@@ -4,7 +4,7 @@ import { ArticleCard } from "@/presentation/components/organism/ArticleCard";
 
 import { useNavigate } from "react-router-dom";
 
-export const ArticlesTemplate = () => {
+export const PostsTemplate = () => {
   const navigate = useNavigate()
   return (
   <>
