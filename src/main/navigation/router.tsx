@@ -1,8 +1,8 @@
-import { ForgotPasswordTemplate, NewPostTemplate, HomeTemplate } from "@/presentation/components/templates";
-import { PostsPage, PostPage, RegisterUserPage, LoginPage } from "@/presentation/pages";
+import { ForgotPasswordTemplate, HomeTemplate } from "@/presentation/components/templates";
+import { PostsPage, PostPage, RegisterUserPage, LoginPage, NewPostPage } from "@/presentation/pages";
 import { ApiContext } from "@/presentation/contexts";
 
-import { makeRemoteGetPost, makeRemoteListPosts, makeRemoteAuthenticateUser, makeRemoteRegisterUser } from "@/main/factories/usecases";
+import { makeRemoteGetPost, makeRemoteListPosts, makeRemoteAuthenticateUser, makeRemoteRegisterUser, makeRemoteRegisterPost } from "@/main/factories/usecases";
 import { clearCurrentUserAdapter, getCurrentUserAdapter, setCurrentUserAdapter } from "@/main/adapters/CurrentAccountAdapter";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -27,7 +27,7 @@ export const Router = () => (
         <Route path="/post/new"
           element={
             <PrivateRoute>
-              <NewPostTemplate />
+              <NewPostPage registerPost={makeRemoteRegisterPost()} />
             </PrivateRoute>
           }
         />
