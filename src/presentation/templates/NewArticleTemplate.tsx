@@ -1,4 +1,3 @@
-import { Avatar, AvatarImage, AvatarFallback } from "@/presentation/components/ui/avatar";
 import { Textarea } from "@/presentation/components/ui/textarea";
 import { Label } from "@/presentation/components/ui/label";
 import { Button } from "@/presentation/components/ui/button";
@@ -8,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/presentation/components/ui/dropdown-menu"
+import { CustomAvatar } from "@/presentation/components/molecule/CustomAvatar";
 
 import logoDark from "../assets/logo-dark.svg";
 
@@ -23,10 +23,7 @@ export const NewArticleTemplate = () => (
         </ul>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Avatar className="ml-10">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+            <CustomAvatar />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem>Perfil</DropdownMenuItem>

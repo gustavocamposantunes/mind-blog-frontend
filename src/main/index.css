@@ -58,7 +58,6 @@ body,
 }
 
 a {
-  font-weight: 500;
   color: var(--primary);
   text-decoration: inherit;
   font-size: 14px;
