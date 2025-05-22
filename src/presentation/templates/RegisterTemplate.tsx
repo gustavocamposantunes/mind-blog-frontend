@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import logo from "../assets/logo.svg";
 
-export const RegisterTemplate = () => {
+export const RegisterUserTemplate = () => {
   const navigate = useNavigate();
 
   return (
