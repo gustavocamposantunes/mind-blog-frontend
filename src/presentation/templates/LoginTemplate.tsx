@@ -26,7 +26,7 @@ export const LoginTemplate = () => {
             <Input type="password" id="password" placeholder="Digite sua senha" />
           </div>
           <div className="w-full flex justify-end">
-            <a href="#" className="text-sm text-stone-950 hover:underline">Esqueceu a senha?</a>
+            <a onClick={() => navigate("/forgot-password")} className="text-sm text-stone-950 hover:underline">Esqueceu a senha?</a>
           </div>
           <Button className="mt-4 w-full py-4 bg-stone-950" type="submit">Entrar</Button>
           <a onClick={() => navigate("/register")}>Novo usuário? Clique aqui</a>

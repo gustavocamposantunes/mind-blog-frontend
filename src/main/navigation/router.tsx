@@ -1,5 +1,4 @@
-import { LoginTemplate } from "@/presentation/templates/LoginTemplate";
-import { RegisterUserTemplate } from "@/presentation/templates/RegisterUserTemplate";
+import { LoginTemplate, RegisterUserTemplate, ForgotPasswordTemplate } from "@/presentation/templates";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export const Router = () => (
@@ -8,6 +7,7 @@ export const Router = () => (
       <Route path="/" element={<div>Home</div>} />
       <Route path="/login" element={<LoginTemplate />} />
       <Route path="/register" element={<RegisterUserTemplate />} />
+      <Route path="/forgot-password" element={<ForgotPasswordTemplate />} />
     </Routes>
   </BrowserRouter>
 )
