@@ -19,19 +19,19 @@ export const HomeTemplate = () => (
           id={1} 
           title="Dominando TypeScript: Por que a Tipagem Estática Está Transformando o Desenvolvimento JavaScript" 
           content="TypeScript, uma superconjunto de JavaScript, tem se tornado uma escolha popular entre desenvolvedores para garantir código mais seguro e fácil de manter. Neste artigo, vamos explorar os benefícios da tipagem estática no..." 
-          ranking="01"
+          favourite="01"
         />
         <ArticleCard 
           id={1} 
           title="Dominando TypeScript: Por que a Tipagem Estática Está Transformando o Desenvolvimento JavaScript" 
           content="TypeScript, uma superconjunto de JavaScript, tem se tornado uma escolha popular entre desenvolvedores para garantir código mais seguro e fácil de manter. Neste artigo, vamos explorar os benefícios da tipagem estática no..." 
-          ranking="02"
+          favourite="02"
         />
         <ArticleCard 
           id={1} 
           title="Dominando TypeScript: Por que a Tipagem Estática Está Transformando o Desenvolvimento JavaScript" 
           content="TypeScript, uma superconjunto de JavaScript, tem se tornado uma escolha popular entre desenvolvedores para garantir código mais seguro e fácil de manter. Neste artigo, vamos explorar os benefícios da tipagem estática no..." 
-          ranking="03"
+          favourite="03"
         />
       </section>
     </main>

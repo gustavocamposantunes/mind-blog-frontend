@@ -6,11 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/presentation/components/ui/card"
-import { CustomAvatar } from "@/presentation/components/molecules/CustomAvatar"
+import { FavouriteAvatarPost } from "@/presentation/components/atoms/FavouriteAvatarPost";
 
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
-import { Heart } from "lucide-react";
+import { FavouriteHeartCount } from "../atoms/FavouriteHeartCount";
 
 interface IArticleCard {
   id: number;
@@ -18,7 +18,7 @@ interface IArticleCard {
   content: string;
   className?: string;
   redirect?: string;
-  ranking?: string;
+  favourite?: string;
 }
 
 export const ArticleCard: React.FC<IArticleCard> = ({
@@ -27,7 +27,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
   content,
   className,
   redirect,
-  ranking
+  favourite
 }) => {
   const navigate = useNavigate();
   return (
@@ -37,11 +37,11 @@ export const ArticleCard: React.FC<IArticleCard> = ({
       onClick={() => navigate(`/posts/${id}`)}
     >
       <div className="flex">
-        <img className={`flex-1 ${ranking ? "max-w-[50%]" : ""}`} src="https://miro.medium.com/v2/resize:fit:1358/1*moJeTvW97yShLB7URRj5Kg.png" alt="" />
-        {ranking
+        <img className={`flex-1 ${favourite ? "max-w-[50%]" : ""}`} src="https://miro.medium.com/v2/resize:fit:1358/1*moJeTvW97yShLB7URRj5Kg.png" alt="" />
+        {favourite
           ?
           <div className="flex flex-1 items-center justify-center">
-            <h1 className="irish-grove-font">{ranking}</h1>
+            <h1 className="irish-grove-font">{favourite}</h1>
           </div>
           :
           null
@@ -54,19 +54,8 @@ export const ArticleCard: React.FC<IArticleCard> = ({
         <CardDescription>{content}</CardDescription>
       </CardContent>
       <CardFooter className={`flex justify-between`}>
-        {ranking
-          ?
-          <span className="flex gap-2">
-            <Heart color="#FF3B30" fill="#FF3B30" />
-            <p>16</p>
-          </span>
-          :
-          null
-        }
-        <span className="flex gap-2 items-center">
-          {ranking ? null : <CustomAvatar />}
-          {ranking ? <p>Março 20, 2025</p> : <p>Por <b>John Doe</b> - Março 20, 2025</p>}
-        </span>
+        <FavouriteHeartCount favourite={favourite} />
+        <FavouriteAvatarPost favourite={favourite} />
         {redirect ? <Button className="orange-btn action-btn uppercase">Ler mais</Button> : null}
       </CardFooter>
     </Card>
