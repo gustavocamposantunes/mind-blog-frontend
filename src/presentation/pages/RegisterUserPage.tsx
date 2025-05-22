@@ -39,7 +39,11 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
 
     setPasswordMismatchError(false);
 
-    mutate(registerUserParams, {
+    mutate({
+      name: registerUserParams.name,
+      email: registerUserParams.email,
+      password: registerUserParams.password
+    }, {
       onSuccess: (response) => {
         if (
           context &&
