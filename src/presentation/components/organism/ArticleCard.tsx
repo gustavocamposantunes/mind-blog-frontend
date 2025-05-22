@@ -51,7 +51,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
         <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <CardDescription>{content}</CardDescription>
+        <CardDescription>{content.slice(0, 222)}</CardDescription>
       </CardContent>
       <CardFooter className={`flex justify-between`}>
         <FavouriteHeartCount favourite={favourite} />
