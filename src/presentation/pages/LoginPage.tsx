@@ -7,9 +7,10 @@ import { Button } from "@/presentation/components/ui/button";
 import { LoginTemplate } from "../components/templates";
 import { useAuthenticateUser } from "../hooks";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
+import { ApiContext } from "../contexts";
 
 
 type LoginPageProps = {
@@ -20,7 +21,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
   authenticateUser
 }) => {
   const navigate = useNavigate();
-
+  const context = useContext(ApiContext);
 
   const [authParams, setAuthParams] = useState({ 
     email: "",
@@ -32,8 +33,15 @@ export const LoginPage: React.FC<LoginPageProps> = ({
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     mutate(authParams, {
-      onSuccess: () => {
-        navigate("/");
+      onSuccess: (response) => {
+        if (
+          context &&
+          typeof context.setCurrentUser === "function" &&
+          response !== undefined
+        ) {
+          navigate("/");
+          context.setCurrentUser(response);
+        }
       }
     });
   };
