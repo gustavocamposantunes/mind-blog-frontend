@@ -29,7 +29,7 @@ export const PostsPage: React.FC<PostsPageProps> = ({
           :
           null
         }
-        {data?.map(({ ...props }) => <ArticleCard {...props} />)}
+        {data?.posts.map(({ ...props }) => <ArticleCard {...props} />)}
       </section>
     </PostsTemplate>
   )
