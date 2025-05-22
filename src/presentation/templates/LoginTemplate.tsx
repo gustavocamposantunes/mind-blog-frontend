@@ -4,14 +4,14 @@ import { Button } from "@/presentation/components/ui/button";
 
 import { useNavigate } from "react-router-dom";
 
-import logo from "../assets/logo.svg";
+import logoLight from "../assets/logo-light.svg";
 
 export const LoginTemplate = () => {
   const navigate = useNavigate();
   return (
   <main className="h-screen w-screen flex">
     <div className="h-full flex-1 flex items-center justify-center flex-col bg-stone-950">
-      <img src={logo} alt="logo mind blog" />
+        <img src={logoLight} alt="logoLight mind blog" />
       <h3 className="text-white">Inovação ao seu alcance</h3>
     </div>
     <div className="h-full flex-1 flex items-center justify-center text-white">
@@ -28,7 +28,7 @@ export const LoginTemplate = () => {
           <div className="w-full flex justify-end">
             <a onClick={() => navigate("/forgot-password")} className="text-sm text-stone-950 hover:underline">Esqueceu a senha?</a>
           </div>
-          <Button className="mt-4 w-full py-4 bg-stone-950" type="submit">Entrar</Button>
+          <Button className="mt-4 w-full py-4 bg-stone-950 auth-btn" type="submit">Entrar</Button>
           <a onClick={() => navigate("/register")}>Novo usuário? Clique aqui</a>
        </form>
     </div>

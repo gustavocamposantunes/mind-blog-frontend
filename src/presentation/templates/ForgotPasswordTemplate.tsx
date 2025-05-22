@@ -4,7 +4,7 @@ import { Button } from "@/presentation/components/ui/button";
 
 import { useNavigate } from "react-router-dom";
 
-import logo from "../assets/logo.svg";
+import logoLight from "../assets/logo-light.svg";
 
 export const ForgotPasswordTemplate = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export const ForgotPasswordTemplate = () => {
   return (
     <main className="h-screen w-screen flex">
       <div className="h-full flex-1 flex items-center justify-center flex-col bg-stone-950">
-        <img src={logo} alt="logo mind blog" />
+        <img src={logoLight} alt="logoLight mind blog" />
         <h3 className="text-white">Inovação ao seu alcance</h3>
       </div>
       <div className="h-full flex-1 flex items-center justify-center text-white">
@@ -30,7 +30,7 @@ export const ForgotPasswordTemplate = () => {
               <Label htmlFor="password-confirmation" className="text-stone-950">Confirmar senha</Label>
               <Input type="password" id="password-confirmation" placeholder="Confirme sua senha" />
             </div>
-            <Button className="mt-4 w-full py-4 bg-stone-950" type="submit">Alterar</Button>
+          <Button className="mt-4 w-full py-4 bg-stone-950 auth-btn" type="submit">Alterar</Button>
             <a onClick={() => navigate("/login")}>Já tem cadastro? Clique aqui</a>
         </form>
       </div>
