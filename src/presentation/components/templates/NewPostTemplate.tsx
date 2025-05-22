@@ -9,7 +9,7 @@ import {
 } from "@/presentation/components/ui/dropdown-menu"
 import { CustomAvatar } from "@/presentation/components/molecule/CustomAvatar";
 
-import logoDark from "../assets/logo-dark.svg";
+import logoDark from "../../assets/logo-dark.svg";
 
 export const NewPostTemplate = () => (
   <>

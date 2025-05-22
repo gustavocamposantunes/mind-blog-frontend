@@ -4,7 +4,7 @@ import { Button } from "@/presentation/components/ui/button";
 
 import { useNavigate } from "react-router-dom";
 
-import logoLight from "../assets/logo-light.svg";
+import logoLight from "../../assets/logo-light.svg";
 
 export const ForgotPasswordTemplate = () => {
   const navigate = useNavigate();
