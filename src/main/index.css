@@ -105,7 +105,13 @@ input {
   border-radius: 16px;
 }
 
-.cancel-btn {
+.irish-grove-font {
+  font-family: "Irish Grover", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.orange-btn {
   background-color: #FF3B30 !important;
 }
 

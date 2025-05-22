@@ -26,7 +26,7 @@ export const AuthHeader = () => {
       <nav className="flex items-center">
         <ul className="flex gap-4">
           <MenuItem redirect="/">Home</MenuItem>
-          <MenuItem className="pr-4" redirect="/">Artigos</MenuItem>
+          <MenuItem className="pr-4" redirect="/posts">Artigos</MenuItem>
 
           {isLoggedIn() 
             ? 

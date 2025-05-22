@@ -11,7 +11,7 @@ export const NewPostTemplate = () => (
       <section className="flex justify-between w-full">
         <h2>Novo Artigo</h2>
         <span className="flex gap-2">
-          <Button className="cancel-btn action-btn">Cancelar</Button>
+          <Button className="orange-btn action-btn">Cancelar</Button>
           <Button className="action-btn">Salvar</Button>
         </span>
       </section>

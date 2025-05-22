@@ -1,5 +1,5 @@
 import type { ListPostsUseCase } from "@/domain/usecases";
-import { PostTemplate } from "@/presentation/components/templates";
+import { PostsTemplate } from "@/presentation/components/templates";
 import { ArticleCard } from "@/presentation/components/organism/ArticleCard";
 import { CustomSkeleton } from "@/presentation/components/atoms/CustomSkeleton";
 
@@ -15,7 +15,7 @@ export const PostsPage: React.FC<PostsPageProps> = ({
   const { data, isLoading } = usePostsList(loadPostsList);
 
   return (
-    <PostTemplate>
+    <PostsTemplate>
       <section className="grid grid-cols-3 gap-4">
         {isLoading ?
           <>
@@ -31,6 +31,6 @@ export const PostsPage: React.FC<PostsPageProps> = ({
         }
         {data?.map(({ ...props }) => <ArticleCard {...props} />)}
       </section>
-    </PostTemplate>
+    </PostsTemplate>
   )
 }
