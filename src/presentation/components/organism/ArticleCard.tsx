@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/presentation/components/ui/card"
-import { CustomAvatar } from "@/presentation/components/molecule/CustomAvatar"
+import { CustomAvatar } from "@/presentation/components/molecules/CustomAvatar"
 
 import { useNavigate } from "react-router-dom";
 

@@ -5,13 +5,14 @@ import { makeRemoteListPosts } from "../factories/usecases/makeRemoteListPosts";
 import { LoginPage } from "@/presentation/pages/LoginPage";
 import { makeRemoteAuthenticateUser } from "../factories/usecases/makeRemoteAuthenticateUser";
 import { ApiContext } from "@/presentation/contexts";
-import { getCurrentUserAdapter, setCurrentUserAdapter } from "../adapters/CurrentAccountAdapter";
+import { clearCurrentUserAdapter, getCurrentUserAdapter, setCurrentUserAdapter } from "../adapters/CurrentAccountAdapter";
 
 export const Router = () => (
   <ApiContext.Provider
     value={{
       setCurrentUser: setCurrentUserAdapter,
-      getCurrentUser: getCurrentUserAdapter
+      getCurrentUser: getCurrentUserAdapter,
+      clearCurrentUser: clearCurrentUserAdapter
     }}
   >
     <BrowserRouter>
@@ -20,7 +21,7 @@ export const Router = () => (
         <Route path="/login" element={<LoginPage authenticateUser={makeRemoteAuthenticateUser()} />} />
         <Route path="/register" element={<RegisterUserTemplate />} />
         <Route path="/forgot-password" element={<ForgotPasswordTemplate />} />
-        <Route path="/article/new" element={<NewPostTemplate />} />
+        <Route path="/post/new" element={<NewPostTemplate />} />
       </Routes>
     </BrowserRouter>
   </ApiContext.Provider>

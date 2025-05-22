@@ -1,37 +1,12 @@
 import { Textarea } from "@/presentation/components/ui/textarea";
 import { Label } from "@/presentation/components/ui/label";
 import { Button } from "@/presentation/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/presentation/components/ui/dropdown-menu"
-import { CustomAvatar } from "@/presentation/components/molecule/CustomAvatar";
 
-import logoDark from "../../assets/logo-dark.svg";
+import { AuthHeader } from "@/presentation/components/molecules/AuthHeader";
 
 export const NewPostTemplate = () => (
   <>
-    <header className="w-full flex justify-between px-[10%] pt-4">
-      <img src={logoDark} alt="" />
-      <nav className="flex items-center">
-        <ul className="flex gap-4">
-          <li><a href="">Home</a></li>
-          <li className="pr-4"><a href="">Artigos</a></li>
-          <li className="border-l-2 border-l-stone-700 pl-6"><a href="">Publicar</a></li>
-        </ul>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <CustomAvatar />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>Perfil</DropdownMenuItem>
-            <DropdownMenuItem>Desconectar</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </nav>
-    </header>
+    <AuthHeader />
     <main className="px-[12%] mt-3">
       <section className="flex justify-between w-full">
         <h2>Novo Artigo</h2>
