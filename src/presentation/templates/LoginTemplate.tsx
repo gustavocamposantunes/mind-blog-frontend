@@ -2,9 +2,13 @@ import { Input } from "@/presentation/components/ui/input";
 import { Label } from "@/presentation/components/ui/label";
 import { Button } from "@/presentation/components/ui/button";
 
+import { useNavigate } from "react-router-dom";
+
 import logo from "../assets/logo.svg";
 
-export const LoginTemplate = () => (
+export const LoginTemplate = () => {
+  const navigate = useNavigate();
+  return (
   <main className="h-screen w-screen flex">
     <div className="h-full flex-1 flex items-center justify-center flex-col bg-stone-950">
       <img src={logo} alt="logo mind blog" />
@@ -24,9 +28,10 @@ export const LoginTemplate = () => (
           <div className="w-full flex justify-end">
             <a href="#" className="text-sm text-stone-950 hover:underline">Esqueceu a senha?</a>
           </div>
-          <Button className="mt-4 w-full py-4 bg-stone-950" type="submit">Button</Button>
-          <a href="">Novo usuário? Clique aqui</a>
+          <Button className="mt-4 w-full py-4 bg-stone-950" type="submit">Entrar</Button>
+          <a onClick={() => navigate("/register")}>Novo usuário? Clique aqui</a>
        </form>
     </div>
   </main>
 );
+}
