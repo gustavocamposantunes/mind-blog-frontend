@@ -6,6 +6,7 @@ import { makeRemoteGetPost, makeRemoteListPosts, makeRemoteAuthenticateUser, mak
 import { clearCurrentUserAdapter, getCurrentUserAdapter, setCurrentUserAdapter } from "@/main/adapters/CurrentAccountAdapter";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { PrivateRoute } from "./private-route";
 
 export const Router = () => (
   <ApiContext.Provider
@@ -23,7 +24,13 @@ export const Router = () => (
         <Route path="/login" element={<LoginPage authenticateUser={makeRemoteAuthenticateUser()} />} />
         <Route path="/register" element={<RegisterUserPage registerUser={makeRemoteRegisterUser()} />} />
         <Route path="/forgot-password" element={<ForgotPasswordTemplate />} />
-        <Route path="/post/new" element={<NewPostTemplate />} />
+        <Route path="/post/new"
+          element={
+            <PrivateRoute>
+              <NewPostTemplate />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   </ApiContext.Provider>
