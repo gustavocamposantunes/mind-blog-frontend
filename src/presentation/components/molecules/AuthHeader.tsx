@@ -56,7 +56,7 @@ export const AuthHeader = () => {
               </DropdownMenu>
             </span>
           : 
-            <Button onClick={() => navigate("register")} className="action-btn ml-6">Registrar</Button>
+          <Button onClick={() => navigate("/register")} className="action-btn ml-6">Registrar</Button>
         }
       </nav>
     </header>
