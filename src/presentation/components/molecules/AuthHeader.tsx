@@ -22,7 +22,7 @@ export const AuthHeader = () => {
 
   return (
     <header className="w-full flex justify-between px-[10%] pt-4">
-      <img src={logoDark} alt="" />
+      <a onClick={() => navigate("/")}><img src={logoDark} alt="" /></a>
       <nav className="flex items-center">
         <ul className="flex gap-4">
           <MenuItem redirect="/">Home</MenuItem>
