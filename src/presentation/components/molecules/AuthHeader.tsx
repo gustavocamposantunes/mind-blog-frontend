@@ -43,7 +43,11 @@ export const AuthHeader = () => {
                   <CustomAvatar />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem>Perfil</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => navigate("/profile")}
+                >
+                  Perfil
+                </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => {
                       context.clearCurrentUser();
