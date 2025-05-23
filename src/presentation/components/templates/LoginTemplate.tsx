@@ -17,7 +17,6 @@ export const LoginTemplate: React.FC<ILoginTemplate> = ({
     </div>
     <div className="h-full flex-1 flex items-center justify-center text-white">
       {children}
-
     </div>
   </main>
 );
