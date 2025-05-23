@@ -1,4 +1,4 @@
-import { ForgotPasswordTemplate, HomeTemplate } from "@/presentation/components/templates";
+import { ForgotPasswordTemplate, HomeTemplate, ProfileTemplate } from "@/presentation/components/templates";
 import { PostsPage, PostPage, RegisterUserPage, LoginPage, NewPostPage } from "@/presentation/pages";
 import { ApiContext } from "@/presentation/contexts";
 
@@ -28,6 +28,13 @@ export const Router = () => (
           element={
             <PrivateRoute>
               <NewPostPage registerPost={makeRemoteRegisterPost()} />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/profile"
+          element={
+            <PrivateRoute>
+              <ProfileTemplate />
             </PrivateRoute>
           }
         />

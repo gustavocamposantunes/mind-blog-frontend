@@ -1,6 +1,5 @@
 import { Textarea } from "@/presentation/components/ui/textarea";
 import { Label } from "@/presentation/components/ui/label";
-import { Button } from "@/presentation/components/ui/button";
 
 import { NewPostTemplate } from "@/presentation/components/templates"
 import { useContext, useState } from "react";
@@ -8,6 +7,7 @@ import { ApiContext } from "../contexts";
 import { useRegisterPost } from "../hooks/useRegisterPost";
 import type { RegisterPostUseCase } from "@/domain/usecases";
 import { useNavigate } from "react-router-dom";
+import { FormHeaderAction } from "../components/molecules/FormHeaderAction";
 
 type NewPostPageProps = {
   registerPost: RegisterPostUseCase;
@@ -46,17 +46,7 @@ export const NewPostPage: React.FC<NewPostPageProps> = ({
   return (
     <NewPostTemplate>
       <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
-        <section className="flex justify-between w-full">
-          <h2>Novo Artigo</h2>
-          <div className="flex gap-2">
-            <Button className="orange-btn action-btn" type="button" onClick={() => navigate("/posts")}>
-              Cancelar
-            </Button>
-            <Button className="action-btn" type="submit">
-              Salvar
-            </Button>
-          </div>
-        </section>
+        <FormHeaderAction title="Novo Artigo" />
 
         <section className="mt-4 flex flex-col gap-4">
           <div className="grid w-full gap-1.5">
