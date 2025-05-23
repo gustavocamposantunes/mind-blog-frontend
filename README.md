@@ -1,6 +1,6 @@
 # Mind Blog Frontend
 
-Projeto de um blog desenvolvido como parte de um processo seletivo para um estágio como desenvolvedor fullstack
+Projeto desenvolvido como parte de um teste técnico para uma vaga de estágio como desenvolvedor fullstack na MindGroup.
 
 # Tecnologias Utilizadas
 
