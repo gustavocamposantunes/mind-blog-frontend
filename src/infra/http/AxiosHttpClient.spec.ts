@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import axios from "axios";
-import { faker } from '@faker-js/faker';
 
 import { AxiosHttpClient } from "./AxiosHttpClient";
 import { mockGetRequest } from "@/data/test";
+import { mockHttpResponse } from "../test";
 
 vi.mock("axios")
 
@@ -21,10 +21,7 @@ describe("AxiosHttpClient", () => {
   
   describe("get", () => {
     beforeEach(() => {
-      mockedAxios.get.mockResolvedValue({
-        data: faker.helpers.objectValue,
-        status: faker.number.int()
-      })
+      mockedAxios.get.mockResolvedValue(mockHttpResponse())
     })
     it("Should call axios.get with correct values", async () => {
       const { url, queryParams } = mockGetRequest()
@@ -32,5 +29,12 @@ describe("AxiosHttpClient", () => {
       await sut.get({ url, queryParams })
       expect(mockedAxios.get).toHaveBeenCalledWith(url, { params: queryParams })
     })
+
+    it("Should return correct response on axios.get", async () => {
+      const sut = makeSut();
+      const httpResponse = await sut.get(mockGetRequest());
+      const axiosResponse = await mockedAxios.get.mock.results[0].value;
+      expect(httpResponse).toEqual(axiosResponse);
+    });
   })
 })
