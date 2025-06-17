@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { AxiosHttpClient } from "./AxiosHttpClient";
 import { mockGetRequest } from "@/data/test";
@@ -47,6 +47,31 @@ describe("AxiosHttpClient", () => {
       await expect(sut.get(mockGetRequest())).resolves.toEqual({
         status: 500,
         data: { message: "An unknown error occurred" },
+      });
+    })
+
+    it("Should return the correct error response when axios.get throws a known error", async () => {
+      const sut = makeSut();
+
+      mockedAxios.isAxiosError.mockImplementation((error): error is AxiosError => {
+        return Boolean(error?.isAxiosError);
+      });
+
+      const axiosError = new AxiosError("Request failed", "ERR_BAD_REQUEST");
+      axiosError.isAxiosError = true;
+      axiosError.response = {
+        status: 404,
+        statusText: "Not Found",
+        data: { message: "Not Found" },
+        headers: {},
+        config: { headers: new axios.AxiosHeaders() },
+      };
+
+      mockedAxios.get.mockRejectedValueOnce(axiosError);
+
+      await expect(sut.get(mockGetRequest())).resolves.toEqual({
+        status: 404,
+        data: { message: "Not Found" },
       });
     })
   })
