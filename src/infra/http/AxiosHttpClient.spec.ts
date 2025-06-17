@@ -35,6 +35,19 @@ describe("AxiosHttpClient", () => {
       const httpResponse = await sut.get(mockGetRequest());
       const axiosResponse = await mockedAxios.get.mock.results[0].value;
       expect(httpResponse).toEqual(axiosResponse);
-    });
+    })
+
+    it("Should return a generic error response when axios.get throws an unknown error", async () => {
+      const sut = makeSut();
+
+      const axiosError = new Error("Unexpected error");
+
+      mockedAxios.get.mockRejectedValueOnce(axiosError);
+
+      await expect(sut.get(mockGetRequest())).resolves.toEqual({
+        status: 500,
+        data: { message: "An unknown error occurred" },
+      });
+    })
   })
 })
