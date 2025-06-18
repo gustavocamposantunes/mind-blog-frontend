@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import axios, { AxiosError } from "axios";
 
 import { AxiosHttpClient } from "./AxiosHttpClient";
-import { mockGetRequest } from "@/data/test";
+import { mockGetRequest, mockPostRequest } from "@/data/test";
 import { mockHttpResponse } from "../test";
 
 vi.mock("axios")
@@ -73,6 +73,18 @@ describe("AxiosHttpClient", () => {
         status: 404,
         data: { message: "Not Found" },
       });
+    })
+  })
+  describe("post", () => {
+    beforeEach(() => {
+      mockedAxios.post.mockResolvedValue(mockHttpResponse())
+    })
+
+    it("Should call axios.post with correct values", async () => {
+      const { url, body, headers } = mockPostRequest()
+      const sut = makeSut()
+      await sut.post({ url, body, headers })
+      expect(mockedAxios.post).toHaveBeenCalledWith(url, body, { headers })
     })
   })
 })
