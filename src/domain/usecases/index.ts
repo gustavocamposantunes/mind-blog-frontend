@@ -1,3 +1,4 @@
+export * from "./AuthenticateUserUseCase";
 export * from "./GetPost.usecase";
 export * from "./ListPosts.usecase";
 export * from "./RegisterPost.usecase";
