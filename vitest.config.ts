@@ -4,5 +4,16 @@ import tsconfigPaths from 'vite-tsconfig-paths'
  
 export default defineConfig({
   plugins: [tsconfigPaths(), react()],
-  test: {},
+  test: {
+    coverage: {
+      exclude: [
+        'src/main',
+        'commitlint.config.ts',
+        '**/index.ts',
+        'eslint.config.js',
+        'vite.config.ts',
+        'vitest.config.ts',
+      ]
+    }
+  },
 })
