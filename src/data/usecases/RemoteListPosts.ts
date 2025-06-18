@@ -15,12 +15,22 @@ export class RemoteListPosts implements ListPostsUseCase {
     this.url = url;
     this.httpClient = httpClient;
   }
-  async listAll(): Promise<PostModel[]> {
+  async listAll(): Promise<{
+    posts: PostModel[];
+    total: number;
+    limit: number;
+    page: number;
+  }> {
     const httpResponse = await this.httpClient.get({ url: this.url })
 
     switch(httpResponse.status) {
       case HttpStatusCode.notFound: throw new NotFoundError();
-      default: return httpResponse.data as PostModel[]
+      default: return httpResponse.data as Promise<{
+        posts: PostModel[];
+        total: number;
+        limit: number;
+        page: number;
+      }>
     }
   }
 }
