@@ -2,7 +2,7 @@ import { ForgotPasswordTemplate, HomeTemplate, ProfileTemplate } from "@/present
 import { PostsPage, PostPage, RegisterUserPage, LoginPage, NewPostPage } from "@/presentation/pages";
 import { ApiContext } from "@/presentation/contexts";
 
-import { makeRemoteGetPost, makeRemoteListPosts, makeRemoteAuthenticateUser, makeRemoteRegisterUser, makeRemoteRegisterPost } from "@/main/factories/usecases";
+import { makeRemoteGetPostById, makeRemoteListPosts, makeRemoteAuthenticateUser, makeRemoteRegisterUser, makeRemoteRegisterPost } from "@/main/factories/usecases";
 import { clearCurrentUserAdapter, getCurrentUserAdapter, setCurrentUserAdapter } from "@/main/adapters/CurrentAccountAdapter";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -20,7 +20,7 @@ export const Router = () => (
       <Routes>
         <Route path="/" element={<HomeTemplate />} />
         <Route path="/posts" element={<PostsPage loadPostsList={makeRemoteListPosts()} />} />
-        <Route path="/posts/:id" element={<PostPage fetchPost={makeRemoteGetPost()} />} />
+        <Route path="/posts/:id" element={<PostPage getPostById={makeRemoteGetPostById()} />} />
         <Route path="/login" element={<LoginPage authenticateUser={makeRemoteAuthenticateUser()} />} />
         <Route path="/register" element={<RegisterUserPage registerUser={makeRemoteRegisterUser()} />} />
         <Route path="/forgot-password" element={<ForgotPasswordTemplate />} />

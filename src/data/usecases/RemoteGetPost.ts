@@ -2,9 +2,9 @@ import { type HttpGetClient, HttpStatusCode } from "@/data/protocols";
 import { NotFoundError } from "@/domain/errors";
 
 import type { PostModel } from "@/domain/models";
-import type { GetPostUseCase } from "@/domain/usecases";
+import type { GetPostByIdUseCase } from "@/domain/usecases";
 
-export class RemoteGetPost implements GetPostUseCase, GetPostUseCase {
+export class RemoteGetPost implements GetPostByIdUseCase {
   private readonly url: string;
   private readonly httpClient: HttpGetClient;
 
@@ -15,7 +15,7 @@ export class RemoteGetPost implements GetPostUseCase, GetPostUseCase {
     this.url = url;
     this.httpClient = httpClient;
   }
-  async fetch(id: string): Promise<PostModel> {
+  async getById(id: string): Promise<PostModel> {
     const httpResponse = await this.httpClient.get({ url: `${this.url}/${id}` })
 
     switch(httpResponse.status) {

@@ -1,4 +1,4 @@
 export * from "./useAuthenticateUser";
-export * from "./usePostFetch";
+export * from "./useGetPostById";
 export * from "./usePostsList";
 export * from "./useRegisterUser";

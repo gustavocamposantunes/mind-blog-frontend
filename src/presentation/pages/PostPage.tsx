@@ -1,8 +1,8 @@
-import type { GetPostUseCase } from "@/domain/usecases";
+import type { GetPostByIdUseCase } from "@/domain/usecases";
 import { PostTemplate } from "@/presentation/components/templates";
 import { FavouriteAvatarPost } from "@/presentation/components/atoms/FavouriteAvatarPost";
 
-import { usePostFetch } from "../hooks";
+import { useGetPostById } from "../hooks";
 
 import { useParams } from "react-router-dom";
 
@@ -10,14 +10,14 @@ import { Heart } from "lucide-react";
 import { CustomSkeleton } from "@/presentation/components/atoms/CustomSkeleton";
 
 type PostPageProps = {
-  fetchPost: GetPostUseCase
+  getPostById: GetPostByIdUseCase
 }
 
 export const PostPage: React.FC<PostPageProps> = ({
-  fetchPost
+  getPostById
 }) => {
   const { id } = useParams<{ id: string }>()
-  const { data, isLoading, error } = usePostFetch(fetchPost, String(id));
+  const { data, isLoading, error } = useGetPostById(getPostById, String(id));
 
   return (
     <PostTemplate>
