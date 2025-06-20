@@ -1,6 +1,7 @@
 import type { AuthenticateUserModel } from "@/domain/models";
 import type { AuthenticateUserUseCase, AuthParams } from "@/domain/usecases/AuthenticateUserUseCase";
 import { HttpStatusCode, type HttpPostClient } from "../protocols";
+import { InvalidCredentialsError, NotFoundError, UnexpectedError } from "@/domain/errors";
 
 export class RemoteAuthenticateUser implements AuthenticateUserUseCase {
   private readonly url: string;
@@ -23,30 +24,27 @@ export class RemoteAuthenticateUser implements AuthenticateUserUseCase {
 
     const { status, data } = httpResponse;
 
-    if (status === HttpStatusCode.unauthorized) {
-      return {
-        statusCode: status,
-        error: "Credenciais inválidas"
-      };
+    switch (status) {
+      case HttpStatusCode.created:
+        return {
+          statusCode: status,
+          data: data as AuthenticateUserModel
+        };
+      case HttpStatusCode.unauthorized:
+        return {
+          statusCode: status,
+          error: new InvalidCredentialsError().message
+        };
+      case HttpStatusCode.notFound:
+        return {
+          statusCode: status,
+          error: new NotFoundError().message
+        };
+      default:
+        return {
+          statusCode: status,
+          error: new UnexpectedError().message
+        };
     }
-
-    if (status === HttpStatusCode.notFound) {
-      return {
-        statusCode: status,
-        error: "Recurso não encontrado"
-      };
-    }
-
-    if (status >= 400) {
-      return {
-        statusCode: status,
-        error: "Erro inesperado"
-      };
-    }
-
-    return {
-      statusCode: status,
-      data: data as AuthenticateUserModel
-    };
   }
 }

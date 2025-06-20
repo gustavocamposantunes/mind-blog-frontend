@@ -24,4 +24,17 @@ describe("RemoteAuthenticateUser", () => {
     expect(httpPostClientSpy.url).toBe(url);
     expect(httpPostClientSpy.body).toEqual(authenticationParams);
   });
+  it("should return an InvalidCredentialsError if HttpPostClient returns 401", async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    httpPostClientSpy.response = {
+      status: 401,
+      data: { message: "Credenciais inválidas" }
+    };
+
+    const authenticationParams = mockAuthenticationParams();
+    const response = await sut.auth(authenticationParams);
+
+    expect(response.statusCode).toBe(401);
+    expect(response.error).toBe("Credenciais inválidas");
+  });
 });
