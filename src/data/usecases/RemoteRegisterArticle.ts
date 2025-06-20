@@ -1,5 +1,5 @@
 import type { ArticleModel } from "@/domain/models";
-import { HttpStatusCode, type HttpPostClient } from "../protocols";
+import { HttpStatusCode, type HttpPostClient, type HttpRemoteResponse } from "../protocols";
 import type { RegisterArticleParams, RegisterArticleUseCase } from "@/domain/usecases";
 
 export class RemoteRegisterPost implements RegisterArticleUseCase {
@@ -11,20 +11,14 @@ export class RemoteRegisterPost implements RegisterArticleUseCase {
     this.httpClient = httpClient;
   }
 
-  async register(registerArticleParams: RegisterArticleParams, token?: string): Promise<{
-    statusCode: number;
-    data?: ArticleModel;
-    error?: string;
-  }> {
-    const httpResponse = await this.httpClient.post({
+  async register(registerArticleParams: RegisterArticleParams, token?: string): Promise<HttpRemoteResponse<ArticleModel>> {
+    const { status, data } = await this.httpClient.post({
       url: this.url,
       body: registerArticleParams,
       headers: {
       ...(token && { Authorization: `Bearer ${token}` })
       }
     });
-
-    const { status, data } = httpResponse;
 
     if (status === HttpStatusCode.notFound) {
       return {

@@ -1,3 +1,4 @@
+import type { HttpRemoteResponse } from "@/data/protocols";
 import type { ArticleModel } from "../models";
 
 export type RegisterArticleParams = {
@@ -7,9 +8,5 @@ export type RegisterArticleParams = {
 }
 
 export interface RegisterArticleUseCase {
-  register(registerPostParams: RegisterArticleParams, token?: string): Promise<{
-    statusCode: number;
-    data?: ArticleModel;
-    error?: string;
-  }>
+  register(registerPostParams: RegisterArticleParams, token?: string): Promise<HttpRemoteResponse<ArticleModel>>
 }
