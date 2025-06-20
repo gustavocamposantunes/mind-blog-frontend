@@ -1,5 +1,5 @@
 import { type HttpGetClient, type HttpRemoteResponse, HttpStatusCode } from "@/data/protocols";
-import { NotFoundError, UnexpectedError } from "@/domain/errors";
+import { InternalServerError, NotFoundError, UnexpectedError } from "@/domain/errors";
 
 import type { ArticleModel } from "@/domain/models";
 import type { GetArticleByIdUseCase } from "@/domain/usecases";
@@ -29,6 +29,11 @@ export class RemoteGetArticleById implements GetArticleByIdUseCase {
         return {
           statusCode: status,
           error: new NotFoundError("Artigo não encontrado").message
+        };
+      case HttpStatusCode.serverError:
+        return {
+          statusCode: status,
+          error: new InternalServerError().message
         };
       default:
         return {
