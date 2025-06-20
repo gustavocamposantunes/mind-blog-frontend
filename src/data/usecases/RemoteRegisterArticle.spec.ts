@@ -45,4 +45,17 @@ describe("RemoteRegisterArticle", () => {
     expect(response.statusCode).toBe(500);
     expect(response.error).toBe("Erro interno do servidor");
   });
+
+  it("should returns an UnexpectedError for other status codes", async () => {
+    const { sut, httpPostSpy } = makeSut();
+    httpPostSpy.response = {
+      status: 502,
+      data: { message: "Erro inesperado" }
+    };
+
+    const response = await sut.register(mockRegisterArticleParams(), faker.string.uuid());
+
+    expect(response.statusCode).toBe(502);
+    expect(response.error).toBe("Erro inesperado");
+  });
 });
