@@ -1,10 +1,6 @@
-import type { ArticleModel } from "../models/ArticleModel";
+import type { HttpRemoteResponse } from "@/data/protocols";
+import type { ArticleListModel } from "../models";
 
 export interface ListArticlesUseCase {
-  listAll(): Promise<{
-    posts: ArticleModel[];
-    total: number;
-    limit: number;
-    page: number;
-  }>;
+  listAll(): Promise<HttpRemoteResponse<ArticleListModel>>;
 }

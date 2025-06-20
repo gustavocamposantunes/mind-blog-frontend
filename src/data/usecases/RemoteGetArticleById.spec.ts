@@ -3,7 +3,12 @@ import { RemoteGetArticleById } from "./RemoteGetArticleById";
 import { HttpGetClientSpy } from "../test/mock-http-client";
 import { describe, it, expect } from "vitest";
 
-const makeSut = (url = faker.internet.url()) => {
+type SutTypes = {
+  sut: RemoteGetArticleById;
+  httpClientSpy: HttpGetClientSpy;
+}
+
+const makeSut = (url = faker.internet.url()): SutTypes => {
   const httpClientSpy = new HttpGetClientSpy();
   const sut = new RemoteGetArticleById(url, httpClientSpy);
   return {

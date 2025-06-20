@@ -1,7 +1,7 @@
-import { type HttpGetClient, HttpStatusCode } from "@/data/protocols";
-import { NotFoundError } from "@/domain/errors";
+import { type HttpGetClient, type HttpRemoteResponse, HttpStatusCode } from "@/data/protocols";
+import { NotFoundError, UnexpectedError } from "@/domain/errors";
 
-import type { ArticleModel } from "@/domain/models";
+import type { ArticleListModel } from "@/domain/models";
 import type { ListArticlesUseCase } from "@/domain/usecases";
 
 export class RemoteListArticles implements ListArticlesUseCase {
@@ -15,22 +15,26 @@ export class RemoteListArticles implements ListArticlesUseCase {
     this.url = url;
     this.httpClient = httpClient;
   }
-  async listAll(): Promise<{
-    posts: ArticleModel[];
-    total: number;
-    limit: number;
-    page: number;
-  }> {
-    const httpResponse = await this.httpClient.get({ url: this.url })
+  async listAll(): Promise<HttpRemoteResponse<ArticleListModel>> {
+    const { status, data } = await this.httpClient.get({ url: this.url })
 
-    switch(httpResponse.status) {
-      case HttpStatusCode.notFound: throw new NotFoundError();
-      default: return httpResponse.data as Promise<{
-        posts: ArticleModel[];
-        total: number;
-        limit: number;
-        page: number;
-      }>
+    switch (status) {
+      case HttpStatusCode.ok:
+        return {
+          statusCode: status,
+          data: data as ArticleListModel
+        };
+        ;
+      case HttpStatusCode.notFound:
+        return {
+          statusCode: status,
+          error: new NotFoundError("Artigo não encontrado").message
+        };
+      default:
+        return {
+          statusCode: status,
+          error: new UnexpectedError().message
+        };
     }
   }
 }
