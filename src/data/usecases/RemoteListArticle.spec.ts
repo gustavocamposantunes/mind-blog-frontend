@@ -38,4 +38,17 @@ describe("RemoteListArticles", () => {
     expect(response.statusCode).toBe(404);
     expect(response.error).toBe("Artigo não encontrado");
   });
+
+  it("should return UnexpectedError for other status codes", async () => {
+    const { sut, httpClientSpy } = makeSut();
+    httpClientSpy.response = {
+      status: 500,
+      data: { message: "Erro inesperado" }
+    };
+
+    const response = await sut.listAll();
+
+    expect(response.statusCode).toBe(500);
+    expect(response.error).toBe("Erro inesperado");
+  });
 });
