@@ -1,7 +1,7 @@
 import type { AuthenticateUserModel } from "@/domain/models";
-import { faker } from "@faker-js/faker";
 import { beforeEach, describe, expect, it } from "vitest";
 import { useAuthStore } from "./useAuthStore";
+import { mockAuthenticateUserModel } from "@/domain/test";
 
 describe("useAuthStore", () => {
   beforeEach(() => {
@@ -9,14 +9,20 @@ describe("useAuthStore", () => {
   });
 
   it("should set current user", () => {
-    const account: AuthenticateUserModel = {
-      accessToken: faker.string.uuid(),
-      user: {
-        id: faker.number.int({ min: 1 }),
-        name: faker.person.fullName(),
-        email: faker.internet.email(),
-      },
-    };
+    const account: AuthenticateUserModel = mockAuthenticateUserModel();
+
+    useAuthStore.getState().setCurrentUser(account);
+
+    const currentUser = useAuthStore.getState().getCurrentUser();
+
+    expect(currentUser.accessToken).toBe(account.accessToken);
+    expect(currentUser.user.id).toBe(account.user.id);
+    expect(currentUser.user.name).toBe(account.user.name);
+    expect(currentUser.user.email).toBe(account.user.email);
+  });
+
+  it("should get current user", () => {
+    const account: AuthenticateUserModel = mockAuthenticateUserModel();
 
     useAuthStore.getState().setCurrentUser(account);
 
