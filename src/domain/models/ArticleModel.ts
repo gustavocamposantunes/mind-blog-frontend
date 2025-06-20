@@ -8,7 +8,7 @@ export type ArticleModel = {
 };
 
 export type ArticleListModel = {
-  posts: ArticleModel[];
+  articles: ArticleModel[];
   total: number;
   limit: number;
   page: number;
