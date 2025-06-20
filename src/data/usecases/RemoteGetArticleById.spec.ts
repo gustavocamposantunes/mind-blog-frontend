@@ -49,4 +49,22 @@ describe("RemoteGetArticleById", () => {
     expect(response.statusCode).toBe(500);
     expect(response.error).toBe("Erro inesperado");
   });
+
+  it("should return an ArticleModel if HttpGetClient returns 200", async () => {
+    const { sut, httpClientSpy } = makeSut();
+    const articleId = faker.string.uuid();
+    const articleData = {
+      id: articleId,
+      title: faker.lorem.sentence(),
+      content: faker.lorem.paragraphs(),
+    }
+    httpClientSpy.response = {
+      status: 200,
+      data: articleData
+    };
+
+    const response = await sut.getById(articleId);
+    expect(response.statusCode).toBe(200);
+    expect(response.data).toEqual(articleData);
+  });
 });
