@@ -2,6 +2,7 @@ import type { AuthenticateUserModel } from "@/domain/models";
 import type { AuthParams } from "@/domain/usecases/AuthenticateUserUseCase";
 import { HttpStatusCode, type HttpPostClient } from "../protocols";
 import type { RegisterUserUseCase } from "@/domain/usecases/RegisterUser.usecase";
+import { InternalServerError, UnexpectedError } from "@/domain/errors";
 
 export class RemoteRegisterUser implements RegisterUserUseCase {
   private readonly url: string;
@@ -17,30 +18,27 @@ export class RemoteRegisterUser implements RegisterUserUseCase {
     data?: AuthenticateUserModel;
     error?: string;
   }> {
-    const httpResponse = await this.httpClient.post({
+    const { status, data } = await this.httpClient.post({
       url: this.url,
       body: authenticationParams
     });
 
-    const { status, data } = httpResponse;
-
-    if (status === HttpStatusCode.notFound) {
-      return {
-        statusCode: status,
-        error: "Recurso não encontrado"
-      };
+    switch (status) {
+      case HttpStatusCode.ok:
+        return {
+          statusCode: status,
+          data: data as AuthenticateUserModel
+        };
+      case HttpStatusCode.serverError:
+        return {
+          statusCode: status,
+          error: new InternalServerError().message
+        };
+      default:
+        return {
+          statusCode: status,
+          error: new UnexpectedError().message
+        };
     }
-
-    if (status >= 400) {
-      return {
-        statusCode: status,
-        error: "Erro inesperado"
-      };
-    }
-
-    return {
-      statusCode: status,
-      data: data as AuthenticateUserModel
-    };
   }
 }
