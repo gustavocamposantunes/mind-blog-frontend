@@ -52,4 +52,18 @@ describe("RemoteAuthenticateUser", () => {
     expect(response.statusCode).toBe(404);
     expect(response.error).toBe("Usuário não encontrado");
   });
+
+  it("should throw an UnexpectedError for other status codes", async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    httpPostClientSpy.response = {
+      status: 500,
+      data: { message: "Erro inesperado" }
+    };
+
+    const authenticationParams = mockAuthenticationParams();
+    const response = await sut.auth(authenticationParams);
+
+    expect(response.statusCode).toBe(500);
+    expect(response.error).toBe("Erro inesperado");
+  });
 });
