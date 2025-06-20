@@ -1,7 +1,7 @@
 import type { AuthenticateUserModel } from "@/domain/models";
 import type { AuthenticateUserUseCase, AuthParams } from "@/domain/usecases/AuthenticateUserUseCase";
 import { HttpStatusCode, type HttpPostClient } from "../protocols";
-import { InvalidCredentialsError, NotFoundError, UnexpectedError } from "@/domain/errors";
+import { InternalServerError, InvalidCredentialsError, NotFoundError, UnexpectedError } from "@/domain/errors";
 import type { HttpRemoteResponse } from "../protocols/http/HttpRemoteResponse";
 
 export class RemoteAuthenticateUser implements AuthenticateUserUseCase {
@@ -36,6 +36,11 @@ export class RemoteAuthenticateUser implements AuthenticateUserUseCase {
         return {
           statusCode: status,
           error: new NotFoundError("Usuário não encontrado").message
+        };
+      case HttpStatusCode.serverError:
+        return {
+          statusCode: status,
+          error: new InternalServerError().message
         };
       default:
         return {
