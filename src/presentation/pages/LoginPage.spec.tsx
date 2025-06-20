@@ -1,9 +1,9 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { LoginPage } from "./LoginPage";
 import { UnexpectedError } from "@/domain/errors";
 import { faker } from "@faker-js/faker";
-import { fireEvent, render, screen, waitFor } from "../test/test-utils";
+import { cleanup, fireEvent, render, screen, waitFor } from "../test/test-utils";
 import { AuthenticateUserSpy } from "../test/mock-authenticate-user";
 
 const mockNavigate = vi.fn()
@@ -30,6 +30,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe("LoginPage", () => {
+  beforeEach(cleanup)
   const setupSubmit = () => {
     const emailInput = screen.getByLabelText(/email/i);
     const passwordInput = screen.getByLabelText(/senha/i);
