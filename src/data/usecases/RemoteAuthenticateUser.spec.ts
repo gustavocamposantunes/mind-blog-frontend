@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { describe, expect, it } from "vitest";
 import { HttpPostClientSpy } from "../test/mock-http-client";
 import { RemoteAuthenticateUser } from "./RemoteAuthenticateUser";
-import { mockAuthenticationParams } from "@/domain/test/mock-authentication";
+import { mockAuthenticateUserModel, mockAuthenticationParams } from "@/domain/test/mock-authentication";
 
 const makeSut = (url = faker.internet.url()) => {
   const httpPostClientSpy = new HttpPostClientSpy();
@@ -83,10 +83,7 @@ describe("RemoteAuthenticateUser", () => {
   it("should return a valid AuthenticateUserModel on success", async () => {
     const { sut, httpPostClientSpy } = makeSut();
     const authenticationParams = mockAuthenticationParams();
-    const authenticateUserModel = {
-      accessToken: faker.string.uuid(),
-      name: faker.person.fullName()
-    };
+    const authenticateUserModel = mockAuthenticateUserModel();
 
     httpPostClientSpy.response = {
       status: 200,
