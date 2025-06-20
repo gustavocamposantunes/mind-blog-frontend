@@ -3,7 +3,7 @@ import { HttpPostClientMock } from "../test/mock-http-client";
 import { RemoteRegisterArticle } from "./RemoteRegisterArticle";
 import { describe, expect, it } from "vitest";
 import type { RegisterArticleParams } from "@/domain/usecases";
-import { mockRegisterArticleParams } from "../test";
+import { mockArticle, mockRegisterArticleParams } from "@/domain/test";
 
 type SutTypes = {
   sut: RemoteRegisterArticle;
@@ -57,5 +57,19 @@ describe("RemoteRegisterArticle", () => {
 
     expect(response.statusCode).toBe(502);
     expect(response.error).toBe("Erro inesperado");
+  });
+
+  it("should returns an ArticleModel if HttpPostClient returns 200", async () => {
+    const { sut, httpPostSpy } = makeSut();
+    const article = mockArticle();
+    httpPostSpy.response = {
+      status: 200,
+      data: article
+    };
+
+    const response = await sut.register(mockRegisterArticleParams(), faker.string.uuid());
+
+    expect(response.statusCode).toBe(200);
+    expect(response.data).toEqual(article);
   });
 });

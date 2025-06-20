@@ -1,0 +1,18 @@
+import type { RegisterArticleParams } from "@/domain/usecases";
+import { faker } from "@faker-js/faker";
+import type { ArticleModel } from "../models";
+
+export const mockRegisterArticleParams = (): RegisterArticleParams =>  ({
+  title: faker.lorem.sentence(),
+  content: faker.lorem.paragraphs(),
+  author_id: faker.number.int(),
+})
+
+export const mockArticle = (): ArticleModel => ({
+  id: faker.number.int(),
+  title: faker.lorem.sentence(),
+  content: faker.lorem.paragraphs(3),
+  author_id: faker.number.int(),
+  publishedAt: faker.date.past().toISOString(),
+  updatedAt: faker.date.recent().toISOString()
+})
