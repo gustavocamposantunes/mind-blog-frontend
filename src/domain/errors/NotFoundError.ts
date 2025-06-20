@@ -1,6 +1,6 @@
 export class NotFoundError extends Error{
   constructor () {
-    super ("Not Found Error!");
+    super("Recurso não encontrado");
     this.name = "NotFoundError";
   }
 }
