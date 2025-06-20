@@ -5,15 +5,12 @@ import { Label } from "@/presentation/components/ui/label";
 import { Button } from "@/presentation/components/ui/button";
 
 import { LoginTemplate } from "../components/templates";
-import { useAuthenticateUser } from "../hooks";
+import { useAuthenticateUser, useAuthStore } from "../hooks";
 
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-import { ApiContext } from "../contexts";
-
 
 type LoginPageProps = {
   authenticateUser: AuthenticateUserUseCase;
@@ -23,7 +20,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({
   authenticateUser
 }) => {
   const navigate = useNavigate();
-  const context = useContext(ApiContext);
 
   const [authParams, setAuthParams] = useState({ 
     email: "",
@@ -31,18 +27,15 @@ export const LoginPage: React.FC<LoginPageProps> = ({
   });
 
   const { mutate, status } = useAuthenticateUser(authenticateUser);
+  const { setCurrentUser } = useAuthStore();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     mutate(authParams, {
       onSuccess: (response) => {
-        if (
-          context &&
-          typeof context.setCurrentUser === "function" &&
-          response !== undefined
-        ) {
+        if (response) {
           navigate("/");
-          context.setCurrentUser(response);
+          setCurrentUser(response);
         }
       },
       onError: (error) => {
