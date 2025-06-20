@@ -1,14 +1,14 @@
-import React, { type ReactNode, useContext } from "react";
+import React, { type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
-import { ApiContext } from "@/presentation/contexts";
+import { useAuthStore } from "@/presentation/hooks";
 
 interface IPrivateRoute {
   children: ReactNode
 }
 
 export const PrivateRoute: React.FC<IPrivateRoute> = ({ children }) => {
-  const { getCurrentUser } = useContext(ApiContext);
-  const hasAccessToken = typeof getCurrentUser === "function" && !!getCurrentUser()?.accessToken;
+  const { getCurrentUser } = useAuthStore();
+  const hasAccessToken = typeof getCurrentUser === "function" && !!getCurrentUser().accessToken;
   return hasAccessToken ? <>{children}</> : <Navigate to="/" />;
 };

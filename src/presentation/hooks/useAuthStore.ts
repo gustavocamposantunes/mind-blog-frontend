@@ -1,5 +1,8 @@
 import type { AuthenticateUserModel } from "@/domain/models";
+import { clearCurrentUserAdapter, getCurrentUserAdapter, setCurrentUserAdapter } from "@/main/adapters/CurrentAccountAdapter";
 import { create } from "zustand";
+
+const initialUser = getCurrentUserAdapter();
 
 type AuthStore = {
   accessToken: string;
@@ -14,10 +17,10 @@ type AuthStore = {
 };
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
-  accessToken: "",
-  user: { id: 0, name: "", email: "" },
+  accessToken: initialUser?.accessToken || "",
+  user: initialUser?.user || { id: 0, name: "", email: "" },
 
-  setCurrentUser: (account) =>
+  setCurrentUser: (account) => {
     set(() => ({
       accessToken: account.accessToken,
       user: {
@@ -25,16 +28,20 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         name: account.user.name,
         email: account.user.email,
       },
-    })),
+    }));
+    setCurrentUserAdapter(account)
+  },
 
   getCurrentUser: () => ({
     accessToken: get().accessToken,
     user: { ...get().user },
   }),
 
-  clearCurrentUser: () =>
+  clearCurrentUser: () => {
     set(() => ({
       accessToken: "",
       user: { id: 0, name: "", email: "" },
-  })),
+    }));
+    clearCurrentUserAdapter();
+  },
 }));

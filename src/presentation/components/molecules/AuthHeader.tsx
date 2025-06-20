@@ -6,19 +6,20 @@ import {
   DropdownMenuTrigger,
 } from "@/presentation/components/ui/dropdown-menu"
 import { CustomAvatar } from "@/presentation/components/molecules/CustomAvatar";
-import { ApiContext } from "@/presentation/contexts";
 
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 
 import logoDark from "../../assets/logo-dark.svg";
 import { MenuItem } from "../atoms/MenuItem";
+import { useAuthStore } from "@/presentation/hooks";
 
 export const AuthHeader = () => {
   const navigate = useNavigate()
-  const context = useContext(ApiContext)
+  const { getCurrentUser, clearCurrentUser } = useAuthStore();
 
-  const isLoggedIn = () => context && typeof context.getCurrentUser === "function" && context.getCurrentUser()
+  const isLoggedIn = () => {
+    return !!getCurrentUser().accessToken
+  }
 
   return (
     <header className="w-full flex justify-between px-[10%] pt-4">
@@ -48,12 +49,7 @@ export const AuthHeader = () => {
                 >
                   Perfil
                 </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      context.clearCurrentUser();
-                      window.location.reload();
-                    }}
-                  >
+                <DropdownMenuItem onClick={clearCurrentUser}>
                     Desconectar
                   </DropdownMenuItem>
                 </DropdownMenuContent>
