@@ -3,6 +3,7 @@ import { HttpPostClientMock } from "../test/mock-http-client";
 import { RemoteRegisterArticle } from "./RemoteRegisterArticle";
 import { describe, expect, it } from "vitest";
 import type { RegisterArticleParams } from "@/domain/usecases";
+import { mockRegisterArticleParams } from "../test";
 
 type SutTypes = {
   sut: RemoteRegisterArticle;
@@ -22,11 +23,7 @@ describe("RemoteRegisterArticle", () => {
   it("should call HttpPostClient with correct URL and body", async () => {
     const url = faker.internet.url();
     const { sut, httpPostSpy } = makeSut(url);
-    const params: RegisterArticleParams = {
-      title: faker.lorem.sentence(),
-      content: faker.lorem.paragraphs(),
-      author_id: faker.number.int(),
-    }
+    const params: RegisterArticleParams = mockRegisterArticleParams();
     const token = faker.string.uuid()
     await sut.register(params, token);
     expect(httpPostSpy.url).toBe(url);
@@ -34,5 +31,18 @@ describe("RemoteRegisterArticle", () => {
     expect(httpPostSpy.headers).toEqual({
       Authorization: `Bearer ${token}`
     });
+  });
+
+  it("should returns an InternalServerError if HttpPostClient returns 500", async () => {
+    const { sut, httpPostSpy } = makeSut();
+    httpPostSpy.response = {
+      status: 500,
+      data: { message: "Erro interno do servidor" }
+    };
+
+    const response = await sut.register(mockRegisterArticleParams(), faker.string.uuid());
+
+    expect(response.statusCode).toBe(500);
+    expect(response.error).toBe("Erro interno do servidor");
   });
 });
