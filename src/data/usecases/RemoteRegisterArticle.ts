@@ -1,8 +1,8 @@
 import type { ArticleModel } from "@/domain/models";
 import { HttpStatusCode, type HttpPostClient } from "../protocols";
-import type { RegisterPostParams, RegisterPostUseCase } from "@/domain/usecases";
+import type { RegisterArticleParams, RegisterArticleUseCase } from "@/domain/usecases";
 
-export class RemoteRegisterPost implements RegisterPostUseCase {
+export class RemoteRegisterPost implements RegisterArticleUseCase {
   private readonly url: string;
   private readonly httpClient: HttpPostClient;
 
@@ -11,14 +11,14 @@ export class RemoteRegisterPost implements RegisterPostUseCase {
     this.httpClient = httpClient;
   }
 
-  async register(registerPostParams: RegisterPostParams, token?: string): Promise<{
+  async register(registerArticleParams: RegisterArticleParams, token?: string): Promise<{
     statusCode: number;
     data?: ArticleModel;
     error?: string;
   }> {
     const httpResponse = await this.httpClient.post({
       url: this.url,
-      body: registerPostParams,
+      body: registerArticleParams,
       headers: {
       ...(token && { Authorization: `Bearer ${token}` })
       }
