@@ -2,6 +2,7 @@ import type { AuthenticateUserModel } from "@/domain/models";
 import type { AuthenticateUserUseCase, AuthParams } from "@/domain/usecases/AuthenticateUserUseCase";
 import { HttpStatusCode, type HttpPostClient } from "../protocols";
 import { InvalidCredentialsError, NotFoundError, UnexpectedError } from "@/domain/errors";
+import type { HttpRemoteResponse } from "../protocols/http/HttpRemoteResponse";
 
 export class RemoteAuthenticateUser implements AuthenticateUserUseCase {
   private readonly url: string;
@@ -12,11 +13,7 @@ export class RemoteAuthenticateUser implements AuthenticateUserUseCase {
     this.httpClient = httpClient;
   }
 
-  async auth(authenticationParams: AuthParams): Promise<{
-    statusCode: number;
-    data?: AuthenticateUserModel;
-    error?: string;
-  }> {
+  async auth(authenticationParams: AuthParams): Promise<HttpRemoteResponse<AuthenticateUserModel>> {
     const httpResponse = await this.httpClient.post({
       url: this.url,
       body: authenticationParams
