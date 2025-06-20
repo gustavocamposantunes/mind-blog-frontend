@@ -31,4 +31,17 @@ describe("RemoteRegisterUser", () => {
     expect(httpPostClientSpy.url).toBe(url);
     expect(httpPostClientSpy.body).toEqual(registerUserParams);
   });
+
+  it("should returns an InternalServerError if HttpPostClient returns 500", async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    httpPostClientSpy.response = {
+      status: 500,
+      data: { message: "Erro interno do servidor" }
+    };
+    const registerUserParams = mockAuthenticationParams();
+    const response = await sut.register(registerUserParams);
+
+    expect(response.statusCode).toBe(500);
+    expect(response.error).toBe("Erro interno do servidor");
+  });
 });
