@@ -22,7 +22,7 @@ export class RemoteAuthenticateUser implements AuthenticateUserUseCase {
     const { status, data } = httpResponse;
 
     switch (status) {
-      case HttpStatusCode.created:
+      case HttpStatusCode.ok:
         return {
           statusCode: status,
           data: data as AuthenticateUserModel
