@@ -66,4 +66,23 @@ describe("RemoteAuthenticateUser", () => {
     expect(response.statusCode).toBe(500);
     expect(response.error).toBe("Erro inesperado");
   });
+
+  it("should return a valid AuthenticateUserModel on success", async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    const authenticationParams = mockAuthenticationParams();
+    const authenticateUserModel = {
+      accessToken: faker.string.uuid(),
+      name: faker.person.fullName()
+    };
+
+    httpPostClientSpy.response = {
+      status: 201,
+      data: authenticateUserModel
+    };
+
+    const response = await sut.auth(authenticationParams);
+
+    expect(response.statusCode).toBe(201);
+    expect(response.data).toEqual(authenticateUserModel);
+  });
 });
