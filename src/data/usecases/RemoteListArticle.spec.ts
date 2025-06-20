@@ -28,7 +28,7 @@ describe("RemoteListArticles", () => {
     expect(httpClientSpy.url).toBe(url);
   });
 
-  it("should return NotFoundError if HttpGetClient returns 404", async () => {
+  it("should returns NotFoundError if HttpGetClient returns 404", async () => {
     const { sut, httpClientSpy } = makeSut();
     httpClientSpy.response = {
       status: 404,
@@ -41,7 +41,7 @@ describe("RemoteListArticles", () => {
     expect(response.error).toBe("Artigo não encontrado");
   });
 
-  it("should throw an InternalServerError if HttpGetClient returns 500", async () => {
+  it("should returns an InternalServerError if HttpGetClient returns 500", async () => {
     const { sut, httpClientSpy } = makeSut();
     httpClientSpy.response = {
       status: 500,
@@ -54,7 +54,7 @@ describe("RemoteListArticles", () => {
     expect(response.error).toBe("Erro interno do servidor");
   });
 
-  it("should return UnexpectedError for other status codes", async () => {
+  it("should returns UnexpectedError for other status codes", async () => {
     const { sut, httpClientSpy } = makeSut();
     httpClientSpy.response = {
       status: 502,
@@ -67,7 +67,7 @@ describe("RemoteListArticles", () => {
     expect(response.error).toBe("Erro inesperado");
   });
 
-  it("should return an ArticleListModel if HttpGetClient returns 200", async () => {
+  it("should returns an ArticleListModel if HttpGetClient returns 200", async () => {
     const { sut, httpClientSpy } = makeSut();
     const articleList: ArticleListModel = mockArticlesList();
     httpClientSpy.response = {

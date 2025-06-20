@@ -25,7 +25,7 @@ describe("RemoteAuthenticateUser", () => {
     expect(httpPostClientSpy.body).toEqual(authenticationParams);
   });
 
-  it("should throw an InvalidCredentialsError if HttpPostClient returns 401", async () => {
+  it("should returns an InvalidCredentialsError if HttpPostClient returns 401", async () => {
     const { sut, httpPostClientSpy } = makeSut();
     httpPostClientSpy.response = {
       status: 401,
@@ -39,7 +39,7 @@ describe("RemoteAuthenticateUser", () => {
     expect(response.error).toBe("Credenciais inválidas");
   });
 
-  it("should throw a NotFoundError if HttpPostClient returns 404", async () => {
+  it("should returns a NotFoundError if HttpPostClient returns 404", async () => {
     const { sut, httpPostClientSpy } = makeSut();
     httpPostClientSpy.response = {
       status: 404,
@@ -53,7 +53,7 @@ describe("RemoteAuthenticateUser", () => {
     expect(response.error).toBe("Usuário não encontrado");
   });
 
-  it("should throw an InternalServerError if HttpPostClient returns 500", async () => {
+  it("should returns an InternalServerError if HttpPostClient returns 500", async () => {
     const { sut, httpPostClientSpy } = makeSut();
     httpPostClientSpy.response = {
       status: 500,
@@ -66,7 +66,7 @@ describe("RemoteAuthenticateUser", () => {
     expect(response.error).toBe("Erro interno do servidor");
   });
 
-  it("should throw an UnexpectedError for other status codes", async () => {
+  it("should returns an UnexpectedError for other status codes", async () => {
     const { sut, httpPostClientSpy } = makeSut();
     httpPostClientSpy.response = {
       status: 502,
@@ -80,7 +80,7 @@ describe("RemoteAuthenticateUser", () => {
     expect(response.error).toBe("Erro inesperado");
   });
 
-  it("should return a valid AuthenticateUserModel on success", async () => {
+  it("should returns a valid AuthenticateUserModel on success", async () => {
     const { sut, httpPostClientSpy } = makeSut();
     const authenticationParams = mockAuthenticationParams();
     const authenticateUserModel = mockAuthenticateUserModel();
