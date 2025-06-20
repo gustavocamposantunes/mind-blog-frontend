@@ -3,7 +3,7 @@ import { HttpStatusCode, type HttpPostClient, type HttpRemoteResponse } from "..
 import type { RegisterArticleParams, RegisterArticleUseCase } from "@/domain/usecases";
 import { InternalServerError, UnexpectedError } from "@/domain/errors";
 
-export class RemoteRegisterPost implements RegisterArticleUseCase {
+export class RemoteRegisterArticle implements RegisterArticleUseCase {
   private readonly url: string;
   private readonly httpClient: HttpPostClient;
 
