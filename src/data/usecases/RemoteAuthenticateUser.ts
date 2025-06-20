@@ -38,7 +38,7 @@ export class RemoteAuthenticateUser implements AuthenticateUserUseCase {
       case HttpStatusCode.notFound:
         return {
           statusCode: status,
-          error: new NotFoundError().message
+          error: new NotFoundError("Usuário não encontrado").message
         };
       default:
         return {

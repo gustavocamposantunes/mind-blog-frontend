@@ -24,7 +24,8 @@ describe("RemoteAuthenticateUser", () => {
     expect(httpPostClientSpy.url).toBe(url);
     expect(httpPostClientSpy.body).toEqual(authenticationParams);
   });
-  it("should return an InvalidCredentialsError if HttpPostClient returns 401", async () => {
+
+  it("should throw an InvalidCredentialsError if HttpPostClient returns 401", async () => {
     const { sut, httpPostClientSpy } = makeSut();
     httpPostClientSpy.response = {
       status: 401,
@@ -36,5 +37,19 @@ describe("RemoteAuthenticateUser", () => {
 
     expect(response.statusCode).toBe(401);
     expect(response.error).toBe("Credenciais inválidas");
+  });
+
+  it("should throw a NotFoundError if HttpPostClient returns 404", async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    httpPostClientSpy.response = {
+      status: 404,
+      data: { message: "Usuário não encontrado" }
+    };
+
+    const authenticationParams = mockAuthenticationParams();
+    const response = await sut.auth(authenticationParams);
+
+    expect(response.statusCode).toBe(404);
+    expect(response.error).toBe("Usuário não encontrado");
   });
 });
