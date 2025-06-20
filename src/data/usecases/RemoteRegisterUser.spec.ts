@@ -1,0 +1,34 @@
+import { faker } from "@faker-js/faker";
+import { HttpPostClientSpy } from "../test/mock-http-client";
+import { describe, expect, it } from "vitest";
+import { RemoteRegisterUser } from "./RemoteRegisterUser";
+import { mockAuthenticationParams } from "@/domain/test";
+
+type SutTypes = {
+  sut: RemoteRegisterUser;
+  httpPostClientSpy: HttpPostClientSpy
+}
+
+const makeSut = (url = faker.internet.url()): SutTypes => {
+  const httpPostClientSpy = new HttpPostClientSpy();
+  const sut = new RemoteRegisterUser(url, httpPostClientSpy);
+  
+  return {
+    sut,
+    httpPostClientSpy
+  }
+}
+
+describe("RemoteRegisterUser", () => {
+  it("should call HttpPostClient with correct URL and body", async () => {
+    const url = faker.internet.url();
+    const { httpPostClientSpy, sut } = makeSut(url);
+
+    const registerUserParams = mockAuthenticationParams();
+
+    await sut.register(registerUserParams);
+
+    expect(httpPostClientSpy.url).toBe(url);
+    expect(httpPostClientSpy.body).toEqual(registerUserParams);
+  });
+});
