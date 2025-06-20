@@ -1,26 +1,26 @@
-import type { GetPostByIdUseCase } from "@/domain/usecases";
-import { PostTemplate } from "@/presentation/components/templates";
+import type { GetArticleByIdUseCase } from "@/domain/usecases";
+import { ArticleTemplate } from "@/presentation/components/templates";
 import { FavouriteAvatarPost } from "@/presentation/components/atoms/FavouriteAvatarPost";
 
-import { useGetPostById } from "../hooks";
+import { useGetArticleById } from "../hooks";
 
 import { useParams } from "react-router-dom";
 
 import { Heart } from "lucide-react";
 import { CustomSkeleton } from "@/presentation/components/atoms/CustomSkeleton";
 
-type PostPageProps = {
-  getPostById: GetPostByIdUseCase
+type ArticlePageProps = {
+  getArticletById: GetArticleByIdUseCase
 }
 
-export const PostPage: React.FC<PostPageProps> = ({
-  getPostById
+export const ArticlePage: React.FC<ArticlePageProps> = ({
+  getArticletById
 }) => {
   const { id } = useParams<{ id: string }>()
-  const { data, isLoading, error } = useGetPostById(getPostById, String(id));
+  const { data, isLoading, error } = useGetArticleById(getArticletById, String(id));
 
   return (
-    <PostTemplate>
+    <ArticleTemplate>
       {isLoading 
         ? 
           <span className="flex flex-col gap-4">
@@ -46,6 +46,6 @@ export const PostPage: React.FC<PostPageProps> = ({
             </p>
           </article>
       }
-    </PostTemplate>
+    </ArticleTemplate>
   );
 }

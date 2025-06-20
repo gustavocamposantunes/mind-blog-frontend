@@ -1,4 +1,4 @@
-export type PostModel = {
+export type ArticleModel = {
   id: number;
   title: string;
   content: string;

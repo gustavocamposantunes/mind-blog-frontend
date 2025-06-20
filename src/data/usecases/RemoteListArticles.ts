@@ -1,10 +1,10 @@
 import { type HttpGetClient, HttpStatusCode } from "@/data/protocols";
 import { NotFoundError } from "@/domain/errors";
 
-import type { PostModel } from "@/domain/models";
-import type { ListPostsUseCase } from "@/domain/usecases";
+import type { ArticleModel } from "@/domain/models";
+import type { ListArticlesUseCase } from "@/domain/usecases";
 
-export class RemoteListPosts implements ListPostsUseCase {
+export class RemoteListArticles implements ListArticlesUseCase {
   private readonly url: string;
   private readonly httpClient: HttpGetClient;
 
@@ -16,7 +16,7 @@ export class RemoteListPosts implements ListPostsUseCase {
     this.httpClient = httpClient;
   }
   async listAll(): Promise<{
-    posts: PostModel[];
+    posts: ArticleModel[];
     total: number;
     limit: number;
     page: number;
@@ -26,7 +26,7 @@ export class RemoteListPosts implements ListPostsUseCase {
     switch(httpResponse.status) {
       case HttpStatusCode.notFound: throw new NotFoundError();
       default: return httpResponse.data as Promise<{
-        posts: PostModel[];
+        posts: ArticleModel[];
         total: number;
         limit: number;
         page: number;

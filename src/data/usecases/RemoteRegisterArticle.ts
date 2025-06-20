@@ -1,4 +1,4 @@
-import type { PostModel } from "@/domain/models";
+import type { ArticleModel } from "@/domain/models";
 import { HttpStatusCode, type HttpPostClient } from "../protocols";
 import type { RegisterPostParams, RegisterPostUseCase } from "@/domain/usecases";
 
@@ -13,7 +13,7 @@ export class RemoteRegisterPost implements RegisterPostUseCase {
 
   async register(registerPostParams: RegisterPostParams, token?: string): Promise<{
     statusCode: number;
-    data?: PostModel;
+    data?: ArticleModel;
     error?: string;
   }> {
     const httpResponse = await this.httpClient.post({
@@ -42,7 +42,7 @@ export class RemoteRegisterPost implements RegisterPostUseCase {
 
     return {
       statusCode: status,
-      data: data as PostModel
+      data: data as ArticleModel
     };
   }
 }

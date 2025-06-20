@@ -1,8 +1,8 @@
 import { ForgotPasswordTemplate, HomeTemplate, ProfileTemplate } from "@/presentation/components/templates";
-import { PostsPage, PostPage, RegisterUserPage, LoginPage, NewPostPage } from "@/presentation/pages";
+import { ArticlesPage, ArticlePage, RegisterUserPage, LoginPage, NewArticlePage } from "@/presentation/pages";
 import { ApiContext } from "@/presentation/contexts";
 
-import { makeRemoteGetPostById, makeRemoteListPosts, makeRemoteAuthenticateUser, makeRemoteRegisterUser, makeRemoteRegisterPost } from "@/main/factories/usecases";
+import { makeRemoteGetArticleById, makeRemoteListArticles, makeRemoteAuthenticateUser, makeRemoteRegisterUser, makeRemoteRegisterArticle } from "@/main/factories/usecases";
 import { clearCurrentUserAdapter, getCurrentUserAdapter, setCurrentUserAdapter } from "@/main/adapters/CurrentAccountAdapter";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -19,15 +19,15 @@ export const Router = () => (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeTemplate />} />
-        <Route path="/posts" element={<PostsPage loadPostsList={makeRemoteListPosts()} />} />
-        <Route path="/posts/:id" element={<PostPage getPostById={makeRemoteGetPostById()} />} />
+        <Route path="/articles" element={<ArticlesPage loadPostsList={makeRemoteListArticles()} />} />
+        <Route path="/articles/:id" element={<ArticlePage getArticletById={makeRemoteGetArticleById()} />} />
         <Route path="/login" element={<LoginPage authenticateUser={makeRemoteAuthenticateUser()} />} />
         <Route path="/register" element={<RegisterUserPage registerUser={makeRemoteRegisterUser()} />} />
         <Route path="/forgot-password" element={<ForgotPasswordTemplate />} />
-        <Route path="/post/new"
+        <Route path="/article/new"
           element={
             <PrivateRoute>
-              <NewPostPage registerPost={makeRemoteRegisterPost()} />
+              <NewArticlePage registerArticle={makeRemoteRegisterArticle()} />
             </PrivateRoute>
           }
         />

@@ -1,32 +1,32 @@
 import { Textarea } from "@/presentation/components/ui/textarea";
 import { Label } from "@/presentation/components/ui/label";
 
-import { NewPostTemplate } from "@/presentation/components/templates"
+import { NewArticleTemplate } from "@/presentation/components/templates"
 import { useContext, useState } from "react";
 import { ApiContext } from "../contexts";
-import { useRegisterPost } from "../hooks/useRegisterPost";
-import type { RegisterPostUseCase } from "@/domain/usecases";
+import { useRegisterArticle } from "../hooks/useRegisterArticle";
+import type { RegisterArticleUseCase } from "@/domain/usecases";
 import { useNavigate } from "react-router-dom";
 import { FormHeaderAction } from "../components/molecules/FormHeaderAction";
 
-type NewPostPageProps = {
-  registerPost: RegisterPostUseCase;
+type NewArticlePageProps = {
+  registerArticle: RegisterArticleUseCase;
 }
 
-export const NewPostPage: React.FC<NewPostPageProps> = ({
-  registerPost
+export const NewArticlePage: React.FC<NewArticlePageProps> = ({
+  registerArticle
 }) => {
   const navigate = useNavigate();
 
   const context = useContext(ApiContext);
   
-  const [registerPostParams, setRegisterPostParams] = useState({
+  const [registerArticleParams, setRegisterArticleParams] = useState({
     title: "",
     content: ""
   });
 
-  const { mutate } = useRegisterPost(
-    registerPost,
+  const { mutate } = useRegisterArticle(
+    registerArticle,
     context.getCurrentUser?.()?.accessToken
   );
 
@@ -34,17 +34,17 @@ export const NewPostPage: React.FC<NewPostPageProps> = ({
     event.preventDefault();
 
     mutate({
-      ...registerPostParams,
+      ...registerArticleParams,
       author_id: Number(context.getCurrentUser?.()?.user.id)
     }, {
       onSuccess: () => {
-        navigate("/posts");
+        navigate("/articles");
       }
     });
   }
 
   return (
-    <NewPostTemplate>
+    <NewArticleTemplate>
       <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
         <FormHeaderAction title="Novo Artigo" />
 
@@ -54,10 +54,10 @@ export const NewPostPage: React.FC<NewPostPageProps> = ({
             <Textarea
               placeholder="Adicione um título"
               id="title"
-              value={registerPostParams.title}
+              value={registerArticleParams.title}
               onChange={(event) =>
-                setRegisterPostParams({
-                  ...registerPostParams,
+                setRegisterArticleParams({
+                  ...registerArticleParams,
                   title: event.target.value,
                 })
               }
@@ -70,10 +70,10 @@ export const NewPostPage: React.FC<NewPostPageProps> = ({
               className="min-h-[400px]"
               placeholder="Escreva seu artigo"
               id="content"
-              value={registerPostParams.content}
+              value={registerArticleParams.content}
               onChange={(event) =>
-                setRegisterPostParams({
-                  ...registerPostParams,
+                setRegisterArticleParams({
+                  ...registerArticleParams,
                   content: event.target.value,
                 })
               }
@@ -81,6 +81,6 @@ export const NewPostPage: React.FC<NewPostPageProps> = ({
           </div>
         </section>
       </form>
-    </NewPostTemplate>
+    </NewArticleTemplate>
   )
 }

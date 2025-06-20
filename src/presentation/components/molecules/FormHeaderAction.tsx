@@ -14,7 +14,7 @@ export const FormHeaderAction: React.FC<IFormHeaderAction> = ({
     <section className="flex justify-between w-full">
       <h2 className="text-2xl font-semibold">{title}</h2>
       <div className="flex gap-2">
-        <Button className="orange-btn action-btn" type="button" onClick={() => navigate("/posts")}>
+        <Button className="orange-btn action-btn" type="button" onClick={() => navigate("/articles")}>
           Cancelar
         </Button>
         <Button className="action-btn" type="submit">

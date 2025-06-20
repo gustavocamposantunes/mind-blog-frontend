@@ -34,7 +34,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
     <Card
       className={`pt-0 cursor-pointer hover:shadow-lg transition-shadow ${className ?? ""}`}
       key={id}
-      onClick={() => navigate(`/posts/${id}`)}
+      onClick={() => navigate(`/articles/${id}`)}
     >
       <div className="flex">
         <img className={`flex-1 ${favourite ? "max-w-[50%]" : ""}`} src="https://miro.medium.com/v2/resize:fit:1358/1*moJeTvW97yShLB7URRj5Kg.png" alt="" />

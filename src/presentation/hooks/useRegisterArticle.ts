@@ -1,9 +1,9 @@
-import type { RegisterPostParams, RegisterPostUseCase } from "@/domain/usecases";
+import type { RegisterArticleParams, RegisterArticleUseCase } from "@/domain/usecases";
 import { useMutation } from "@tanstack/react-query";
 
-export const useRegisterPost = (registerPost: RegisterPostUseCase, token?: string) => {
+export const useRegisterArticle = (registerPost: RegisterArticleUseCase, token?: string) => {
   return useMutation({
-    mutationFn: async (params: RegisterPostParams) => {
+    mutationFn: async (params: RegisterArticleParams) => {
       const result = await registerPost.register(params, token);
 
       if (result.error) {

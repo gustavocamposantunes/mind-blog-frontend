@@ -1,2 +1,2 @@
 export * from "./AuthenticateUserModel";
-export * from "./PostModel";
+export * from "./ArticleModel";

@@ -3,11 +3,11 @@
 import { AuthHeader } from "@/presentation/components/molecules/AuthHeader";
 import type { ReactNode } from "react";
 
-interface INewPostTemplate {
+interface INewArticleTemplate {
   children: ReactNode;
 }
 
-export const NewPostTemplate: React.FC<INewPostTemplate> = ({
+export const NewArticleTemplate: React.FC<INewArticleTemplate> = ({
   children
 }) => (
   <>
