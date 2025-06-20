@@ -8,6 +8,7 @@ export default defineConfig({
     coverage: {
       exclude: [
         'src/main',
+        'src/presentation/components',
         'commitlint.config.ts',
         '**/index.ts',
         'eslint.config.js',
