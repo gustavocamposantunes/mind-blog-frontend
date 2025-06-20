@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { HttpPostClientSpy } from "../test/mock-http-client";
 import { describe, expect, it } from "vitest";
 import { RemoteRegisterUser } from "./RemoteRegisterUser";
-import { mockAuthenticationParams } from "@/domain/test";
+import { mockAuthenticateUserModel, mockAuthenticationParams } from "@/domain/test";
 
 type SutTypes = {
   sut: RemoteRegisterUser;
@@ -57,5 +57,21 @@ describe("RemoteRegisterUser", () => {
 
     expect(response.statusCode).toBe(502);
     expect(response.error).toBe("Erro inesperado");
+  });
+
+  it("should returns a valid AuthenticateUserModel on success", async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    const registerUserParams = mockAuthenticationParams();
+    const authenticateUserModel = mockAuthenticateUserModel();
+
+    httpPostClientSpy.response = {
+      status: 200,
+      data: authenticateUserModel
+    };
+
+    const response = await sut.register(registerUserParams);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.data).toEqual(authenticateUserModel);
   });
 });
