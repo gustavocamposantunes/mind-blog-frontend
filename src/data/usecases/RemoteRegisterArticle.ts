@@ -1,6 +1,7 @@
 import type { ArticleModel } from "@/domain/models";
 import { HttpStatusCode, type HttpPostClient, type HttpRemoteResponse } from "../protocols";
 import type { RegisterArticleParams, RegisterArticleUseCase } from "@/domain/usecases";
+import { InternalServerError, UnexpectedError } from "@/domain/errors";
 
 export class RemoteRegisterPost implements RegisterArticleUseCase {
   private readonly url: string;
@@ -20,23 +21,22 @@ export class RemoteRegisterPost implements RegisterArticleUseCase {
       }
     });
 
-    if (status === HttpStatusCode.notFound) {
-      return {
-        statusCode: status,
-        error: "Recurso não encontrado"
-      };
+    switch (status) {
+      case HttpStatusCode.ok:
+        return {
+          statusCode: status,
+          data: data as ArticleModel
+        };
+      case HttpStatusCode.serverError:
+        return {
+          statusCode: status,
+          error: new InternalServerError().message
+        };
+      default:
+        return {
+          statusCode: status,
+          error: new UnexpectedError().message
+        };
     }
-
-    if (status >= 400) {
-      return {
-        statusCode: status,
-        error: "Erro inesperado"
-      };
-    }
-
-    return {
-      statusCode: status,
-      data: data as ArticleModel
-    };
   }
 }
