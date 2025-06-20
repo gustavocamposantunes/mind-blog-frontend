@@ -10,6 +10,8 @@ import { useAuthenticateUser } from "../hooks";
 import { useContext, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import { ApiContext } from "../contexts";
 
 
@@ -28,7 +30,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
     password: "" 
   });
 
-  const { mutate, status, error } = useAuthenticateUser(authenticateUser);
+  const { mutate, status } = useAuthenticateUser(authenticateUser);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -42,6 +44,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({
           navigate("/");
           context.setCurrentUser(response);
         }
+      },
+      onError: (error) => {
+        toast.error(error.message);
       }
     });
   };
@@ -94,8 +99,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({
           >
             {status === "pending" ? "Carregando..." : "Entrar"}
           </Button>
-
-          {error && <p className="text-red-500">{error.name}</p>}
 
           <a 
             onClick={() => navigate("/register")}

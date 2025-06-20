@@ -6,6 +6,8 @@ import { makeRemoteGetArticleById, makeRemoteListArticles, makeRemoteAuthenticat
 import { clearCurrentUserAdapter, getCurrentUserAdapter, setCurrentUserAdapter } from "@/main/adapters/CurrentAccountAdapter";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer, Bounce } from "react-toastify";
+
 import { PrivateRoute } from "./private-route";
 
 export const Router = () => (
@@ -40,5 +42,18 @@ export const Router = () => (
         />
       </Routes>
     </BrowserRouter>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick={false}
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      transition={Bounce}
+    />
   </ApiContext.Provider>
 )
