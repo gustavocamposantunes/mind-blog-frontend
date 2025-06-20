@@ -44,4 +44,18 @@ describe("RemoteRegisterUser", () => {
     expect(response.statusCode).toBe(500);
     expect(response.error).toBe("Erro interno do servidor");
   });
+
+  it("should returns an UnexpectedError for other status codes", async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    httpPostClientSpy.response = {
+      status: 502,
+      data: { message: "Erro inesperado" }
+    };
+
+    const registerUserParams = mockAuthenticationParams();
+    const response = await sut.register(registerUserParams);
+
+    expect(response.statusCode).toBe(502);
+    expect(response.error).toBe("Erro inesperado");
+  });
 });
