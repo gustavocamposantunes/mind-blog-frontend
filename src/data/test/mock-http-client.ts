@@ -1,6 +1,6 @@
 import { HttpStatusCode, type HttpGetClient, type HttpGetParams, type HttpPostClient, type HttpPostParams, type HttpResponse } from "../protocols";
 
-export class HttpPostClientMock implements HttpPostClient {
+export class HttpPostClientSpy implements HttpPostClient {
   url?: string;
   body?: object;
   headers?: Record<string, string>;

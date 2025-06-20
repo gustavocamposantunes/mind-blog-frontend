@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { HttpPostClientMock } from "../test/mock-http-client";
+import { HttpPostClientSpy } from "../test/mock-http-client";
 import { RemoteRegisterArticle } from "./RemoteRegisterArticle";
 import { describe, expect, it } from "vitest";
 import type { RegisterArticleParams } from "@/domain/usecases";
@@ -7,11 +7,11 @@ import { mockArticle, mockRegisterArticleParams } from "@/domain/test";
 
 type SutTypes = {
   sut: RemoteRegisterArticle;
-  httpPostSpy: HttpPostClientMock;
+  httpPostSpy: HttpPostClientSpy;
 }
 
 const makeSut = (url = faker.internet.url()): SutTypes => {
-  const httpPostSpy = new HttpPostClientMock();
+  const httpPostSpy = new HttpPostClientSpy();
   const sut = new RemoteRegisterArticle(url, httpPostSpy);
   return {
     sut,
