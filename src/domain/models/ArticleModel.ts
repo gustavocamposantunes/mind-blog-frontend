@@ -6,3 +6,10 @@ export type ArticleModel = {
   publishedAt: string;
   updatedAt: string;
 };
+
+export type ArticleListModel = {
+  posts: ArticleModel[];
+  total: number;
+  limit: number;
+  page: number;
+};
