@@ -21,4 +21,18 @@ describe("RemoteGetArticleById", () => {
 
     expect(httpClientSpy.url).toBe(`${url}/${articleId}`);
   });
+
+  it("should throw NotFoundError if HttpGetClient returns 404", async () => {
+    const { sut, httpClientSpy } = makeSut();
+    httpClientSpy.response = {
+      status: 404,
+      data: { message: "Artigo não encontrado" }
+    };
+
+    const articleId = faker.string.uuid();
+    const response = await sut.getById(articleId);
+
+    expect(response.statusCode).toBe(404);
+    expect(response.error).toBe("Artigo não encontrado");
+  });
 });
