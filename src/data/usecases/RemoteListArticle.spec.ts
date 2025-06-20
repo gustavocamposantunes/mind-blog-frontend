@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 import { HttpGetClientSpy } from "../test/mock-http-client";
 import { RemoteListArticles } from "./RemoteListArticles";
 import { describe, expect, it } from "vitest";
+import type { ArticleListModel } from "@/domain/models";
 
 type SutTypes = {
   sut: RemoteListArticles;
@@ -50,5 +51,31 @@ describe("RemoteListArticles", () => {
 
     expect(response.statusCode).toBe(500);
     expect(response.error).toBe("Erro inesperado");
+  });
+
+  it("should return an ArticleListModel if HttpGetClient returns 200", async () => {
+    const { sut, httpClientSpy } = makeSut();
+    const articleList: ArticleListModel = {
+      posts: [
+        {
+          id: faker.number.int(),
+          title: faker.lorem.sentence(),
+          content: faker.lorem.paragraphs(3),
+          author_id: faker.number.int(),
+          publishedAt: faker.date.past().toISOString(),
+          updatedAt: faker.date.recent().toISOString()
+        }
+      ],
+      limit: 10,
+      page: 1,
+      total: 1
+    };
+    httpClientSpy.response = {
+      status: 200,
+      data: articleList
+    };
+    const response = await sut.listAll();
+    expect(response.statusCode).toBe(200);
+    expect(response.data).toEqual(articleList);
   });
 });
