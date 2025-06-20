@@ -25,4 +25,17 @@ describe("RemoteListArticles", () => {
 
     expect(httpClientSpy.url).toBe(url);
   });
+
+  it("should return NotFoundError if HttpGetClient returns 404", async () => {
+    const { sut, httpClientSpy } = makeSut();
+    httpClientSpy.response = {
+      status: 404,
+      data: { message: "Artigo não encontrado" }
+    };
+
+    const response = await sut.listAll();
+
+    expect(response.statusCode).toBe(404);
+    expect(response.error).toBe("Artigo não encontrado");
+  });
 });
