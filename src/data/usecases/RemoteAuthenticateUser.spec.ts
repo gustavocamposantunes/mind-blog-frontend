@@ -76,13 +76,13 @@ describe("RemoteAuthenticateUser", () => {
     };
 
     httpPostClientSpy.response = {
-      status: 201,
+      status: 200,
       data: authenticateUserModel
     };
 
     const response = await sut.auth(authenticationParams);
 
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
     expect(response.data).toEqual(authenticateUserModel);
   });
 });
