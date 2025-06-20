@@ -40,16 +40,29 @@ describe("RemoteListArticles", () => {
     expect(response.error).toBe("Artigo não encontrado");
   });
 
-  it("should return UnexpectedError for other status codes", async () => {
+  it("should throw an InternalServerError if HttpGetClient returns 500", async () => {
     const { sut, httpClientSpy } = makeSut();
     httpClientSpy.response = {
       status: 500,
-      data: { message: "Erro inesperado" }
+      data: { message: "Erro interno do servidor" }
     };
 
     const response = await sut.listAll();
 
     expect(response.statusCode).toBe(500);
+    expect(response.error).toBe("Erro interno do servidor");
+  });
+
+  it("should return UnexpectedError for other status codes", async () => {
+    const { sut, httpClientSpy } = makeSut();
+    httpClientSpy.response = {
+      status: 502,
+      data: { message: "Erro inesperado" }
+    };
+
+    const response = await sut.listAll();
+
+    expect(response.statusCode).toBe(502);
     expect(response.error).toBe("Erro inesperado");
   });
 
