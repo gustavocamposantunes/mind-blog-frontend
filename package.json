@@ -10,7 +10,10 @@
     "preview": "vite preview",
     "prepare": "husky",
     "test": "vitest",
-    "test:coverage": "vitest --run --coverage"
+    "test:coverage": "vitest --run --coverage",
+    "check": "ncu",
+    "check:update": "ncu -u",
+    "check:interactive": "ncu --interactive"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
