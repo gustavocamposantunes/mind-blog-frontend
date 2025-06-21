@@ -3,6 +3,7 @@ import { cleanup, render, screen } from "../test/test-utils";
 import { ArticlePage } from "./ArticlePage";
 import { GetArticleByIdSpy } from "../test";
 import { UnexpectedError } from "@/domain/errors";
+import { formatDateToShortMonth } from "../utils/dateFormatter";
 
 vi.mock("react-router-dom", async () => ({
   ...await vi.importActual("react-router-dom"),
@@ -54,8 +55,10 @@ describe("ArticlePage", () => {
 
     const articleTitle = await screen.findByText(getArticleByIdSpy.data.title);
     const articleContent = await screen.findByText(getArticleByIdSpy.data.content);
+    const articleDate = await screen.findByTestId("published-at");
 
     expect(articleTitle).toBeTruthy();
     expect(articleContent).toBeTruthy();
+    expect(articleDate.textContent).toEqual(expect.stringContaining(formatDateToShortMonth(getArticleByIdSpy.data.publishedAt)));
   })
 });
