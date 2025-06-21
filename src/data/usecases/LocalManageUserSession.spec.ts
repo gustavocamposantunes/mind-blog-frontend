@@ -28,4 +28,13 @@ describe("LocalManageUserSession", () => {
     const storedAccount = sut.get();
     expect(storedAccount).toBeNull();
   });
+
+  it("should call LocalStorageCurrentUserAdapter.clear and remove the stored user", () => {
+    const { sut } = makeSut();
+    const account = mockAuthenticateUserModel();
+    sut.set(account);
+    sut.clear();
+    const storedAccount = sut.get();
+    expect(storedAccount).toBeNull();
+  });
 });
