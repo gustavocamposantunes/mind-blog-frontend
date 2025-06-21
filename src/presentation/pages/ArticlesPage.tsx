@@ -6,13 +6,13 @@ import { CustomSkeleton } from "@/presentation/components/atoms/CustomSkeleton";
 import { useArticlesList } from "../hooks";
 
 type ArticlessPageProps = {
-  listArticlessList: ListArticlesUseCase;
+  listArticles: ListArticlesUseCase;
 }
 
 export const ArticlesPage: React.FC<ArticlessPageProps> = ({ 
-  listArticlessList
+  listArticles
  }) => {
-  const { data, isLoading } = useArticlesList(listArticlessList);
+  const { data, isLoading } = useArticlesList(listArticles);
 
   return (
     <ArticlesTemplate>

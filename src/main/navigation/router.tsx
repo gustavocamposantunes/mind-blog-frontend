@@ -38,7 +38,7 @@ export const Router = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomeTemplate />} />
-          <Route path="/articles" element={<ArticlesPage loadPostsList={makeRemoteListArticles()} />} />
+          <Route path="/articles" element={<ArticlesPage listArticles={makeRemoteListArticles()} />} />
           <Route path="/articles/:id" element={<ArticlePage getArticletById={makeRemoteGetArticleById()} />} />
           <Route path="/login" element={<LoginPage authenticateUser={makeRemoteAuthenticateUser()} />} />
           <Route path="/register" element={<RegisterUserPage registerUser={makeRemoteRegisterUser()} />} />

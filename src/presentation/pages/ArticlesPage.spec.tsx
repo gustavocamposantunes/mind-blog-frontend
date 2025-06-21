@@ -1,7 +1,7 @@
 import { render, screen } from "../test/test-utils";
 import { ArticlesPage } from "./ArticlesPage";
 import { describe, expect, it, vi } from "vitest";
-import { ListArticlessListSpy } from "../test";
+import { listArticlesSpy } from "../test";
 
 vi.mock("react-router-dom", async () => ({
   ...await vi.importActual("react-router-dom"),
@@ -9,14 +9,14 @@ vi.mock("react-router-dom", async () => ({
 }))
 
 type SutTypes = {
-  listArticlesListSpy: ListArticlessListSpy
+  listArticlesListSpy: listArticlesSpy
 }
 
 const makeSut = (): SutTypes => {
-  const listArticlesListSpy = new ListArticlessListSpy();
+  const listArticlesListSpy = new listArticlesSpy();
 
   render(
-    <ArticlesPage listArticlessList={listArticlesListSpy} />
+    <ArticlesPage listArticles={listArticlesListSpy} />
   )
   return {
     listArticlesListSpy
