@@ -20,6 +20,7 @@ export class RemoteGetArticleById implements GetArticleByIdUseCase {
 
     switch (status) {
       case HttpStatusCode.ok:
+        console.log("data", data);
         return {
           statusCode: status,
           data: data as ArticleModel
