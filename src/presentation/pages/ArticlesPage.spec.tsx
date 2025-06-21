@@ -2,6 +2,7 @@ import { cleanup, render, screen } from "../test/test-utils";
 import { ArticlesPage } from "./ArticlesPage";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { listArticlesSpy } from "../test";
+import { formatDateToShortMonth } from "../utils/dateFormatter";
 
 vi.mock("react-router-dom", async () => ({
   ...await vi.importActual("react-router-dom"),
@@ -39,8 +40,10 @@ describe("ArticlesPage", () => {
 
     const firstArticleTitle = await screen.findByText(listArticlesListSpy.articlesList.articles[0].title);
     const firstArticleContent = await screen.findByText(listArticlesListSpy.articlesList.articles[0].content);
+    const firstArticleDate = await screen.findByTestId("published-at");
 
     expect(firstArticleTitle).toBeTruthy();
     expect(firstArticleContent).toBeTruthy();
+    expect(firstArticleDate.textContent).toEqual(expect.stringContaining(formatDateToShortMonth(listArticlesListSpy.articlesList.articles[0].publishedAt)));
   });
-})
+});
