@@ -87,5 +87,17 @@ describe("RegisterUserPage", () => {
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/");
     });
-  })
+  });
+
+  it("Should redirect to LoginPage when click on 'Já tem cadastro?'", async () => {
+    makeSut();
+
+    const loginLink = screen.getByText(/já tem cadastro\? clique aqui/i)
+
+    fireEvent.click(loginLink);
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/login");
+    });
+  });
 });
