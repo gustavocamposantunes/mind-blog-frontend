@@ -4,7 +4,7 @@ import { LoginPage } from "./LoginPage";
 import { UnexpectedError } from "@/domain/errors";
 import { faker } from "@faker-js/faker";
 import { cleanup, fireEvent, render, screen, waitFor } from "../test/test-utils";
-import { AuthenticateUserSpy } from "../test/mock-authenticate-user";
+import { AuthenticateUserSpy } from "../test";
 
 const mockNavigate = vi.fn()
 
