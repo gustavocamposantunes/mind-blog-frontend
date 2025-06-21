@@ -16,7 +16,6 @@ type SutTypes = {
   registerArticleSpy: RegisterArticleSpy
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const makeSut = (): SutTypes => {
   const registerArticleSpy = new RegisterArticleSpy()
 
@@ -73,4 +72,14 @@ describe("NewArticlePage", () => {
       expect(mockNavigate).toHaveBeenCalledWith("/articles");
     });
   });
+
+  it("should redirect to /articles when submit is successfull", async () => {
+    makeSut();
+
+    setupSubmit();
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/articles");
+    });
+  })
 });
