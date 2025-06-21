@@ -78,4 +78,16 @@ describe("LoginPage", () => {
       expect(mockNavigate).toHaveBeenCalledWith("/forgot-password");
     });
   });
+
+  it("should redirect to RegisterUserPage when register user link is clicked", async () => {
+    makeSut();
+
+    const registerUserLink = screen.getByText(/novo usuário\? clique aqui/i);
+
+    fireEvent.click(registerUserLink);
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/register");
+    });
+  });
 });
