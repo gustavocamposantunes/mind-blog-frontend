@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { cleanup, fireEvent, render, screen } from "../test/test-utils";
+import { cleanup, fireEvent, render, screen, waitFor } from "../test/test-utils";
 import { RegisterUserPage } from "./RegisterUserPage";
 import { RegisterUserSpy } from "../test";
 import { UnexpectedError } from "@/domain/errors";
@@ -78,4 +78,14 @@ describe("RegisterUserPage", () => {
 
     expect(errorAssistiveText).toBeTruthy();
   });
+
+  it("should redirect to HomePage when submit successfull", async () => {
+    makeSut();
+
+    setupSubmit();
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/");
+    });
+  })
 });
