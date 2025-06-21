@@ -8,6 +8,7 @@ import type { RegisterArticleUseCase } from "@/domain/usecases";
 import { useNavigate } from "react-router-dom";
 import { FormHeaderAction } from "../components/molecules/FormHeaderAction";
 import { useAuthStore } from "../store/auth-store";
+import { toast } from "react-toastify";
 
 type NewArticlePageProps = {
   registerArticle: RegisterArticleUseCase;
@@ -38,6 +39,9 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
     }, {
       onSuccess: () => {
         navigate("/articles");
+      },
+      onError: (error) => {
+        toast.error(error.message);
       }
     });
   };
