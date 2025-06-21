@@ -36,7 +36,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
             <div className="flex flex-col gap-4 pb-6 border-b border-[#cecece]">
               <h1 className="text-4-xl">{data?.data?.title}</h1>
               <span className="flex justify-between items-center">
-                <FavouriteAvatarPost />
+                <FavouriteAvatarPost publishedAt={data?.data?.publishedAt} />
                 <Heart />
               </span>
             </div>
