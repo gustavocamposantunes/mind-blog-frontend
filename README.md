@@ -2,11 +2,12 @@
 
 Projeto desenvolvido como parte de um teste técnico para uma vaga de estágio como desenvolvedor fullstack na MindGroup.
 
-# Tecnologias Utilizadas
+# Principais Bibliotecas
 
 * Vite
 * TanStackQuery
 * ShadCN
+* Zustand
 * Tailwind
 * React Router DOM
 
