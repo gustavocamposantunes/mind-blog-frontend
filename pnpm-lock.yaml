@@ -35,6 +35,12 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      data-fns:
+        specifier: ^1.1.0
+        version: 1.1.0
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
       lucide-react:
         specifier: ^0.520.0
         version: 0.520.0(react@19.1.0)
@@ -1503,9 +1509,16 @@ packages:
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
+  data-fns@1.1.0:
+    resolution: {integrity: sha512-/rJzdbnuY3DVgzqsfEfc+tJLuAKYaHzkUxSMRIU3dxKFeWGD/MGhrgAfuwSOmgfJ8enygztp9DeuvoSxauppIg==}
+    engines: {node: '>=10'}
+
   data-urls@5.0.0:
     resolution: {integrity: sha512-ZYP5VBHshaDAiVZxjbRVcFJpc+4xGgT0bK3vzy1HLN8jTO975HEbuYzZJcHoQEY5K1a0z8YayJkyVETa08eNTg==}
     engines: {node: '>=18'}
+
+  date-fns@4.1.0:
+    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
   debug@4.4.1:
     resolution: {integrity: sha512-KcKCqiftBJcZr++7ykoDIEwSa3XWowTfNPo92BYxjXiyYEVrUQh2aLyhxBCwww+heortUFxEJYcRzosstTEBYQ==}
@@ -2478,6 +2491,10 @@ packages:
 
   undici-types@7.8.0:
     resolution: {integrity: sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw==}
+
+  unit-fns@0.1.9:
+    resolution: {integrity: sha512-bxceIkc7n2icQmgQx8u3vX98ZBIcpL2YJDKIsWDFK7ZX1TTuLvtNWVNd9/oARCDHd7QQRzwc+zxabO0HSK8X0w==}
+    engines: {node: '>=10'}
 
   update-browserslist-db@1.1.3:
     resolution: {integrity: sha512-UxhIZQ+QInVdunkDAaiazvvT/+fXL5Osr0JZlJulepYu6Jd7qJtDZjlur0emRlT71EN3ScPoE7gvsuIKKNavKw==}
@@ -4007,10 +4024,16 @@ snapshots:
 
   csstype@3.1.3: {}
 
+  data-fns@1.1.0:
+    dependencies:
+      unit-fns: 0.1.9
+
   data-urls@5.0.0:
     dependencies:
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.2.0
+
+  date-fns@4.1.0: {}
 
   debug@4.4.1:
     dependencies:
@@ -4927,6 +4950,8 @@ snapshots:
   typescript@5.8.3: {}
 
   undici-types@7.8.0: {}
+
+  unit-fns@0.1.9: {}
 
   update-browserslist-db@1.1.3(browserslist@4.24.5):
     dependencies:
