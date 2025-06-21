@@ -38,8 +38,8 @@ describe("ArticlePage", () => {
   it("should render an error message if throws", async () => {
     const getArticleByIdSpy = new GetArticleByIdSpy();
 
-    const error = new UnexpectedError()
-    vi.spyOn(getArticleByIdSpy, "getById").mockRejectedValueOnce(error)
+    const error = new UnexpectedError();
+    vi.spyOn(getArticleByIdSpy, "getById").mockRejectedValueOnce(error);
 
     render(
       <ArticlePage getArticletById={getArticleByIdSpy} />
@@ -48,4 +48,14 @@ describe("ArticlePage", () => {
     const errorWrapper = await screen.findByTestId("error-wrapper");
     expect(errorWrapper.textContent).toBe("Erro inesperado");
   });
+
+  it("should render the article correctly", async () => {
+    const { getArticleByIdSpy } = makeSut();
+
+    const articleTitle = await screen.findByText(getArticleByIdSpy.data.title);
+    const articleContent = await screen.findByText(getArticleByIdSpy.data.content);
+
+    expect(articleTitle).toBeTruthy();
+    expect(articleContent).toBeTruthy();
+  })
 });
