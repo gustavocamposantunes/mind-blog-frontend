@@ -32,7 +32,15 @@ src
     * No backend, inclui controladores (controllers), validadores e formatação das respostas HTTP — basicamente, tudo que faz a "ponte" entre o usuário (ou cliente) e a lógica de negócio.
 
 # Instruções
+## Rodar o projeto
 Nesse exemplo utilizo o pnpm, porém pode ser utilizado o npm ou yarn para instalação e rodar o projeto
 * Primeiro instale as dependências com o pnpm``$ pnpm i``
 * Crie um arquivo ``.env.local`` na raiz do projeto e copie a variável de ambiente do arquivos do ``.env.example``
 * Rode o projeto com ``pnpm dev`` e verifique em ``localhost:5173``
+
+## Atualizar pacotes
+Para fim de manutenibilidade o projeto conta com alguns scripts para verificar e atualizar os pacotes
+* Antes de tudo instale o [npm-check-updates](https://www.npmjs.com/package/npm-check-updates) globalmente com ```pnpm i -g npm-check-updates```
+* Se quiser apenas verificar as atualizações ``$ pnpm run check``
+* Para atualizar todos os pacotes ``$ pnpm run check:update``
+* O modo interativo permite selecionar os pacotes que quer atualizar ``$ pnpm run check:interactive``
