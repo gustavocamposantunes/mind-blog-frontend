@@ -1,13 +1,15 @@
-import { cleanup, fireEvent, render, screen } from "../test/test-utils";
+import { cleanup, fireEvent, render, screen, waitFor } from "../test/test-utils";
 import { NewArticlePage } from "./NewArticlePage";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { UnexpectedError } from "@/domain/errors";
 import { faker } from "@faker-js/faker";
 import { RegisterArticleSpy } from "../test";
 
+const mockNavigate = vi.fn()
+
 vi.mock("react-router-dom", async () => ({
   ...await vi.importActual("react-router-dom"),
-  useNavigate: () => vi.fn()
+  useNavigate: () => mockNavigate
 }))
 
 type SutTypes = {
@@ -29,7 +31,7 @@ const makeSut = (): SutTypes => {
 
 describe("NewArticlePage", () => {
   beforeEach(cleanup)
-  
+
   const setupSubmit = () => {
     const titleInput = screen.getByLabelText(/título/i);
     const contentInput = screen.getByLabelText(/texto/i);
@@ -58,5 +60,17 @@ describe("NewArticlePage", () => {
     const errorToastMessage = await screen.findByText(error.message);
 
     expect(errorToastMessage).toBeTruthy();
+  });
+
+  it("should redirect to /articles when cancel button is clicked", async () => {
+    makeSut();
+
+    const cancelButton = screen.getByRole('button', { name: /salvar/i });
+
+    fireEvent.click(cancelButton);
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/articles");
+    });
   });
 });
