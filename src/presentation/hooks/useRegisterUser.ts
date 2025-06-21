@@ -6,10 +6,6 @@ export const useRegisterUser = (registerUser: RegisterUserUseCase) => {
     mutationFn: async (params: RegisterUserParams) => {
       const result = await registerUser.register(params);
 
-      if (result.error) {
-        throw new Error(result.error);
-      }
-
       return result.data;
     }
   });

@@ -6,10 +6,6 @@ export const useAuthenticateUser = (authenticateUser: AuthenticateUserUseCase) =
     mutationFn: async (params: AuthParams) => {
       const result = await authenticateUser.auth(params);
 
-      if (result.error) {
-        throw new Error(result.error);
-      }
-
       return result.data;
     }
   });
