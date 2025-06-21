@@ -58,12 +58,24 @@ describe("LoginPage", () => {
     await screen.findByText(error.message);
   });
 
-  it("should redirects to HomePage on authentication success", async () => {
+  it("should redirect to HomePage on authentication success", async () => {
     makeSut();
     setupSubmit();
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/");
+    });
+  });
+
+  it("should redirect to ForgotPasswordPage when forgot password link is clicked", async () => {
+    makeSut();
+
+    const forgotPasswordLink = screen.getByText(/esqueceu a senha\?/i);
+
+    fireEvent.click(forgotPasswordLink);
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/forgot-password");
     });
   });
 });
