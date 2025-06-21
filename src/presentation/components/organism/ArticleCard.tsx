@@ -11,11 +11,13 @@ import { FavouriteAvatarPost } from "@/presentation/components/atoms/FavouriteAv
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { FavouriteHeartCount } from "../atoms/FavouriteHeartCount";
+import { formatDateToShortMonth } from "@/presentation/utils/dateFormatter";
 
 interface IArticleCard {
   id: number;
   title: string;
   content: string;
+  publishedAt: string;
   className?: string;
   redirect?: string;
   favourite?: string;
@@ -25,11 +27,15 @@ export const ArticleCard: React.FC<IArticleCard> = ({
   id,
   title,
   content,
+  publishedAt = "2023-10-01T00:00:00Z",
   className,
   redirect,
   favourite
 }) => {
   const navigate = useNavigate();
+
+  const formattedDate = formatDateToShortMonth(publishedAt);
+
   return (
     <Card
       className={`pt-0 cursor-pointer hover:shadow-lg transition-shadow ${className ?? ""}`}
@@ -55,7 +61,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
       </CardContent>
       <CardFooter className={`flex justify-between`}>
         <FavouriteHeartCount favourite={favourite} />
-        <FavouriteAvatarPost favourite={favourite} />
+        <FavouriteAvatarPost publishedAt={formattedDate} favourite={favourite} />
         {redirect ? <Button className="orange-btn action-btn uppercase">Ler mais</Button> : null}
       </CardFooter>
     </Card>

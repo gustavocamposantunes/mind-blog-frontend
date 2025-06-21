@@ -29,7 +29,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
           :
           null
         }
-        {data?.data?.articles.map(({ ...props }) => <ArticleCard key={props.id} {...props} />)}
+        {data?.data?.articles.map(({ ...props }) => <ArticleCard key={props.id} {...props} publishedAt={props.publishedAt} />)}
       </section>
     </ArticlesTemplate>
   )
