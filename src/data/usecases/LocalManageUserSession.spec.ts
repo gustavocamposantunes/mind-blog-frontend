@@ -1,0 +1,24 @@
+import { LocalManageUserSession } from "./LocalManageUserSession";
+import { describe, expect, it } from "vitest";
+import { mockAuthenticateUserModel } from "@/domain/test";
+
+type SutTypes = {
+  sut: LocalManageUserSession;
+}
+
+const makeSut = (): SutTypes => {
+  const sut = new LocalManageUserSession();
+  return {
+    sut
+  };
+};
+
+describe("LocalManageUserSession", () => {
+  it("should call LocalStorageCurrentUserAdapter.set with correct value", () => {
+    const { sut } = makeSut();
+    const account = mockAuthenticateUserModel();
+    sut.set(account);
+    const storedAccount = sut.get();
+    expect(storedAccount).toEqual(account);
+  });
+});
