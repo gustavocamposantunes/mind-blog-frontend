@@ -1,9 +1,7 @@
 import { ForgotPasswordTemplate, HomeTemplate, ProfileTemplate } from "@/presentation/components/templates";
 import { ArticlesPage, ArticlePage, RegisterUserPage, LoginPage, NewArticlePage } from "@/presentation/pages";
-import { ApiContext } from "@/presentation/contexts";
 
 import { makeRemoteGetArticleById, makeRemoteListArticles, makeRemoteAuthenticateUser, makeRemoteRegisterUser, makeRemoteRegisterArticle } from "@/main/factories/usecases";
-import { clearCurrentUserAdapter, getCurrentUserAdapter, setCurrentUserAdapter } from "@/main/adapters/CurrentAccountAdapter";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer, Bounce } from "react-toastify";
@@ -11,13 +9,7 @@ import { ToastContainer, Bounce } from "react-toastify";
 import { PrivateRoute } from "./private-route";
 
 export const Router = () => (
-  <ApiContext.Provider
-    value={{
-      setCurrentUser: setCurrentUserAdapter,
-      getCurrentUser: getCurrentUserAdapter,
-      clearCurrentUser: clearCurrentUserAdapter
-    }}
-  >
+  <>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeTemplate />} />
@@ -55,5 +47,5 @@ export const Router = () => (
       theme="light"
       transition={Bounce}
     />
-  </ApiContext.Provider>
+  </>
 )
