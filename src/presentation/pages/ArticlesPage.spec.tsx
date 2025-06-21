@@ -1,6 +1,6 @@
-import { render, screen } from "../test/test-utils";
+import { cleanup, render, screen } from "../test/test-utils";
 import { ArticlesPage } from "./ArticlesPage";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { listArticlesSpy } from "../test";
 
 vi.mock("react-router-dom", async () => ({
@@ -24,6 +24,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe("ArticlesPage", () => {
+  beforeEach(cleanup);
   it("should render skeletons while is loading", async () => {
     makeSut();
 
@@ -31,5 +32,15 @@ describe("ArticlesPage", () => {
 
     expect(skeletons).toBeTruthy();
     expect(skeletons.length).toBe(6);
-  })
+  });
+
+  it("should render the articles", async () => {
+    const { listArticlesListSpy } = makeSut();
+
+    const firstArticleTitle = await screen.findByText(listArticlesListSpy.articlesList.articles[0].title);
+    const firstArticleContent = await screen.findByText(listArticlesListSpy.articlesList.articles[0].content);
+
+    expect(firstArticleTitle).toBeTruthy();
+    expect(firstArticleContent).toBeTruthy();
+  });
 })
