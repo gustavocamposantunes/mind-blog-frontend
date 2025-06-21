@@ -26,7 +26,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
     password: "" 
   });
 
-  const { mutate, status } = useAuthenticateUser(authenticateUser);
+  const { mutate } = useAuthenticateUser(authenticateUser);
   const { setCurrentUser } = useAuthStore();
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -90,7 +90,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
             className="mt-4 w-full py-4 auth-btn" 
             type="submit"
           >
-            {status === "pending" ? "Carregando..." : "Entrar"}
+          Entrar
           </Button>
 
           <a 
