@@ -4,61 +4,75 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/presentation/components/ui/dropdown-menu"
+} from "@/presentation/components/ui/dropdown-menu";
 import { CustomAvatar } from "@/presentation/components/molecules/CustomAvatar";
 
 import { useNavigate } from "react-router-dom";
 
 import logoDark from "../../assets/logo-dark.svg";
 import { MenuItem } from "../atoms/MenuItem";
-import { useAuthStore } from "@/presentation/hooks";
+import { useAuthStore } from "@/presentation/store/auth-store";
 
 export const AuthHeader = () => {
-  const navigate = useNavigate()
-  const { getCurrentUser, clearCurrentUser } = useAuthStore();
+  const navigate = useNavigate();
 
-  const isLoggedIn = () => {
-    return !!getCurrentUser().accessToken
-  }
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const clearCurrentUser = useAuthStore((state) => state.clearCurrentUser);
+
+  const isLoggedIn = !!accessToken;
 
   return (
     <header className="w-full flex justify-between px-[10%] pt-4">
-      <a onClick={() => navigate("/")}><img src={logoDark} alt="" /></a>
+      <a onClick={() => navigate("/")}><img src={logoDark} alt="logo" /></a>
       <nav className="flex items-center">
         <ul className="flex gap-4">
           <MenuItem redirect="/">Home</MenuItem>
           <MenuItem className="pr-4" redirect="/articles">Artigos</MenuItem>
 
-          {isLoggedIn() 
-            ? 
-              <MenuItem className="border-l-2 border-l-stone-700 pl-6" redirect="/post/new">Publicar</MenuItem>
-            : 
-              <MenuItem className="border-l-2 border-l-stone-700 pl-6" redirect="/login">Entrar</MenuItem>
-          }
+          {isLoggedIn
+            ? (
+              <MenuItem
+                className="border-l-2 border-l-stone-700 pl-6"
+                redirect="/article/new"
+              >
+                Publicar
+              </MenuItem>
+            ) : (
+              <MenuItem
+                className="border-l-2 border-l-stone-700 pl-6"
+                redirect="/login"
+              >
+                Entrar
+              </MenuItem>
+            )}
         </ul>
-        {isLoggedIn()
-          ? 
-            <span className="ml-8">
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <CustomAvatar />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                <DropdownMenuItem
-                  onClick={() => navigate("/profile")}
-                >
+        {isLoggedIn ? (
+          <span className="ml-8">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <CustomAvatar />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={() => navigate("/profile")}>
                   Perfil
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={clearCurrentUser}>
-                    Desconectar
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </span>
-          : 
-          <Button onClick={() => navigate("/register")} className="action-btn ml-6">Registrar</Button>
-        }
+                <DropdownMenuItem
+                  onClick={() => {
+                    clearCurrentUser();
+                    navigate("/");
+                  }}
+                >
+                  Desconectar
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </span>
+        ) : (
+          <Button onClick={() => navigate("/register")} className="action-btn ml-6">
+            Registrar
+          </Button>
+        )}
       </nav>
     </header>
-  )
-}
+  );
+};

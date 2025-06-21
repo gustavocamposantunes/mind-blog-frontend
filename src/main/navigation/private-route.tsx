@@ -1,14 +1,17 @@
-import React, { type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-
-import { useAuthStore } from "@/presentation/hooks";
+import { useAuthStore } from "@/presentation/store/auth-store";
 
 interface IPrivateRoute {
-  children: ReactNode
+  children: ReactNode;
 }
 
-export const PrivateRoute: React.FC<IPrivateRoute> = ({ children }) => {
-  const { getCurrentUser } = useAuthStore();
-  const hasAccessToken = typeof getCurrentUser === "function" && !!getCurrentUser().accessToken;
-  return hasAccessToken ? <>{children}</> : <Navigate to="/" />;
+export const PrivateRoute = ({ children }: IPrivateRoute) => {
+  const accessToken = useAuthStore((state) => state.accessToken);
+
+  if (!accessToken) {
+    return <Navigate to="/" />;
+  }
+
+  return <>{children}</>;
 };

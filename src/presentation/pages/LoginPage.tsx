@@ -5,12 +5,13 @@ import { Label } from "@/presentation/components/ui/label";
 import { Button } from "@/presentation/components/ui/button";
 
 import { LoginTemplate } from "../components/templates";
-import { useAuthenticateUser, useAuthStore } from "../hooks";
+import { useAuthenticateUser } from "../hooks";
 
 import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuthStore } from "../store/auth-store";
 
 type LoginPageProps = {
   authenticateUser: AuthenticateUserUseCase;

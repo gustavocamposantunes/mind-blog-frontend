@@ -1,25 +1,24 @@
 import { Textarea } from "@/presentation/components/ui/textarea";
 import { Label } from "@/presentation/components/ui/label";
 
-import { NewArticleTemplate } from "@/presentation/components/templates"
-import { useContext, useState } from "react";
-import { ApiContext } from "../contexts";
+import { NewArticleTemplate } from "@/presentation/components/templates";
+import { useState } from "react";
 import { useRegisterArticle } from "../hooks/useRegisterArticle";
 import type { RegisterArticleUseCase } from "@/domain/usecases";
 import { useNavigate } from "react-router-dom";
 import { FormHeaderAction } from "../components/molecules/FormHeaderAction";
+import { useAuthStore } from "../store/auth-store";
 
 type NewArticlePageProps = {
   registerArticle: RegisterArticleUseCase;
-}
+};
 
 export const NewArticlePage: React.FC<NewArticlePageProps> = ({
   registerArticle
 }) => {
   const navigate = useNavigate();
+  const { user, accessToken } = useAuthStore();
 
-  const context = useContext(ApiContext);
-  
   const [registerArticleParams, setRegisterArticleParams] = useState({
     title: "",
     content: ""
@@ -27,7 +26,7 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
 
   const { mutate } = useRegisterArticle(
     registerArticle,
-    context.getCurrentUser?.()?.accessToken
+    accessToken
   );
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -35,13 +34,13 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
 
     mutate({
       ...registerArticleParams,
-      author_id: Number(context.getCurrentUser?.()?.user.id)
+      author_id: Number(user.id)
     }, {
       onSuccess: () => {
         navigate("/articles");
       }
     });
-  }
+  };
 
   return (
     <NewArticleTemplate>
@@ -82,5 +81,5 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
         </section>
       </form>
     </NewArticleTemplate>
-  )
-}
+  );
+};

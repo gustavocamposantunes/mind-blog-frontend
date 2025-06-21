@@ -5,10 +5,10 @@ import { Button } from "@/presentation/components/ui/button";
 
 import type { RegisterUserUseCase } from "@/domain/usecases";
 import { useRegisterUser } from "../hooks";
-import { ApiContext } from "../contexts";
 
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useAuthStore } from "../store/auth-store";
+import { useState } from "react";
 
 type RegisterUserProps = {
   registerUser: RegisterUserUseCase
@@ -18,7 +18,7 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
   registerUser
 }) => {
   const navigate = useNavigate();
-  const context = useContext(ApiContext);
+  const { setCurrentUser } = useAuthStore();
 
   const [passwordMismatchError, setPasswordMismatchError] = useState(false);
   const [registerUserParams, setRegisterUserParams] = useState({
@@ -45,13 +45,9 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
       password: registerUserParams.password
     }, {
       onSuccess: (response) => {
-        if (
-          context &&
-          typeof context.setCurrentUser === "function" &&
-          response !== undefined
-        ) {
+        if (response) {
+          setCurrentUser(response);
           navigate("/");
-          context.setCurrentUser(response);
         }
       }
     });
