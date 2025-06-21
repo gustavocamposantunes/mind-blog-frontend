@@ -9,6 +9,7 @@ import { useRegisterUser } from "../hooks";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/auth-store";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 type RegisterUserProps = {
   registerUser: RegisterUserUseCase
@@ -28,7 +29,7 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
     passwordConfirmation: ""
   });
 
-  const { mutate, status, error } = useRegisterUser(registerUser)
+  const { mutate } = useRegisterUser(registerUser)
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -49,6 +50,9 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
           setCurrentUser(response);
           navigate("/");
         }
+      },
+      onError: (error) => {
+        toast.error(error.message);
       }
     });
   }
@@ -122,10 +126,8 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
             className="mt-4 w-full py-4 bg-stone-950 auth-btn" 
             type="submit"
           >
-            {status === "pending" ? "Carregando..." : "Criar Conta"}
+          Criar Conta
           </Button>
-
-          {error && <p className="text-red-500">{error.name}</p>}
 
           <a onClick={() => navigate("/login")}>Já tem cadastro? Clique aqui</a>
       </form>
