@@ -21,4 +21,11 @@ describe("LocalManageUserSession", () => {
     const storedAccount = sut.get();
     expect(storedAccount).toEqual(account);
   });
+
+  it("should call LocalStorageCurrentUserAdapter.get and return null if no user is stored", () => {
+    const { sut } = makeSut();
+    sut.clear();
+    const storedAccount = sut.get();
+    expect(storedAccount).toBeNull();
+  });
 });
