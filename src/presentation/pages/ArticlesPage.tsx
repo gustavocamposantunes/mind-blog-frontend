@@ -6,13 +6,13 @@ import { CustomSkeleton } from "@/presentation/components/atoms/CustomSkeleton";
 import { useArticlesList } from "../hooks";
 
 type ArticlessPageProps = {
-  loadPostsList: ListArticlesUseCase;
+  listArticlessList: ListArticlesUseCase;
 }
 
 export const ArticlesPage: React.FC<ArticlessPageProps> = ({ 
-  loadPostsList
+  listArticlessList
  }) => {
-  const { data, isLoading } = useArticlesList(loadPostsList);
+  const { data, isLoading } = useArticlesList(listArticlessList);
 
   return (
     <ArticlesTemplate>
@@ -29,7 +29,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
           :
           null
         }
-        {data?.data?.articles.map(({ ...props }) => <ArticleCard {...props} />)}
+        {data?.data?.articles.map(({ ...props }) => <ArticleCard key={props.id} {...props} />)}
       </section>
     </ArticlesTemplate>
   )
