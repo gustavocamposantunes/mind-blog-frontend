@@ -1,3 +1,4 @@
+import type { HttpRemoteResponse } from "@/data/protocols";
 import type { AuthenticateUserModel } from "../models";
 
 export type RegisterUserParams = {
@@ -7,9 +8,5 @@ export type RegisterUserParams = {
 }
 
 export interface RegisterUserUseCase {
-  register(registerUserParams: RegisterUserParams): Promise<{
-    statusCode: number;
-    data?: AuthenticateUserModel;
-    error?: string;
-  }>
+  register(registerUserParams: RegisterUserParams): Promise<HttpRemoteResponse<AuthenticateUserModel>>
 }
