@@ -30,7 +30,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
           </span>
         : error 
         ? 
-          <p className="text-red-500">{error.name}</p> 
+          <p data-testid="error-wrapper" className="text-red-500">{error.message}</p> 
         :    
           <article>
             <div className="flex flex-col gap-4 pb-6 border-b border-[#cecece]">
