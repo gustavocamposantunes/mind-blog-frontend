@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { FormHeaderAction } from "../components/molecules/FormHeaderAction";
 import { useAuthStore } from "../store/auth-store";
 import { toast } from "react-toastify";
+import { Input } from "../components/ui/input";
 
 type NewArticlePageProps = {
   registerArticle: RegisterArticleUseCase;
@@ -22,7 +23,8 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
 
   const [registerArticleParams, setRegisterArticleParams] = useState({
     title: "",
-    content: ""
+    content: "",
+    image: ""
   });
 
   const { mutate } = useRegisterArticle(
@@ -46,12 +48,50 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
     });
   };
 
+  function toBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+    });
+  }
+
   return (
     <NewArticleTemplate>
       <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
         <FormHeaderAction title="Novo Artigo" />
 
         <section className="mt-4 flex flex-col gap-4">
+          <div>
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+              <Label htmlFor="picture">Inserir Imagem</Label>
+              <Input
+                id="picture"
+                type="file"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const base64 = await toBase64(file);
+                    setRegisterArticleParams({
+                      ...registerArticleParams,
+                      image: base64,
+                    });
+                  }
+                }}
+              />
+            </div>
+            {registerArticleParams.image && (
+              <img
+                className="w-72"
+                src={registerArticleParams.image}
+                alt="foto do artigo selecionada"
+                data-testid="selected-image"
+              />
+            )}
+
+          </div>
+
           <div className="grid w-full gap-1.5">
             <Label htmlFor="title">Título</Label>
             <Textarea
@@ -82,6 +122,8 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
               }
             />
           </div>
+
+
         </section>
       </form>
     </NewArticleTemplate>
