@@ -7,6 +7,9 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     coverage: {
+      provider: 'istanbul',
+      reporter: ['text', 'lcov', 'html'],
+      reportsDirectory: 'coverage',
       exclude: [
         'src/main',
         'src/presentation/components',
@@ -15,7 +18,15 @@ export default defineConfig({
         'eslint.config.js',
         'vite.config.ts',
         'vitest.config.ts',
-      ]
+      ],
+      thresholds: {
+        global: {
+          statements: 90,
+          branches: 90,
+          functions: 90,
+          lines: 90,
+        },
+      }
     }
   },
 })
