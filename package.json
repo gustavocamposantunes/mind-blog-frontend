@@ -12,7 +12,6 @@
     "prepare": "husky",
     "test": "vitest",
     "test:coverage": "vitest --run --coverage",
-    "test:ci": "vitest run --coverage --reporter=text --reporter=lcov",
     "check": "ncu",
     "check:update": "ncu -u",
     "check:interactive": "ncu --interactive"
@@ -51,7 +50,6 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
-    "@vitest/coverage-istanbul": "3.2.4",
     "@vitest/coverage-v8": "3.2.4",
     "conventional-changelog-atom": "^5.0.0",
     "eslint": "^9.29.0",
