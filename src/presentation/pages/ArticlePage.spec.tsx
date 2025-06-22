@@ -56,9 +56,13 @@ describe("ArticlePage", () => {
     const articleTitle = await screen.findByText(getArticleByIdSpy.data.title);
     const articleContent = await screen.findByText(getArticleByIdSpy.data.content);
     const articleDate = await screen.findByTestId("published-at");
+    const articleImage = await screen.findByAltText(getArticleByIdSpy.data.title) as HTMLImageElement;
+
 
     expect(articleTitle).toBeTruthy();
     expect(articleContent).toBeTruthy();
     expect(articleDate.textContent).toEqual(expect.stringContaining(formatDateToShortMonth(getArticleByIdSpy.data.publishedAt)));
-  })
+    expect(articleImage).toBeTruthy();
+    expect(articleImage.src).toEqual(getArticleByIdSpy.data.image);
+  });
 });
