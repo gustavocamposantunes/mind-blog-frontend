@@ -7,6 +7,7 @@ import { FormHeaderAction } from "../components/molecules/FormHeaderAction";
 import { Input } from "../components/ui/input";
 import { useRegisterArticle } from "../hooks/useRegisterArticle";
 import { useAuthStore } from "../store/auth-store";
+import { toBase64 } from "../utils/toBase64";
 
 import type { RegisterArticleUseCase } from "@/domain/usecases";
 
@@ -50,15 +51,6 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
       }
     });
   };
-
-  function toBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = reject;
-    });
-  }
 
   return (
     <NewArticleTemplate>
