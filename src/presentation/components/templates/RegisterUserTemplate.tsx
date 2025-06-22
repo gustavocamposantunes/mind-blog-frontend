@@ -1,7 +1,8 @@
 
 
-import type { ReactNode } from "react";
 import logoLight from "../../assets/logo-light.svg";
+
+import type { ReactNode } from "react";
 
 interface IRegisterUserTemplate {
   children: ReactNode;

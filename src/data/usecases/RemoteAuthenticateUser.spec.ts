@@ -1,7 +1,10 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, it } from "vitest";
+
 import { HttpPostClientSpy } from "../test/mock-http-client";
+
 import { RemoteAuthenticateUser } from "./RemoteAuthenticateUser";
+
 import { mockAuthenticateUserModel, mockAuthenticationParams } from "@/domain/test/mock-authentication";
 
 const makeSut = (url = faker.internet.url()) => {

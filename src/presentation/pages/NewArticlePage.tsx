@@ -1,15 +1,18 @@
-import { Textarea } from "@/presentation/components/ui/textarea";
-import { Label } from "@/presentation/components/ui/label";
+
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import { FormHeaderAction } from "../components/molecules/FormHeaderAction";
+import { Input } from "../components/ui/input";
+import { useRegisterArticle } from "../hooks/useRegisterArticle";
+import { useAuthStore } from "../store/auth-store";
+
+import type { RegisterArticleUseCase } from "@/domain/usecases";
 
 import { NewArticleTemplate } from "@/presentation/components/templates";
-import { useState } from "react";
-import { useRegisterArticle } from "../hooks/useRegisterArticle";
-import type { RegisterArticleUseCase } from "@/domain/usecases";
-import { useNavigate } from "react-router-dom";
-import { FormHeaderAction } from "../components/molecules/FormHeaderAction";
-import { useAuthStore } from "../store/auth-store";
-import { toast } from "react-toastify";
-import { Input } from "../components/ui/input";
+import { Label } from "@/presentation/components/ui/label";
+import { Textarea } from "@/presentation/components/ui/textarea";
 
 type NewArticlePageProps = {
   registerArticle: RegisterArticleUseCase;

@@ -1,5 +1,6 @@
-import type { AuthenticateUserUseCase, AuthParams } from "@/domain/usecases/AuthenticateUserUseCase"
 import { useMutation } from "@tanstack/react-query"
+
+import type { AuthenticateUserUseCase, AuthParams } from "@/domain/usecases/AuthenticateUserUseCase"
 
 export const useAuthenticateUser = (authenticateUser: AuthenticateUserUseCase) => {
   return useMutation({

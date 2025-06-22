@@ -1,6 +1,7 @@
 
 
 import logoLight from "../../assets/logo-light.svg";
+
 import type { ReactNode } from "react";
 
 interface ILoginTemplate {

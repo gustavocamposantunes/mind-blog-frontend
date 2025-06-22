@@ -1,7 +1,7 @@
 import { AuthHeader } from "@/presentation/components/molecules/AuthHeader";
 import { FormHeaderAction } from "@/presentation/components/molecules/FormHeaderAction";
-import { Label } from "@/presentation/components/ui/label";
 import { Input } from "@/presentation/components/ui/input";
+import { Label } from "@/presentation/components/ui/label";
 
 export const ProfileTemplate = () => (
   <>

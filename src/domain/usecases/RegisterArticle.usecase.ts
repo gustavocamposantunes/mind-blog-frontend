@@ -1,5 +1,5 @@
-import type { HttpRemoteResponse } from "@/data/protocols";
 import type { ArticleModel } from "../models";
+import type { HttpRemoteResponse } from "@/data/protocols";
 
 export type RegisterArticleParams = {
   title: string;

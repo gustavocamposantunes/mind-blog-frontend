@@ -1,9 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { cleanup, render, screen } from "../test/test-utils";
-import { ArticlePage } from "./ArticlePage";
+
 import { GetArticleByIdSpy } from "../test";
-import { UnexpectedError } from "@/domain/errors";
+import { cleanup, render, screen } from "../test/test-utils";
 import { formatDateToShortMonth } from "../utils/dateFormatter";
+
+import { ArticlePage } from "./ArticlePage";
+
+import { UnexpectedError } from "@/domain/errors";
+
 
 vi.mock("react-router-dom", async () => ({
   ...await vi.importActual("react-router-dom"),

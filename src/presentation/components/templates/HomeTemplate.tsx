@@ -1,6 +1,7 @@
+import { News } from "../organism/News";
+
 import { AuthHeader } from "@/presentation/components/molecules/AuthHeader"
 import { ArticleCard } from "@/presentation/components/organism/ArticleCard";
-import { News } from "../organism/News";
 
 export const HomeTemplate = () => (
   <>

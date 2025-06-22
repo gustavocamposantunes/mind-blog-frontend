@@ -1,7 +1,8 @@
 import type { HttpRemoteResponse } from "@/data/protocols";
 import type { ArticleModel } from "@/domain/models";
-import { mockArticle, mockRegisterArticleParams } from "@/domain/test";
 import type { RegisterArticleParams, RegisterArticleUseCase } from "@/domain/usecases";
+
+import { mockArticle, mockRegisterArticleParams } from "@/domain/test";
 
 export class RegisterArticleSpy implements RegisterArticleUseCase {
   registerPostParams = mockRegisterArticleParams()

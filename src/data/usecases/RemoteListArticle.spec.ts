@@ -1,8 +1,12 @@
 import { faker } from "@faker-js/faker";
-import { HttpGetClientSpy } from "../test/mock-http-client";
-import { RemoteListArticles } from "./RemoteListArticles";
 import { describe, expect, it } from "vitest";
+
+import { HttpGetClientSpy } from "../test/mock-http-client";
+
+import { RemoteListArticles } from "./RemoteListArticles";
+
 import type { ArticleListModel } from "@/domain/models";
+
 import { mockArticlesList } from "@/domain/test";
 
 type SutTypes = {

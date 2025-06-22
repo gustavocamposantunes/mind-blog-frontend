@@ -1,13 +1,16 @@
-import type { GetArticleByIdUseCase } from "@/domain/usecases";
-import { ArticleTemplate } from "@/presentation/components/templates";
-import { FavouriteAvatarPost } from "@/presentation/components/atoms/FavouriteAvatarPost";
+import { Heart } from "lucide-react";
+import { useParams } from "react-router-dom";
 
 import { useGetArticleById } from "../hooks";
 
-import { useParams } from "react-router-dom";
+import type { GetArticleByIdUseCase } from "@/domain/usecases";
 
-import { Heart } from "lucide-react";
 import { CustomSkeleton } from "@/presentation/components/atoms/CustomSkeleton";
+import { FavouriteAvatarPost } from "@/presentation/components/atoms/FavouriteAvatarPost";
+import { ArticleTemplate } from "@/presentation/components/templates";
+
+
+
 
 type ArticlePageProps = {
   getArticletById: GetArticleByIdUseCase

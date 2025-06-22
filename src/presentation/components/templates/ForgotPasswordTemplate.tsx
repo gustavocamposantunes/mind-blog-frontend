@@ -1,10 +1,12 @@
-import { Input } from "@/presentation/components/ui/input";
-import { Label } from "@/presentation/components/ui/label";
-import { Button } from "@/presentation/components/ui/button";
-
 import { useNavigate } from "react-router-dom";
 
 import logoLight from "../../assets/logo-light.svg";
+
+import { Button } from "@/presentation/components/ui/button";
+import { Input } from "@/presentation/components/ui/input";
+import { Label } from "@/presentation/components/ui/label";
+
+
 
 export const ForgotPasswordTemplate = () => {
   const navigate = useNavigate();

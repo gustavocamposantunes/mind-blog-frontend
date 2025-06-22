@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render } from "@testing-library/react";
-import type { ReactNode } from "react";
 import { Bounce, ToastContainer } from "react-toastify";
+
+import type { ReactNode } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {

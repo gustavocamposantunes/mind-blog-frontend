@@ -1,9 +1,11 @@
-import type { ListArticlesUseCase } from "@/domain/usecases";
-import { ArticlesTemplate } from "@/presentation/components/templates";
-import { ArticleCard } from "@/presentation/components/organism/ArticleCard";
-import { CustomSkeleton } from "@/presentation/components/atoms/CustomSkeleton";
-
 import { useArticlesList } from "../hooks";
+
+import type { ListArticlesUseCase } from "@/domain/usecases";
+
+import { CustomSkeleton } from "@/presentation/components/atoms/CustomSkeleton";
+import { ArticleCard } from "@/presentation/components/organism/ArticleCard";
+import { ArticlesTemplate } from "@/presentation/components/templates";
+
 
 type ArticlessPageProps = {
   listArticles: ListArticlesUseCase;

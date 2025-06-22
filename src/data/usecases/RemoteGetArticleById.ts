@@ -1,8 +1,9 @@
+import type { ArticleModel } from "@/domain/models";
+import type { GetArticleByIdUseCase } from "@/domain/usecases";
+
 import { type HttpGetClient, type HttpRemoteResponse, HttpStatusCode } from "@/data/protocols";
 import { InternalServerError, NotFoundError, UnexpectedError } from "@/domain/errors";
 
-import type { ArticleModel } from "@/domain/models";
-import type { GetArticleByIdUseCase } from "@/domain/usecases";
 
 export class RemoteGetArticleById implements GetArticleByIdUseCase {
   private readonly url: string;

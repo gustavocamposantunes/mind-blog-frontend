@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { formatDateToShortMonth } from './dateFormatter';
 
 describe("dateFormatter", () => {

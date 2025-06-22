@@ -1,3 +1,10 @@
+
+import { useNavigate } from "react-router-dom";
+
+import { FavouriteHeartCount } from "../atoms/FavouriteHeartCount";
+import { Button } from "../ui/button";
+
+import { FavouriteAvatarPost } from "@/presentation/components/atoms/FavouriteAvatarPost";
 import {
   Card,
   CardContent,
@@ -6,11 +13,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/presentation/components/ui/card"
-import { FavouriteAvatarPost } from "@/presentation/components/atoms/FavouriteAvatarPost";
-
-import { useNavigate } from "react-router-dom";
-import { Button } from "../ui/button";
-import { FavouriteHeartCount } from "../atoms/FavouriteHeartCount";
 
 interface IArticleCard {
   id: number;

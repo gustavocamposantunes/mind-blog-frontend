@@ -1,17 +1,19 @@
-import type { AuthenticateUserUseCase } from "@/domain/usecases/AuthenticateUserUseCase";
 
-import { Input } from "@/presentation/components/ui/input";
-import { Label } from "@/presentation/components/ui/label";
-import { Button } from "@/presentation/components/ui/button";
+
+
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { LoginTemplate } from "../components/templates";
 import { useAuthenticateUser } from "../hooks";
-
-import { useState } from "react";
-
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useAuthStore } from "../store/auth-store";
+
+import type { AuthenticateUserUseCase } from "@/domain/usecases/AuthenticateUserUseCase";
+
+import { Button } from "@/presentation/components/ui/button";
+import { Input } from "@/presentation/components/ui/input";
+import { Label } from "@/presentation/components/ui/label";
 
 type LoginPageProps = {
   authenticateUser: AuthenticateUserUseCase;

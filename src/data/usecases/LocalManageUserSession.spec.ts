@@ -1,5 +1,7 @@
-import { LocalManageUserSession } from "./LocalManageUserSession";
 import { describe, expect, it } from "vitest";
+
+import { LocalManageUserSession } from "./LocalManageUserSession";
+
 import { mockAuthenticateUserModel } from "@/domain/test";
 
 type SutTypes = {

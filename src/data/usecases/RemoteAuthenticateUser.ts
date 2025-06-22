@@ -1,8 +1,11 @@
+import { HttpStatusCode, type HttpPostClient } from "../protocols";
+
+import type { HttpRemoteResponse } from "../protocols/http/HttpRemoteResponse";
 import type { AuthenticateUserModel } from "@/domain/models";
 import type { AuthenticateUserUseCase, AuthParams } from "@/domain/usecases/AuthenticateUserUseCase";
-import { HttpStatusCode, type HttpPostClient } from "../protocols";
+
 import { InternalServerError, InvalidCredentialsError, NotFoundError, UnexpectedError } from "@/domain/errors";
-import type { HttpRemoteResponse } from "../protocols/http/HttpRemoteResponse";
+
 
 export class RemoteAuthenticateUser implements AuthenticateUserUseCase {
   private readonly url: string;

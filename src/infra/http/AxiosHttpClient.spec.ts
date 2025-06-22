@@ -1,9 +1,11 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
 import axios, { AxiosError } from "axios";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { mockHttpResponse } from "../test";
 
 import { AxiosHttpClient } from "./AxiosHttpClient";
+
 import { mockGetRequest, mockPostRequest } from "@/data/test";
-import { mockHttpResponse } from "../test";
 
 vi.mock("axios")
 

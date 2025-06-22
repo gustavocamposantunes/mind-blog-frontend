@@ -1,7 +1,8 @@
 import type { HttpRemoteResponse } from "@/data/protocols";
 import type { AuthenticateUserModel } from "@/domain/models";
-import { mockAuthenticateUserModel } from "@/domain/test";
 import type { RegisterUserParams, RegisterUserUseCase } from "@/domain/usecases";
+
+import { mockAuthenticateUserModel } from "@/domain/test";
 
 export class RegisterUserSpy implements RegisterUserUseCase {
   regusterUserParams?: object

@@ -1,15 +1,16 @@
-import { RegisterUserTemplate } from "@/presentation/components/templates"
-import { Input } from "@/presentation/components/ui/input";
-import { Label } from "@/presentation/components/ui/label";
-import { Button } from "@/presentation/components/ui/button";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import { useRegisterUser } from "../hooks";
+import { useAuthStore } from "../store/auth-store";
 
 import type { RegisterUserUseCase } from "@/domain/usecases";
-import { useRegisterUser } from "../hooks";
 
-import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store/auth-store";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { RegisterUserTemplate } from "@/presentation/components/templates"
+import { Button } from "@/presentation/components/ui/button";
+import { Input } from "@/presentation/components/ui/input";
+import { Label } from "@/presentation/components/ui/label";
 
 type RegisterUserProps = {
   registerUser: RegisterUserUseCase

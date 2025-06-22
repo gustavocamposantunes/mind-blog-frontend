@@ -1,5 +1,5 @@
-import type { HttpRemoteResponse } from "@/data/protocols"
 import type { AuthenticateUserModel } from "../models"
+import type { HttpRemoteResponse } from "@/data/protocols"
 
 export type AuthParams ={ email: string, password: string }
 

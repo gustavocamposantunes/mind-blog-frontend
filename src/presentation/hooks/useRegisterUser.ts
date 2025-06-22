@@ -1,5 +1,6 @@
-import type { RegisterUserParams, RegisterUserUseCase } from "@/domain/usecases";
 import { useMutation } from "@tanstack/react-query";
+
+import type { RegisterUserParams, RegisterUserUseCase } from "@/domain/usecases";
 
 export const useRegisterUser = (registerUser: RegisterUserUseCase) => {
   return useMutation({

@@ -1,8 +1,12 @@
 import { faker } from "@faker-js/faker";
-import { HttpPostClientSpy } from "../test/mock-http-client";
-import { RemoteRegisterArticle } from "./RemoteRegisterArticle";
 import { describe, expect, it } from "vitest";
+
+import { HttpPostClientSpy } from "../test/mock-http-client";
+
+import { RemoteRegisterArticle } from "./RemoteRegisterArticle";
+
 import type { RegisterArticleParams } from "@/domain/usecases";
+
 import { mockArticle, mockRegisterArticleParams } from "@/domain/test";
 
 type SutTypes = {

@@ -1,5 +1,6 @@
-import type { RegisterArticleParams, RegisterArticleUseCase } from "@/domain/usecases";
 import { useMutation } from "@tanstack/react-query";
+
+import type { RegisterArticleParams, RegisterArticleUseCase } from "@/domain/usecases";
 
 export const useRegisterArticle = (registerPost: RegisterArticleUseCase, token?: string) => {
   return useMutation({

@@ -1,7 +1,10 @@
 import { faker } from "@faker-js/faker";
-import { HttpPostClientSpy } from "../test/mock-http-client";
 import { describe, expect, it } from "vitest";
+
+import { HttpPostClientSpy } from "../test/mock-http-client";
+
 import { RemoteRegisterUser } from "./RemoteRegisterUser";
+
 import { mockAuthenticateUserModel, mockAuthenticationParams } from "@/domain/test";
 
 type SutTypes = {

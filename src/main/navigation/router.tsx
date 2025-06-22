@@ -1,18 +1,8 @@
 import { useEffect } from "react";
-import { useAuthStore } from "@/presentation/store/auth-store";
-import {
-  ForgotPasswordTemplate,
-  HomeTemplate,
-  ProfileTemplate
-} from "@/presentation/components/templates";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer, Bounce } from "react-toastify";
 
-import {
-  ArticlesPage,
-  ArticlePage,
-  RegisterUserPage,
-  LoginPage,
-  NewArticlePage
-} from "@/presentation/pages";
+import { PrivateRoute } from "./private-route";
 
 import {
   makeRemoteGetArticleById,
@@ -21,10 +11,19 @@ import {
   makeRemoteRegisterUser,
   makeRemoteRegisterArticle
 } from "@/main/factories/usecases";
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ToastContainer, Bounce } from "react-toastify";
-import { PrivateRoute } from "./private-route";
+import {
+  ForgotPasswordTemplate,
+  HomeTemplate,
+  ProfileTemplate
+} from "@/presentation/components/templates";
+import {
+  ArticlesPage,
+  ArticlePage,
+  RegisterUserPage,
+  LoginPage,
+  NewArticlePage
+} from "@/presentation/pages";
+import { useAuthStore } from "@/presentation/store/auth-store";
 
 export const Router = () => {
   const hydrate = useAuthStore((state) => state.hydrate);

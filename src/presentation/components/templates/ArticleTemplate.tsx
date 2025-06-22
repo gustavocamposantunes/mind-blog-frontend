@@ -1,5 +1,6 @@
-import { AuthHeader } from "@/presentation/components/molecules/AuthHeader";
 import type { ReactNode } from "react";
+
+import { AuthHeader } from "@/presentation/components/molecules/AuthHeader";
 
 interface IArticleTemplate {
   children: ReactNode;

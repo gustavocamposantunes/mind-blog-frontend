@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
+
 import { useAuthStore } from "@/presentation/store/auth-store";
 
 interface IPrivateRoute {

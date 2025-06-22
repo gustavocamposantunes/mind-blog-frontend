@@ -1,5 +1,7 @@
 import { create } from "zustand";
+
 import type { AuthenticateUserModel } from "@/domain/models/AuthenticateUserModel";
+
 import { LocalManageUserSession } from "@/data/usecases/LocalManageUserSession";
 
 const manageUserSession = new LocalManageUserSession();

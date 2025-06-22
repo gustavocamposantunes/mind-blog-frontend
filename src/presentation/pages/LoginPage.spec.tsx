@@ -1,10 +1,12 @@
+import { faker } from "@faker-js/faker";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { LoginPage } from "./LoginPage";
-import { UnexpectedError } from "@/domain/errors";
-import { faker } from "@faker-js/faker";
-import { cleanup, fireEvent, render, screen, waitFor } from "../test/test-utils";
 import { AuthenticateUserSpy } from "../test";
+import { cleanup, fireEvent, render, screen, waitFor } from "../test/test-utils";
+
+import { LoginPage } from "./LoginPage";
+
+import { UnexpectedError } from "@/domain/errors";
 
 const mockNavigate = vi.fn()
 

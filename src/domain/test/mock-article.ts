@@ -1,6 +1,7 @@
-import type { RegisterArticleParams } from "@/domain/usecases";
 import { faker } from "@faker-js/faker";
+
 import type { ArticleListModel, ArticleModel } from "../models";
+import type { RegisterArticleParams } from "@/domain/usecases";
 
 export const mockRegisterArticleParams = (): RegisterArticleParams =>  ({
   title: faker.lorem.sentence(),

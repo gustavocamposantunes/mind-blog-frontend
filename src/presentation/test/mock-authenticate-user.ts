@@ -1,6 +1,7 @@
-import type { AuthenticateUserUseCase, AuthParams } from "@/domain/usecases";
 import type { HttpRemoteResponse } from "@/data/protocols";
 import type { AuthenticateUserModel } from "@/domain/models";
+import type { AuthenticateUserUseCase, AuthParams } from "@/domain/usecases";
+
 import { mockAuthenticateUserModel } from "@/domain/test";
 
 export class AuthenticateUserSpy implements AuthenticateUserUseCase {

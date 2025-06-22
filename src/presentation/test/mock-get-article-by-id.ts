@@ -1,6 +1,7 @@
-import type { GetArticleByIdUseCase } from "@/domain/usecases";
 import type { HttpRemoteResponse } from "@/data/protocols";
 import type { ArticleModel } from "@/domain/models";
+import type { GetArticleByIdUseCase } from "@/domain/usecases";
+
 import { mockArticle } from "@/domain/test";
 
 export class GetArticleByIdSpy implements GetArticleByIdUseCase {

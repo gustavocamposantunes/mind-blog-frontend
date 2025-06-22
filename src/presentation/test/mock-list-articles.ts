@@ -1,7 +1,8 @@
 import type { HttpRemoteResponse } from "@/data/protocols";
 import type { ArticleListModel } from "@/domain/models";
-import { mockArticlesList } from "@/domain/test"
 import type { ListArticlesUseCase } from "@/domain/usecases"
+
+import { mockArticlesList } from "@/domain/test"
 
 export class ListArticlesSpy implements ListArticlesUseCase {
   articlesList = mockArticlesList();

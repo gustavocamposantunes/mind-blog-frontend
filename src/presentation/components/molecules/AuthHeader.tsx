@@ -1,3 +1,10 @@
+
+import { useNavigate } from "react-router-dom";
+
+import logoDark from "../../assets/logo-dark.svg";
+import { MenuItem } from "../atoms/MenuItem";
+
+import { CustomAvatar } from "@/presentation/components/molecules/CustomAvatar";
 import { Button } from "@/presentation/components/ui/button";
 import {
   DropdownMenu,
@@ -5,12 +12,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/presentation/components/ui/dropdown-menu";
-import { CustomAvatar } from "@/presentation/components/molecules/CustomAvatar";
-
-import { useNavigate } from "react-router-dom";
-
-import logoDark from "../../assets/logo-dark.svg";
-import { MenuItem } from "../atoms/MenuItem";
 import { useAuthStore } from "@/presentation/store/auth-store";
 
 export const AuthHeader = () => {
