@@ -12,6 +12,7 @@
     "prepare": "husky",
     "test": "vitest",
     "test:coverage": "vitest --run --coverage",
+    "test:ci": "vitest run --coverage --reporter=text --reporter=lcov",
     "check": "ncu",
     "check:update": "ncu -u",
     "check:interactive": "ncu --interactive"
