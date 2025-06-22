@@ -12,6 +12,7 @@ export const mockArticle = (): ArticleModel => ({
   id: faker.number.int(),
   title: faker.lorem.sentence(),
   content: faker.lorem.paragraphs(1),
+  image: faker.image.urlLoremFlickr({ category: "nature" }),
   author_id: faker.number.int(),
   publishedAt: faker.date.past().toISOString(),
   updatedAt: faker.date.recent().toISOString()

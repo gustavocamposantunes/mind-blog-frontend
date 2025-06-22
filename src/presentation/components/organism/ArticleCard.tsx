@@ -16,6 +16,7 @@ interface IArticleCard {
   id: number;
   title: string;
   content: string;
+  image?: string;
   publishedAt: string;
   className?: string;
   redirect?: string;
@@ -26,6 +27,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
   id,
   title,
   content,
+  image = "https://miro.medium.com/v2/resize:fit:1358/1*moJeTvW97yShLB7URRj5Kg.png",
   publishedAt = "2023-10-01T00:00:00Z",
   className,
   redirect,
@@ -40,7 +42,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
       onClick={() => navigate(`/articles/${id}`)}
     >
       <div className="flex">
-        <img className={`flex-1 ${favourite ? "max-w-[50%]" : ""}`} src="https://miro.medium.com/v2/resize:fit:1358/1*moJeTvW97yShLB7URRj5Kg.png" alt="" />
+        <img className={`flex-1 ${favourite ? "max-w-[50%]" : ""}`} src={image} alt={title} />
         {favourite
           ?
           <div className="flex flex-1 items-center justify-center">
