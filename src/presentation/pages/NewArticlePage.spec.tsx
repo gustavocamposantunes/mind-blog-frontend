@@ -29,7 +29,9 @@ const makeSut = (): SutTypes => {
 }
 
 describe("NewArticlePage", () => {
-  beforeEach(cleanup)
+  beforeEach(() => {
+    cleanup();
+  })
 
   const setupSubmit = () => {
     const titleInput = screen.getByLabelText(/título/i);
@@ -81,5 +83,20 @@ describe("NewArticlePage", () => {
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/articles");
     });
-  })
+  });
+
+  it("should render the image when a file is selected", async () => {
+    makeSut();
+
+    const file = new File(["image content"], "image.png", { type: "image/png" });
+    const inputFile = screen.getByLabelText(/inserir imagem/i);
+
+    fireEvent.change(inputFile, { target: { files: [file] } });
+
+    const selectedImage = await screen.findByTestId("selected-image") as HTMLImageElement;
+
+    expect(selectedImage).toBeDefined();
+    expect(selectedImage.src).toBe(`data:image/png;base64,${btoa("image content")}`);
+    expect(selectedImage.alt).toBe("foto do artigo selecionada");
+  });
 });

@@ -5,6 +5,7 @@ import type { ArticleListModel, ArticleModel } from "../models";
 export const mockRegisterArticleParams = (): RegisterArticleParams =>  ({
   title: faker.lorem.sentence(),
   content: faker.lorem.paragraphs(),
+  image: faker.image.urlLoremFlickr({ category: "nature" }),
   author_id: faker.number.int(),
 })
 
