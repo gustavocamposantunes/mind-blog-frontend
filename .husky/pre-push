@@ -5,4 +5,4 @@ echo "🔍 Running lint..."
 npm run lint
 
 echo "🧪 Running test:ci..."
-npm run test:ci
+npm run test:coverage
