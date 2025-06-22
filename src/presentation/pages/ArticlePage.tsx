@@ -43,7 +43,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
                 <Heart />
               </span>
             </div>
-            <img className="mt-5 w-full" src={data?.data?.image ?? "https://miro.medium.com/v2/resize:fit:1358/1*moJeTvW97yShLB7URRj5Kg.png"} alt={data?.data?.title} />
+            <img className="mt-5 w-full" src={data?.data?.image} alt={data?.data?.title} />
             <p className="p-4">
               {data?.data?.content}
             </p>
