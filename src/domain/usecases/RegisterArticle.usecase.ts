@@ -4,6 +4,7 @@ import type { ArticleModel } from "../models";
 export type RegisterArticleParams = {
   title: string;
   content: string;
+  image?: string;
   author_id: number;
 }
 
