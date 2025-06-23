@@ -47,4 +47,10 @@ describe("useAuthStore", () => {
     expect(state.user).toEqual(mockUser);
   });
 
+  it("should set isHydrated to true after hydration", () => {
+    useAuthStore.getState().hydrate();
+
+    const state = useAuthStore.getState();
+    expect(state.isHydrated).toBe(true);
+  });
 });
