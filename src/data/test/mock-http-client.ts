@@ -20,6 +20,7 @@ export class HttpPostClientSpy implements HttpPostClient {
 export class HttpGetClientSpy implements HttpGetClient {
   url?: string;
   queryParams?: Record<string, string | number | boolean | undefined>;
+  headers?: Record<string, string>;
   response: HttpResponse = {
     status: HttpStatusCode.ok,
     data: {}
@@ -28,6 +29,7 @@ export class HttpGetClientSpy implements HttpGetClient {
   async get(params: HttpGetParams): Promise<HttpResponse> {
     this.url = params.url;
     this.queryParams = params.queryParams;
+    this.headers = params.headers;
 
     return this.response;
   }
