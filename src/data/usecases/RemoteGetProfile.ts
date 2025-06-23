@@ -3,7 +3,7 @@ import { HttpStatusCode, type HttpGetClient, type HttpRemoteResponse } from "../
 import type { UserModel } from "@/domain/models";
 import type { GetProfileUseCase } from "@/domain/usecases";
 
-import { InternalServerError } from "@/domain/errors";
+import { InternalServerError, UnexpectedError } from "@/domain/errors";
 
 export class RemoteGetProfile implements GetProfileUseCase {
   private readonly url: string;
@@ -32,6 +32,11 @@ export class RemoteGetProfile implements GetProfileUseCase {
         return {
           statusCode: status,
           error: new InternalServerError().message
+        };
+      default:
+        return {
+          statusCode: status,
+          error: new UnexpectedError().message
         };
     }
 
