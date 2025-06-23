@@ -1,4 +1,5 @@
 export * from "./useAuthenticateUser";
 export * from "./useGetArticleById";
+export * from "./useGetProfile";
 export * from "./useArticlesList";
 export * from "./useRegisterUser";

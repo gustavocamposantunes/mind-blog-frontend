@@ -9,19 +9,20 @@ import {
   makeRemoteListArticles,
   makeRemoteAuthenticateUser,
   makeRemoteRegisterUser,
-  makeRemoteRegisterArticle
+  makeRemoteRegisterArticle,
+  makeRemoteGetProfile
 } from "@/main/factories/usecases";
 import {
   ForgotPasswordTemplate,
   HomeTemplate,
-  ProfileTemplate
 } from "@/presentation/components/templates";
 import {
   ArticlesPage,
   ArticlePage,
   RegisterUserPage,
   LoginPage,
-  NewArticlePage
+  NewArticlePage,
+  ProfilePage
 } from "@/presentation/pages";
 import { useAuthStore } from "@/presentation/store/auth-store";
 
@@ -52,7 +53,7 @@ export const Router = () => {
           <Route path="/profile"
             element={
               <PrivateRoute>
-                <ProfileTemplate />
+                <ProfilePage getProfile={makeRemoteGetProfile()} />
               </PrivateRoute>
             }
           />
