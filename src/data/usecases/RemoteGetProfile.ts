@@ -1,8 +1,9 @@
-import { faker } from "@faker-js/faker";
+import { HttpStatusCode, type HttpGetClient, type HttpRemoteResponse } from "../protocols";
 
-import type { HttpGetClient } from "../protocols";
 import type { UserModel } from "@/domain/models";
 import type { GetProfileUseCase } from "@/domain/usecases";
+
+import { InternalServerError } from "@/domain/errors";
 
 export class RemoteGetProfile implements GetProfileUseCase {
   private readonly url: string;
@@ -13,20 +14,26 @@ export class RemoteGetProfile implements GetProfileUseCase {
     this.httpClient = httpClient;
   }
   
-  getProfile(token: string): Promise<UserModel> {
-      this.httpClient.get({
+  async getProfile(token: string): Promise<HttpRemoteResponse<UserModel>> {
+    const { status, data } = await this.httpClient.get({
         url: this.url,
         headers: {
         ...(token && { Authorization: `Bearer ${token}` })
         }
       })
-      return Promise.resolve({
-        id: faker.number.int(),
-        name: faker.person.firstName(),
-        email: faker.internet.email(),
-        image: faker.image.urlLoremFlickr(),
-        createdAt: faker.date.anytime().toISOString(),
-        updatedAt: faker.date.anytime().toISOString(),
-      })
+
+    switch (status) {
+      case HttpStatusCode.ok:
+        return Promise.resolve({
+          statusCode: status,
+          data: data as UserModel
+        })
+      case HttpStatusCode.serverError:
+        return {
+          statusCode: status,
+          error: new InternalServerError().message
+        };
+    }
+
   }
 }
