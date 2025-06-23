@@ -32,4 +32,17 @@ describe("RemoteGetProfile", () => {
       Authorization: `Bearer ${token}`
     });
   });
+
+  it("should returns an InternalServerError if HttpGetClient returns 500", async () => {
+    const { sut, httpGetClientSpy } = makeSut();
+    httpGetClientSpy.response = {
+      status: 500,
+      data: { message: "Erro interno do servidor" }
+    };
+
+    const response = await sut.getProfile(faker.string.uuid());
+
+    expect(response.statusCode).toBe(500);
+    expect(response.error).toBe("Erro interno do servidor");
+  })
 })
