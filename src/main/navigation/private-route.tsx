@@ -8,7 +8,11 @@ interface IPrivateRoute {
 }
 
 export const PrivateRoute = ({ children }: IPrivateRoute) => {
-  const accessToken = useAuthStore((state) => state.accessToken);
+  const { isHydrated, accessToken } = useAuthStore((state) => state);
+
+  if (!isHydrated) {
+    return <div>...carregando</div>
+  }
 
   if (!accessToken) {
     return <Navigate to="/" />;
