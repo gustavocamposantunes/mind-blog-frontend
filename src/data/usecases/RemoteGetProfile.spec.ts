@@ -5,6 +5,8 @@ import { HttpGetClientSpy } from "../test/mock-http-client";
 
 import { RemoteGetProfile } from "./RemoteGetProfile";
 
+import { mockUser } from "@/domain/test";
+
 type SutTypes = {
   sut: RemoteGetProfile;
   httpGetClientSpy: HttpGetClientSpy
@@ -58,4 +60,19 @@ describe("RemoteGetProfile", () => {
     expect(response.statusCode).toBe(502);
     expect(response.error).toBe("Erro inesperado");
   });
+
+  it("should return an UserModel if HttpGetClient returns 200", async () => {
+    const { sut, httpGetClientSpy } = makeSut();
+    const user = mockUser();
+
+    httpGetClientSpy.response = {
+      status: 200,
+      data: user
+    };
+
+    const response = await sut.getProfile(faker.string.uuid());
+
+    expect(response.statusCode).toBe(200);
+    expect(response.data).toEqual(user);
+  })
 })
