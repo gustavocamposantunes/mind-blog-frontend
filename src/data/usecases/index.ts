@@ -1,5 +1,5 @@
 export * from './auth/RemoteAuthenticateUser'
 export * from './article/RemoteGetArticleById'
-export * from './RemoteListArticles'
-export * from './RemoteRegisterArticle'
+export * from './article/RemoteListArticles'
+export * from './article/RemoteRegisterArticle'
 export * from './user/RemoteRegisterUser'
