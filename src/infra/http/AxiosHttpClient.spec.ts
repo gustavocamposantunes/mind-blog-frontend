@@ -148,5 +148,12 @@ describe('AxiosHttpClient', () => {
       await sut.put({ url, body, headers })
       expect(mockedAxios.put).toHaveBeenCalledWith(url, body, { headers })
     })
+
+    it('Should return correct response on axios.put', async () => {
+      const sut = makeSut()
+      const httpResponse = await sut.put(mockHttpRequest())
+      const axiosResponse = await mockedAxios.put.mock.results[0].value
+      expect(httpResponse).toEqual(axiosResponse)
+    })
   })
 })
