@@ -1,15 +1,14 @@
-import {
-  HttpStatusCode,
-  type HttpPostClient,
-  type HttpRemoteResponse,
-} from '../protocols'
-
 import type { ArticleModel } from '@/domain/models'
 import type {
   RegisterArticleParams,
   RegisterArticleUseCase,
 } from '@/domain/usecases'
 
+import {
+  HttpStatusCode,
+  type HttpPostClient,
+  type HttpRemoteResponse,
+} from '@/data/protocols'
 import { InternalServerError, UnexpectedError } from '@/domain/errors'
 
 export class RemoteRegisterArticle implements RegisterArticleUseCase {
