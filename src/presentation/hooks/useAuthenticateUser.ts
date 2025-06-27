@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import type {
   AuthenticateUserUseCase,
   AuthParams,
-} from '@/domain/usecases/AuthenticateUserUseCase'
+} from '@/domain/usecases/AuthenticateUser.usecase'
 
 export const useAuthenticateUser = (
   authenticateUser: AuthenticateUserUseCase,

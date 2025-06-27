@@ -6,7 +6,7 @@ import { LoginTemplate } from '../components/templates'
 import { useAuthenticateUser } from '../hooks'
 import { useAuthStore } from '../store/auth-store'
 
-import type { AuthenticateUserUseCase } from '@/domain/usecases/AuthenticateUserUseCase'
+import type { AuthenticateUserUseCase } from '@/domain/usecases/AuthenticateUser.usecase'
 
 import { Button } from '@/presentation/components/ui/button'
 import { Input } from '@/presentation/components/ui/input'

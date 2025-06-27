@@ -5,7 +5,7 @@ import type { AuthenticateUserModel } from '@/domain/models'
 import type {
   AuthenticateUserUseCase,
   AuthParams,
-} from '@/domain/usecases/AuthenticateUserUseCase'
+} from '@/domain/usecases/AuthenticateUser.usecase'
 
 import {
   InternalServerError,

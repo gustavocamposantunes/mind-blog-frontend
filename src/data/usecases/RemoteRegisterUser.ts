@@ -1,7 +1,7 @@
 import { HttpStatusCode, type HttpPostClient } from '../protocols'
 
 import type { AuthenticateUserModel } from '@/domain/models'
-import type { AuthParams } from '@/domain/usecases/AuthenticateUserUseCase'
+import type { AuthParams } from '@/domain/usecases/AuthenticateUser.usecase'
 import type { RegisterUserUseCase } from '@/domain/usecases/RegisterUser.usecase'
 
 import { InternalServerError, UnexpectedError } from '@/domain/errors'

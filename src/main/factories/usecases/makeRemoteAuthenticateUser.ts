@@ -1,6 +1,6 @@
 import { makeApiUrl, makeAxiosHttpClient } from '../http'
 
-import type { AuthenticateUserUseCase } from '@/domain/usecases/AuthenticateUserUseCase'
+import type { AuthenticateUserUseCase } from '@/domain/usecases/AuthenticateUser.usecase'
 
 import { RemoteAuthenticateUser } from '@/data/usecases/RemoteAuthenticateUser'
 

@@ -1,4 +1,4 @@
-export * from './AuthenticateUserUseCase'
+export * from './AuthenticateUser.usecase'
 export * from './GetArticleById.usecase'
 export * from './GetProfile.usecase'
 export * from './ListArticles.usecase'
