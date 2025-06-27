@@ -1,10 +1,9 @@
 import { faker } from '@faker-js/faker'
 import { describe, expect, it } from 'vitest'
 
-import { HttpGetClientSpy } from '../test/mock-http-client'
-
 import { RemoteGetProfile } from './RemoteGetProfile'
 
+import { HttpGetClientSpy } from '@/data/test/mock-http-client'
 import { mockUser } from '@/domain/test'
 
 type SutTypes = {

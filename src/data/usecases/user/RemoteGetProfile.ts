@@ -2,7 +2,7 @@ import {
   HttpStatusCode,
   type HttpGetClient,
   type HttpRemoteResponse,
-} from '../protocols'
+} from '../../protocols'
 
 import type { UserModel } from '@/domain/models'
 import type { GetProfileUseCase } from '@/domain/usecases'
