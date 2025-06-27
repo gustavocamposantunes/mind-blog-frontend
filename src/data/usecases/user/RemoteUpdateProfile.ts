@@ -1,6 +1,12 @@
-import type { HttpPutClient } from '@/data/protocols'
 import type { UserModel } from '@/domain/models'
 import type { UpdateProfileUseCase } from '@/domain/usecases/user/UpdateProfile.usecase'
+
+import {
+  HttpStatusCode,
+  type HttpPutClient,
+  type HttpRemoteResponse,
+} from '@/data/protocols'
+import { InternalServerError, UnexpectedError } from '@/domain/errors'
 
 export class RemoteUpdateProfile implements UpdateProfileUseCase {
   private readonly url: string
@@ -14,8 +20,8 @@ export class RemoteUpdateProfile implements UpdateProfileUseCase {
   async update(
     token: string,
     updateProfileParams: { name?: string; image?: string },
-  ): Promise<UserModel> {
-    await this.httpClient.put({
+  ): Promise<HttpRemoteResponse<UserModel>> {
+    const { status, data } = await this.httpClient.put({
       url: this.url,
       body: updateProfileParams,
       headers: {
@@ -23,6 +29,22 @@ export class RemoteUpdateProfile implements UpdateProfileUseCase {
       },
     })
 
-    return Promise.resolve({} as UserModel)
+    switch (status) {
+      case HttpStatusCode.ok:
+        return Promise.resolve({
+          statusCode: status,
+          data: data as UserModel,
+        })
+      case HttpStatusCode.serverError:
+        return {
+          statusCode: status,
+          error: new InternalServerError().message,
+        }
+      default:
+        return {
+          statusCode: status,
+          error: new UnexpectedError().message,
+        }
+    }
   }
 }

@@ -1,3 +1,4 @@
+import type { HttpRemoteResponse } from '@/data/protocols'
 import type { UserModel } from '@/domain/models'
 
 type UpdateProfileParams = {
@@ -9,5 +10,5 @@ export interface UpdateProfileUseCase {
   update(
     token: string,
     updateProfileParams: UpdateProfileParams,
-  ): Promise<UserModel>
+  ): Promise<HttpRemoteResponse<UserModel>>
 }
