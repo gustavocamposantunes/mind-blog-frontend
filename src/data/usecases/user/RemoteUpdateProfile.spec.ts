@@ -52,4 +52,19 @@ describe('RemoteUpdateProfile', () => {
     expect(response.statusCode).toBe(500)
     expect(response.error).toBe('Erro interno do servidor')
   })
+
+  it('should return an UnexpectedError for other status codes', async () => {
+    const { sut, httpPutClientSpy } = makeSut()
+    httpPutClientSpy.response = {
+      status: 502,
+      data: { message: 'Erro inesperado' },
+    }
+
+    const response = await sut.update(faker.string.uuid(), {
+      image: faker.image.urlLoremFlickr(),
+    })
+
+    expect(response.statusCode).toBe(502)
+    expect(response.error).toBe('Erro inesperado')
+  })
 })
