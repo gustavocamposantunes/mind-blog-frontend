@@ -10,6 +10,7 @@ import type {
   HttpResponse,
 } from '@/data/protocols'
 
+// prettier-ignore
 export class AxiosHttpClient
   implements HttpGetClient, HttpPostClient, HttpPutClient {
   async get(params: HttpGetParams): Promise<HttpResponse> {
@@ -45,7 +46,8 @@ export class AxiosHttpClient
         status: response.status,
         data: response.data,
       }
-    } catch (error) {
+    }
+    catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         return {
           status: error.response.status,
