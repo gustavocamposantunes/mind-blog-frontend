@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { RemoteUpdateProfile } from './RemoteUpdateProfile'
 
 import { HttpPutClientSpy } from '@/data/test/mock-http-client'
+import { mockUser } from '@/domain/test'
 
 type SutTypes = {
   sut: RemoteUpdateProfile
@@ -66,5 +67,22 @@ describe('RemoteUpdateProfile', () => {
 
     expect(response.statusCode).toBe(502)
     expect(response.error).toBe('Erro inesperado')
+  })
+
+  it('should return an UserModel if HttpPutClient returns 200', async () => {
+    const { sut, httpPutClientSpy } = makeSut()
+    const user = mockUser()
+
+    httpPutClientSpy.response = {
+      status: 200,
+      data: user,
+    }
+
+    const response = await sut.update(faker.string.uuid(), {
+      image: faker.image.urlLoremFlickr(),
+    })
+
+    expect(response.statusCode).toBe(200)
+    expect(response.data).toEqual(user)
   })
 })
