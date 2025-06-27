@@ -60,9 +60,27 @@ export class AxiosHttpClient
     }
   }
 
-  put(params: HttpPutParams): Promise<HttpResponse> {
-    return axios.put(params.url, params.body, {
-      headers: params.headers,
-    })
+  async put(params: HttpPutParams): Promise<HttpResponse> {
+    try {
+      const response = await axios.put(params.url, params.body, {
+        headers: params.headers,
+      })
+      return {
+        status: response.status,
+        data: response.data,
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return {
+          status: error.response.status,
+          data: error.response.data,
+        }
+      }
+
+      return {
+        status: 500,
+        data: { message: 'An unknown error occurred' },
+      }
+    }
   }
 }
