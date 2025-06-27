@@ -1,22 +1,22 @@
-import { type ReactNode } from "react";
-import { Navigate } from "react-router-dom";
+import { type ReactNode } from 'react'
+import { Navigate } from 'react-router-dom'
 
-import { useAuthStore } from "@/presentation/store/auth-store";
+import { useAuthStore } from '@/presentation/store/auth-store'
 
 interface IPrivateRoute {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export const PrivateRoute = ({ children }: IPrivateRoute) => {
-  const { isHydrated, accessToken } = useAuthStore((state) => state);
+  const { isHydrated, accessToken } = useAuthStore((state) => state)
 
   if (!isHydrated) {
     return <div>...carregando</div>
   }
 
   if (!accessToken) {
-    return <Navigate to="/" />;
+    return <Navigate to="/" />
   }
 
-  return <>{children}</>;
-};
+  return <>{children}</>
+}

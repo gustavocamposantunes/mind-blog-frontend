@@ -1,18 +1,18 @@
-import { faker } from "@faker-js/faker";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { faker } from '@faker-js/faker'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { AuthenticateUserSpy } from "../test";
-import { cleanup, fireEvent, render, screen, waitFor } from "../test/test-utils";
+import { AuthenticateUserSpy } from '../test'
+import { cleanup, fireEvent, render, screen, waitFor } from '../test/test-utils'
 
-import { LoginPage } from "./LoginPage";
+import { LoginPage } from './LoginPage'
 
-import { UnexpectedError } from "@/domain/errors";
+import { UnexpectedError } from '@/domain/errors'
 
 const mockNavigate = vi.fn()
 
-vi.mock("react-router-dom", async () => ({
-  ...await vi.importActual("react-router-dom"),
-  useNavigate: () => mockNavigate
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useNavigate: () => mockNavigate,
 }))
 
 type SutTypes = {
@@ -20,76 +20,74 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const authenticateUserSpy = new AuthenticateUserSpy();
+  const authenticateUserSpy = new AuthenticateUserSpy()
 
-  render(
-    <LoginPage authenticateUser={authenticateUserSpy} />
-  );
+  render(<LoginPage authenticateUser={authenticateUserSpy} />)
 
   return {
-    authenticateUserSpy
+    authenticateUserSpy,
   }
 }
 
-describe("LoginPage", () => {
+describe('LoginPage', () => {
   beforeEach(cleanup)
   const setupSubmit = () => {
-    const emailInput = screen.getByLabelText(/email/i);
-    const passwordInput = screen.getByLabelText(/senha/i);
+    const emailInput = screen.getByLabelText(/email/i)
+    const passwordInput = screen.getByLabelText(/senha/i)
 
-    const submitButton = screen.getByRole('button', { name: /entrar/i });
+    const submitButton = screen.getByRole('button', { name: /entrar/i })
 
-    fireEvent.change(emailInput, { target: { value: faker.internet.email() } });
-    fireEvent.change(passwordInput, { target: { value: faker.internet.password() } });
+    fireEvent.change(emailInput, { target: { value: faker.internet.email() } })
+    fireEvent.change(passwordInput, {
+      target: { value: faker.internet.password() },
+    })
 
-    fireEvent.click(submitButton);
+    fireEvent.click(submitButton)
   }
 
-  it("should render a tooltip.error with a message if the authentication fails", async () => {
-    const authenticateUserSpy = new AuthenticateUserSpy();
+  it('should render a tooltip.error with a message if the authentication fails', async () => {
+    const authenticateUserSpy = new AuthenticateUserSpy()
 
-    const error = new UnexpectedError();
-    vi.spyOn(authenticateUserSpy, 'auth').mockRejectedValueOnce(error);
+    const error = new UnexpectedError()
+    vi.spyOn(authenticateUserSpy, 'auth').mockRejectedValueOnce(error)
 
-    render(
-      <LoginPage authenticateUser={authenticateUserSpy} />
-    );
+    render(<LoginPage authenticateUser={authenticateUserSpy} />)
 
-    setupSubmit();
+    setupSubmit()
 
-    await screen.findByText(error.message);
-  });
+    await screen.findByText(error.message)
+  })
 
-  it("should redirect to HomePage on authentication success", async () => {
-    makeSut();
-    setupSubmit();
+  it('should redirect to HomePage on authentication success', async () => {
+    makeSut()
+    setupSubmit()
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/");
-    });
-  });
+      expect(mockNavigate).toHaveBeenCalledWith('/')
+    })
+  })
 
-  it("should redirect to ForgotPasswordPage when forgot password link is clicked", async () => {
-    makeSut();
+  it('should redirect to ForgotPasswordPage when forgot password link is clicked', async () => {
+    makeSut()
 
-    const forgotPasswordLink = screen.getByText(/esqueceu a senha\?/i);
+    const forgotPasswordLink = screen.getByText(/esqueceu a senha\?/i)
 
-    fireEvent.click(forgotPasswordLink);
-
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/forgot-password");
-    });
-  });
-
-  it("should redirect to RegisterUserPage when register user link is clicked", async () => {
-    makeSut();
-
-    const registerUserLink = screen.getByText(/novo usuário\? clique aqui/i);
-
-    fireEvent.click(registerUserLink);
+    fireEvent.click(forgotPasswordLink)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/register");
-    });
-  });
-});
+      expect(mockNavigate).toHaveBeenCalledWith('/forgot-password')
+    })
+  })
+
+  it('should redirect to RegisterUserPage when register user link is clicked', async () => {
+    makeSut()
+
+    const registerUserLink = screen.getByText(/novo usuário\? clique aqui/i)
+
+    fireEvent.click(registerUserLink)
+
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith('/register')
+    })
+  })
+})

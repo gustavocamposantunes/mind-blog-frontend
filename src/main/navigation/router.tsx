@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ToastContainer, Bounce } from "react-toastify";
+import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ToastContainer, Bounce } from 'react-toastify'
 
-import { PrivateRoute } from "./private-route";
+import { PrivateRoute } from './private-route'
 
 import {
   makeRemoteGetArticleById,
@@ -10,47 +10,67 @@ import {
   makeRemoteAuthenticateUser,
   makeRemoteRegisterUser,
   makeRemoteRegisterArticle,
-  makeRemoteGetProfile
-} from "@/main/factories/usecases";
+  makeRemoteGetProfile,
+} from '@/main/factories/usecases'
 import {
   ForgotPasswordTemplate,
   HomeTemplate,
-} from "@/presentation/components/templates";
+} from '@/presentation/components/templates'
 import {
   ArticlesPage,
   ArticlePage,
   RegisterUserPage,
   LoginPage,
   NewArticlePage,
-  ProfilePage
-} from "@/presentation/pages";
-import { useAuthStore } from "@/presentation/store/auth-store";
+  ProfilePage,
+} from '@/presentation/pages'
+import { useAuthStore } from '@/presentation/store/auth-store'
 
 export const Router = () => {
-  const hydrate = useAuthStore((state) => state.hydrate);
+  const hydrate = useAuthStore((state) => state.hydrate)
 
   useEffect(() => {
-    hydrate();
-  }, [hydrate]);
+    hydrate()
+  }, [hydrate])
 
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomeTemplate />} />
-          <Route path="/articles" element={<ArticlesPage listArticles={makeRemoteListArticles()} />} />
-          <Route path="/articles/:id" element={<ArticlePage getArticletById={makeRemoteGetArticleById()} />} />
-          <Route path="/login" element={<LoginPage authenticateUser={makeRemoteAuthenticateUser()} />} />
-          <Route path="/register" element={<RegisterUserPage registerUser={makeRemoteRegisterUser()} />} />
+          <Route
+            path="/articles"
+            element={<ArticlesPage listArticles={makeRemoteListArticles()} />}
+          />
+          <Route
+            path="/articles/:id"
+            element={
+              <ArticlePage getArticletById={makeRemoteGetArticleById()} />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <LoginPage authenticateUser={makeRemoteAuthenticateUser()} />
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <RegisterUserPage registerUser={makeRemoteRegisterUser()} />
+            }
+          />
           <Route path="/forgot-password" element={<ForgotPasswordTemplate />} />
-          <Route path="/article/new"
+          <Route
+            path="/article/new"
             element={
               <PrivateRoute>
                 <NewArticlePage registerArticle={makeRemoteRegisterArticle()} />
               </PrivateRoute>
             }
           />
-          <Route path="/profile"
+          <Route
+            path="/profile"
             element={
               <PrivateRoute>
                 <ProfilePage getProfile={makeRemoteGetProfile()} />
@@ -73,5 +93,5 @@ export const Router = () => {
         transition={Bounce}
       />
     </>
-  );
-};
+  )
+}

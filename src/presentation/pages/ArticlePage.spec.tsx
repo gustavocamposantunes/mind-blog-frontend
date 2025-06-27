@@ -1,17 +1,16 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { GetArticleByIdSpy } from "../test";
-import { cleanup, render, screen } from "../test/test-utils";
-import { formatDateToShortMonth } from "../utils/dateFormatter";
+import { GetArticleByIdSpy } from '../test'
+import { cleanup, render, screen } from '../test/test-utils'
+import { formatDateToShortMonth } from '../utils/dateFormatter'
 
-import { ArticlePage } from "./ArticlePage";
+import { ArticlePage } from './ArticlePage'
 
-import { UnexpectedError } from "@/domain/errors";
+import { UnexpectedError } from '@/domain/errors'
 
-
-vi.mock("react-router-dom", async () => ({
-  ...await vi.importActual("react-router-dom"),
-  useNavigate: () => vi.fn()
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useNavigate: () => vi.fn(),
 }))
 
 type SutTypes = {
@@ -19,54 +18,57 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const getArticleByIdSpy = new GetArticleByIdSpy();
+  const getArticleByIdSpy = new GetArticleByIdSpy()
 
-  render(
-    <ArticlePage getArticletById={getArticleByIdSpy} />
-  );
+  render(<ArticlePage getArticletById={getArticleByIdSpy} />)
 
   return {
-    getArticleByIdSpy
+    getArticleByIdSpy,
   }
 }
 
-describe("ArticlePage", () => {
-  beforeEach(cleanup);
-  it("should render a skeleton group while the content is loading", async () => {
-    makeSut();
+describe('ArticlePage', () => {
+  beforeEach(cleanup)
+  it('should render a skeleton group while the content is loading', async () => {
+    makeSut()
 
-    const skeletonGroup = await screen.findByTestId("skeleton-group")
+    const skeletonGroup = await screen.findByTestId('skeleton-group')
 
-    expect(skeletonGroup).toBeTruthy();
-  });
+    expect(skeletonGroup).toBeTruthy()
+  })
 
-  it("should render an error message if throws", async () => {
-    const getArticleByIdSpy = new GetArticleByIdSpy();
+  it('should render an error message if throws', async () => {
+    const getArticleByIdSpy = new GetArticleByIdSpy()
 
-    const error = new UnexpectedError();
-    vi.spyOn(getArticleByIdSpy, "getById").mockRejectedValueOnce(error);
+    const error = new UnexpectedError()
+    vi.spyOn(getArticleByIdSpy, 'getById').mockRejectedValueOnce(error)
 
-    render(
-      <ArticlePage getArticletById={getArticleByIdSpy} />
-    );
+    render(<ArticlePage getArticletById={getArticleByIdSpy} />)
 
-    const errorWrapper = await screen.findByTestId("error-wrapper");
-    expect(errorWrapper.textContent).toBe("Erro inesperado");
-  });
+    const errorWrapper = await screen.findByTestId('error-wrapper')
+    expect(errorWrapper.textContent).toBe('Erro inesperado')
+  })
 
-  it("should render the article correctly", async () => {
-    const { getArticleByIdSpy } = makeSut();
+  it('should render the article correctly', async () => {
+    const { getArticleByIdSpy } = makeSut()
 
-    const articleTitle = await screen.findByText(getArticleByIdSpy.data.title);
-    const articleContent = await screen.findByText(getArticleByIdSpy.data.content);
-    const articleDate = await screen.findByTestId("published-at");
-    const articleImage = await screen.findByAltText(getArticleByIdSpy.data.title) as HTMLImageElement;
+    const articleTitle = await screen.findByText(getArticleByIdSpy.data.title)
+    const articleContent = await screen.findByText(
+      getArticleByIdSpy.data.content,
+    )
+    const articleDate = await screen.findByTestId('published-at')
+    const articleImage = (await screen.findByAltText(
+      getArticleByIdSpy.data.title,
+    )) as HTMLImageElement
 
-
-    expect(articleTitle).toBeTruthy();
-    expect(articleContent).toBeTruthy();
-    expect(articleDate.textContent).toEqual(expect.stringContaining(formatDateToShortMonth(getArticleByIdSpy.data.publishedAt)));
-    expect(articleImage).toBeTruthy();
-    expect(articleImage.src).toEqual(getArticleByIdSpy.data.image);
-  });
-});
+    expect(articleTitle).toBeTruthy()
+    expect(articleContent).toBeTruthy()
+    expect(articleDate.textContent).toEqual(
+      expect.stringContaining(
+        formatDateToShortMonth(getArticleByIdSpy.data.publishedAt),
+      ),
+    )
+    expect(articleImage).toBeTruthy()
+    expect(articleImage.src).toEqual(getArticleByIdSpy.data.image)
+  })
+})

@@ -1,12 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query'
 
-import type { GetArticleByIdUseCase } from "@/domain/usecases";
+import type { GetArticleByIdUseCase } from '@/domain/usecases'
 
-export const useGetArticleById = (getArticle: GetArticleByIdUseCase, id: string) => {
+export const useGetArticleById = (
+  getArticle: GetArticleByIdUseCase,
+  id: string,
+) => {
   return useQuery({
     queryKey: ['article'],
     queryFn: async () => {
       return await getArticle.getById(id)
-    }
+    },
   })
 }

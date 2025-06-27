@@ -1,56 +1,57 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from 'vitest'
 
-import { useAuthStore } from "./auth-store";
+import { useAuthStore } from './auth-store'
 
 const mockUser = {
   id: 1,
-  name: "John Doe",
-  email: "john.doe@example.com",
-};
+  name: 'John Doe',
+  email: 'john.doe@example.com',
+}
 
 const mockAccount = {
-  accessToken: "fake-token-123",
+  accessToken: 'fake-token-123',
   user: mockUser,
-};
+}
 
-describe("useAuthStore", () => {
+describe('useAuthStore', () => {
   beforeEach(() => {
-    localStorage.clear();
-    useAuthStore.getState().clearCurrentUser();
-  });
+    localStorage.clear()
+    useAuthStore.getState().clearCurrentUser()
+  })
 
-  it("should set and get current user", () => {
-    useAuthStore.getState().setCurrentUser(mockAccount);
+  it('should set and get current user', () => {
+    useAuthStore.getState().setCurrentUser(mockAccount)
 
-    const state = useAuthStore.getState();
+    const state = useAuthStore.getState()
 
-    expect(state.accessToken).toBe(mockAccount.accessToken);
-    expect(state.user).toEqual(mockUser);
-  });
+    expect(state.accessToken).toBe(mockAccount.accessToken)
+    expect(state.user).toEqual(mockUser)
+  })
 
-  it("should clear current user", () => {
-    const { setCurrentUser, clearCurrentUser, accessToken, user } = useAuthStore.getState();
-    setCurrentUser(mockAccount);
-    clearCurrentUser();
+  it('should clear current user', () => {
+    const { setCurrentUser, clearCurrentUser, accessToken, user } =
+      useAuthStore.getState()
+    setCurrentUser(mockAccount)
+    clearCurrentUser()
 
-    expect(accessToken).toBe("");
-    expect(user).toEqual({ id: 0, name: "", email: "" });
-  });
+    expect(accessToken).toBe('')
+    expect(user).toEqual({ id: 0, name: '', email: '' })
+  })
 
-  it("should hydrate state from local storage", () => {
-    useAuthStore.getState().setCurrentUser(mockAccount);
+  it('should hydrate state from local storage', () => {
+    useAuthStore.getState().setCurrentUser(mockAccount)
 
-    useAuthStore.getState().hydrate();
+    useAuthStore.getState().hydrate()
 
-    const state = useAuthStore.getState();
-    expect(state.accessToken).toBe(mockAccount.accessToken);
-    expect(state.user).toEqual(mockUser);
-  });
+    const state = useAuthStore.getState()
+    expect(state.accessToken).toBe(mockAccount.accessToken)
+    expect(state.user).toEqual(mockUser)
+  })
 
-  it("should set isHydrated to true after hydration", () => {
-    useAuthStore.getState().hydrate();
+  it('should set isHydrated to true after hydration', () => {
+    useAuthStore.getState().hydrate()
 
-    const state = useAuthStore.getState();
-    expect(state.isHydrated).toBe(true);
-  });
-});
+    const state = useAuthStore.getState()
+    expect(state.isHydrated).toBe(true)
+  })
+})

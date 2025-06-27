@@ -1,1 +1,1 @@
-export * from "./mock-http-response";
+export * from './mock-http-response'

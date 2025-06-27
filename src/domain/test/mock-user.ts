@@ -1,6 +1,6 @@
-import { faker } from "@faker-js/faker";
+import { faker } from '@faker-js/faker'
 
-import type { UserModel } from "../models";
+import type { UserModel } from '../models'
 
 export const mockUser = (): UserModel => ({
   id: faker.number.int(),

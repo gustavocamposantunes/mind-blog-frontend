@@ -1,3 +1,3 @@
-export * from "./AuthenticateUserModel";
-export * from "./ArticleModel";
-export * from "./UserModel";
+export * from './AuthenticateUserModel'
+export * from './ArticleModel'
+export * from './UserModel'

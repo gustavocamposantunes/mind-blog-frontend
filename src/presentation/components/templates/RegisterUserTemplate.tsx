@@ -1,17 +1,14 @@
+import logoLight from '../../assets/logo-light.svg'
 
-
-import logoLight from "../../assets/logo-light.svg";
-
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react'
 
 interface IRegisterUserTemplate {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export const RegisterUserTemplate: React.FC<IRegisterUserTemplate> = ({
-  children
+  children,
 }) => {
-
   return (
     <main className="h-screen w-screen flex">
       <div className="h-full flex-1 flex items-center justify-center flex-col bg-stone-950">
@@ -22,5 +19,5 @@ export const RegisterUserTemplate: React.FC<IRegisterUserTemplate> = ({
         {children}
       </div>
     </main>
-  );
+  )
 }

@@ -1,20 +1,18 @@
-import { faker } from "@faker-js/faker";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { faker } from '@faker-js/faker'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { RegisterArticleSpy } from "../test";
-import { cleanup, fireEvent, render, screen, waitFor } from "../test/test-utils";
+import { RegisterArticleSpy } from '../test'
+import { cleanup, fireEvent, render, screen, waitFor } from '../test/test-utils'
 
-import { NewArticlePage } from "./NewArticlePage";
+import { NewArticlePage } from './NewArticlePage'
 
-import { UnexpectedError } from "@/domain/errors";
-
-
+import { UnexpectedError } from '@/domain/errors'
 
 const mockNavigate = vi.fn()
 
-vi.mock("react-router-dom", async () => ({
-  ...await vi.importActual("react-router-dom"),
-  useNavigate: () => mockNavigate
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useNavigate: () => mockNavigate,
 }))
 
 type SutTypes = {
@@ -24,84 +22,86 @@ type SutTypes = {
 const makeSut = (): SutTypes => {
   const registerArticleSpy = new RegisterArticleSpy()
 
-  render(
-    <NewArticlePage registerArticle={registerArticleSpy} />
-  );
+  render(<NewArticlePage registerArticle={registerArticleSpy} />)
 
   return {
-    registerArticleSpy
+    registerArticleSpy,
   }
 }
 
-describe("NewArticlePage", () => {
+describe('NewArticlePage', () => {
   beforeEach(() => {
-    cleanup();
+    cleanup()
   })
 
   const setupSubmit = () => {
-    const titleInput = screen.getByLabelText(/título/i);
-    const contentInput = screen.getByLabelText(/texto/i);
+    const titleInput = screen.getByLabelText(/título/i)
+    const contentInput = screen.getByLabelText(/texto/i)
 
-    const submitButton = screen.getByRole('button', { name: /salvar/i });
+    const submitButton = screen.getByRole('button', { name: /salvar/i })
 
-    fireEvent.change(titleInput, { target: { value: faker.lorem.sentence() } });
-    fireEvent.change(contentInput, { target: { value: faker.lorem.paragraph() } });
+    fireEvent.change(titleInput, { target: { value: faker.lorem.sentence() } })
+    fireEvent.change(contentInput, {
+      target: { value: faker.lorem.paragraph() },
+    })
 
-    fireEvent.click(submitButton);
+    fireEvent.click(submitButton)
   }
 
-  it("should render a toast.error when register fails ", async () => {
-     const registerArticleSpy = new RegisterArticleSpy()
+  it('should render a toast.error when register fails ', async () => {
+    const registerArticleSpy = new RegisterArticleSpy()
 
-    const error = new UnexpectedError();
-    
-    vi.spyOn(registerArticleSpy, "register").mockRejectedValueOnce(error);
+    const error = new UnexpectedError()
 
-    render(
-      <NewArticlePage registerArticle={registerArticleSpy} />
-    );
+    vi.spyOn(registerArticleSpy, 'register').mockRejectedValueOnce(error)
 
-    setupSubmit();
+    render(<NewArticlePage registerArticle={registerArticleSpy} />)
 
-    const errorToastMessage = await screen.findByText(error.message);
+    setupSubmit()
 
-    expect(errorToastMessage).toBeTruthy();
-  });
+    const errorToastMessage = await screen.findByText(error.message)
 
-  it("should redirect to /articles when cancel button is clicked", async () => {
-    makeSut();
+    expect(errorToastMessage).toBeTruthy()
+  })
 
-    const cancelButton = screen.getByRole('button', { name: /salvar/i });
+  it('should redirect to /articles when cancel button is clicked', async () => {
+    makeSut()
 
-    fireEvent.click(cancelButton);
+    const cancelButton = screen.getByRole('button', { name: /salvar/i })
+
+    fireEvent.click(cancelButton)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/articles");
-    });
-  });
+      expect(mockNavigate).toHaveBeenCalledWith('/articles')
+    })
+  })
 
-  it("should redirect to /articles when submit is successfull", async () => {
-    makeSut();
+  it('should redirect to /articles when submit is successfull', async () => {
+    makeSut()
 
-    setupSubmit();
+    setupSubmit()
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/articles");
-    });
-  });
+      expect(mockNavigate).toHaveBeenCalledWith('/articles')
+    })
+  })
 
-  it("should render the image when a file is selected", async () => {
-    makeSut();
+  it('should render the image when a file is selected', async () => {
+    makeSut()
 
-    const file = new File(["image content"], "image.png", { type: "image/png" });
-    const inputFile = screen.getByLabelText(/inserir imagem/i);
+    const file = new File(['image content'], 'image.png', { type: 'image/png' })
+    const inputFile = screen.getByLabelText(/inserir imagem/i)
 
-    fireEvent.change(inputFile, { target: { files: [file] } });
+    fireEvent.change(inputFile, { target: { files: [file] } })
 
-    const selectedImage = await screen.findByTestId("selected-image") as HTMLImageElement;
+    const selectedImage = (await screen.findByTestId(
+      'selected-image',
+    )) as HTMLImageElement
 
-    expect(selectedImage).toBeDefined();
-    expect(selectedImage.src).toBe(`data:image/png;base64,${btoa("image content")}`);
-    expect(selectedImage.alt).toBe("foto do artigo selecionada");
-  });
-});
+    expect(selectedImage).toBeDefined()
+    expect(selectedImage.src).toBe(
+      `data:image/png;base64,${btoa('image content')}`,
+    )
+    expect(selectedImage.alt).toBe('foto do artigo selecionada')
+  })
+})

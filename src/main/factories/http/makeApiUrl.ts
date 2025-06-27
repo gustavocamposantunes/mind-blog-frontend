@@ -1,1 +1,2 @@
-export const makeApiUrl = (path: string) => `${import.meta.env.VITE_MOCKOON_URL}${path}`;
+export const makeApiUrl = (path: string) =>
+  `${import.meta.env.VITE_MOCKOON_URL}${path}`

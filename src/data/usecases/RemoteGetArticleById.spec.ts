@@ -1,79 +1,79 @@
-import { faker } from "@faker-js/faker";
-import { describe, it, expect } from "vitest";
+import { faker } from '@faker-js/faker'
+import { describe, it, expect } from 'vitest'
 
-import { HttpGetClientSpy } from "../test/mock-http-client";
+import { HttpGetClientSpy } from '../test/mock-http-client'
 
-import { RemoteGetArticleById } from "./RemoteGetArticleById";
+import { RemoteGetArticleById } from './RemoteGetArticleById'
 
 type SutTypes = {
-  sut: RemoteGetArticleById;
-  httpClientSpy: HttpGetClientSpy;
+  sut: RemoteGetArticleById
+  httpClientSpy: HttpGetClientSpy
 }
 
 const makeSut = (url = faker.internet.url()): SutTypes => {
-  const httpClientSpy = new HttpGetClientSpy();
-  const sut = new RemoteGetArticleById(url, httpClientSpy);
+  const httpClientSpy = new HttpGetClientSpy()
+  const sut = new RemoteGetArticleById(url, httpClientSpy)
   return {
     sut,
     httpClientSpy,
-  };
+  }
 }
 
-describe("RemoteGetArticleById", () => {
-  it("should call HttpGetClient with correct URL", async () => {
-    const url = faker.internet.url();
-    const { sut, httpClientSpy } = makeSut(url);
-    const articleId = faker.string.uuid();
-    await sut.getById(articleId);
+describe('RemoteGetArticleById', () => {
+  it('should call HttpGetClient with correct URL', async () => {
+    const url = faker.internet.url()
+    const { sut, httpClientSpy } = makeSut(url)
+    const articleId = faker.string.uuid()
+    await sut.getById(articleId)
 
-    expect(httpClientSpy.url).toBe(`${url}/${articleId}`);
-  });
+    expect(httpClientSpy.url).toBe(`${url}/${articleId}`)
+  })
 
-  it("should returs NotFoundError if HttpGetClient returns 404", async () => {
-    const { sut, httpClientSpy } = makeSut();
+  it('should returs NotFoundError if HttpGetClient returns 404', async () => {
+    const { sut, httpClientSpy } = makeSut()
     httpClientSpy.response = {
       status: 404,
-      data: { message: "Artigo não encontrado" }
-    };
+      data: { message: 'Artigo não encontrado' },
+    }
 
-    const articleId = faker.string.uuid();
-    const response = await sut.getById(articleId);
+    const articleId = faker.string.uuid()
+    const response = await sut.getById(articleId)
 
-    expect(response.statusCode).toBe(404);
-    expect(response.error).toBe("Artigo não encontrado");
-  });
+    expect(response.statusCode).toBe(404)
+    expect(response.error).toBe('Artigo não encontrado')
+  })
 
-  it("should returns an InternalServerError if HttpGetClient returns 500", async () => {
-    const { sut, httpClientSpy } = makeSut();
+  it('should returns an InternalServerError if HttpGetClient returns 500', async () => {
+    const { sut, httpClientSpy } = makeSut()
     httpClientSpy.response = {
       status: 500,
-      data: { message: "Erro interno do servidor" }
-    };
+      data: { message: 'Erro interno do servidor' },
+    }
 
-    const articleId = faker.string.uuid();
-    const response = await sut.getById(articleId);
+    const articleId = faker.string.uuid()
+    const response = await sut.getById(articleId)
 
-    expect(response.statusCode).toBe(500);
-    expect(response.error).toBe("Erro interno do servidor");
-  });
+    expect(response.statusCode).toBe(500)
+    expect(response.error).toBe('Erro interno do servidor')
+  })
 
-  it("should returns UnexpectedError for other status codes", async () => {
-    const { sut, httpClientSpy } = makeSut();
+  it('should returns UnexpectedError for other status codes', async () => {
+    const { sut, httpClientSpy } = makeSut()
     httpClientSpy.response = {
       status: 502,
-      data: { message: "Erro inesperado" }
-    };
+      data: { message: 'Erro inesperado' },
+    }
 
-    const articleId = faker.string.uuid();
-    const response = await sut.getById(articleId);
+    const articleId = faker.string.uuid()
+    const response = await sut.getById(articleId)
 
-    expect(response.statusCode).toBe(502);
-    expect(response.error).toBe("Erro inesperado");
-  });
+    expect(response.statusCode).toBe(502)
+    expect(response.error).toBe('Erro inesperado')
+  })
 
-  it("should returns an ArticleModel if HttpGetClient returns 200", async () => {
-    const { sut, httpClientSpy } = makeSut();
-    const articleId = faker.string.uuid();
+  it('should returns an ArticleModel if HttpGetClient returns 200', async () => {
+    const { sut, httpClientSpy } = makeSut()
+    const articleId = faker.string.uuid()
     const articleData = {
       id: articleId,
       title: faker.lorem.sentence(),
@@ -81,11 +81,11 @@ describe("RemoteGetArticleById", () => {
     }
     httpClientSpy.response = {
       status: 200,
-      data: articleData
-    };
+      data: articleData,
+    }
 
-    const response = await sut.getById(articleId);
-    expect(response.statusCode).toBe(200);
-    expect(response.data).toEqual(articleData);
-  });
-});
+    const response = await sut.getById(articleId)
+    expect(response.statusCode).toBe(200)
+    expect(response.data).toEqual(articleData)
+  })
+})

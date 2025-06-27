@@ -1,17 +1,18 @@
 export const HttpStatusCode = {
-    ok: 200,
-    created: 201,
-    noContent: 204,
-    badRequest: 400,
-    unauthorized: 401,
-    forbidden: 403,
-    notFound: 404,
-    serverError: 500
-} as const;
+  ok: 200,
+  created: 201,
+  noContent: 204,
+  badRequest: 400,
+  unauthorized: 401,
+  forbidden: 403,
+  notFound: 404,
+  serverError: 500,
+} as const
 
-export type HttpStatusCode = typeof HttpStatusCode[keyof typeof HttpStatusCode];
+export type HttpStatusCode =
+  (typeof HttpStatusCode)[keyof typeof HttpStatusCode]
 
 export type HttpResponse<T = object, E = { message?: string }> = {
-    status: number
-    data?: T | E
+  status: number
+  data?: T | E
 }

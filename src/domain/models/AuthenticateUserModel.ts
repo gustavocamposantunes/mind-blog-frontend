@@ -1,8 +1,8 @@
 export interface AuthenticateUserModel {
-  accessToken: string;
+  accessToken: string
   user: {
-    id: number;
-    name: string;
-    email: string;
-  };
+    id: number
+    name: string
+    email: string
+  }
 }

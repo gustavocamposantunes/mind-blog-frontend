@@ -1,6 +1,6 @@
-import { faker } from "@faker-js/faker";
+import { faker } from '@faker-js/faker'
 
 export const mockHttpResponse = () => ({
   data: faker.helpers.objectValue,
-  status: faker.number.int()
-});
+  status: faker.number.int(),
+})

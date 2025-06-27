@@ -1,56 +1,55 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { FormHeaderAction } from '../components/molecules/FormHeaderAction'
+import { Input } from '../components/ui/input'
+import { useRegisterArticle } from '../hooks/useRegisterArticle'
+import { useAuthStore } from '../store/auth-store'
+import { toBase64 } from '../utils/toBase64'
 
-import { FormHeaderAction } from "../components/molecules/FormHeaderAction";
-import { Input } from "../components/ui/input";
-import { useRegisterArticle } from "../hooks/useRegisterArticle";
-import { useAuthStore } from "../store/auth-store";
-import { toBase64 } from "../utils/toBase64";
+import type { RegisterArticleUseCase } from '@/domain/usecases'
 
-import type { RegisterArticleUseCase } from "@/domain/usecases";
-
-import { NewArticleTemplate } from "@/presentation/components/templates";
-import { Label } from "@/presentation/components/ui/label";
-import { Textarea } from "@/presentation/components/ui/textarea";
+import { NewArticleTemplate } from '@/presentation/components/templates'
+import { Label } from '@/presentation/components/ui/label'
+import { Textarea } from '@/presentation/components/ui/textarea'
 
 type NewArticlePageProps = {
-  registerArticle: RegisterArticleUseCase;
-};
+  registerArticle: RegisterArticleUseCase
+}
 
 export const NewArticlePage: React.FC<NewArticlePageProps> = ({
-  registerArticle
+  registerArticle,
 }) => {
-  const navigate = useNavigate();
-  const { user, accessToken } = useAuthStore();
+  const navigate = useNavigate()
+  const { user, accessToken } = useAuthStore()
 
   const [registerArticleParams, setRegisterArticleParams] = useState({
-    title: "",
-    content: "",
-    image: ""
-  });
+    title: '',
+    content: '',
+    image: '',
+  })
 
-  const { mutate } = useRegisterArticle(
-    registerArticle,
-    accessToken
-  );
+  const { mutate } = useRegisterArticle(registerArticle, accessToken)
 
   const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    mutate({
-      ...registerArticleParams,
-      author_id: Number(user.id)
-    }, {
-      onSuccess: () => {
-        navigate("/articles");
+    mutate(
+      {
+        ...registerArticleParams,
+        author_id: Number(user.id),
       },
-      onError: (error) => {
-        toast.error(error.message);
-      }
-    });
-  };
+      {
+        onSuccess: () => {
+          navigate('/articles')
+        },
+        onError: (error) => {
+          toast.error(error.message)
+        },
+      },
+    )
+  }
 
   return (
     <NewArticleTemplate>
@@ -65,13 +64,13 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
                 id="picture"
                 type="file"
                 onChange={async (e) => {
-                  const file = e.target.files?.[0];
+                  const file = e.target.files?.[0]
                   if (file) {
-                    const base64 = await toBase64(file);
+                    const base64 = await toBase64(file)
                     setRegisterArticleParams({
                       ...registerArticleParams,
                       image: base64,
-                    });
+                    })
                   }
                 }}
               />
@@ -84,7 +83,6 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
                 data-testid="selected-image"
               />
             )}
-
           </div>
 
           <div className="grid w-full gap-1.5">
@@ -117,10 +115,8 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
               }
             />
           </div>
-
-
         </section>
       </form>
     </NewArticleTemplate>
-  );
-};
+  )
+}

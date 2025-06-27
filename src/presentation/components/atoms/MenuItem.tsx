@@ -1,21 +1,21 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react'
 
 interface IMenuItem extends React.LiHTMLAttributes<HTMLLIElement> {
-  redirect: string;
-  children: ReactNode;
+  redirect: string
+  children: ReactNode
 }
 
-export const MenuItem: React.FC<IMenuItem> = ({ redirect, className, children }) => {
-  const navigate = useNavigate();
+export const MenuItem: React.FC<IMenuItem> = ({
+  redirect,
+  className,
+  children,
+}) => {
+  const navigate = useNavigate()
   return (
-    <li 
-      className={className}
-    >
-      <a onClick={() => navigate(redirect)}>
-        {children}
-      </a>
+    <li className={className}>
+      <a onClick={() => navigate(redirect)}>{children}</a>
     </li>
   )
 }

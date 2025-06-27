@@ -1,20 +1,20 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render } from "@testing-library/react";
-import { Bounce, ToastContainer } from "react-toastify";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { render } from '@testing-library/react'
+import { Bounce, ToastContainer } from 'react-toastify'
 
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react'
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,
     },
-  }
-});
+  },
+})
 
 const customRender = (ui: ReactNode, options = {}) =>
   render(ui, {
-    wrapper: ({ children }) =>
+    wrapper: ({ children }) => (
       <QueryClientProvider client={queryClient}>
         {children}
         <ToastContainer
@@ -30,8 +30,10 @@ const customRender = (ui: ReactNode, options = {}) =>
           theme="light"
           transition={Bounce}
         />
-      </QueryClientProvider>, ...options
-  });
+      </QueryClientProvider>
+    ),
+    ...options,
+  })
 
 export {
   render as baseRender,
@@ -41,5 +43,5 @@ export {
   act,
   within,
   cleanup,
-} from "@testing-library/react";
-export { customRender as render };
+} from '@testing-library/react'
+export { customRender as render }

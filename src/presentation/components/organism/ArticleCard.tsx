@@ -1,10 +1,9 @@
+import { useNavigate } from 'react-router-dom'
 
-import { useNavigate } from "react-router-dom";
+import { FavouriteHeartCount } from '../atoms/FavouriteHeartCount'
+import { Button } from '../ui/button'
 
-import { FavouriteHeartCount } from "../atoms/FavouriteHeartCount";
-import { Button } from "../ui/button";
-
-import { FavouriteAvatarPost } from "@/presentation/components/atoms/FavouriteAvatarPost";
+import { FavouriteAvatarPost } from '@/presentation/components/atoms/FavouriteAvatarPost'
 import {
   Card,
   CardContent,
@@ -12,47 +11,48 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/presentation/components/ui/card"
+} from '@/presentation/components/ui/card'
 
 interface IArticleCard {
-  id: number;
-  title: string;
-  content: string;
-  image?: string;
-  publishedAt: string;
-  className?: string;
-  redirect?: string;
-  favourite?: string;
+  id: number
+  title: string
+  content: string
+  image?: string
+  publishedAt: string
+  className?: string
+  redirect?: string
+  favourite?: string
 }
 
 export const ArticleCard: React.FC<IArticleCard> = ({
   id,
   title,
   content,
-  image = "https://miro.medium.com/v2/resize:fit:1358/1*moJeTvW97yShLB7URRj5Kg.png",
-  publishedAt = "2023-10-01T00:00:00Z",
+  image = 'https://miro.medium.com/v2/resize:fit:1358/1*moJeTvW97yShLB7URRj5Kg.png',
+  publishedAt = '2023-10-01T00:00:00Z',
   className,
   redirect,
-  favourite
+  favourite,
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <Card
-      className={`pt-0 cursor-pointer hover:shadow-lg transition-shadow ${className ?? ""}`}
+      className={`pt-0 cursor-pointer hover:shadow-lg transition-shadow ${className ?? ''}`}
       key={id}
       onClick={() => navigate(`/articles/${id}`)}
     >
       <div className="flex">
-        <img className={`flex-1 ${favourite ? "max-w-[50%]" : ""}`} src={image} alt={title} />
-        {favourite
-          ?
+        <img
+          className={`flex-1 ${favourite ? 'max-w-[50%]' : ''}`}
+          src={image}
+          alt={title}
+        />
+        {favourite ? (
           <div className="flex flex-1 items-center justify-center">
             <h1 className="irish-grove-font">{favourite}</h1>
           </div>
-          :
-          null
-        }
+        ) : null}
       </div>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
@@ -63,8 +63,10 @@ export const ArticleCard: React.FC<IArticleCard> = ({
       <CardFooter className={`flex justify-between`}>
         <FavouriteHeartCount favourite={favourite} />
         <FavouriteAvatarPost publishedAt={publishedAt} favourite={favourite} />
-        {redirect ? <Button className="orange-btn action-btn uppercase">Ler mais</Button> : null}
+        {redirect ? (
+          <Button className="orange-btn action-btn uppercase">Ler mais</Button>
+        ) : null}
       </CardFooter>
     </Card>
-)
+  )
 }

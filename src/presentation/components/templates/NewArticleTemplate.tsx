@@ -1,20 +1,16 @@
+import type { ReactNode } from 'react'
 
-
-import type { ReactNode } from "react";
-
-import { AuthHeader } from "@/presentation/components/molecules/AuthHeader";
+import { AuthHeader } from '@/presentation/components/molecules/AuthHeader'
 
 interface INewArticleTemplate {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export const NewArticleTemplate: React.FC<INewArticleTemplate> = ({
-  children
+  children,
 }) => (
   <>
     <AuthHeader />
-    <main className="px-[12%] mt-3">            
-      {children}
-    </main>
+    <main className="px-[12%] mt-3">{children}</main>
   </>
 )

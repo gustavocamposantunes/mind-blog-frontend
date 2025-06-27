@@ -1,51 +1,53 @@
+import { useNavigate } from 'react-router-dom'
 
-import { useNavigate } from "react-router-dom";
+import logoDark from '../../assets/logo-dark.svg'
+import { MenuItem } from '../atoms/MenuItem'
 
-import logoDark from "../../assets/logo-dark.svg";
-import { MenuItem } from "../atoms/MenuItem";
-
-import { CustomAvatar } from "@/presentation/components/molecules/CustomAvatar";
-import { Button } from "@/presentation/components/ui/button";
+import { CustomAvatar } from '@/presentation/components/molecules/CustomAvatar'
+import { Button } from '@/presentation/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/presentation/components/ui/dropdown-menu";
-import { useAuthStore } from "@/presentation/store/auth-store";
+} from '@/presentation/components/ui/dropdown-menu'
+import { useAuthStore } from '@/presentation/store/auth-store'
 
 export const AuthHeader = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const accessToken = useAuthStore((state) => state.accessToken);
-  const clearCurrentUser = useAuthStore((state) => state.clearCurrentUser);
+  const accessToken = useAuthStore((state) => state.accessToken)
+  const clearCurrentUser = useAuthStore((state) => state.clearCurrentUser)
 
-  const isLoggedIn = !!accessToken;
+  const isLoggedIn = !!accessToken
 
   return (
     <header className="w-full flex justify-between px-[10%] pt-4">
-      <a onClick={() => navigate("/")}><img src={logoDark} alt="logo" /></a>
+      <a onClick={() => navigate('/')}>
+        <img src={logoDark} alt="logo" />
+      </a>
       <nav className="flex items-center">
         <ul className="flex gap-4">
           <MenuItem redirect="/">Home</MenuItem>
-          <MenuItem className="pr-4" redirect="/articles">Artigos</MenuItem>
+          <MenuItem className="pr-4" redirect="/articles">
+            Artigos
+          </MenuItem>
 
-          {isLoggedIn
-            ? (
-              <MenuItem
-                className="border-l-2 border-l-stone-700 pl-6"
-                redirect="/article/new"
-              >
-                Publicar
-              </MenuItem>
-            ) : (
-              <MenuItem
-                className="border-l-2 border-l-stone-700 pl-6"
-                redirect="/login"
-              >
-                Entrar
-              </MenuItem>
-            )}
+          {isLoggedIn ? (
+            <MenuItem
+              className="border-l-2 border-l-stone-700 pl-6"
+              redirect="/article/new"
+            >
+              Publicar
+            </MenuItem>
+          ) : (
+            <MenuItem
+              className="border-l-2 border-l-stone-700 pl-6"
+              redirect="/login"
+            >
+              Entrar
+            </MenuItem>
+          )}
         </ul>
         {isLoggedIn ? (
           <span className="ml-8">
@@ -54,13 +56,13 @@ export const AuthHeader = () => {
                 <CustomAvatar />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => navigate("/profile")}>
+                <DropdownMenuItem onClick={() => navigate('/profile')}>
                   Perfil
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
-                    clearCurrentUser();
-                    navigate("/");
+                    clearCurrentUser()
+                    navigate('/')
                   }}
                 >
                   Desconectar
@@ -69,11 +71,14 @@ export const AuthHeader = () => {
             </DropdownMenu>
           </span>
         ) : (
-          <Button onClick={() => navigate("/register")} className="action-btn ml-6">
+          <Button
+            onClick={() => navigate('/register')}
+            className="action-btn ml-6"
+          >
             Registrar
           </Button>
         )}
       </nav>
     </header>
-  );
-};
+  )
+}

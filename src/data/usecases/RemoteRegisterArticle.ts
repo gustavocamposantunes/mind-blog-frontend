@@ -1,44 +1,54 @@
-import { HttpStatusCode, type HttpPostClient, type HttpRemoteResponse } from "../protocols";
+import {
+  HttpStatusCode,
+  type HttpPostClient,
+  type HttpRemoteResponse,
+} from '../protocols'
 
-import type { ArticleModel } from "@/domain/models";
-import type { RegisterArticleParams, RegisterArticleUseCase } from "@/domain/usecases";
+import type { ArticleModel } from '@/domain/models'
+import type {
+  RegisterArticleParams,
+  RegisterArticleUseCase,
+} from '@/domain/usecases'
 
-import { InternalServerError, UnexpectedError } from "@/domain/errors";
+import { InternalServerError, UnexpectedError } from '@/domain/errors'
 
 export class RemoteRegisterArticle implements RegisterArticleUseCase {
-  private readonly url: string;
-  private readonly httpClient: HttpPostClient;
+  private readonly url: string
+  private readonly httpClient: HttpPostClient
 
   constructor(url: string, httpClient: HttpPostClient) {
-    this.url = url;
-    this.httpClient = httpClient;
+    this.url = url
+    this.httpClient = httpClient
   }
 
-  async register(registerArticleParams: RegisterArticleParams, token?: string): Promise<HttpRemoteResponse<ArticleModel>> {
+  async register(
+    registerArticleParams: RegisterArticleParams,
+    token?: string,
+  ): Promise<HttpRemoteResponse<ArticleModel>> {
     const { status, data } = await this.httpClient.post({
       url: this.url,
       body: registerArticleParams,
       headers: {
-      ...(token && { Authorization: `Bearer ${token}` })
-      }
-    });
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+    })
 
     switch (status) {
       case HttpStatusCode.ok:
         return {
           statusCode: status,
-          data: data as ArticleModel
-        };
+          data: data as ArticleModel,
+        }
       case HttpStatusCode.serverError:
         return {
           statusCode: status,
-          error: new InternalServerError().message
-        };
+          error: new InternalServerError().message,
+        }
       default:
         return {
           statusCode: status,
-          error: new UnexpectedError().message
-        };
+          error: new UnexpectedError().message,
+        }
     }
   }
 }
