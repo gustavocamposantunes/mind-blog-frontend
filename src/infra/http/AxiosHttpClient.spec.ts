@@ -155,5 +155,18 @@ describe('AxiosHttpClient', () => {
       const axiosResponse = await mockedAxios.put.mock.results[0].value
       expect(httpResponse).toEqual(axiosResponse)
     })
+
+    it('Should return a generic error response when axios.put throws an unknown error', async () => {
+      const sut = makeSut()
+
+      const axiosError = new Error('Unexpected error')
+
+      mockedAxios.put.mockRejectedValueOnce(axiosError)
+
+      await expect(sut.put(mockHttpRequest())).resolves.toEqual({
+        status: 500,
+        data: { message: 'An unknown error occurred' },
+      })
+    })
   })
 })
