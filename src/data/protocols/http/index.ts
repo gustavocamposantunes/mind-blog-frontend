@@ -1,4 +1,5 @@
 export * from './HttpGetClient'
 export * from './HttpPostClient'
+export * from './HttpPutClient'
 export * from './HttpRemoteResponse'
 export * from './HttpResponse'

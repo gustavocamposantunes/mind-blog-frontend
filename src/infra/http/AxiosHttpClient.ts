@@ -5,10 +5,13 @@ import type {
   HttpGetParams,
   HttpPostClient,
   HttpPostParams,
+  HttpPutClient,
+  HttpPutParams,
   HttpResponse,
 } from '@/data/protocols'
 
-export class AxiosHttpClient implements HttpGetClient, HttpPostClient {
+export class AxiosHttpClient
+  implements HttpGetClient, HttpPostClient, HttpPutClient {
   async get(params: HttpGetParams): Promise<HttpResponse> {
     try {
       const response = await axios.get(params.url, {
@@ -55,5 +58,11 @@ export class AxiosHttpClient implements HttpGetClient, HttpPostClient {
         data: { message: 'An unknown error occurred' },
       }
     }
+  }
+
+  put(params: HttpPutParams): Promise<HttpResponse> {
+    return axios.put(params.url, params.body, {
+      headers: params.headers,
+    })
   }
 }
