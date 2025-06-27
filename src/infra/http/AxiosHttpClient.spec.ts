@@ -5,7 +5,7 @@ import { mockHttpResponse } from '../test'
 
 import { AxiosHttpClient } from './AxiosHttpClient'
 
-import { mockGetRequest, mockPostRequest } from '@/data/test'
+import { mockGetRequest, mockHttpRequest } from '@/data/test'
 
 vi.mock('axios')
 
@@ -84,7 +84,7 @@ describe('AxiosHttpClient', () => {
     })
 
     it('Should call axios.post with correct values', async () => {
-      const { url, body, headers } = mockPostRequest()
+      const { url, body, headers } = mockHttpRequest()
       const sut = makeSut()
       await sut.post({ url, body, headers })
       expect(mockedAxios.post).toHaveBeenCalledWith(url, body, { headers })
@@ -92,7 +92,7 @@ describe('AxiosHttpClient', () => {
 
     it('Should return correct response on axios.post', async () => {
       const sut = makeSut()
-      const httpResponse = await sut.post(mockPostRequest())
+      const httpResponse = await sut.post(mockHttpRequest())
       const axiosResponse = await mockedAxios.post.mock.results[0].value
       expect(httpResponse).toEqual(axiosResponse)
     })
@@ -104,7 +104,7 @@ describe('AxiosHttpClient', () => {
 
       mockedAxios.post.mockRejectedValueOnce(axiosError)
 
-      await expect(sut.post(mockPostRequest())).resolves.toEqual({
+      await expect(sut.post(mockHttpRequest())).resolves.toEqual({
         status: 500,
         data: { message: 'An unknown error occurred' },
       })
@@ -131,10 +131,22 @@ describe('AxiosHttpClient', () => {
 
       mockedAxios.post.mockRejectedValueOnce(axiosError)
 
-      await expect(sut.post(mockPostRequest())).resolves.toEqual({
+      await expect(sut.post(mockHttpRequest())).resolves.toEqual({
         status: 404,
         data: { message: 'Not Found' },
       })
+    })
+  })
+  describe('put', () => {
+    beforeEach(() => {
+      mockedAxios.put.mockResolvedValue(mockHttpResponse())
+    })
+
+    it('Should call axios.put with correct values', async () => {
+      const { url, body, headers } = mockHttpRequest()
+      const sut = makeSut()
+      await sut.put({ url, body, headers })
+      expect(mockedAxios.put).toHaveBeenCalledWith(url, body, { headers })
     })
   })
 })
