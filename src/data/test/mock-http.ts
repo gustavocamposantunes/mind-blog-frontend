@@ -10,7 +10,7 @@ export const mockGetRequest = () => ({
   },
 })
 
-export const mockPostRequest = () => ({
+export const mockHttpRequest = () => ({
   url,
   body: { name: faker.commerce.productName(), price: faker.commerce.price() },
   headers: { 'Content-Type': 'application/json' },
