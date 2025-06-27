@@ -37,4 +37,19 @@ describe('RemoteUpdateProfile', () => {
       Authorization: `Bearer ${token}`,
     })
   })
+
+  it('should returns an InternalServerError if HttpPutClient returns 500', async () => {
+    const { sut, httpPutClientSpy } = makeSut()
+    httpPutClientSpy.response = {
+      status: 500,
+      data: { message: 'Erro interno do servidor' },
+    }
+
+    const response = await sut.update(faker.string.uuid(), {
+      image: faker.image.urlLoremFlickr(),
+    })
+
+    expect(response.statusCode).toBe(500)
+    expect(response.error).toBe('Erro interno do servidor')
+  })
 })
