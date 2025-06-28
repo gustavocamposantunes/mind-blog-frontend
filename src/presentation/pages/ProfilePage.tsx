@@ -57,6 +57,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         onSuccess: () => {
           toast.info('Perfil alterado com sucesso')
         },
+        onError: (error) => {
+          toast.error(error.message)
+        },
       },
     )
   }
