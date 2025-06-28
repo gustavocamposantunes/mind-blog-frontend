@@ -1,9 +1,8 @@
-import { useNavigate } from 'react-router-dom'
+import { PencilIcon } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
 
-import { FavouriteHeartCount } from '../atoms/FavouriteHeartCount'
 import { Button } from '../ui/button'
 
-import { FavouriteAvatarPost } from '@/presentation/components/atoms/FavouriteAvatarPost'
 import {
   Card,
   CardContent,
@@ -12,12 +11,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/presentation/components/ui/card'
+import { useAuthStore } from '@/presentation/store/auth-store'
+import { formatDateToShortMonth } from '@/presentation/utils/dateFormatter'
 
 interface IArticleCard {
   id: number
   title: string
   content: string
   image?: string
+  author_id?: number
   publishedAt: string
   className?: string
   redirect?: string
@@ -29,12 +31,18 @@ export const ArticleCard: React.FC<IArticleCard> = ({
   title,
   content,
   image = 'https://miro.medium.com/v2/resize:fit:1358/1*moJeTvW97yShLB7URRj5Kg.png',
+  author_id,
   publishedAt = '2023-10-01T00:00:00Z',
   className,
   redirect,
   favourite,
 }) => {
   const navigate = useNavigate()
+  const { user } = useAuthStore()
+
+  const formatterdDate = formatDateToShortMonth(
+    publishedAt || new Date().toISOString(),
+  )
 
   return (
     <Card
@@ -61,8 +69,14 @@ export const ArticleCard: React.FC<IArticleCard> = ({
         <CardDescription>{content.slice(0, 222)}</CardDescription>
       </CardContent>
       <CardFooter className={`flex justify-between`}>
-        <FavouriteHeartCount favourite={favourite} />
-        <FavouriteAvatarPost publishedAt={publishedAt} favourite={favourite} />
+        <p data-testid="published-at">
+          Por <b>John Doe</b> - {formatterdDate}
+        </p>
+        {user.id === author_id ? (
+          <Link className="bg-stone-800 p-2 rounded-md" to="">
+            <PencilIcon className="text-white" />
+          </Link>
+        ) : null}
         {redirect ? (
           <Button className="orange-btn action-btn uppercase">Ler mais</Button>
         ) : null}
