@@ -51,9 +51,7 @@ describe('ProfilePage', () => {
     })
   })
 
-  it('should render the profile image when a file is selected', async () => {
-    makeSut()
-
+  const updateImage = async () => {
     const file = new File(['image content'], 'image.png', { type: 'image/png' })
 
     const inputFile = screen.getByLabelText(/inserir imagem de perfil/i)
@@ -64,11 +62,35 @@ describe('ProfilePage', () => {
       'selected-image',
     )) as HTMLImageElement
 
+    return {
+      selectedImage,
+    }
+  }
+
+  it('should render the profile image when a file is selected', async () => {
+    makeSut()
+
+    const { selectedImage } = await updateImage()
     await waitFor(() => {
       expect(selectedImage.src).toBe(
         `data:image/png;base64,${btoa('image content')}`,
       )
     })
+
     expect(selectedImage.alt).toBe('foto de perfil')
+  })
+
+  it('should render a toast.info when user is updated succesfully', async () => {
+    makeSut()
+
+    await updateImage()
+
+    const submitButton = screen.getByRole('button', {
+      name: /salvar/i,
+    })
+
+    fireEvent.click(submitButton)
+
+    await screen.findByText('Perfil alterado com sucesso')
   })
 })
