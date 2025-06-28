@@ -5,6 +5,8 @@ import { cleanup, fireEvent, render, screen, waitFor } from '../test/test-utils'
 
 import { ProfilePage } from './ProfilePage'
 
+import { UnexpectedError } from '@/domain/errors'
+
 const mockNavigate = vi.fn()
 
 vi.mock('react-router-dom', async () => ({
@@ -67,6 +69,14 @@ describe('ProfilePage', () => {
     }
   }
 
+  const submitForm = () => {
+    const submitButton = screen.getByRole('button', {
+      name: /salvar/i,
+    })
+
+    fireEvent.click(submitButton)
+  }
+
   it('should render the profile image when a file is selected', async () => {
     makeSut()
 
@@ -85,12 +95,24 @@ describe('ProfilePage', () => {
 
     await updateImage()
 
-    const submitButton = screen.getByRole('button', {
-      name: /salvar/i,
-    })
-
-    fireEvent.click(submitButton)
+    submitForm()
 
     await screen.findByText('Perfil alterado com sucesso')
+  })
+
+  it('should render a toast.error if update fails', async () => {
+    const getProfileSpy = new GetProfileSpy()
+    const putProfileSpy = new PutProfileSpy()
+
+    const error = new UnexpectedError()
+    vi.spyOn(putProfileSpy, 'update').mockRejectedValueOnce(error)
+
+    render(
+      <ProfilePage getProfile={getProfileSpy} updateProfile={putProfileSpy} />,
+    )
+
+    submitForm()
+
+    await screen.findByText(error.message)
   })
 })
