@@ -11,6 +11,7 @@ import {
   makeRemoteRegisterUser,
   makeRemoteRegisterArticle,
   makeRemoteGetProfile,
+  makeRemoteUpdateProfile,
 } from '@/main/factories/usecases'
 import {
   ForgotPasswordTemplate,
@@ -73,7 +74,10 @@ export const Router = () => {
             path="/profile"
             element={
               <PrivateRoute>
-                <ProfilePage getProfile={makeRemoteGetProfile()} />
+                <ProfilePage
+                  getProfile={makeRemoteGetProfile()}
+                  updateProfile={makeRemoteUpdateProfile()}
+                />
               </PrivateRoute>
             }
           />

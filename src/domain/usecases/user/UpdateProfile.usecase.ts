@@ -1,7 +1,7 @@
 import type { HttpRemoteResponse } from '@/data/protocols'
 import type { UserModel } from '@/domain/models'
 
-type UpdateProfileParams = {
+export type UpdateProfileParams = {
   name?: string
   image?: string
 }
