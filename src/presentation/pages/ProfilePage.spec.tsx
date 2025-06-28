@@ -1,7 +1,7 @@
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { GetProfileSpy } from '../test'
-import { render, screen, waitFor } from '../test/test-utils'
+import { GetProfileSpy, PutProfileSpy } from '../test'
+import { cleanup, fireEvent, render, screen, waitFor } from '../test/test-utils'
 
 import { ProfilePage } from './ProfilePage'
 
@@ -14,19 +14,25 @@ vi.mock('react-router-dom', async () => ({
 
 type SutTypes = {
   getProfileSpy: GetProfileSpy
+  putProfileSpy: PutProfileSpy
 }
 
 const makeSut = (): SutTypes => {
   const getProfileSpy = new GetProfileSpy()
+  const putProfileSpy = new PutProfileSpy()
 
-  render(<ProfilePage getProfile={getProfileSpy} />)
+  render(
+    <ProfilePage getProfile={getProfileSpy} updateProfile={putProfileSpy} />,
+  )
 
   return {
     getProfileSpy,
+    putProfileSpy,
   }
 }
 
 describe('ProfilePage', () => {
+  beforeEach(cleanup)
   it('should render the fields with returned data from get profile api', async () => {
     const { getProfileSpy } = makeSut()
 
@@ -43,5 +49,26 @@ describe('ProfilePage', () => {
       expect(inputName.value).toBe(name)
       expect(inputSurrname.value).toBe(surrname)
     })
+  })
+
+  it('should render the profile image when a file is selected', async () => {
+    makeSut()
+
+    const file = new File(['image content'], 'image.png', { type: 'image/png' })
+
+    const inputFile = screen.getByLabelText(/inserir imagem de perfil/i)
+
+    fireEvent.change(inputFile, { target: { files: [file] } })
+
+    const selectedImage = (await screen.findByTestId(
+      'selected-image',
+    )) as HTMLImageElement
+
+    await waitFor(() => {
+      expect(selectedImage.src).toBe(
+        `data:image/png;base64,${btoa('image content')}`,
+      )
+    })
+    expect(selectedImage.alt).toBe('foto de perfil')
   })
 })
