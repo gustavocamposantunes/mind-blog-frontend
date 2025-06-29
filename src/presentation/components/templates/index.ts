@@ -1,2 +1,2 @@
-export * from './NewArticleTemplate'
+export * from './AuthTemplate'
 export * from './PageTemplate'
