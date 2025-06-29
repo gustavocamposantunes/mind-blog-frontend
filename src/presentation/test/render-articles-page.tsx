@@ -18,18 +18,6 @@ export const renderArticlesPageWithRouter = (
       path: '/articles',
       Component: ArticlesPageComponent,
     },
-    {
-      path: '/login',
-      Component: () => <div>Login Page</div>,
-    },
-    {
-      path: '/forgot-password',
-      Component: () => <div>Forgot Password Page</div>,
-    },
-    {
-      path: '/',
-      Component: () => <div>Home Page</div>,
-    },
   ])
 
   render(<Stub initialEntries={['/articles']} />)

@@ -12,14 +12,6 @@ export const renderHomePageWithRouter = () => {
       path: '/',
       Component: HomePageComponent,
     },
-    {
-      path: '/login',
-      Component: () => <div>Login Page</div>,
-    },
-    {
-      path: '/forgot-password',
-      Component: () => <div>Forgot Password Page</div>,
-    },
   ])
 
   render(<Stub initialEntries={['/']} />)

@@ -14,7 +14,7 @@ export const renderForgotPasswordPageWithRouter = () => {
     },
     {
       path: '/login',
-      Component: () => <div>Login Page</div>,
+      Component: () => <div data-testid="login-page-mock">Login Page</div>,
     },
   ])
 

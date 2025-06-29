@@ -98,5 +98,9 @@ describe('RegisterUserPage', () => {
 
     expect(loginLink.getAttribute('href')).toBeTruthy()
     expect(loginLink.getAttribute('href')).toContain('/login')
+
+    fireEvent.click(loginLink)
+
+    expect(screen.getByTestId('login-page-mock')).toBeTruthy()
   })
 })

@@ -20,18 +20,6 @@ export const renderProfilePageWithRouter = (
       path: '/profile',
       Component: ProfilePageComponent,
     },
-    {
-      path: '/register',
-      Component: () => <div>Register Page</div>,
-    },
-    {
-      path: '/forgot-password',
-      Component: () => <div>Forgot Password Page</div>,
-    },
-    {
-      path: '/',
-      Component: () => <div>Home Page</div>,
-    },
   ])
 
   render(<Stub initialEntries={['/profile']} />)

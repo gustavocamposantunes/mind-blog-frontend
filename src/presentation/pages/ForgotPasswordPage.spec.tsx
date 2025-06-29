@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 
 import { renderForgotPasswordPageWithRouter } from '../test'
-import { screen } from '../test/test-utils'
+import { fireEvent, screen } from '../test/test-utils'
 
 const mockNavigate = vi.fn()
 
@@ -24,5 +24,9 @@ describe('ForgotPasswordPage', () => {
 
     expect(redirectToLoginLink.getAttribute('href')).toBeTruthy()
     expect(redirectToLoginLink.getAttribute('href')).toContain('/login')
+
+    fireEvent.click(redirectToLoginLink)
+
+    expect(screen.getByTestId('login-page-mock')).toBeTruthy()
   })
 })

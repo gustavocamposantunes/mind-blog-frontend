@@ -20,15 +20,7 @@ export const renderRegisterUserPageWithRouter = (
     },
     {
       path: '/login',
-      Component: () => <div>Login Page</div>,
-    },
-    {
-      path: '/forgot-password',
-      Component: () => <div>Forgot Password Page</div>,
-    },
-    {
-      path: '/',
-      Component: () => <div>Home Page</div>,
+      Component: () => <div data-testid="login-page-mock">Login Page</div>,
     },
   ])
 
