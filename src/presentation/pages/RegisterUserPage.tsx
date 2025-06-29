@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { AuthTemplate } from '../components/templates/AuthTemplate'
@@ -146,7 +146,7 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
           Criar Conta
         </Button>
 
-        <a onClick={() => navigate('/login')}>Já tem cadastro? Clique aqui</a>
+        <Link to="/login">Já tem cadastro? Clique aqui</Link>
       </form>
     </AuthTemplate>
   )

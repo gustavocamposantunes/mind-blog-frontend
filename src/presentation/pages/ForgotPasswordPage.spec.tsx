@@ -1,8 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { fireEvent, render, screen } from '../test/test-utils'
-
-import { ForgotPasswordPage } from './ForgotPasswordPage'
+import { renderForgotPasswordPageWithRouter } from '../test'
+import { screen } from '../test/test-utils'
 
 const mockNavigate = vi.fn()
 
@@ -12,7 +11,7 @@ vi.mock('react-router-dom', async () => ({
 }))
 
 const makeSut = () => {
-  render(<ForgotPasswordPage />)
+  renderForgotPasswordPageWithRouter()
 }
 
 describe('ForgotPasswordPage', () => {
@@ -23,8 +22,7 @@ describe('ForgotPasswordPage', () => {
       /já tem cadastro\? clique aqui/i,
     )
 
-    fireEvent.click(redirectToLoginLink)
-
-    expect(mockNavigate).toHaveBeenCalledWith('/login')
+    expect(redirectToLoginLink.getAttribute('href')).toBeTruthy()
+    expect(redirectToLoginLink.getAttribute('href')).toContain('/login')
   })
 })

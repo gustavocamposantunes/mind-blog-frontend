@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import type { ReactNode } from 'react'
 
@@ -12,10 +12,9 @@ export const MenuItem: React.FC<IMenuItem> = ({
   className,
   children,
 }) => {
-  const navigate = useNavigate()
   return (
     <li className={className}>
-      <a onClick={() => navigate(redirect)}>{children}</a>
+      <Link to={redirect}>{children}</Link>
     </li>
   )
 }

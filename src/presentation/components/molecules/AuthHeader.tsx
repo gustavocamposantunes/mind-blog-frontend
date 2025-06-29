@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import logoDark from '../../assets/logo-dark.svg'
 import { MenuItem } from '../atoms/MenuItem'
@@ -23,9 +23,9 @@ export const AuthHeader = () => {
 
   return (
     <header className="w-full flex justify-between px-[10%] pt-4">
-      <a onClick={() => navigate('/')}>
+      <Link to="/">
         <img src={logoDark} alt="logo" />
-      </a>
+      </Link>
       <nav className="flex items-center">
         <ul className="flex gap-4">
           <MenuItem redirect="/">Home</MenuItem>

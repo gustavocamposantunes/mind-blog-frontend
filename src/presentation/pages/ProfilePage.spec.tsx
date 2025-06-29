@@ -1,9 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { GetProfileSpy, PutProfileSpy } from '../test'
-import { cleanup, fireEvent, render, screen, waitFor } from '../test/test-utils'
-
-import { ProfilePage } from './ProfilePage'
+import {
+  GetProfileSpy,
+  PutProfileSpy,
+  renderProfilePageWithRouter,
+} from '../test'
+import { cleanup, fireEvent, screen, waitFor } from '../test/test-utils'
 
 import { UnexpectedError } from '@/domain/errors'
 
@@ -23,9 +25,7 @@ const makeSut = (): SutTypes => {
   const getProfileSpy = new GetProfileSpy()
   const putProfileSpy = new PutProfileSpy()
 
-  render(
-    <ProfilePage getProfile={getProfileSpy} updateProfile={putProfileSpy} />,
-  )
+  renderProfilePageWithRouter(getProfileSpy, putProfileSpy)
 
   return {
     getProfileSpy,
@@ -107,9 +107,7 @@ describe('ProfilePage', () => {
     const error = new UnexpectedError()
     vi.spyOn(putProfileSpy, 'update').mockRejectedValueOnce(error)
 
-    render(
-      <ProfilePage getProfile={getProfileSpy} updateProfile={putProfileSpy} />,
-    )
+    renderProfilePageWithRouter(getProfileSpy, putProfileSpy)
 
     submitForm()
 

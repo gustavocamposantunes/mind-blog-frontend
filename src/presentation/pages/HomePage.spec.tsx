@@ -1,8 +1,6 @@
 import { describe, it, vi } from 'vitest'
 
-import { render } from '../test/test-utils'
-
-import { HomePage } from './HomePage'
+import { renderHomePageWithRouter } from '../test'
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
@@ -10,7 +8,7 @@ vi.mock('react-router-dom', async () => ({
 }))
 
 const makeSut = () => {
-  render(<HomePage />)
+  renderHomePageWithRouter()
 }
 
 describe('HomePage', () => {

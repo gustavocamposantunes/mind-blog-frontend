@@ -2,9 +2,8 @@ import { faker } from '@faker-js/faker'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { RegisterArticleSpy } from '../test'
-import { cleanup, fireEvent, render, screen, waitFor } from '../test/test-utils'
-
-import { NewArticlePage } from './NewArticlePage'
+import { renderNewArticlePageWithRouter } from '../test'
+import { cleanup, fireEvent, screen, waitFor } from '../test/test-utils'
 
 import { UnexpectedError } from '@/domain/errors'
 
@@ -22,7 +21,7 @@ type SutTypes = {
 const makeSut = (): SutTypes => {
   const registerArticleSpy = new RegisterArticleSpy()
 
-  render(<NewArticlePage registerArticle={registerArticleSpy} />)
+  renderNewArticlePageWithRouter(registerArticleSpy)
 
   return {
     registerArticleSpy,
@@ -55,7 +54,7 @@ describe('NewArticlePage', () => {
 
     vi.spyOn(registerArticleSpy, 'register').mockRejectedValueOnce(error)
 
-    render(<NewArticlePage registerArticle={registerArticleSpy} />)
+    renderNewArticlePageWithRouter(registerArticleSpy)
 
     setupSubmit()
 

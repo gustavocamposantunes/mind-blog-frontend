@@ -1,10 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { ListArticlesSpy } from '../test'
-import { cleanup, render, screen } from '../test/test-utils'
+import { ListArticlesSpy, renderArticlesPageWithRouter } from '../test'
+import { cleanup, screen } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
-
-import { ArticlesPage } from './ArticlesPage'
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
@@ -18,7 +16,8 @@ type SutTypes = {
 const makeSut = (): SutTypes => {
   const listArticlesListSpy = new ListArticlesSpy()
 
-  render(<ArticlesPage listArticles={listArticlesListSpy} />)
+  renderArticlesPageWithRouter(listArticlesListSpy)
+
   return {
     listArticlesListSpy,
   }

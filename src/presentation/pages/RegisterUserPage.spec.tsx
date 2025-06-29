@@ -1,10 +1,8 @@
 import { faker } from '@faker-js/faker'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { RegisterUserSpy } from '../test'
-import { cleanup, fireEvent, render, screen, waitFor } from '../test/test-utils'
-
-import { RegisterUserPage } from './RegisterUserPage'
+import { RegisterUserSpy, renderRegisterUserPageWithRouter } from '../test'
+import { cleanup, fireEvent, screen, waitFor } from '../test/test-utils'
 
 import { UnexpectedError } from '@/domain/errors'
 
@@ -22,7 +20,7 @@ type SutTypes = {
 const makeSut = (): SutTypes => {
   const registerUserSpy = new RegisterUserSpy()
 
-  render(<RegisterUserPage registerUser={registerUserSpy} />)
+  renderRegisterUserPageWithRouter(registerUserSpy)
 
   return {
     registerUserSpy,
@@ -60,7 +58,7 @@ describe('RegisterUserPage', () => {
     const error = new UnexpectedError()
     vi.spyOn(registerUserSpy, 'register').mockRejectedValueOnce(error)
 
-    render(<RegisterUserPage registerUser={registerUserSpy} />)
+    renderRegisterUserPageWithRouter(registerUserSpy)
 
     setupSubmit()
 
@@ -93,15 +91,12 @@ describe('RegisterUserPage', () => {
     })
   })
 
-  it("Should redirect to LoginPage when click on 'Já tem cadastro?'", async () => {
+  it("Should redirect to LoginPage when click on 'Já tem cadastro?'", () => {
     makeSut()
 
     const loginLink = screen.getByText(/já tem cadastro\? clique aqui/i)
 
-    fireEvent.click(loginLink)
-
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/login')
-    })
+    expect(loginLink.getAttribute('href')).toBeTruthy()
+    expect(loginLink.getAttribute('href')).toContain('/login')
   })
 })

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { AuthTemplate } from '../components/templates/AuthTemplate'
 
@@ -7,8 +7,6 @@ import { Input } from '@/presentation/components/ui/input'
 import { Label } from '@/presentation/components/ui/label'
 
 export const ForgotPasswordPage = () => {
-  const navigate = useNavigate()
-
   return (
     <AuthTemplate>
       <form
@@ -44,7 +42,7 @@ export const ForgotPasswordPage = () => {
         >
           Alterar
         </Button>
-        <a onClick={() => navigate('/login')}>Já tem cadastro? Clique aqui</a>
+        <Link to="/login">Já tem cadastro? Clique aqui</Link>
       </form>
     </AuthTemplate>
   )

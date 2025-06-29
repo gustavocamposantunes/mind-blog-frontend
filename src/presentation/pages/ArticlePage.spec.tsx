@@ -1,10 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { GetArticleByIdSpy } from '../test'
-import { cleanup, render, screen } from '../test/test-utils'
+import { GetArticleByIdSpy, renderArticlePageWithRouter } from '../test'
+import { cleanup, screen } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
-
-import { ArticlePage } from './ArticlePage'
 
 import { UnexpectedError } from '@/domain/errors'
 
@@ -20,7 +18,7 @@ type SutTypes = {
 const makeSut = (): SutTypes => {
   const getArticleByIdSpy = new GetArticleByIdSpy()
 
-  render(<ArticlePage getArticletById={getArticleByIdSpy} />)
+  renderArticlePageWithRouter(getArticleByIdSpy)
 
   return {
     getArticleByIdSpy,
@@ -43,7 +41,7 @@ describe('ArticlePage', () => {
     const error = new UnexpectedError()
     vi.spyOn(getArticleByIdSpy, 'getById').mockRejectedValueOnce(error)
 
-    render(<ArticlePage getArticletById={getArticleByIdSpy} />)
+    renderArticlePageWithRouter(getArticleByIdSpy)
 
     const errorWrapper = await screen.findByTestId('error-wrapper')
     expect(errorWrapper.textContent).toBe('Erro inesperado')
