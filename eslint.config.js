@@ -6,11 +6,12 @@ import tseslint from 'typescript-eslint'
 import pluginImport from 'eslint-plugin-import'
 import prettierPlugin from 'eslint-plugin-prettier'
 import prettierConfig from 'eslint-config-prettier'
+import jsxA11y from 'eslint-plugin-jsx-a11y'
 
 export default tseslint.config(
   { ignores: ['dist', 'coverage'] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended, prettierConfig],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended, prettierConfig, jsxA11y],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
