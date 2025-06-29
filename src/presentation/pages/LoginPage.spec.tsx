@@ -43,7 +43,7 @@ describe('LoginPage', () => {
     fireEvent.click(submitButton)
   }
 
-  it.only('should render a tooltip.error with a message if the authentication fails', async () => {
+  it('should render a tooltip.error with a message if the authentication fails', async () => {
     const authenticateUserSpy = new AuthenticateUserSpy()
 
     const error = new UnexpectedError()
@@ -84,8 +84,6 @@ describe('LoginPage', () => {
     const registerUserLink = screen.getByText(/novo usuário\? clique aqui/i)
 
     fireEvent.click(registerUserLink)
-
-    screen.logTestingPlaygroundURL()
 
     expect(registerUserLink.getAttribute('href')).toBeTruthy()
     expect(registerUserLink.getAttribute('href')).toContain('/register')
