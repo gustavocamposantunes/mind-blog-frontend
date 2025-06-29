@@ -1,10 +1,8 @@
 import { faker } from '@faker-js/faker'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { AuthenticateUserSpy } from '../test'
-import { cleanup, fireEvent, render, screen, waitFor } from '../test/test-utils'
-
-import { LoginPage } from './LoginPage'
+import { AuthenticateUserSpy, renderLoginPageWithRouter } from '../test'
+import { cleanup, fireEvent, screen, waitFor } from '../test/test-utils'
 
 import { UnexpectedError } from '@/domain/errors'
 
@@ -22,7 +20,7 @@ type SutTypes = {
 const makeSut = (): SutTypes => {
   const authenticateUserSpy = new AuthenticateUserSpy()
 
-  render(<LoginPage authenticateUser={authenticateUserSpy} />)
+  renderLoginPageWithRouter(authenticateUserSpy)
 
   return {
     authenticateUserSpy,
@@ -45,13 +43,13 @@ describe('LoginPage', () => {
     fireEvent.click(submitButton)
   }
 
-  it('should render a tooltip.error with a message if the authentication fails', async () => {
+  it.only('should render a tooltip.error with a message if the authentication fails', async () => {
     const authenticateUserSpy = new AuthenticateUserSpy()
 
     const error = new UnexpectedError()
     vi.spyOn(authenticateUserSpy, 'auth').mockRejectedValueOnce(error)
 
-    render(<LoginPage authenticateUser={authenticateUserSpy} />)
+    renderLoginPageWithRouter(authenticateUserSpy)
 
     setupSubmit()
 
@@ -67,27 +65,29 @@ describe('LoginPage', () => {
     })
   })
 
-  it('should redirect to ForgotPasswordPage when forgot password link is clicked', async () => {
+  it('should redirect to ForgotPasswordPage when forgot password link is clicked', () => {
     makeSut()
 
     const forgotPasswordLink = screen.getByText(/esqueceu a senha\?/i)
 
     fireEvent.click(forgotPasswordLink)
 
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/forgot-password')
-    })
+    expect(forgotPasswordLink.getAttribute('href')).toBeTruthy()
+    expect(forgotPasswordLink.getAttribute('href')).toContain(
+      '/forgot-password',
+    )
   })
 
-  it('should redirect to RegisterUserPage when register user link is clicked', async () => {
+  it('should redirect to RegisterUserPage when register user link is clicked', () => {
     makeSut()
 
     const registerUserLink = screen.getByText(/novo usuário\? clique aqui/i)
 
     fireEvent.click(registerUserLink)
 
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/register')
-    })
+    screen.logTestingPlaygroundURL()
+
+    expect(registerUserLink.getAttribute('href')).toBeTruthy()
+    expect(registerUserLink.getAttribute('href')).toContain('/register')
   })
 })

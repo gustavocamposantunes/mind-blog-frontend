@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { AuthTemplate } from '../components/templates/AuthTemplate'
+import { AuthTemplate } from '../components/templates'
 import { useAuthenticateUser } from '../hooks'
 import { useAuthStore } from '../store/auth-store'
 
@@ -85,18 +85,18 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
           />
         </div>
         <div className="w-full flex justify-end">
-          <a
-            onClick={() => navigate('/forgot-password')}
+          <Link
+            to="/forgot-password"
             className="text-sm text-stone-950 hover:underline"
           >
             Esqueceu a senha?
-          </a>
+          </Link>
         </div>
         <Button className="mt-4 w-full py-4 auth-btn" type="submit">
           Entrar
         </Button>
 
-        <a onClick={() => navigate('/register')}>Novo usuário? Clique aqui</a>
+        <Link to="/register">Novo usuário? Clique aqui</Link>
       </form>
     </AuthTemplate>
   )
