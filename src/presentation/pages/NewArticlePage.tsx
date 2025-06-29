@@ -10,7 +10,7 @@ import { toBase64 } from '../utils/toBase64'
 
 import type { RegisterArticleUseCase } from '@/domain/usecases'
 
-import { NewArticleTemplate } from '@/presentation/components/templates'
+import { PageTemplate } from '@/presentation/components/templates'
 import { Label } from '@/presentation/components/ui/label'
 import { Textarea } from '@/presentation/components/ui/textarea'
 
@@ -52,7 +52,7 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
   }
 
   return (
-    <NewArticleTemplate>
+    <PageTemplate>
       <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
         <FormHeaderAction title="Novo Artigo" />
 
@@ -117,6 +117,6 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
           </div>
         </section>
       </form>
-    </NewArticleTemplate>
+    </PageTemplate>
   )
 }

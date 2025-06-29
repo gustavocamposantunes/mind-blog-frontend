@@ -7,7 +7,7 @@ import type { GetArticleByIdUseCase } from '@/domain/usecases'
 
 import { CustomSkeleton } from '@/presentation/components/atoms/CustomSkeleton'
 import { FavouriteAvatarPost } from '@/presentation/components/atoms/FavouriteAvatarPost'
-import { ArticleTemplate } from '@/presentation/components/templates'
+import { PageTemplate } from '@/presentation/components/templates'
 
 type ArticlePageProps = {
   getArticletById: GetArticleByIdUseCase
@@ -23,7 +23,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
   )
 
   return (
-    <ArticleTemplate>
+    <PageTemplate>
       {isLoading ? (
         <span className="flex flex-col gap-4" data-testid="skeleton-group">
           <CustomSkeleton />
@@ -51,6 +51,6 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
           <p className="p-4">{data?.data?.content}</p>
         </article>
       )}
-    </ArticleTemplate>
+    </PageTemplate>
   )
 }

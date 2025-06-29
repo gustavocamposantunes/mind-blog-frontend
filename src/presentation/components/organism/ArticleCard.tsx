@@ -20,7 +20,7 @@ interface IArticleCard {
   content: string
   image?: string
   author_id?: number
-  publishedAt: string
+  publishedAt?: string
   className?: string
   redirect?: string
   favourite?: string

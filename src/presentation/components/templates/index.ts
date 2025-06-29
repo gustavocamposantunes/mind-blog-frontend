@@ -1,5 +1,2 @@
-export * from './ArticlesTemplate'
-export * from './HomeTemplate'
 export * from './NewArticleTemplate'
-export * from './ArticleTemplate'
-export * from './ProfileTemplate'
+export * from './PageTemplate'

@@ -4,7 +4,7 @@ import type { ListArticlesUseCase } from '@/domain/usecases'
 
 import { CustomSkeleton } from '@/presentation/components/atoms/CustomSkeleton'
 import { ArticleCard } from '@/presentation/components/organism/ArticleCard'
-import { ArticlesTemplate } from '@/presentation/components/templates'
+import { PageTemplate } from '@/presentation/components/templates'
 
 type ArticlessPageProps = {
   listArticles: ListArticlesUseCase
@@ -16,7 +16,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   const { data, isLoading } = useArticlesList(listArticles)
 
   return (
-    <ArticlesTemplate>
+    <PageTemplate>
       <section className="grid grid-cols-3 gap-4">
         {isLoading ? (
           <>
@@ -36,6 +36,6 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
           />
         ))}
       </section>
-    </ArticlesTemplate>
+    </PageTemplate>
   )
 }

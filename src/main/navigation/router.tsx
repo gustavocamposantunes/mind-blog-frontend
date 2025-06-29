@@ -13,7 +13,6 @@ import {
   makeRemoteGetProfile,
   makeRemoteUpdateProfile,
 } from '@/main/factories/usecases'
-import { HomeTemplate } from '@/presentation/components/templates'
 import {
   ArticlesPage,
   ArticlePage,
@@ -22,6 +21,7 @@ import {
   NewArticlePage,
   ProfilePage,
   ForgotPasswordPage,
+  HomePage,
 } from '@/presentation/pages'
 import { useAuthStore } from '@/presentation/store/auth-store'
 
@@ -36,7 +36,7 @@ export const Router = () => {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomeTemplate />} />
+          <Route path="/" element={<HomePage />} />
           <Route
             path="/articles"
             element={<ArticlesPage listArticles={makeRemoteListArticles()} />}

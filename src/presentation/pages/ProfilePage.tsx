@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { FormHeaderAction } from '../components/molecules/FormHeaderAction'
-import { ProfileTemplate } from '../components/templates'
+import { PageTemplate } from '../components/templates'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { useGetProfile, useUpdateProfile } from '../hooks'
@@ -65,7 +65,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   }
 
   return (
-    <ProfileTemplate>
+    <PageTemplate>
       <form className="w-full flex flex-col gap-6" onSubmit={handleSubmit}>
         <FormHeaderAction title="Editar Perfil" />
         <section className="mt-4 flex flex-col gap-4">
@@ -124,6 +124,6 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </div>
         </section>
       </form>
-    </ProfileTemplate>
+    </PageTemplate>
   )
 }
