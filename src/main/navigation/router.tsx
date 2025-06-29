@@ -13,10 +13,7 @@ import {
   makeRemoteGetProfile,
   makeRemoteUpdateProfile,
 } from '@/main/factories/usecases'
-import {
-  ForgotPasswordTemplate,
-  HomeTemplate,
-} from '@/presentation/components/templates'
+import { HomeTemplate } from '@/presentation/components/templates'
 import {
   ArticlesPage,
   ArticlePage,
@@ -24,6 +21,7 @@ import {
   LoginPage,
   NewArticlePage,
   ProfilePage,
+  ForgotPasswordPage,
 } from '@/presentation/pages'
 import { useAuthStore } from '@/presentation/store/auth-store'
 
@@ -61,7 +59,7 @@ export const Router = () => {
               <RegisterUserPage registerUser={makeRemoteRegisterUser()} />
             }
           />
-          <Route path="/forgot-password" element={<ForgotPasswordTemplate />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route
             path="/article/new"
             element={

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { LoginTemplate } from '../components/templates'
+import { AuthTemplate } from '../components/templates/AuthTemplate'
 import { useAuthenticateUser } from '../hooks'
 import { useAuthStore } from '../store/auth-store'
 
@@ -43,7 +43,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
   }
 
   return (
-    <LoginTemplate>
+    <AuthTemplate>
       <form
         onSubmit={handleSubmit}
         action=""
@@ -98,6 +98,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
 
         <a onClick={() => navigate('/register')}>Novo usuário? Clique aqui</a>
       </form>
-    </LoginTemplate>
+    </AuthTemplate>
   )
 }

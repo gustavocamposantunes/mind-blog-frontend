@@ -2,12 +2,12 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { AuthTemplate } from '../components/templates/AuthTemplate'
 import { useRegisterUser } from '../hooks'
 import { useAuthStore } from '../store/auth-store'
 
 import type { RegisterUserUseCase } from '@/domain/usecases'
 
-import { RegisterUserTemplate } from '@/presentation/components/templates'
 import { Button } from '@/presentation/components/ui/button'
 import { Input } from '@/presentation/components/ui/input'
 import { Label } from '@/presentation/components/ui/label'
@@ -64,7 +64,7 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
   }
 
   return (
-    <RegisterUserTemplate>
+    <AuthTemplate>
       <form
         onSubmit={handleSubmit}
         className="w-full flex items-center flex-col gap-6 px-[20%]"
@@ -148,6 +148,6 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
 
         <a onClick={() => navigate('/login')}>Já tem cadastro? Clique aqui</a>
       </form>
-    </RegisterUserTemplate>
+    </AuthTemplate>
   )
 }

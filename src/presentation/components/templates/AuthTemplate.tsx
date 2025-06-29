@@ -2,11 +2,11 @@ import logoLight from '../../assets/logo-light.svg'
 
 import type { ReactNode } from 'react'
 
-interface ILoginTemplate {
+interface IAuthTemplate {
   children: ReactNode
 }
 
-export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
+export const AuthTemplate: React.FC<IAuthTemplate> = ({ children }) => (
   <main className="h-screen w-screen flex">
     <div className="h-full flex-1 flex items-center justify-center flex-col bg-stone-950">
       <img src={logoLight} alt="logoLight mind blog" />
