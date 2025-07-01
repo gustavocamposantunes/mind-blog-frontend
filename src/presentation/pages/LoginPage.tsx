@@ -3,10 +3,9 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { FormHeader } from '../components/atoms'
+import { AuthForm } from '../components/atoms/AuthForm'
 import { TextField } from '../components/molecules'
-import { AuthTemplate } from '../components/templates'
-import { Separator } from '../components/ui/separator'
+import { LoginTemplate } from '../components/templates/LoginTemplate'
 import { useAuthenticateUser } from '../hooks'
 import { useAuthStore } from '../store/auth-store'
 
@@ -29,7 +28,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
   const { mutate } = useAuthenticateUser(authenticateUser)
   const { setCurrentUser } = useAuthStore()
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const onSubmit = (event: React.FormEvent) => {
     event.preventDefault()
     mutate(authParams, {
       onSuccess: (response) => {
@@ -45,16 +44,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
   }
 
   return (
-    <AuthTemplate>
-      <form
-        onSubmit={handleSubmit}
-        className="w-full flex lg:text-center flex-col px-8 md:px-24 lg:px-28 xl:px-44"
-      >
-        <FormHeader
-          title="Conectar"
-          description="Acesse sua conta para acompanhar e publicar artigos exclusivos sobre
-          inovação e tecnologia."
-        />
+    <LoginTemplate>
+      <AuthForm onSubmit={onSubmit}>
         <TextField
           className="mt-8"
           label="Email"
@@ -83,20 +74,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
             })
           }}
         />
+
         <Link to="/forgot-password" className="text-end mt-4">
           Esqueceu a senha?
         </Link>
+
         <Button className="mt-4 w-full py-6" type="submit">
           Entrar
           <LogIn />
         </Button>
-
-        <Separator className="my-8" />
-
-        <Link className="text-center" to="/register">
-          Novo usuário? Clique aqui
-        </Link>
-      </form>
-    </AuthTemplate>
+      </AuthForm>
+    </LoginTemplate>
   )
 }
