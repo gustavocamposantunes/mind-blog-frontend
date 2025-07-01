@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { FormHeader } from '../components/atoms'
-import { CustomInput } from '../components/molecules'
+import { TextField } from '../components/molecules'
 import { AuthTemplate } from '../components/templates'
 import { Separator } from '../components/ui/separator'
 import { useAuthenticateUser } from '../hooks'
@@ -55,7 +55,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
           description="Acesse sua conta para acompanhar e publicar artigos exclusivos sobre
           inovação e tecnologia."
         />
-        <CustomInput
+        <TextField
           className="mt-8"
           label="Email"
           type="email"
@@ -69,7 +69,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
             })
           }}
         />
-        <CustomInput
+        <TextField
           className="mt-8"
           label="Senha"
           type="password"

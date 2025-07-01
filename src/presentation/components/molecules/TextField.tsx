@@ -3,11 +3,11 @@ import React from 'react'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 
-interface ICustomInput extends React.ComponentProps<'input'> {
+interface ITextField extends React.ComponentProps<'input'> {
   label: string
 }
 
-export const CustomInput: React.FC<ICustomInput> = ({
+export const TextField: React.FC<ITextField> = ({
   label,
   className,
   ...props

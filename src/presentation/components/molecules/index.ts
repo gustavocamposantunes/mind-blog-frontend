@@ -1,4 +1,4 @@
 export * from './AuthHeader'
 export * from './CustomAvatar'
-export * from './CustomInput'
+export * from './TextField'
 export * from './FormHeaderAction'
