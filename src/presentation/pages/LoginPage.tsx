@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { FormHeader } from '../components/atoms'
 import { CustomInput } from '../components/molecules'
 import { AuthTemplate } from '../components/templates'
 import { Separator } from '../components/ui/separator'
@@ -49,11 +50,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
         onSubmit={handleSubmit}
         className="w-full flex lg:text-center flex-col px-8 md:px-24 lg:px-28 xl:px-44"
       >
-        <h2 className="text-2xl font-bold">Conectar</h2>
-        <p className="mt-1 text-lg">
-          Acesse sua conta para acompanhar e publicar artigos exclusivos sobre
-          inovação e tecnologia.
-        </p>
+        <FormHeader
+          title="Conectar"
+          description="Acesse sua conta para acompanhar e publicar artigos exclusivos sobre
+          inovação e tecnologia."
+        />
         <CustomInput
           className="mt-8"
           label="Email"
