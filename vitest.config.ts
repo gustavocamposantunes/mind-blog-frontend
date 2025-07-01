@@ -17,6 +17,8 @@ export default defineConfig({
         'eslint.config.js',
         'vite.config.ts',
         'vitest.config.ts',
+        '.storybook',
+        'src/stories',
       ],
       thresholds: {
         global: {
