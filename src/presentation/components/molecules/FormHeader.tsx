@@ -2,11 +2,11 @@ import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/presentation/components/ui/button'
 
-interface IFormHeaderAction {
+interface IFormHeader {
   title: string
 }
 
-export const FormHeaderAction: React.FC<IFormHeaderAction> = ({ title }) => {
+export const FormHeader: React.FC<IFormHeader> = ({ title }) => {
   const navigate = useNavigate()
   return (
     <section className="flex justify-between w-full">

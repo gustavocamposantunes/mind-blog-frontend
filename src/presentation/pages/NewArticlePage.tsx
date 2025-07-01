@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { FormHeaderAction } from '../components/molecules/FormHeaderAction'
+import { FormHeader } from '../components/molecules'
 import { Input } from '../components/ui/input'
 import { useRegisterArticle } from '../hooks/useRegisterArticle'
 import { useAuthStore } from '../store/auth-store'
@@ -54,7 +54,7 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
   return (
     <PageTemplate>
       <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6">
-        <FormHeaderAction title="Novo Artigo" />
+        <FormHeader title="Novo Artigo" />
 
         <section className="mt-4 flex flex-col gap-4">
           <div>
