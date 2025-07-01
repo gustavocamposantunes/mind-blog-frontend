@@ -1,16 +1,17 @@
+import { LogIn } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { CustomInput } from '../components/molecules'
 import { AuthTemplate } from '../components/templates'
+import { Separator } from '../components/ui/separator'
 import { useAuthenticateUser } from '../hooks'
 import { useAuthStore } from '../store/auth-store'
 
 import type { AuthenticateUserUseCase } from '@/domain/usecases/auth/authenticate-user.usecase'
 
 import { Button } from '@/presentation/components/ui/button'
-import { Input } from '@/presentation/components/ui/input'
-import { Label } from '@/presentation/components/ui/label'
 
 type LoginPageProps = {
   authenticateUser: AuthenticateUserUseCase
@@ -46,57 +47,54 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
     <AuthTemplate>
       <form
         onSubmit={handleSubmit}
-        action=""
-        className="w-full flex items-center flex-col gap-6 px-[20%]"
+        className="w-full flex lg:text-center flex-col px-8 md:px-24 lg:px-28 xl:px-44"
       >
-        <h2 className="text-stone-950 text-[24px]">Conectar</h2>
-        <div className="grid w-full items-center gap-1.5">
-          <Label htmlFor="email" className="text-stone-950">
-            Email
-          </Label>
-          <Input
-            type="email"
-            id="email"
-            placeholder="Digite seu email"
-            value={authParams.email}
-            onChange={(event) => {
-              setAuthParams({
-                ...authParams,
-                email: event.target.value,
-              })
-            }}
-          />
-        </div>
-        <div className="grid w-full items-center gap-1.5">
-          <Label htmlFor="password" className="text-stone-950">
-            Senha
-          </Label>
-          <Input
-            type="password"
-            id="password"
-            placeholder="Digite sua senha"
-            value={authParams.password}
-            onChange={(event) => {
-              setAuthParams({
-                ...authParams,
-                password: event.target.value,
-              })
-            }}
-          />
-        </div>
-        <div className="w-full flex justify-end">
-          <Link
-            to="/forgot-password"
-            className="text-sm text-stone-950 hover:underline"
-          >
-            Esqueceu a senha?
-          </Link>
-        </div>
-        <Button className="mt-4 w-full py-4 auth-btn" type="submit">
+        <h2 className="text-2xl font-bold">Conectar</h2>
+        <p className="mt-1 text-lg">
+          Acesse sua conta para acompanhar e publicar artigos exclusivos sobre
+          inovação e tecnologia.
+        </p>
+        <CustomInput
+          className="mt-8"
+          label="Email"
+          type="email"
+          id="email"
+          placeholder="Digite seu email"
+          value={authParams.email}
+          onChange={(event) => {
+            setAuthParams({
+              ...authParams,
+              email: event.target.value,
+            })
+          }}
+        />
+        <CustomInput
+          className="mt-8"
+          label="Senha"
+          type="password"
+          id="password"
+          placeholder="Digite sua senha"
+          value={authParams.password}
+          onChange={(event) => {
+            setAuthParams({
+              ...authParams,
+              password: event.target.value,
+            })
+          }}
+        />
+        <Link to="/forgot-password" className="text-end mt-4">
+          Esqueceu a senha?
+        </Link>
+        <Button className="mt-4 w-full py-6" type="submit">
           Entrar
+          <LogIn />
         </Button>
 
-        <Link to="/register">Novo usuário? Clique aqui</Link>
+        <Separator className="my-8" />
+
+        <Link className="text-center" to="/register">
+          Novo usuário? Clique aqui
+        </Link>
       </form>
     </AuthTemplate>
   )

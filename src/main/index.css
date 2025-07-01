@@ -60,7 +60,6 @@ body,
 a {
   color: var(--primary);
   text-decoration: inherit;
-  font-size: 14px;
   cursor: pointer;
 }
 a:hover {
@@ -87,6 +86,7 @@ button {
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
+  background-color: #0c0a09;
 }
 button:hover {
   border-color: #646cff;
@@ -99,12 +99,18 @@ input {
   color: black;
 }
 
+h1,
+h2,
+h3,
+h4,
+p {
+  color: #0c0a09;
+}
 .auth-btn {
   background-color: #1a1a1a;
-  padding: 10px 16px;
-  border-radius: 16px;
+  padding: 30px 16px;
+    border-radius: 6px;
 }
-
 .irish-grove-font {
   font-family: "Irish Grover", system-ui;
   font-weight: 400;
