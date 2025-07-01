@@ -1,7 +1,7 @@
-import type { AuthenticateUserModel } from '@/domain/models/AuthenticateUserModel'
-import type { ManageUserSessionUseCase } from '@/domain/usecases/auth/ManageUserSessionUseCase'
+import type { AuthenticateUserModel } from '@/domain/models/authenticate-user-model'
+import type { ManageUserSessionUseCase } from '@/domain/usecases/auth/manage-user-session.usecase'
 
-import { currentUserStorage } from '@/infra/storage/LocalStorageCurrentUserAdapter'
+import { currentUserStorage } from '@/infra/storage/local-storage-current-user-adapter'
 
 export class LocalManageUserSession implements ManageUserSessionUseCase {
   set(account: AuthenticateUserModel): void {

@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { describe, expect, it } from 'vitest'
 
-import { RemoteRegisterArticle } from './RemoteRegisterArticle'
+import { RemoteRegisterArticle } from './remote-register-article'
 
 import type { RegisterArticleParams } from '@/domain/usecases'
 

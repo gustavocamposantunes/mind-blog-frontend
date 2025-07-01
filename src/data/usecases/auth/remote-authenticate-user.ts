@@ -1,11 +1,11 @@
 import { HttpStatusCode, type HttpPostClient } from '../../protocols'
 
-import type { HttpRemoteResponse } from '../../protocols/http/HttpRemoteResponse'
+import type { HttpRemoteResponse } from '../../protocols/http/http-remote-response'
 import type { AuthenticateUserModel } from '@/domain/models'
 import type {
   AuthenticateUserUseCase,
   AuthParams,
-} from '@/domain/usecases/auth/AuthenticateUser.usecase'
+} from '@/domain/usecases/auth/authenticate-user.usecase'
 
 import {
   InternalServerError,

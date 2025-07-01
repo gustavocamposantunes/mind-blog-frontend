@@ -1,4 +1,4 @@
-import type { AuthenticateUserModel } from '@/domain/models/AuthenticateUserModel'
+import type { AuthenticateUserModel } from '@/domain/models/authenticate-user-model'
 
 const key = 'account'
 

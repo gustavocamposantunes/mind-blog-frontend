@@ -1,2 +1,2 @@
-export * from './makeApiUrl'
-export * from './makeAxiosHttpClient'
+export * from './make-api-url'
+export * from './make-axios-http-client'

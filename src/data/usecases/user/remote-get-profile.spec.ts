@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { describe, expect, it } from 'vitest'
 
-import { RemoteGetProfile } from './RemoteGetProfile'
+import { RemoteGetProfile } from './remote-get-profile'
 
 import { HttpGetClientSpy } from '@/data/test/mock-http-client'
 import { mockUser } from '@/domain/test'

@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import type {
   UpdateProfileParams,
   UpdateProfileUseCase,
-} from '@/domain/usecases/user/UpdateProfile.usecase'
+} from '@/domain/usecases/user/update-profile.usecase'
 
 export const useUpdateProfile = (
   token: string,

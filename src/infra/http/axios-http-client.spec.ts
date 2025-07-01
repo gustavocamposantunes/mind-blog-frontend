@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { mockHttpResponse } from '../test'
 
-import { AxiosHttpClient } from './AxiosHttpClient'
+import { AxiosHttpClient } from './axios-http-client'
 
 import { mockGetRequest, mockHttpRequest } from '@/data/test'
 

@@ -10,7 +10,7 @@ import { useAuthStore } from '../store/auth-store'
 import { toBase64 } from '../utils/toBase64'
 
 import type { GetProfileUseCase } from '@/domain/usecases'
-import type { UpdateProfileUseCase } from '@/domain/usecases/user/UpdateProfile.usecase'
+import type { UpdateProfileUseCase } from '@/domain/usecases/user/update-profile.usecase'
 
 type ProfilePageProps = {
   getProfile: GetProfileUseCase

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { LocalManageUserSession } from './LocalManageUserSession'
+import { LocalManageUserSession } from './local-manage-user-session'
 
 import { mockAuthenticateUserModel } from '@/domain/test'
 

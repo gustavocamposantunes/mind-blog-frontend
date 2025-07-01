@@ -3,7 +3,7 @@ import type { UserModel } from '@/domain/models'
 import type {
   UpdateProfileParams,
   UpdateProfileUseCase,
-} from '@/domain/usecases/user/UpdateProfile.usecase'
+} from '@/domain/usecases/user/update-profile.usecase'
 
 import { mockUser } from '@/domain/test'
 

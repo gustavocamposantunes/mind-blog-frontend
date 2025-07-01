@@ -1,4 +1,4 @@
-import type { AuthenticateUserModel } from '../../models/AuthenticateUserModel'
+import type { AuthenticateUserModel } from '../../models/authenticate-user-model'
 
 export interface ManageUserSessionUseCase {
   set(account: AuthenticateUserModel): void

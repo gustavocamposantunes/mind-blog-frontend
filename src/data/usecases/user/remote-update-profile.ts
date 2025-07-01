@@ -1,5 +1,5 @@
 import type { UserModel } from '@/domain/models'
-import type { UpdateProfileUseCase } from '@/domain/usecases/user/UpdateProfile.usecase'
+import type { UpdateProfileUseCase } from '@/domain/usecases/user/update-profile.usecase'
 
 import {
   HttpStatusCode,
