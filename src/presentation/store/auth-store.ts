@@ -8,7 +8,7 @@ const manageUserSession = new LocalManageUserSession()
 
 type AuthState = {
   accessToken: string
-  user: { id: number; name: string; email: string }
+  user: { id: number; name: string; email: string; image?: string }
 }
 
 export type AuthStore = AuthState & {

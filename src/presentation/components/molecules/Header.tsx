@@ -55,7 +55,7 @@ export const Header: React.FC<IHeader> = ({ store }) => {
           <span className="ml-8">
             <DropdownMenu>
               <DropdownMenuTrigger className="bg-white!">
-                <CustomAvatar />
+                <CustomAvatar src={store.user.image} />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => navigate('/profile')}>
