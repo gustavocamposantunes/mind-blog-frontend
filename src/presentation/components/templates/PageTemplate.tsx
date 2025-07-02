@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { AuthHeader } from '@/presentation/components/molecules/AuthHeader'
+import { Header } from '@/presentation/components/molecules'
 
 interface IPageTemplate {
   children: ReactNode
@@ -8,7 +8,7 @@ interface IPageTemplate {
 
 export const PageTemplate: React.FC<IPageTemplate> = ({ children }) => (
   <>
-    <AuthHeader />
+    <Header />
     <main className="px-4 md:px-[10%] mt-8">{children}</main>
   </>
 )

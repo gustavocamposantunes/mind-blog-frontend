@@ -1,4 +1,4 @@
-export * from './AuthHeader'
+export * from './Header'
 export * from './AuthSection'
 export * from './CustomAvatar'
 export * from './TextField'

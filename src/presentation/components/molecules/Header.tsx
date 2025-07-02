@@ -14,7 +14,7 @@ import {
 } from '@/presentation/components/ui/dropdown-menu'
 import { useAuthStore } from '@/presentation/store/auth-store'
 
-export const AuthHeader = () => {
+export const Header = () => {
   const navigate = useNavigate()
 
   const accessToken = useAuthStore((state) => state.accessToken)
