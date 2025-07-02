@@ -68,7 +68,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
       <CardContent>
         <CardDescription>{content.slice(0, 222)}</CardDescription>
       </CardContent>
-      <CardFooter className={`flex justify-between`}>
+      <CardFooter className={`flex justify-between mt-auto`}>
         <p data-testid="published-at">
           Por <b>John Doe</b> - {formatterdDate}
         </p>

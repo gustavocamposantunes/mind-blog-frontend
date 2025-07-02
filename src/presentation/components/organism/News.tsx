@@ -1,5 +1,6 @@
-export const News = () => (
-  <article className="p-4 col-span-1 bg-stone-950 rounded-sm">
+type INews = React.ComponentProps<'article'>
+export const News: React.FC<INews> = ({ className }) => (
+  <article className={`p-4 bg-stone-950 rounded-sm ${className}`}>
     <h1 className="text-white! irish-grove-font">Notícias</h1>
     <div className="mt-8">
       <h2 className="text-white! font-bold">
