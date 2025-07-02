@@ -11,6 +11,7 @@ interface ITextField extends React.ComponentProps<'input'> {
 export const TextField: React.FC<ITextField> = ({
   label,
   className,
+  error,
   ...props
 }) => (
   <div className={`grid w-full items-center gap-1.5 ${className}`}>
@@ -18,5 +19,6 @@ export const TextField: React.FC<ITextField> = ({
       {label}
     </Label>
     <Input className="text-xl md:text-base!" {...props} />
+    {error}
   </div>
 )
