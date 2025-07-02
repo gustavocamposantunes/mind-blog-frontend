@@ -24,6 +24,8 @@ export const Article: React.FC<IArticle> = ({
       </span>
     </div>
     <img className="mt-5 w-full" src={image} alt={title} />
-    <p className="p-4 text-lg">{content}</p>
+    <p data-testid="article-content" className="p-4 text-lg">
+      {content}
+    </p>
   </article>
 )
