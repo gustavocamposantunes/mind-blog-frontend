@@ -1,6 +1,7 @@
 export * from './ArticlesTemplate'
 export * from './ArticleTemplate'
 export * from './AuthTemplate'
+export * from './ForgotPasswordTemplate'
 export * from './LoginTemplate'
 export * from './PageTemplate'
 export * from './RegisterUserTemplate'
