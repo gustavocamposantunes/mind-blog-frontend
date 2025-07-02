@@ -24,7 +24,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
     <ArticleTemplate isLoading={isLoading} error={error}>
       <Article
         title={data?.data?.title}
-        publishedAt={data?.data?.title}
+        publishedAt={data?.data?.publishedAt}
         image={data?.data?.image}
         content={data?.data?.content}
       />
