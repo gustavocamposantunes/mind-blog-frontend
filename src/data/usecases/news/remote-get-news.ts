@@ -6,7 +6,7 @@ import {
   type HttpGetClient,
   type HttpRemoteResponse,
 } from '@/data/protocols'
-import { UnexpectedError } from '@/domain/errors'
+import { InternalServerError, UnexpectedError } from '@/domain/errors'
 
 export class RemoteGetNews implements GetNewsUseCase {
   private readonly url: string
@@ -27,6 +27,11 @@ export class RemoteGetNews implements GetNewsUseCase {
         return {
           statusCode: status,
           data: data as NewsModel,
+        }
+      case HttpStatusCode.serverError:
+        return {
+          statusCode: status,
+          error: new InternalServerError().message,
         }
       default:
         return {
