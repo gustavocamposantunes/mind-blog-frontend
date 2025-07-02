@@ -22,11 +22,11 @@ export const AuthHeader = () => {
   const isLoggedIn = !!accessToken
 
   return (
-    <header className="w-full flex justify-between px-[10%] pt-4">
+    <header className="w-full flex flex-col md:flex-row items-center md:items-start justify-between px-[10%] pt-4">
       <Link to="/">
         <img src={logoDark} alt="logo" />
       </Link>
-      <nav className="flex items-center">
+      <nav className="flex items-center pt-6">
         <ul className="flex gap-4">
           <MenuItem redirect="/">Home</MenuItem>
           <MenuItem className="pr-4" redirect="/articles">
