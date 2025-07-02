@@ -16,8 +16,8 @@ export const ForgotPasswordTemplate: React.FC<IForgotPasswordTemplate> = ({
 }) => (
   <AuthTemplate>
     <AuthSection
-      title="Esqueceu a senha"
-      description="Não se preocupe, te enviaremos um email de redefinição de senha"
+      title="Esqueceu a senha?"
+      description="Não se preocupe, enviaremos um email de redefinição de senha"
     >
       {children}
 
