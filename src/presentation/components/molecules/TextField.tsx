@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { type ReactNode } from 'react'
 
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
 
 interface ITextField extends React.ComponentProps<'input'> {
   label: string
+  error?: ReactNode
 }
 
 export const TextField: React.FC<ITextField> = ({
