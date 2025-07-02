@@ -10,8 +10,28 @@ import { Button } from '@/presentation/components/ui/button'
 
 const meta = {
   title: 'Templates/LoginTemplate',
-  component: () => (
-    <LoginTemplate>
+  component: LoginTemplate,
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route path="/" element={<Story />} />
+        </Routes>
+      </MemoryRouter>
+    ),
+  ],
+} satisfies Meta<typeof LoginTemplate>
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+export const Default: Story = {
+  args: {
+    children: (
       <AuthForm onSubmit={() => {}}>
         <TextField
           className="mt-8"
@@ -37,24 +57,6 @@ const meta = {
           <LogIn />
         </Button>
       </AuthForm>
-    </LoginTemplate>
-  ),
-  parameters: {
-    layout: 'centered',
-  },
-  tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <MemoryRouter initialEntries={['/']}>
-        <Routes>
-          <Route path="/" element={<Story />} />
-        </Routes>
-      </MemoryRouter>
     ),
-  ],
-} satisfies Meta<typeof Button>
-
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {}
+  },
+}
