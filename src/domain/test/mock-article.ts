@@ -10,10 +10,10 @@ export const mockRegisterArticleParams = (): RegisterArticleParams => ({
   author_id: faker.number.int(),
 })
 
-export const mockArticle = (): ArticleModel => ({
+export const mockArticle = (withContent = false): ArticleModel => ({
   id: faker.number.int(),
   title: faker.lorem.sentence(),
-  content: faker.lorem.paragraphs(1),
+  content: faker.lorem.paragraphs(withContent ? 50 : 1),
   image: faker.image.urlLoremFlickr({
     category: 'nature',
     width: 1400,
