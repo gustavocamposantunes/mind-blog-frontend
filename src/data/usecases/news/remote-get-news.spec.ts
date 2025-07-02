@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { RemoteGetNews } from './remote-get-news'
 
 import { HttpGetClientSpy } from '@/data/test/mock-http-client'
+import { mockNews } from '@/domain/test'
 
 type SutTypes = {
   sut: RemoteGetNews
@@ -54,5 +55,20 @@ describe('RemoteGetNews', () => {
 
     expect(response.statusCode).toBe(502)
     expect(response.error).toBe('Erro inesperado')
+  })
+
+  it('should return an NewsModel if HttpGetClient returns 200', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+    const news = mockNews()
+
+    httpGetClientSpy.response = {
+      status: 200,
+      data: news,
+    }
+
+    const response = await sut.getNews()
+
+    expect(response.statusCode).toBe(200)
+    expect(response.data).toEqual(news)
   })
 })
