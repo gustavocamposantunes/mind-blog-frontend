@@ -28,4 +28,18 @@ describe('RemoteGetNews', () => {
 
     expect(httpGetClientSpy.url).toBe(url)
   })
+
+  it('should return an InternalServerError if HttpGetClient returns 500', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+
+    httpGetClientSpy.response = {
+      status: 500,
+      data: { message: 'Erro interno do servidor' },
+    }
+
+    const response = await sut.getNews()
+
+    expect(response.statusCode).toBe(500)
+    expect(response.error).toBe('Erro interno do servidor')
+  })
 })
