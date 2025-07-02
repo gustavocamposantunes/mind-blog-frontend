@@ -1,49 +1,31 @@
-import { Link } from 'react-router-dom'
+import { Mail } from 'lucide-react'
 
-import { AuthTemplate } from '../components/templates/AuthTemplate'
+import { AuthForm } from '../components/atoms'
+import { TextField } from '../components/molecules'
+import { ForgotPasswordTemplate } from '../components/templates/ForgotPasswordTemplate'
 
 import { Button } from '@/presentation/components/ui/button'
-import { Input } from '@/presentation/components/ui/input'
-import { Label } from '@/presentation/components/ui/label'
-
 export const ForgotPasswordPage = () => {
   return (
-    <AuthTemplate>
-      <form
-        action=""
-        className="w-full flex items-center flex-col gap-6 px-[20%]"
+    <ForgotPasswordTemplate>
+      <AuthForm
+        onSubmit={() => {
+          /* empty block */
+        }}
       >
-        <h2 className="text-stone-950 text-[24px]">Esqueci a senha</h2>
-        <div className="grid w-full items-center gap-1.5">
-          <Label htmlFor="email" className="text-stone-950">
-            Email
-          </Label>
-          <Input type="email" id="email" placeholder="Digite seu email" />
-        </div>
-        <div className="grid w-full items-center gap-1.5">
-          <Label htmlFor="password" className="text-stone-950">
-            Senha
-          </Label>
-          <Input type="password" id="password" placeholder="Digite sua senha" />
-        </div>
-        <div className="grid w-full items-center gap-1.5">
-          <Label htmlFor="password-confirmation" className="text-stone-950">
-            Confirmar senha
-          </Label>
-          <Input
-            type="password"
-            id="password-confirmation"
-            placeholder="Confirme sua senha"
-          />
-        </div>
-        <Button
-          className="mt-4 w-full py-4 bg-stone-950 auth-btn"
-          type="submit"
-        >
-          Alterar
+        <TextField
+          className="mt-8"
+          label="Email"
+          type="email"
+          id="email"
+          placeholder="Digite seu email"
+        />
+
+        <Button className="mt-4 w-full py-6" type="submit">
+          Enviar email de recuperação
+          <Mail />
         </Button>
-        <Link to="/login">Já tem cadastro? Clique aqui</Link>
-      </form>
-    </AuthTemplate>
+      </AuthForm>
+    </ForgotPasswordTemplate>
   )
 }
