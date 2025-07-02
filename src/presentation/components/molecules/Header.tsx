@@ -12,16 +12,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/presentation/components/ui/dropdown-menu'
-import { type AuthStore } from '@/presentation/store/auth-store'
+import { useAuthStore } from '@/presentation/store/auth-store'
 
-interface IHeader {
-  store: AuthStore
-}
-
-export const Header: React.FC<IHeader> = ({ store }) => {
+export const Header: React.FC = () => {
   const navigate = useNavigate()
 
-  const isLoggedIn = !!store.accessToken
+  const { accessToken, clearCurrentUser, user } = useAuthStore()
+
+  const isLoggedIn = !!accessToken
 
   return (
     <header className="w-full flex flex-col md:flex-row items-center md:items-start justify-between px-[10%] pt-4">
@@ -51,11 +49,11 @@ export const Header: React.FC<IHeader> = ({ store }) => {
             </MenuItem>
           )}
         </ul>
-        {store.accessToken ? (
+        {isLoggedIn ? (
           <span className="ml-8">
             <DropdownMenu>
               <DropdownMenuTrigger className="bg-white!">
-                <CustomAvatar src={store.user.image} />
+                <CustomAvatar src={user.image} />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => navigate('/profile')}>
@@ -64,7 +62,7 @@ export const Header: React.FC<IHeader> = ({ store }) => {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
-                    store.clearCurrentUser()
+                    clearCurrentUser()
                     navigate('/')
                   }}
                 >

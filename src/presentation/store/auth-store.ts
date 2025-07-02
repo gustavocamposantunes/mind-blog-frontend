@@ -20,7 +20,7 @@ export type AuthStore = AuthState & {
 
 export const useAuthStore = create<AuthStore>((set) => ({
   accessToken: '',
-  user: { id: 0, name: '', email: '' },
+  user: { id: 0, name: '', email: '', image: '' },
   isHydrated: false,
 
   setCurrentUser: (account) => {
@@ -30,7 +30,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
   clearCurrentUser: () => {
     manageUserSession.clear()
-    set({ accessToken: '', user: { id: 0, name: '', email: '' } })
+    set({ accessToken: '', user: { id: 0, name: '', email: '', image: '' } })
   },
 
   hydrate: () => {
