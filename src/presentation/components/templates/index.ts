@@ -1,4 +1,5 @@
 export * from './ArticlesTemplate'
+export * from './ArticleTemplate'
 export * from './AuthTemplate'
 export * from './LoginTemplate'
 export * from './PageTemplate'

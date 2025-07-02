@@ -1,13 +1,11 @@
-import { Heart } from 'lucide-react'
 import { useParams } from 'react-router-dom'
 
+import { Article } from '../components/organism'
 import { useGetArticleById } from '../hooks'
 
 import type { GetArticleByIdUseCase } from '@/domain/usecases'
 
-import { CustomSkeleton } from '@/presentation/components/atoms/CustomSkeleton'
-import { FavouriteAvatarPost } from '@/presentation/components/atoms/FavouriteAvatarPost'
-import { PageTemplate } from '@/presentation/components/templates'
+import { ArticleTemplate } from '@/presentation/components/templates'
 
 type ArticlePageProps = {
   getArticletById: GetArticleByIdUseCase
@@ -23,34 +21,13 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
   )
 
   return (
-    <PageTemplate>
-      {isLoading ? (
-        <span className="flex flex-col gap-4" data-testid="skeleton-group">
-          <CustomSkeleton />
-          <CustomSkeleton />
-          <CustomSkeleton />
-        </span>
-      ) : error ? (
-        <p data-testid="error-wrapper" className="text-red-500">
-          {error.message}
-        </p>
-      ) : (
-        <article>
-          <div className="flex flex-col gap-4 pb-6 border-b border-[#cecece]">
-            <h1 className="text-4-xl">{data?.data?.title}</h1>
-            <span className="flex justify-between items-center">
-              <FavouriteAvatarPost publishedAt={data?.data?.publishedAt} />
-              <Heart />
-            </span>
-          </div>
-          <img
-            className="mt-5 w-full"
-            src={data?.data?.image}
-            alt={data?.data?.title}
-          />
-          <p className="p-4">{data?.data?.content}</p>
-        </article>
-      )}
-    </PageTemplate>
+    <ArticleTemplate isLoading={isLoading} error={error}>
+      <Article
+        title={data?.data?.title}
+        publishedAt={data?.data?.title}
+        image={data?.data?.image}
+        content={data?.data?.content}
+      />
+    </ArticleTemplate>
   )
 }
