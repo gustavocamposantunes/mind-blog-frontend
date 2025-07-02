@@ -6,7 +6,7 @@ import { mockArticle } from '@/domain/test'
 
 export class GetArticleByIdSpy implements GetArticleByIdUseCase {
   id: string = '0'
-  data = mockArticle()
+  data = mockArticle(true)
   async getById(id: string): Promise<HttpRemoteResponse<ArticleModel>> {
     this.id = id
     return Promise.resolve({

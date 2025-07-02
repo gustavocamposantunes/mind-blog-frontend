@@ -51,16 +51,14 @@ describe('ArticlePage', () => {
     const { getArticleByIdSpy } = makeSut()
 
     const articleTitle = await screen.findByText(getArticleByIdSpy.data.title)
-    const articleContent = await screen.findByText(
-      getArticleByIdSpy.data.content,
-    )
+    const articleContent = await screen.findByTestId('article-content')
     const articleDate = await screen.findByTestId('published-at')
     const articleImage = (await screen.findByAltText(
       getArticleByIdSpy.data.title,
     )) as HTMLImageElement
 
     expect(articleTitle).toBeTruthy()
-    expect(articleContent).toBeTruthy()
+    expect(articleContent.textContent).toBe(getArticleByIdSpy.data.content)
     expect(articleDate.textContent).toEqual(
       expect.stringContaining(
         formatDateToShortMonth(getArticleByIdSpy.data.publishedAt),
