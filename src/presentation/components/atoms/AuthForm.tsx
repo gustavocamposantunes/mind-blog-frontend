@@ -1,7 +1,7 @@
 import type { FormEvent, ReactNode } from 'react'
 
 interface IAuthForm {
-  onSubmit: (event: FormEvent) => void
+  onSubmit?: (event: FormEvent) => void
   children: ReactNode
 }
 

@@ -8,11 +8,7 @@ import { Button } from '@/presentation/components/ui/button'
 export const ForgotPasswordPage = () => {
   return (
     <ForgotPasswordTemplate>
-      <AuthForm
-        onSubmit={() => {
-          /* empty block */
-        }}
-      >
+      <AuthForm>
         <TextField
           className="mt-8"
           label="Email"
