@@ -1,3 +1,4 @@
+import { LogOut, UserPen } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import logoDark from '../../assets/logo-dark.svg'
@@ -52,11 +53,12 @@ export const AuthHeader = () => {
         {isLoggedIn ? (
           <span className="ml-8">
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger className="bg-white!">
                 <CustomAvatar />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => navigate('/profile')}>
+                  <UserPen />
                   Perfil
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -65,6 +67,7 @@ export const AuthHeader = () => {
                     navigate('/')
                   }}
                 >
+                  <LogOut />
                   Desconectar
                 </DropdownMenuItem>
               </DropdownMenuContent>
