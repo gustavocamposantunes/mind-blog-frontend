@@ -42,4 +42,17 @@ describe('RemoteGetNews', () => {
     expect(response.statusCode).toBe(500)
     expect(response.error).toBe('Erro interno do servidor')
   })
+
+  it('should return an UnexpectedError for other status codes', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+    httpGetClientSpy.response = {
+      status: 502,
+      data: { message: 'Erro inesperado' },
+    }
+
+    const response = await sut.getNews()
+
+    expect(response.statusCode).toBe(502)
+    expect(response.error).toBe('Erro inesperado')
+  })
 })
