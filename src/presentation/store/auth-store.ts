@@ -11,7 +11,7 @@ type AuthState = {
   user: { id: number; name: string; email: string }
 }
 
-type AuthStore = AuthState & {
+export type AuthStore = AuthState & {
   setCurrentUser: (account: AuthenticateUserModel) => void
   clearCurrentUser: () => void
   hydrate: () => void

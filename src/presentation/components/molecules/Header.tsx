@@ -12,15 +12,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/presentation/components/ui/dropdown-menu'
-import { useAuthStore } from '@/presentation/store/auth-store'
+import { type AuthStore } from '@/presentation/store/auth-store'
 
-export const Header = () => {
+interface IHeader {
+  store: AuthStore
+}
+
+export const Header: React.FC<IHeader> = ({ store }) => {
   const navigate = useNavigate()
 
-  const accessToken = useAuthStore((state) => state.accessToken)
-  const clearCurrentUser = useAuthStore((state) => state.clearCurrentUser)
-
-  const isLoggedIn = !!accessToken
+  const isLoggedIn = !!store.accessToken
 
   return (
     <header className="w-full flex flex-col md:flex-row items-center md:items-start justify-between px-[10%] pt-4">
@@ -50,7 +51,7 @@ export const Header = () => {
             </MenuItem>
           )}
         </ul>
-        {isLoggedIn ? (
+        {store.accessToken ? (
           <span className="ml-8">
             <DropdownMenu>
               <DropdownMenuTrigger className="bg-white!">
@@ -63,7 +64,7 @@ export const Header = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
-                    clearCurrentUser()
+                    store.clearCurrentUser()
                     navigate('/')
                   }}
                 >
