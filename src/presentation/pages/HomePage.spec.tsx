@@ -31,4 +31,14 @@ describe('HomePage', () => {
 
     expect(skeletonNews).toBeTruthy()
   })
+
+  it('should render a list of articles after load', () => {
+    makeSut()
+
+    const listArticles = screen.getByTestId('list-news')
+    const newArticleList = screen.getAllByTestId('new-article')
+
+    expect(listArticles).toBeTruthy()
+    expect(newArticleList.length).toBe(7)
+  })
 })
