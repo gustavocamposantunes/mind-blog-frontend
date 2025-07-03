@@ -1,46 +1,20 @@
-type INews = React.ComponentProps<'article'>
-export const News: React.FC<INews> = ({ className }) => (
-  <article className={`p-4 bg-stone-950 rounded-sm ${className}`}>
-    <h1 className="text-white! irish-grove-font">Notícias</h1>
-    <div className="mt-8">
-      <h2 className="text-white! font-bold">
-        Inteligência Artificial: O Futuro da Automação e da Transformação
-        Digital
-      </h2>
-      <p className="text-white! mt-2">
-        Neste artigo, exploramos como a inteligência artificial está moldando o
-        futuro dos negócios e da tecno...
-      </p>
-    </div>
-    <div className="mt-8">
-      <h2 className="text-white! font-bold">
-        Inteligência Artificial: O Futuro da Automação e da Transformação
-        Digital
-      </h2>
-      <p className="text-white! mt-2">
-        Neste artigo, exploramos como a inteligência artificial está moldando o
-        futuro dos negócios e da tecno...
-      </p>
-    </div>
-    <div className="mt-8">
-      <h2 className="text-white! font-bold">
-        Inteligência Artificial: O Futuro da Automação e da Transformação
-        Digital
-      </h2>
-      <p className="text-white! mt-2">
-        Neste artigo, exploramos como a inteligência artificial está moldando o
-        futuro dos negócios e da tecno...
-      </p>
-    </div>
-    <div className="mt-8">
-      <h2 className="text-white! font-bold">
-        Inteligência Artificial: O Futuro da Automação e da Transformação
-        Digital
-      </h2>
-      <p className="text-white! mt-2">
-        Neste artigo, exploramos como a inteligência artificial está moldando o
-        futuro dos negócios e da tecno...
-      </p>
-    </div>
-  </article>
-)
+/* eslint-disable prettier/prettier */
+
+import { New } from '../molecules'
+import { Skeleton } from '../ui/skeleton'
+
+type INews = {
+  isLoading: boolean
+} & React.ComponentProps<'section'>
+export const News: React.FC<INews> = ({ className, isLoading }) =>
+  isLoading ? (
+    <Skeleton
+      data-testid="skeleton-news"
+      className={`p-4 bg-stone-950 rounded-sm ${className}`}
+    />
+  ) : (
+    <section className={`p-4 bg-stone-950 rounded-sm ${className}`}>
+      <h1 className="text-white! irish-grove-font">Notícias</h1>
+        <New title='...' description='...' />
+      </section>
+    )
