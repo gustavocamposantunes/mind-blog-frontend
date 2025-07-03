@@ -12,7 +12,7 @@ type HomePageProps = {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ getNews }) => {
-  const { isLoading } = useGetNews(getNews)
+  const { isLoading, data } = useGetNews(getNews)
   return (
     <PageTemplate>
       <section className="grid gap-4 xl:grid-cols-3 pb-8">
@@ -26,7 +26,7 @@ export const HomePage: React.FC<HomePageProps> = ({ getNews }) => {
         {isLoading ? (
           <Skeleton data-testid="skeleton-news" />
         ) : (
-          <News className="xl:col-span-1" />
+          <News news={data?.data?.articles} className="xl:col-span-1" />
         )}
         <ArticleCard
           id={1}

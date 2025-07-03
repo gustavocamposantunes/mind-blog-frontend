@@ -1,10 +1,14 @@
-type INew = {
+type INewArticle = {
   title: string
   description: string
 } & React.ComponentProps<'article'>
 
-export const New: React.FC<INew> = ({ title, description, ...props }) => (
-  <article {...props}>
+export const NewArticle: React.FC<INewArticle> = ({
+  title,
+  description,
+  ...props
+}) => (
+  <article {...props} data-testid="new-article">
     <h2 className="text-white! font-bold">{title}</h2>
     <p className="text-white! mt-2">{description}</p>
   </article>
