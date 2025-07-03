@@ -4,8 +4,10 @@ import { HomePage } from '../pages'
 
 import { render } from './test-utils'
 
-export const renderHomePageWithRouter = () => {
-  const HomePageComponent = () => <HomePage />
+import type { GetNewsSpy } from './mock-get-news'
+
+export const renderHomePageWithRouter = (getNewsSpy: GetNewsSpy) => {
+  const HomePageComponent = () => <HomePage getNews={getNewsSpy} />
 
   const Stub = createRoutesStub([
     {
