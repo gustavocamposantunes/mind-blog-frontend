@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 import { New } from '../molecules'
 import { Skeleton } from '../ui/skeleton'
 
@@ -15,6 +13,6 @@ export const News: React.FC<INews> = ({ className, isLoading }) =>
   ) : (
     <section className={`p-4 bg-stone-950 rounded-sm ${className}`}>
       <h1 className="text-white! irish-grove-font">Notícias</h1>
-        <New title='...' description='...' />
-      </section>
-    )
+      <New title="..." description="..." />
+    </section>
+  )
