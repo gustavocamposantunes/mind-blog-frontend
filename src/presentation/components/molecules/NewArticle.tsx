@@ -9,7 +9,7 @@ export const NewArticle: React.FC<INewArticle> = ({
   ...props
 }) => (
   <article {...props} data-testid="new-article">
-    <h2 className="text-white! font-bold">{title}</h2>
+    <h2 className="text-white! font-bold hover:underline">{title}</h2>
     <p className="text-white! mt-2">{description}</p>
   </article>
 )

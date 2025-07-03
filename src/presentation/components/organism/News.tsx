@@ -10,9 +10,18 @@ export const News: React.FC<INews> = ({ className, news }) => (
     data-testid="list-news"
     className={`p-4 bg-stone-950 rounded-sm ${className}`}
   >
-    <h1 className="text-white! irish-grove-font">Notícias</h1>
-    {news?.map(({ title, description }) => (
-      <NewArticle key={title} title={title} description={description} />
+    <h1 className="text-white! text-4xl irish-grove-font">News</h1>
+    {news?.map(({ title, description, url }) => (
+      <a
+        href={url}
+        key={title}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block mt-8"
+        data-testid="new-article-link"
+      >
+        <NewArticle className="mt-8" title={title} description={description} />
+      </a>
     ))}
   </section>
 )
