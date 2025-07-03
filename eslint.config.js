@@ -1,4 +1,3 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
 import storybook from "eslint-plugin-storybook";
 
 import js from '@eslint/js'
@@ -49,6 +48,6 @@ export default tseslint.config({ ignores: ['dist', 'coverage'] }, {
         alphabetize: { order: 'asc', caseInsensitive: true }
       }
     ],
-    'prettier/prettier': ['error', { singleQuote: true, semi: false }]
+    'prettier/prettier': ['error', { singleQuote: true, semi: false, bracketSameLine: false }]
   },
 }, storybook.configs["flat/recommended"]);
