@@ -12,6 +12,7 @@ import {
   makeRemoteRegisterArticle,
   makeRemoteGetProfile,
   makeRemoteUpdateProfile,
+  makeRemoteGetNews,
 } from '@/main/factories/usecases'
 import {
   ArticlesPage,
@@ -36,7 +37,10 @@ export const Router = () => {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/"
+            element={<HomePage getNews={makeRemoteGetNews()} />}
+          />
           <Route
             path="/articles"
             element={<ArticlesPage listArticles={makeRemoteListArticles()} />}

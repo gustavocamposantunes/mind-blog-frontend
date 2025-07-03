@@ -1,5 +1,6 @@
 export * from './make-remote-authenticate-user'
 export * from './make-remote-get-article-by-id'
+export * from './make-remote-get-news'
 export * from './make-remote-get-profile'
 export * from './make-remote-list-articles'
 export * from './make-remote-register-articles'
