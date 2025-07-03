@@ -1,3 +1,4 @@
+import { Skeleton } from '../components/ui/skeleton'
 import { useGetNews } from '../hooks'
 
 import type { GetNewsUseCase } from '@/domain/usecases/news/get-news.usecase'
@@ -22,7 +23,11 @@ export const HomePage: React.FC<HomePageProps> = ({ getNews }) => {
           content="TypeScript, uma superconjunto de JavaScript, tem se tornado uma escolha popular entre desenvolvedores para garantir código mais seguro e fácil de manter. Neste artigo, vamos explorar os benefícios da tipagem estática no..."
           redirect="1"
         />
-        <News isLoading={isLoading} className="xl:col-span-1" />
+        {isLoading ? (
+          <Skeleton data-testid="skeleton-news" />
+        ) : (
+          <News className="xl:col-span-1" />
+        )}
         <ArticleCard
           id={1}
           title="Dominando TypeScript: Por que a Tipagem Estática Está Transformando o Desenvolvimento JavaScript"
