@@ -91,16 +91,20 @@ describe('RegisterUserPage', () => {
     })
   })
 
-  it("Should redirect to LoginPage when click on 'Já tem cadastro?'", () => {
+  it("Should redirect to LoginPage when click on 'Já tem cadastro?'", async () => {
     makeSut()
 
-    const loginLink = screen.getByText(/já tem cadastro\? clique aqui/i)
+    const loginLink = screen.getByRole('link', {
+      name: /já tem cadastro\? clique aqui/i
+    })
 
     expect(loginLink.getAttribute('href')).toBeTruthy()
     expect(loginLink.getAttribute('href')).toContain('/login')
 
     fireEvent.click(loginLink)
 
-    expect(screen.getByTestId('login-page-mock')).toBeTruthy()
+    await waitFor(() => {
+      expect(screen.getByTestId('login-page-mock')).toBeTruthy()
+    })
   })
 })

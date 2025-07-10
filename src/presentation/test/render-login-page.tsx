@@ -1,4 +1,4 @@
-import { createRoutesStub } from 'react-router-dom'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 
 import { render } from './test-utils'
 
@@ -9,24 +9,22 @@ import { LoginPage } from '@/presentation/pages/LoginPage'
 export const renderLoginPageWithRouter = (
   authenticateUserSpy: AuthenticateUserSpy,
 ) => {
-  const LoginPageComponent = () => (
-    <LoginPage authenticateUser={authenticateUserSpy} />
+  render(
+    <MemoryRouter initialEntries={['/login']}>
+      <Routes>
+        <Route
+          path="/login"
+          element={<LoginPage authenticateUser={authenticateUserSpy} />}
+        />
+        <Route
+          path="/register"
+          element={<div>Register Page</div>}
+        />
+        <Route
+          path="/forgot-password"
+          element={<div>Forgot Password Page</div>}
+        />
+      </Routes>
+    </MemoryRouter>
   )
-
-  const Stub = createRoutesStub([
-    {
-      path: '/login',
-      Component: LoginPageComponent,
-    },
-    {
-      path: '/register',
-      Component: () => <div>Register Page</div>,
-    },
-    {
-      path: '/forgot-password',
-      Component: () => <div>Forgot Password Page</div>,
-    },
-  ])
-
-  render(<Stub initialEntries={['/login']} />)
 }
