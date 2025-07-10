@@ -19,7 +19,7 @@ describe('ForgotPasswordPage', () => {
     makeSut()
 
     const redirectToLoginLink = screen.getByRole('link', {
-      name: /já tem cadastro\? clique aqui/i
+      name: /já tem cadastro\? clique aqui/i,
     })
 
     expect(redirectToLoginLink.getAttribute('href')).toBeTruthy()

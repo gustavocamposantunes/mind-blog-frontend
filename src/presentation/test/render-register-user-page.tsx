@@ -21,6 +21,6 @@ export const renderRegisterUserPageWithRouter = (
           element={<div data-testid="login-page-mock">Login Page</div>}
         />
       </Routes>
-    </MemoryRouter>
+    </MemoryRouter>,
   )
 }

@@ -95,7 +95,7 @@ describe('RegisterUserPage', () => {
     makeSut()
 
     const loginLink = screen.getByRole('link', {
-      name: /já tem cadastro\? clique aqui/i
+      name: /já tem cadastro\? clique aqui/i,
     })
 
     expect(loginLink.getAttribute('href')).toBeTruthy()

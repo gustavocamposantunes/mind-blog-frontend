@@ -16,15 +16,12 @@ export const renderLoginPageWithRouter = (
           path="/login"
           element={<LoginPage authenticateUser={authenticateUserSpy} />}
         />
-        <Route
-          path="/register"
-          element={<div>Register Page</div>}
-        />
+        <Route path="/register" element={<div>Register Page</div>} />
         <Route
           path="/forgot-password"
           element={<div>Forgot Password Page</div>}
         />
       </Routes>
-    </MemoryRouter>
+    </MemoryRouter>,
   )
 }

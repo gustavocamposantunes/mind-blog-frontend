@@ -1,7 +1,10 @@
 import { PencilIcon } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 
+import { CustomAvatar } from '../molecules'
 import { Button } from '../ui/button'
+
+import type { AuthorModel } from '@/domain/models'
 
 import {
   Card,
@@ -13,8 +16,6 @@ import {
 } from '@/presentation/components/ui/card'
 import { useAuthStore } from '@/presentation/store/auth-store'
 import { formatDateToShortMonth } from '@/presentation/utils/dateFormatter'
-import type { AuthorModel } from '@/domain/models'
-import { CustomAvatar } from '../molecules'
 
 interface IArticleCard {
   id: number
