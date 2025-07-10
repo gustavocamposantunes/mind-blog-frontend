@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { useGetArticleById } from '../hooks'
 
 import type { GetArticleByIdUseCase } from '@/domain/usecases'
+import { Skeleton } from '../components/ui/skeleton'
 
 type EditArticlePageProps = {
   getArticletById: GetArticleByIdUseCase
@@ -15,12 +16,20 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
 }) => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { error } = useGetArticleById(getArticletById, String(id))
+  const { error, isLoading } = useGetArticleById(getArticletById, String(id))
 
   useEffect(() => {
-    toast.error('Erro ao buscar artigo')
-    navigate('/')
+    if(error?.message) {
+      toast.error('Erro ao buscar artigo')
+      navigate('/')
+    }
   }, [error])
 
-  return <></>
+  let content = isLoading ? <span data-testid="skeleton-group">
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+  </span> : null
+
+  return content
 }
