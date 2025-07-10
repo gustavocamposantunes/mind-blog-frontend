@@ -18,7 +18,8 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
   getArticletById,
 }) => {
   const [editArticleParams, setEditArticleParams] = useState({
-    title: ''
+    title: '',
+    content: ''
   })
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
@@ -34,7 +35,8 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
   useEffect(() => {
     if(data?.data)
       setEditArticleParams({
-        title: data?.data?.title
+        title: data?.data?.title,
+        content: data?.data?.content,
       })
   }, [data?.data])
 
@@ -49,12 +51,25 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
         <div className="grid w-full gap-1.5">
           <Label htmlFor="title">Título</Label>
           <Textarea
-            placeholder="Adicione um título"
+            placeholder="Edite o título"
             id="title"
             name='title'
             data-testid="textaread-title"
             onChange={(e) => setEditArticleParams({...editArticleParams, title: e.target.value})}
             value={editArticleParams.title}
+          />
+        </div>
+
+        <div className="grid w-full gap-1.5">
+          <Label htmlFor="content">Conteúdo</Label>
+          <Textarea
+            className="min-h-[400px]"
+            placeholder="Edite o conteúdo"
+            id="content"
+            name='content'
+            data-testid="textaread-content"
+            onChange={(e) => setEditArticleParams({...editArticleParams, content: e.target.value})}
+            value={editArticleParams.content}
           />
         </div>
       </div>
