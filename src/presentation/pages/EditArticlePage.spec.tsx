@@ -1,7 +1,7 @@
 import { describe, it, vi, beforeEach, expect } from 'vitest'
 
 import { GetArticleByIdSpy, renderEditArticlePage } from '../test'
-import { cleanup, screen, waitFor } from '../test/test-utils'
+import { cleanup, fireEvent, screen, waitFor } from '../test/test-utils'
 
 import { NotFoundError } from '@/domain/errors'
 
@@ -93,6 +93,24 @@ describe('EditArticlePage', () => {
 
     await waitFor(() => {
       expect(articleImage).toHaveProperty('src', getArticleByIdSpy.data.image)
+    })
+  })
+
+  it('should change the article image if a new one is selected', async () => {
+    makeSut()
+
+    const inputPicture = await screen.findByTestId('input-picture')
+
+    const file = new File(['image content'], 'image.png', { type: 'image/png' })
+
+    fireEvent.change(inputPicture, { target: { files: [file] } })
+
+    const articleImage = await screen.findByTestId('selected-image') as HTMLImageElement
+
+    await waitFor(() => {
+      expect(articleImage.src).toBe(
+        `data:image/png;base64,${btoa('image content')}`,
+      )
     })
   })
 })
