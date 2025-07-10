@@ -6,7 +6,7 @@ import { formatDateToShortMonth } from '@/presentation/utils/dateFormatter'
 interface IArticle {
   title: string
   publishedAt: string
-  image: string
+  image?: string
   content: string
   author?: {
     id: number
