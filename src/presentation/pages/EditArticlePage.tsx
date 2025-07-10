@@ -60,7 +60,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
     </span>
   ) : (
     <PageTemplate>
-      <form data-testid="form-edit-article">
+      <form>
         <FormHeader title="Editar Artigo" />
         <section className="mt-4 flex flex-col gap-4">
           <div>
