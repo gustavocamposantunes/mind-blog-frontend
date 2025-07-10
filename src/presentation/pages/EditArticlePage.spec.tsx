@@ -53,4 +53,10 @@ describe('EditArticlePage', () => {
 
     await screen.findByTestId('skeleton-group')
   })
+
+  it('should render the edit article form when data is loaded', async () => {
+    makeSut()
+
+    await screen.findByRole('form')
+  })
 })
