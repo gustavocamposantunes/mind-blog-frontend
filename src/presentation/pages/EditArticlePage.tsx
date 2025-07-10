@@ -29,7 +29,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
     <Skeleton />
     <Skeleton />
     <Skeleton />
-  </span> : null
+  </span> : <form role='form'></form>
 
   return content
 }
