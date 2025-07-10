@@ -28,7 +28,10 @@ const setupNotFoundArticle = (): SutTypes => {
   }
 }
 describe('EditArticlePage', () => {
-  beforeEach(cleanup)
+  beforeEach(() => {
+    cleanup()
+    vi.clearAllMocks()
+  })
   it('should render an error if article is not found', async () => {
     const { getArticleByIdSpy } = setupNotFoundArticle()
 
@@ -43,5 +46,11 @@ describe('EditArticlePage', () => {
     makeSut(getArticleByIdSpy)
 
     await screen.findByTestId('home-page-mock')
+  })
+
+  it('should render an skeleton group when the article is not loaded yet', async () => {
+    makeSut()
+
+    await screen.findByTestId('skeleton-group')
   })
 })
