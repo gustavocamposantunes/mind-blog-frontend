@@ -1,7 +1,7 @@
-import { describe, it, vi } from 'vitest'
+import { describe, it, vi, beforeEach } from 'vitest'
 
 import { GetArticleByIdSpy, renderEditArticlePage } from '../test'
-import { screen } from '../test/test-utils'
+import { cleanup, screen } from '../test/test-utils'
 
 import { NotFoundError } from '@/domain/errors'
 
@@ -17,15 +17,31 @@ const makeSut = (getArticleByIdSpy = new GetArticleByIdSpy()): SutTypes => {
   }
 }
 
-describe('EditArticlePage', () => {
-  it('should render an error if article is not found', async () => {
-    const getArticleByIdSpy = new GetArticleByIdSpy()
+const setupNotFoundArticle = (): SutTypes => {
+  const getArticleByIdSpy = new GetArticleByIdSpy()
 
-    const error = new NotFoundError()
-    vi.spyOn(getArticleByIdSpy, 'getById').mockRejectedValueOnce(error)
+  const error = new NotFoundError()
+  vi.spyOn(getArticleByIdSpy, 'getById').mockRejectedValueOnce(error)
+
+  return {
+    getArticleByIdSpy
+  }
+}
+describe('EditArticlePage', () => {
+  beforeEach(cleanup)
+  it('should render an error if article is not found', async () => {
+    const { getArticleByIdSpy } = setupNotFoundArticle()
 
     makeSut(getArticleByIdSpy)
 
     await screen.findByText('Erro ao buscar artigo')
+  })
+
+  it('should redirect to HomePage if article is not found', async () => {
+    const { getArticleByIdSpy } = setupNotFoundArticle()
+
+    makeSut(getArticleByIdSpy)
+
+    await screen.findByTestId('home-page-mock')
   })
 })
