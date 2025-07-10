@@ -15,8 +15,8 @@ export const Header: React.FC<IHeader> = ({ children }) => {
       <Link to="/">
         <img src={logoDark} alt="logo" />
       </Link>
-      <nav className="flex items-center pt-6">
-        <ul className="flex gap-4">
+      <nav className="flex pt-6">
+        <ul className="flex gap-4 items-center">
           <MenuItem redirect="/">Home</MenuItem>
           <MenuItem className="pr-4" redirect="/articles">
             Artigos
