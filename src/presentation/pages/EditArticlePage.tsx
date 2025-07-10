@@ -20,7 +20,11 @@ type EditArticlePageProps = {
 export const EditArticlePage: React.FC<EditArticlePageProps> = ({
   getArticletById,
 }) => {
-  const [editArticleParams, setEditArticleParams] = useState({
+  const [editArticleParams, setEditArticleParams] = useState<{
+    title: string,
+    content: string,
+    image?: string
+  }>({
     title: '',
     content: '',
     image: ''
@@ -41,7 +45,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
       setEditArticleParams({
         title: data?.data?.title,
         content: data?.data?.content,
-        image: data?.data?.image ?? '',
+        image: data?.data?.image,
       })
   }, [data?.data])
 
@@ -91,7 +95,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
               id="title"
               name='title'
               data-testid="textaread-title"
-              onChange={(e) => setEditArticleParams({...editArticleParams, title: e.target.value})}
+              readOnly
               value={editArticleParams.title}
             />
           </div>
@@ -104,7 +108,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
               id="content"
               name='content'
               data-testid="textaread-content"
-              onChange={(e) => setEditArticleParams({...editArticleParams, content: e.target.value})}
+              readOnly
               value={editArticleParams.content}
             />
           </div>
