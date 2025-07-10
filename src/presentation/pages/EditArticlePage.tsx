@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { useGetArticleById } from '../hooks'
@@ -14,10 +14,12 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
   getArticletById,
 }) => {
   const { id } = useParams<{ id: string }>()
+  const navigate = useNavigate()
   const { error } = useGetArticleById(getArticletById, String(id))
 
   useEffect(() => {
     toast.error('Erro ao buscar artigo')
+    navigate('/')
   }, [error])
 
   return <></>
