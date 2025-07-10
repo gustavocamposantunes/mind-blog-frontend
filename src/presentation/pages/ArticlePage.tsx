@@ -26,12 +26,12 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
           <Article
             title={data.data.title}
             publishedAt={data.data.publishedAt}
-            image={data.data.image || ''}
+            image={data.data.image}
             content={data.data.content}
             author={{
               id: data.data.author.id,
               name: data.data.author.name,
-              avatar: data.data.author.avatar || '',
+              avatar: data.data.author.avatar,
             }}/>
       )}
     </ArticleTemplate>
