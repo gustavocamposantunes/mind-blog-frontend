@@ -1,7 +1,7 @@
-import { describe, it, vi, beforeEach } from 'vitest'
+import { describe, it, vi, beforeEach, expect } from 'vitest'
 
 import { GetArticleByIdSpy, renderEditArticlePage } from '../test'
-import { cleanup, screen } from '../test/test-utils'
+import { cleanup, screen, waitFor } from '../test/test-utils'
 
 import { NotFoundError } from '@/domain/errors'
 
@@ -58,5 +58,21 @@ describe('EditArticlePage', () => {
     makeSut()
 
     await screen.findByRole('form')
+  })
+
+  it('should render the form header', async () => {
+    makeSut()
+
+    await screen.findByTestId('form-header')
+  })
+
+  it('should render the title input filled', async () => {
+    const { getArticleByIdSpy } = makeSut()
+
+    const textAreaTitle = await screen.findByTestId('textaread-title')
+
+    await waitFor(() => {
+      expect(textAreaTitle).toHaveProperty('value', getArticleByIdSpy.data.title)
+    })
   })
 })
