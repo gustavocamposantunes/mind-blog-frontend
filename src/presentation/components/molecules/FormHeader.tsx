@@ -9,7 +9,7 @@ interface IFormHeader {
 export const FormHeader: React.FC<IFormHeader> = ({ title }) => {
   const navigate = useNavigate()
   return (
-    <section className="flex justify-between w-full">
+    <section className="flex justify-between w-full" data-testid="form-header">
       <h2 className="text-2xl font-semibold">{title}</h2>
       <div className="flex gap-2">
         <Button
