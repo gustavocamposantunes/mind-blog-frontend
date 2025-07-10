@@ -19,7 +19,11 @@ export const mockArticle = (withContent = false): ArticleModel => ({
     width: 1400,
     height: 700,
   }),
-  author_id: faker.number.int(),
+  author: {
+    id: faker.number.int(),
+    name: faker.person.fullName(),
+    avatar: faker.image.avatar(),
+  },
   publishedAt: faker.date.past().toISOString(),
   updatedAt: faker.date.recent().toISOString(),
 })
