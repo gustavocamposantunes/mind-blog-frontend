@@ -75,4 +75,14 @@ describe('EditArticlePage', () => {
       expect(textAreaTitle).toHaveProperty('value', getArticleByIdSpy.data.title)
     })
   })
+
+  it('should render the content input filled', async () => {
+    const { getArticleByIdSpy } = makeSut()
+
+    const textAreaContent = await screen.findByTestId('textaread-content')
+
+    await waitFor(() => {
+      expect(textAreaContent).toHaveProperty('value', getArticleByIdSpy.data.content)
+    })
+  })
 })
