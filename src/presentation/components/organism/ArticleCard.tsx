@@ -79,7 +79,13 @@ export const ArticleCard: React.FC<IArticleCard> = ({
           </p>
         </span>
         {user.id === author?.id ? (
-          <Link className="bg-stone-800 p-2 rounded-md" to="">
+          <Link
+            className="bg-stone-800 p-2 rounded-md"
+            to={`/article/edit/${id}`}
+            onClick={(e) => {
+              e.stopPropagation()
+            }}
+          >
             <PencilIcon className="text-white" />
           </Link>
         ) : null}
