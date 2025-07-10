@@ -85,4 +85,14 @@ describe('EditArticlePage', () => {
       expect(textAreaContent).toHaveProperty('value', getArticleByIdSpy.data.content)
     })
   })
+
+  it('should render the article image', async () => {
+    const { getArticleByIdSpy } = makeSut()
+
+    const articleImage = await screen.findByTestId('selected-image')
+
+    await waitFor(() => {
+      expect(articleImage).toHaveProperty('src', getArticleByIdSpy.data.image)
+    })
+  })
 })
