@@ -13,13 +13,15 @@ import {
 } from '@/presentation/components/ui/card'
 import { useAuthStore } from '@/presentation/store/auth-store'
 import { formatDateToShortMonth } from '@/presentation/utils/dateFormatter'
+import type { AuthorModel } from '@/domain/models'
+import { CustomAvatar } from '../molecules'
 
 interface IArticleCard {
   id: number
   title: string
   content: string
   image?: string
-  author_id?: number
+  author?: AuthorModel
   publishedAt?: string
   className?: string
   redirect?: string
@@ -31,7 +33,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
   title,
   content,
   image = 'https://miro.medium.com/v2/resize:fit:1358/1*moJeTvW97yShLB7URRj5Kg.png',
-  author_id,
+  author,
   publishedAt = '2023-10-01T00:00:00Z',
   className,
   redirect,
@@ -69,10 +71,13 @@ export const ArticleCard: React.FC<IArticleCard> = ({
         <CardDescription>{content.slice(0, 222)}</CardDescription>
       </CardContent>
       <CardFooter className={`flex justify-between mt-auto`}>
-        <p data-testid="published-at">
-          Por <b>John Doe</b> - {formatterdDate}
-        </p>
-        {user.id === author_id ? (
+        <span className="flex items-center gap-2">
+          <CustomAvatar src={author?.avatar}></CustomAvatar>
+          <p data-testid="published-at">
+            Por <b>{author?.name}</b> - {formatterdDate}
+          </p>
+        </span>
+        {user.id === author?.id ? (
           <Link className="bg-stone-800 p-2 rounded-md" to="">
             <PencilIcon className="text-white" />
           </Link>

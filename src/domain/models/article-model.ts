@@ -1,9 +1,15 @@
+export type AuthorModel = {
+  id: number
+  name: string
+  avatar?: string
+}
+
 export type ArticleModel = {
   id: number
   title: string
   content: string
   image?: string
-  author_id: number
+  author: AuthorModel
   publishedAt: string
   updatedAt: string
 }

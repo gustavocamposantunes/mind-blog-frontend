@@ -22,12 +22,18 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
 
   return (
     <ArticleTemplate isLoading={isLoading} error={error}>
-      <Article
-        title={data?.data?.title}
-        publishedAt={data?.data?.publishedAt}
-        image={data?.data?.image}
-        content={data?.data?.content}
-      />
+      {data?.data && (
+          <Article
+            title={data.data.title}
+            publishedAt={data.data.publishedAt}
+            image={data.data.image || ''}
+            content={data.data.content}
+            author={{
+              id: data.data.author.id,
+              name: data.data.author.name,
+              avatar: data.data.author.avatar || '',
+            }}/>
+      )}
     </ArticleTemplate>
   )
 }
