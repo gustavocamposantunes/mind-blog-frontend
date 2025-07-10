@@ -19,7 +19,8 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
 }) => {
   const [editArticleParams, setEditArticleParams] = useState({
     title: '',
-    content: ''
+    content: '',
+    image: ''
   })
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
@@ -37,6 +38,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
       setEditArticleParams({
         title: data?.data?.title,
         content: data?.data?.content,
+        image: data?.data?.image ?? '',
       })
   }, [data?.data])
 
@@ -48,30 +50,38 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
     <FormHeader title='Editar Artigo' />
     <section className="mt-4 flex flex-col gap-4">
       <div>
-        <div className="grid w-full gap-1.5">
-          <Label htmlFor="title">Título</Label>
-          <Textarea
-            placeholder="Edite o título"
-            id="title"
-            name='title'
-            data-testid="textaread-title"
-            onChange={(e) => setEditArticleParams({...editArticleParams, title: e.target.value})}
-            value={editArticleParams.title}
+        {editArticleParams.image && (
+          <img
+            className="w-72"
+            src={editArticleParams.image}
+            alt="foto do artigo selecionada"
+            data-testid="selected-image"
           />
-        </div>
+        )}
+      </div>
+      <div className="grid w-full gap-1.5">
+        <Label htmlFor="title">Título</Label>
+        <Textarea
+          placeholder="Edite o título"
+          id="title"
+          name='title'
+          data-testid="textaread-title"
+          onChange={(e) => setEditArticleParams({...editArticleParams, title: e.target.value})}
+          value={editArticleParams.title}
+        />
+      </div>
 
-        <div className="grid w-full gap-1.5">
-          <Label htmlFor="content">Conteúdo</Label>
-          <Textarea
-            className="min-h-[400px]"
-            placeholder="Edite o conteúdo"
-            id="content"
-            name='content'
-            data-testid="textaread-content"
-            onChange={(e) => setEditArticleParams({...editArticleParams, content: e.target.value})}
-            value={editArticleParams.content}
-          />
-        </div>
+      <div className="grid w-full gap-1.5">
+        <Label htmlFor="content">Conteúdo</Label>
+        <Textarea
+          className="min-h-[400px]"
+          placeholder="Edite o conteúdo"
+          id="content"
+          name='content'
+          data-testid="textaread-content"
+          onChange={(e) => setEditArticleParams({...editArticleParams, content: e.target.value})}
+          value={editArticleParams.content}
+        />
       </div>
     </section>
   </form>
