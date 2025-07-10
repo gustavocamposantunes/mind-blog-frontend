@@ -24,8 +24,8 @@ import {
   ForgotPasswordPage,
   HomePage,
 } from '@/presentation/pages'
-import { useAuthStore } from '@/presentation/store/auth-store'
 import { EditArticlePage } from '@/presentation/pages/EditArticlePage'
+import { useAuthStore } from '@/presentation/store/auth-store'
 
 export const Router = () => {
   const hydrate = useAuthStore((state) => state.hydrate)

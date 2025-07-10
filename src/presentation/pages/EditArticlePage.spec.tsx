@@ -24,7 +24,7 @@ const setupNotFoundArticle = (): SutTypes => {
   vi.spyOn(getArticleByIdSpy, 'getById').mockRejectedValueOnce(error)
 
   return {
-    getArticleByIdSpy
+    getArticleByIdSpy,
   }
 }
 describe('EditArticlePage', () => {
@@ -72,7 +72,10 @@ describe('EditArticlePage', () => {
     const textAreaTitle = await screen.findByTestId('textaread-title')
 
     await waitFor(() => {
-      expect(textAreaTitle).toHaveProperty('value', getArticleByIdSpy.data.title)
+      expect(textAreaTitle).toHaveProperty(
+        'value',
+        getArticleByIdSpy.data.title,
+      )
     })
   })
 
@@ -82,7 +85,10 @@ describe('EditArticlePage', () => {
     const textAreaContent = await screen.findByTestId('textaread-content')
 
     await waitFor(() => {
-      expect(textAreaContent).toHaveProperty('value', getArticleByIdSpy.data.content)
+      expect(textAreaContent).toHaveProperty(
+        'value',
+        getArticleByIdSpy.data.content,
+      )
     })
   })
 
@@ -105,7 +111,9 @@ describe('EditArticlePage', () => {
 
     fireEvent.change(inputPicture, { target: { files: [file] } })
 
-    const articleImage = await screen.findByTestId('selected-image') as HTMLImageElement
+    const articleImage = (await screen.findByTestId(
+      'selected-image',
+    )) as HTMLImageElement
 
     await waitFor(() => {
       expect(articleImage.src).toBe(
