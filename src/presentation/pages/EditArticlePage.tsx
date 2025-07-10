@@ -9,6 +9,8 @@ import { Skeleton } from '../components/ui/skeleton'
 import { FormHeader } from '../components/molecules'
 import { Label } from '../components/ui/label'
 import { Textarea } from '../components/ui/textarea'
+import { Input } from '../components/ui/input'
+import { toBase64 } from '../utils/toBase64'
 
 type EditArticlePageProps = {
   getArticletById: GetArticleByIdUseCase
@@ -50,6 +52,24 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
     <FormHeader title='Editar Artigo' />
     <section className="mt-4 flex flex-col gap-4">
       <div>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="picture">Inserir Imagem</Label>
+          <Input
+            id="picture"
+            type="file"
+            data-testid="input-picture"
+            onChange={async (e) => {
+              const file = e.target.files?.[0]
+              if (file) {
+                const base64 = await toBase64(file)
+                setEditArticleParams({
+                  ...editArticleParams,
+                  image: base64,
+                })
+              }
+            }}
+          />
+        </div>
         {editArticleParams.image && (
           <img
             className="w-72"
