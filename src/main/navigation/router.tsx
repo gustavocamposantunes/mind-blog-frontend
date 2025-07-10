@@ -25,6 +25,7 @@ import {
   HomePage,
 } from '@/presentation/pages'
 import { useAuthStore } from '@/presentation/store/auth-store'
+import { EditArticlePage } from '@/presentation/pages/EditArticlePage'
 
 export const Router = () => {
   const hydrate = useAuthStore((state) => state.hydrate)
@@ -69,6 +70,14 @@ export const Router = () => {
             element={
               <PrivateRoute>
                 <NewArticlePage registerArticle={makeRemoteRegisterArticle()} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/article/edit/:id"
+            element={
+              <PrivateRoute>
+                <EditArticlePage getArticletById={makeRemoteGetArticleById()} />
               </PrivateRoute>
             }
           />
