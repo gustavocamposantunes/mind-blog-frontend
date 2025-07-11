@@ -1,5 +1,5 @@
 import { Heart, PencilIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { CustomAvatar } from '../molecules'
@@ -27,10 +27,10 @@ interface IArticleCard {
   className?: string
   redirect?: string
   favourite?: string
-  isLoggedIn: boolean
+  isLoggedIn?: boolean
   authUserId?: number
-  favouriteArticleById: (id: number, favourite: () => void) => void
-  favourited: boolean
+  favouriteArticleById?: (id: number, favourite: () => void) => void
+  favourited?: boolean
 }
 
 export const ArticleCard: React.FC<IArticleCard> = ({
@@ -56,7 +56,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
   )
 
   const editArticle =
-    authUserId === author?.id ? (
+    author?.id && authUserId === author?.id ? (
       <Link
         className="bg-stone-800 p-2 rounded-md"
         to={`/article/edit/${id}`}
@@ -69,7 +69,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
     ) : null
 
   const favoriteArticle =
-    authUserId !== author?.id && isLoggedIn ? (
+    authUserId !== author?.id && isLoggedIn && favouriteArticleById ? (
       <Heart
         fill={favorite ? 'red' : 'white'}
         data-testid="favorite-heart-icon"
