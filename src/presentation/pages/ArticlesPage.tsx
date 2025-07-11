@@ -28,7 +28,11 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
       token: accessToken
     },
     {
-      onError: (error) => toast.error(error.message)
+      onError: (error) => toast.error(error.message),
+      onSuccess: () => {
+        favourite()
+        toast.info('Artigo adicionado aos favoritos')
+      }
     }
   )
   }
