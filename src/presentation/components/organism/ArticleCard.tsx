@@ -60,7 +60,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
           e.stopPropagation()
         }}
       >
-        <PencilIcon className="text-white" />
+        <PencilIcon data-testid="pencil-icon" className="text-white" />
       </Link>
     ) : null
 
@@ -81,6 +81,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
       className={`pt-0 cursor-pointer hover:shadow-lg transition-shadow ${className ?? ''}`}
       key={id}
       onClick={() => navigate(`/articles/${id}`)}
+      data-testid={`card-article-${id}`}
     >
       <div className="flex">
         <img
