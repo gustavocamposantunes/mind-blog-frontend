@@ -108,18 +108,6 @@ describe('ArticlesPage', () => {
   
       expect(favoriteHeartIcon).toBeTruthy()
     })
-  
-    it.skip('should change favorite heart icon color on click', async () => {
-      makeSut()
-  
-      const favoriteHeartIcon = await screen.findByTestId('favorite-heart-icon')
-  
-      expect(favoriteHeartIcon.getAttribute('fill')).toBe('white')
-  
-      fireEvent.click(favoriteHeartIcon)
-  
-      expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
-    })
 
     const setupFavouriteError = async () => {
       const favouriteArticleSpy = new FavouriteArticleSpy()
@@ -151,6 +139,20 @@ describe('ArticlesPage', () => {
       await screen.findByText(mockedError.message)
 
       expect(favoriteHeartIcon.getAttribute('fill')).toBe('white')
+    })
+
+    it('should change favorite heart icon color on success', async () => {
+      makeSut()
+  
+      const favoriteHeartIcon = await screen.findByTestId('favorite-heart-icon')
+  
+      expect(favoriteHeartIcon.getAttribute('fill')).toBe('white')
+  
+      fireEvent.click(favoriteHeartIcon)
+
+      await screen.findByText('Artigo adicionado aos favoritos')
+  
+      expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
     })
   })
 })
