@@ -29,7 +29,8 @@ interface IArticleCard {
   favourite?: string
   isLoggedIn: boolean
   authUserId?: number
-  favouriteArticleById: (id: number, favourite: () => void) => void
+  favouriteArticleById: (id: number, favourite: () => void) => void,
+  favourited: boolean
 }
 
 export const ArticleCard: React.FC<IArticleCard> = ({
@@ -44,9 +45,10 @@ export const ArticleCard: React.FC<IArticleCard> = ({
   favourite,
   isLoggedIn,
   authUserId,
-  favouriteArticleById
+  favouriteArticleById,
+  favourited
 }) => {
-  const [favorite, setFavorite] = useState(false)
+  const [favorite, setFavorite] = useState(favourited)
   const navigate = useNavigate()
 
   const formatterdDate = formatDateToShortMonth(
@@ -74,7 +76,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
         onClick={(e) => {
           e.stopPropagation()
           favouriteArticleById(id, () => {
-            setFavorite(!favorite)
+            setFavorite(true)
           })          
         }}
       />
