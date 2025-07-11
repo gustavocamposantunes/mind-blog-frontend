@@ -98,4 +98,18 @@ describe('ArticlesPage', () => {
 
     expect(pencilIcon).toBeTruthy()
   })
+
+  it('should redirect to the article edit page when the pencil icon is clicked', async () => {
+    makeSut()
+
+    const pencilIcon = await screen.findByTestId('pencil-icon')
+
+    fireEvent.click(pencilIcon)
+
+    const editArticlePageMock = await screen.findByTestId(
+      'edit-article-page-mock',
+    )
+
+    expect(editArticlePageMock).toBeTruthy()
+  })
 })
