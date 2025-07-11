@@ -1,11 +1,15 @@
-import { useArticlesList, useFavouriteArticle } from '../hooks'
+import { toast } from 'react-toastify'
 
-import type { FavouriteArticleUseCase, ListArticlesUseCase } from '@/domain/usecases'
+import { useArticlesList, useFavouriteArticle } from '../hooks'
+import { useAuthStore } from '../store'
+
+import type {
+  FavouriteArticleUseCase,
+  ListArticlesUseCase,
+} from '@/domain/usecases'
 
 import { ArticleCard } from '@/presentation/components/organism/ArticleCard'
 import { ArticlesTemplate } from '@/presentation/components/templates'
-import { useAuthStore } from '../store'
-import { toast } from 'react-toastify'
 
 type ArticlessPageProps = {
   listArticles: ListArticlesUseCase
@@ -14,27 +18,28 @@ type ArticlessPageProps = {
 
 export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   listArticles,
-  favouriteArticle
+  favouriteArticle,
 }) => {
   const { user, accessToken } = useAuthStore()
-  
+
   const { data, isLoading } = useArticlesList(listArticles)
 
   const { mutate } = useFavouriteArticle(favouriteArticle)
 
   const favouriteArticleById = (id: number, favourite: () => void) => {
-    mutate({
-      id,
-      token: accessToken
-    },
-    {
-      onError: (error) => toast.error(error.message),
-      onSuccess: () => {
-        favourite()
-        toast.info('Artigo adicionado aos favoritos')
-      }
-    }
-  )
+    mutate(
+      {
+        id,
+        token: accessToken,
+      },
+      {
+        onError: (error) => toast.error(error.message),
+        onSuccess: () => {
+          favourite()
+          toast.info('Artigo adicionado aos favoritos')
+        },
+      },
+    )
   }
 
   return (

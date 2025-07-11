@@ -29,7 +29,7 @@ interface IArticleCard {
   favourite?: string
   isLoggedIn: boolean
   authUserId?: number
-  favouriteArticleById: (id: number, favourite: () => void) => void,
+  favouriteArticleById: (id: number, favourite: () => void) => void
   favourited: boolean
 }
 
@@ -46,7 +46,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
   isLoggedIn,
   authUserId,
   favouriteArticleById,
-  favourited
+  favourited,
 }) => {
   const [favorite, setFavorite] = useState(favourited)
   const navigate = useNavigate()
@@ -77,7 +77,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
           e.stopPropagation()
           favouriteArticleById(id, () => {
             setFavorite(true)
-          })          
+          })
         }}
       />
     ) : null

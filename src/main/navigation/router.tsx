@@ -13,7 +13,7 @@ import {
   makeRemoteGetProfile,
   makeRemoteUpdateProfile,
   makeRemoteGetNews,
-  makeRemoteFavouriteArticle
+  makeRemoteFavouriteArticle,
 } from '@/main/factories/usecases'
 import {
   ArticlesPage,
@@ -45,7 +45,12 @@ export const Router = () => {
           />
           <Route
             path="/articles"
-            element={<ArticlesPage listArticles={makeRemoteListArticles()} favouriteArticle={makeRemoteFavouriteArticle()} />}
+            element={
+              <ArticlesPage
+                listArticles={makeRemoteListArticles()}
+                favouriteArticle={makeRemoteFavouriteArticle()}
+              />
+            }
           />
           <Route
             path="/articles/:id"

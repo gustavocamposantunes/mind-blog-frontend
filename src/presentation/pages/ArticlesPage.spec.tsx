@@ -1,11 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { FavouriteArticleSpy, ListArticlesSpy, renderArticlesPageWithRouter } from '../test'
+import {
+  FavouriteArticleSpy,
+  ListArticlesSpy,
+  renderArticlesPageWithRouter,
+} from '../test'
 import { cleanup, fireEvent, screen } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
 
-import { mockAuthenticateUserModel } from '@/domain/test'
 import { UnexpectedError } from '@/domain/errors'
+import { mockAuthenticateUserModel } from '@/domain/test'
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
@@ -21,12 +25,15 @@ type SutTypes = {
   favouriteArticleSpy: FavouriteArticleSpy
 }
 
-const makeSut = (listArticlesListSpy = new ListArticlesSpy(), favouriteArticleSpy = new FavouriteArticleSpy()): SutTypes => {
+const makeSut = (
+  listArticlesListSpy = new ListArticlesSpy(),
+  favouriteArticleSpy = new FavouriteArticleSpy(),
+): SutTypes => {
   renderArticlesPageWithRouter(listArticlesListSpy, favouriteArticleSpy)
 
   return {
     listArticlesListSpy,
-    favouriteArticleSpy
+    favouriteArticleSpy,
   }
 }
 
@@ -36,16 +43,16 @@ describe('ArticlesPage', () => {
   describe('List', () => {
     it('should render skeletons while is loading', async () => {
       makeSut()
-  
+
       const skeletons = await screen.findAllByTestId('custom-skeleton')
-  
+
       expect(skeletons).toBeTruthy()
       expect(skeletons.length).toBe(6)
     })
-  
+
     it('should render the articles', async () => {
       const { listArticlesListSpy } = makeSut()
-  
+
       const firstArticleTitle = await screen.findByText(
         listArticlesListSpy.articlesList.articles[0].title,
       )
@@ -56,7 +63,7 @@ describe('ArticlesPage', () => {
       const firstArticleImage = (await screen.findByAltText(
         listArticlesListSpy.articlesList.articles[0].title,
       )) as HTMLImageElement
-  
+
       expect(firstArticleTitle).toBeTruthy()
       expect(firstArticleContent).toBeTruthy()
       expect(firstArticleDate[0].textContent).toEqual(
@@ -71,30 +78,30 @@ describe('ArticlesPage', () => {
         listArticlesListSpy.articlesList.articles[0].image,
       )
     })
-  
+
     it('should render the pencil icon when an article is from the auth user', async () => {
       const { listArticlesListSpy } = makeSut()
-  
+
       await screen.findByTestId(
         `card-article-${listArticlesListSpy.articlesList.articles[1].id}`,
       )
-  
+
       const pencilIcon = await screen.findByTestId('pencil-icon')
-  
+
       expect(pencilIcon).toBeTruthy()
     })
-  
+
     it('should redirect to the article edit page when the pencil icon is clicked', async () => {
       makeSut()
-  
+
       const pencilIcon = await screen.findByTestId('pencil-icon')
-  
+
       fireEvent.click(pencilIcon)
-  
+
       const editArticlePageMock = await screen.findByTestId(
         'edit-article-page-mock',
       )
-  
+
       expect(editArticlePageMock).toBeTruthy()
     })
   })
@@ -102,25 +109,31 @@ describe('ArticlesPage', () => {
   describe('Favourite', () => {
     it('should render a favorite heart icon on article', async () => {
       makeSut()
-  
-      const favoriteHeartIcon = await screen.findAllByTestId('favorite-heart-icon')
-  
+
+      const favoriteHeartIcon = await screen.findAllByTestId(
+        'favorite-heart-icon',
+      )
+
       expect(favoriteHeartIcon).toBeTruthy()
     })
 
     const setupFavouriteError = async () => {
       const favouriteArticleSpy = new FavouriteArticleSpy()
       const mockedError = new UnexpectedError()
-      vi.spyOn(favouriteArticleSpy, 'favorite').mockRejectedValueOnce(mockedError)
+      vi.spyOn(favouriteArticleSpy, 'favorite').mockRejectedValueOnce(
+        mockedError,
+      )
       makeSut(undefined, favouriteArticleSpy)
 
-      const [favoriteHeartIcon] = await screen.findAllByTestId('favorite-heart-icon')
+      const [favoriteHeartIcon] = await screen.findAllByTestId(
+        'favorite-heart-icon',
+      )
 
       fireEvent.click(favoriteHeartIcon)
 
       return {
         mockedError,
-        favoriteHeartIcon
+        favoriteHeartIcon,
       }
     }
 
@@ -142,22 +155,26 @@ describe('ArticlesPage', () => {
 
     it('should change favorite heart icon color on success', async () => {
       makeSut()
-  
-      const [favoriteHeartIcon] = await screen.findAllByTestId('favorite-heart-icon')
-  
+
+      const [favoriteHeartIcon] = await screen.findAllByTestId(
+        'favorite-heart-icon',
+      )
+
       expect(favoriteHeartIcon.getAttribute('fill')).toBe('white')
-  
+
       fireEvent.click(favoriteHeartIcon)
 
       await screen.findByText('Artigo adicionado aos favoritos')
-  
+
       expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
     })
 
     it('should init the article favourited', async () => {
       makeSut()
-  
-      const [_,favoriteHeartIcon] = await screen.findAllByTestId('favorite-heart-icon')
+
+      const [_, favoriteHeartIcon] = await screen.findAllByTestId(
+        'favorite-heart-icon',
+      )
 
       expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
     })
