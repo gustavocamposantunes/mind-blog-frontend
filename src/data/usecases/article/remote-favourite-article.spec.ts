@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest'
 
 import { RemoteFavouriteArticle } from './remote-favourite-article'
 
+import type { FavouriteModel } from '@/domain/models'
+
 import { HttpPostClientSpy } from '@/data/test/mock-http-client'
 
 type SutTypes = {
@@ -64,5 +66,38 @@ describe('RemoteFavouriteArticle', () => {
 
     expect(response.statusCode).toBe(403)
     expect(response.error).toBe('Credenciais inválidas')
+  })
+
+  it('should returns an UnexpectedError when HttpPostClient returns other error status codes', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+
+    httpPostClientSpy.response = {
+      status: 502,
+      data: { message: 'Erro inesperado' },
+    }
+
+    const response = await sut.favorite(faker.number.int(), faker.string.uuid())
+
+    expect(response.statusCode).toBe(502)
+    expect(response.error).toBe('Erro inesperado')
+  })
+
+  it('should returns a FavouriteModel if HttpPostClient returns 201', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+
+    const favouriteModel: FavouriteModel = {
+      favouriteCount: faker.number.int(),
+      favourited: true,
+    }
+
+    httpPostClientSpy.response = {
+      status: 201,
+      data: favouriteModel,
+    }
+
+    const response = await sut.favorite(faker.number.int(), faker.string.uuid())
+
+    expect(response.statusCode).toBe(201)
+    expect(response.data).toBe(favouriteModel)
   })
 })
