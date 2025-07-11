@@ -72,6 +72,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
     authUserId !== author?.id && isLoggedIn && favouriteArticleById ? (
       <Heart
         fill={favorite ? 'red' : 'white'}
+        color={favorite ? 'red' : undefined}
         data-testid="favorite-heart-icon"
         onClick={(e) => {
           e.stopPropagation()
