@@ -6,7 +6,7 @@ import {
   type HttpPostClient,
   type HttpRemoteResponse,
 } from '@/data/protocols'
-import { InternalServerError, UnexpectedError } from '@/domain/errors'
+import { InternalServerError, InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
 
 export class RemoteFavouriteArticle implements FavouriteArticleUseCase {
   private readonly url: string
@@ -40,6 +40,11 @@ export class RemoteFavouriteArticle implements FavouriteArticleUseCase {
         return {
           statusCode: status,
           error: new InternalServerError().message,
+        }
+      case HttpStatusCode.forbidden:
+        return {
+          statusCode: status,
+          error: new InvalidCredentialsError().message
         }
       default:
         return {
