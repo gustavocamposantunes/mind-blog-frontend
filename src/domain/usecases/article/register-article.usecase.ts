@@ -1,4 +1,4 @@
-import type { ArticleModel } from '../models'
+import type { ArticleModel } from '@/domain/models'
 import type { HttpRemoteResponse } from '@/data/protocols'
 
 export type RegisterArticleParams = {
