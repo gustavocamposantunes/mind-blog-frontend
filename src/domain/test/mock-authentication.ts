@@ -14,6 +14,6 @@ export const mockAuthenticateUserModel = (): AuthenticateUserModel => ({
     id: 5,
     email: faker.internet.email(),
     name: faker.person.fullName(),
-    image: faker.image.avatar()
+    image: faker.image.avatar(),
   },
 })
