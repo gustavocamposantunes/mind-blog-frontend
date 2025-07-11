@@ -6,7 +6,11 @@ import {
   type HttpPostClient,
   type HttpRemoteResponse,
 } from '@/data/protocols'
-import { InternalServerError, InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
+import {
+  InternalServerError,
+  InvalidCredentialsError,
+  UnexpectedError,
+} from '@/domain/errors'
 
 export class RemoteFavouriteArticle implements FavouriteArticleUseCase {
   private readonly url: string
@@ -21,7 +25,7 @@ export class RemoteFavouriteArticle implements FavouriteArticleUseCase {
     id: number,
     token: string,
   ): Promise<HttpRemoteResponse<FavouriteModel>> {
-    const { status } = await this.httpClient.post({
+    const { status, data } = await this.httpClient.post({
       url: this.url,
       body: {
         id,
@@ -32,10 +36,11 @@ export class RemoteFavouriteArticle implements FavouriteArticleUseCase {
     })
 
     switch (status) {
-      case HttpStatusCode.ok:
-        return Promise.resolve(
-          {},
-        ) as unknown as HttpRemoteResponse<FavouriteModel>
+      case HttpStatusCode.created:
+        return {
+          statusCode: status,
+          data: data as FavouriteModel,
+        }
       case HttpStatusCode.serverError:
         return {
           statusCode: status,
@@ -44,7 +49,7 @@ export class RemoteFavouriteArticle implements FavouriteArticleUseCase {
       case HttpStatusCode.forbidden:
         return {
           statusCode: status,
-          error: new InvalidCredentialsError().message
+          error: new InvalidCredentialsError().message,
         }
       default:
         return {
