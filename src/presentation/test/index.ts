@@ -1,4 +1,5 @@
 export * from './mock-authenticate-user'
+export * from './mock-favourite-article'
 export * from './mock-get-article-by-id'
 export * from './mock-get-news'
 export * from './mock-get-profile'

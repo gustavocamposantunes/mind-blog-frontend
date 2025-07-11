@@ -6,7 +6,8 @@ export const useArticlesList = (loadArticlesList: ListArticlesUseCase) => {
   return useQuery({
     queryKey: ['articles'],
     queryFn: async () => {
-      return await loadArticlesList.listAll()
+      const { data } = await loadArticlesList.listAll()
+      return data
     },
   })
 }

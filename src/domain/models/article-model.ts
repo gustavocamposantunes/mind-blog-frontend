@@ -10,6 +10,7 @@ export type ArticleModel = {
   content: string
   image?: string
   author: AuthorModel
+  favouriteCount: number
   publishedAt: string
   updatedAt: string
 }
