@@ -1,4 +1,4 @@
-import { PencilIcon } from 'lucide-react'
+import { Heart, PencilIcon } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { CustomAvatar } from '../molecules'
@@ -41,11 +41,29 @@ export const ArticleCard: React.FC<IArticleCard> = ({
   favourite,
 }) => {
   const navigate = useNavigate()
-  const { user } = useAuthStore()
+  const { user, accessToken } = useAuthStore()
+
+  const isLoggedIn = !!accessToken
 
   const formatterdDate = formatDateToShortMonth(
     publishedAt || new Date().toISOString(),
   )
+
+  const editArticle = user.id === author?.id ? (
+    <Link
+      className="bg-stone-800 p-2 rounded-md"
+      to={`/article/edit/${id}`}
+      onClick={(e) => {
+        e.stopPropagation()
+      }}
+    >
+      <PencilIcon className="text-white" />
+    </Link>
+  ) : null
+
+  const favoriteArticle = user.id !== author?.id && isLoggedIn ?
+    <Heart data-testid="favorite-heart-icon" onClick={(e) => { e.stopPropagation() }} />
+    : null
 
   return (
     <Card
@@ -78,17 +96,8 @@ export const ArticleCard: React.FC<IArticleCard> = ({
             Por <b>{author?.name}</b> - {formatterdDate}
           </p>
         </span>
-        {user.id === author?.id ? (
-          <Link
-            className="bg-stone-800 p-2 rounded-md"
-            to={`/article/edit/${id}`}
-            onClick={(e) => {
-              e.stopPropagation()
-            }}
-          >
-            <PencilIcon className="text-white" />
-          </Link>
-        ) : null}
+        {editArticle}
+        {favoriteArticle}
         {redirect ? (
           <Button className="orange-btn action-btn uppercase">Ler mais</Button>
         ) : null}
