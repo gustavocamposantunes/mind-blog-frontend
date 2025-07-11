@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 
-import type { ArticleListModel, ArticleModel } from '../models'
+import type { ArticleListModel, ArticleModel, FavouriteModel } from '../models'
 import type { RegisterArticleParams } from '@/domain/usecases'
 
 export const mockRegisterArticleParams = (): RegisterArticleParams => ({
@@ -48,4 +48,9 @@ export const mockArticlesList = (): ArticleListModel => ({
   limit: 10,
   page: 1,
   total: 1,
+})
+
+export const mockFavouriteArticle = (): FavouriteModel => ({
+  favouriteCount: faker.number.int(),
+  favourited: true,
 })
