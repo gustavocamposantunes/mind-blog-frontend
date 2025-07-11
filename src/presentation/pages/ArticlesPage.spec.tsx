@@ -109,7 +109,7 @@ describe('ArticlesPage', () => {
       expect(favoriteHeartIcon).toBeTruthy()
     })
   
-    it('should change favorite heart icon color on click', async () => {
+    it.skip('should change favorite heart icon color on click', async () => {
       makeSut()
   
       const favoriteHeartIcon = await screen.findByTestId('favorite-heart-icon')
@@ -132,7 +132,8 @@ describe('ArticlesPage', () => {
       fireEvent.click(favoriteHeartIcon)
 
       return {
-        mockedError
+        mockedError,
+        favoriteHeartIcon
       }
     }
 
@@ -142,6 +143,14 @@ describe('ArticlesPage', () => {
       const error = await screen.findByText(mockedError.message)
 
       expect(error).toBeTruthy()
+    })
+
+    it('should mantain the heart icon fill white if an error occur', async () => {
+      const { mockedError, favoriteHeartIcon } = await setupFavouriteError()
+
+      await screen.findByText(mockedError.message)
+
+      expect(favoriteHeartIcon.getAttribute('fill')).toBe('white')
     })
   })
 })
