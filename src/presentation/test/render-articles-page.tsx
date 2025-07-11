@@ -5,16 +5,18 @@ import { ArticlesPage } from '../pages'
 import { render } from './test-utils'
 
 import type { ListArticlesSpy } from './mock-list-articles'
+import type { FavouriteArticleSpy } from './mock-favourite-article'
 
 export const renderArticlesPageWithRouter = (
   listArticlesSpy: ListArticlesSpy,
+  favouriteArticleSpy: FavouriteArticleSpy
 ) => {
   render(
     <MemoryRouter initialEntries={['/articles']}>
       <Routes>
         <Route
           path="/articles"
-          element={<ArticlesPage listArticles={listArticlesSpy} />}
+          element={<ArticlesPage listArticles={listArticlesSpy} favouriteArticle={favouriteArticleSpy} />}
         />
         <Route
           path="/article/edit/:id"

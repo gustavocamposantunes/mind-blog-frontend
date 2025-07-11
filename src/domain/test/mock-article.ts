@@ -24,6 +24,7 @@ export const mockArticle = (withContent = false): ArticleModel => ({
     name: faker.person.fullName(),
     avatar: faker.image.avatar(),
   },
+  favouriteCount: faker.number.int(),
   publishedAt: faker.date.past().toISOString(),
   updatedAt: faker.date.recent().toISOString(),
 })

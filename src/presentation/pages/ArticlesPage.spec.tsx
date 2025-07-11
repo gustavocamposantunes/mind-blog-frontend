@@ -5,6 +5,8 @@ import { cleanup, fireEvent, screen } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
 
 import { mockAuthenticateUserModel } from '@/domain/test'
+import { findByText } from '@testing-library/react'
+import { UnexpectedError } from '@/domain/errors'
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
@@ -117,6 +119,21 @@ describe('ArticlesPage', () => {
       fireEvent.click(favoriteHeartIcon)
   
       expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
+    })
+
+    it('should render a toast.error when heart icon is clicked and returns an error from api', async () => {
+      const favouriteArticleSpy = new FavouriteArticleSpy()
+      const mockedError = new UnexpectedError()
+      vi.spyOn(favouriteArticleSpy, 'favorite').mockRejectedValueOnce(mockedError)
+      makeSut(undefined, favouriteArticleSpy)
+
+      const favoriteHeartIcon = await screen.findByTestId('favorite-heart-icon')
+
+      fireEvent.click(favoriteHeartIcon)
+
+      const error = await screen.findByText(mockedError.message)
+
+      expect(error).toBeTruthy()
     })
   })
 })
