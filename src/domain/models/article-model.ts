@@ -11,6 +11,7 @@ export type ArticleModel = {
   image?: string
   author: AuthorModel
   favouriteCount: number
+  favourited: boolean
   publishedAt: string
   updatedAt: string
 }

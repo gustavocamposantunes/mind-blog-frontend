@@ -5,7 +5,6 @@ import { cleanup, fireEvent, screen } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
 
 import { mockAuthenticateUserModel } from '@/domain/test'
-import { findByText } from '@testing-library/react'
 import { UnexpectedError } from '@/domain/errors'
 
 vi.mock('react-router-dom', async () => ({
@@ -104,7 +103,7 @@ describe('ArticlesPage', () => {
     it('should render a favorite heart icon on article', async () => {
       makeSut()
   
-      const favoriteHeartIcon = await screen.findByTestId('favorite-heart-icon')
+      const favoriteHeartIcon = await screen.findAllByTestId('favorite-heart-icon')
   
       expect(favoriteHeartIcon).toBeTruthy()
     })
@@ -115,7 +114,7 @@ describe('ArticlesPage', () => {
       vi.spyOn(favouriteArticleSpy, 'favorite').mockRejectedValueOnce(mockedError)
       makeSut(undefined, favouriteArticleSpy)
 
-      const favoriteHeartIcon = await screen.findByTestId('favorite-heart-icon')
+      const [favoriteHeartIcon] = await screen.findAllByTestId('favorite-heart-icon')
 
       fireEvent.click(favoriteHeartIcon)
 
@@ -144,7 +143,7 @@ describe('ArticlesPage', () => {
     it('should change favorite heart icon color on success', async () => {
       makeSut()
   
-      const favoriteHeartIcon = await screen.findByTestId('favorite-heart-icon')
+      const [favoriteHeartIcon] = await screen.findAllByTestId('favorite-heart-icon')
   
       expect(favoriteHeartIcon.getAttribute('fill')).toBe('white')
   

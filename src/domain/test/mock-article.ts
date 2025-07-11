@@ -25,6 +25,7 @@ export const mockArticle = (withContent = false): ArticleModel => ({
     avatar: faker.image.avatar(),
   },
   favouriteCount: faker.number.int(),
+  favourited: false,
   publishedAt: faker.date.past().toISOString(),
   updatedAt: faker.date.recent().toISOString(),
 })
@@ -37,8 +38,13 @@ export const mockArticleLoggedUser = (): ArticleModel => ({
   },
 })
 
+export const mockArticleFavourited = (): ArticleModel => ({
+  ...mockArticle(),
+  favourited: true,
+})
+
 export const mockArticlesList = (): ArticleListModel => ({
-  articles: [mockArticle(), mockArticleLoggedUser()],
+  articles: [mockArticle(), mockArticleLoggedUser(), mockArticleFavourited()],
   limit: 10,
   page: 1,
   total: 1,
