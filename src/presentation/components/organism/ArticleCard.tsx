@@ -15,7 +15,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/presentation/components/ui/card'
-import { useAuthStore } from '@/presentation/store/auth-store'
 import { formatDateToShortMonth } from '@/presentation/utils/dateFormatter'
 
 interface IArticleCard {
@@ -28,6 +27,8 @@ interface IArticleCard {
   className?: string
   redirect?: string
   favourite?: string
+  isLoggedIn: boolean
+  authUserId?: number
 }
 
 export const ArticleCard: React.FC<IArticleCard> = ({
@@ -40,19 +41,18 @@ export const ArticleCard: React.FC<IArticleCard> = ({
   className,
   redirect,
   favourite,
+  isLoggedIn,
+  authUserId
 }) => {
   const [favorite, setFavorite] = useState(false)
   const navigate = useNavigate()
-  const { user, accessToken } = useAuthStore()
-
-  const isLoggedIn = !!accessToken
 
   const formatterdDate = formatDateToShortMonth(
     publishedAt || new Date().toISOString(),
   )
 
   const editArticle =
-    user.id === author?.id ? (
+    authUserId === author?.id ? (
       <Link
         className="bg-stone-800 p-2 rounded-md"
         to={`/article/edit/${id}`}
@@ -65,7 +65,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
     ) : null
 
   const favoriteArticle =
-    user.id !== author?.id && isLoggedIn ? (
+    authUserId !== author?.id && isLoggedIn ? (
       <Heart
         fill={favorite ? 'red' : 'white'}
         data-testid="favorite-heart-icon"
