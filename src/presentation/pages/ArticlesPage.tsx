@@ -22,7 +22,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
 
   const { mutate } = useFavouriteArticle(favouriteArticle)
 
-  const favouriteArticleById = (id: number) => {
+  const favouriteArticleById = (id: number, favourite: () => void) => {
     mutate({
       id,
       token: accessToken
