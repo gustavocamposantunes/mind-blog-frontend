@@ -51,4 +51,18 @@ describe('RemoteFavouriteArticle', () => {
     expect(response.statusCode).toBe(500)
     expect(response.error).toBe('Erro interno do servidor')
   })
+
+  it('should returns an InvalidCredentialsError if HttpPostClient returns 403', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+
+    httpPostClientSpy.response = {
+      status: 403,
+      data: { message: 'Credenciais inválidas' },
+    }
+
+    const response = await sut.favorite(faker.number.int(), faker.string.uuid())
+
+    expect(response.statusCode).toBe(403)
+    expect(response.error).toBe('Credenciais inválidas')
+  })
 })
