@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { ListArticlesSpy, renderArticlesPageWithRouter } from '../test'
-import { cleanup, screen } from '../test/test-utils'
+import { cleanup, fireEvent, screen } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
-import { faker } from '@faker-js/faker'
+
 import { mockAuthenticateUserModel } from '@/domain/test'
 
 vi.mock('react-router-dom', async () => ({
@@ -12,16 +12,14 @@ vi.mock('react-router-dom', async () => ({
 }))
 
 vi.mock('../store/auth-store', async () => ({
-  useAuthStore: () => mockAuthenticateUserModel()
+  useAuthStore: () => mockAuthenticateUserModel(),
 }))
 
 type SutTypes = {
   listArticlesListSpy: ListArticlesSpy
 }
 
-const makeSut = (): SutTypes => {
-  const listArticlesListSpy = new ListArticlesSpy()
-
+const makeSut = (listArticlesListSpy = new ListArticlesSpy()): SutTypes => {
   renderArticlesPageWithRouter(listArticlesListSpy)
 
   return {
@@ -75,5 +73,17 @@ describe('ArticlesPage', () => {
     const favoriteHeartIcon = await screen.findByTestId('favorite-heart-icon')
 
     expect(favoriteHeartIcon).toBeTruthy()
+  })
+
+  it('should change favorite heart icon color on click', async () => {
+    makeSut()
+
+    const favoriteHeartIcon = await screen.findByTestId('favorite-heart-icon')
+
+    expect(favoriteHeartIcon.getAttribute('fill')).toBe('white')
+
+    fireEvent.click(favoriteHeartIcon)
+
+    expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
   })
 })
