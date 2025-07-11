@@ -121,7 +121,7 @@ describe('ArticlesPage', () => {
       expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
     })
 
-    it('should render a toast.error when heart icon is clicked and returns an error from api', async () => {
+    const setupFavouriteError = async () => {
       const favouriteArticleSpy = new FavouriteArticleSpy()
       const mockedError = new UnexpectedError()
       vi.spyOn(favouriteArticleSpy, 'favorite').mockRejectedValueOnce(mockedError)
@@ -130,6 +130,14 @@ describe('ArticlesPage', () => {
       const favoriteHeartIcon = await screen.findByTestId('favorite-heart-icon')
 
       fireEvent.click(favoriteHeartIcon)
+
+      return {
+        mockedError
+      }
+    }
+
+    it('should render a toast.error when heart icon is clicked and returns an error from api', async () => {
+      const { mockedError } = await setupFavouriteError()
 
       const error = await screen.findByText(mockedError.message)
 
