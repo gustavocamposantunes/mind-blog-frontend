@@ -11,8 +11,9 @@ export const mockAuthenticationParams = (): AuthParams => ({
 export const mockAuthenticateUserModel = (): AuthenticateUserModel => ({
   accessToken: faker.string.uuid(),
   user: {
+    id: 5,
     email: faker.internet.email(),
-    id: faker.number.int(),
     name: faker.person.fullName(),
+    image: faker.image.avatar()
   },
 })

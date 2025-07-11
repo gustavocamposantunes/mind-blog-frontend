@@ -3,10 +3,16 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ListArticlesSpy, renderArticlesPageWithRouter } from '../test'
 import { cleanup, screen } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
+import { faker } from '@faker-js/faker'
+import { mockAuthenticateUserModel } from '@/domain/test'
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
   useNavigate: () => vi.fn(),
+}))
+
+vi.mock('../store/auth-store', async () => ({
+  useAuthStore: () => mockAuthenticateUserModel()
 }))
 
 type SutTypes = {
@@ -61,5 +67,13 @@ describe('ArticlesPage', () => {
     expect(firstArticleImage.src).toEqual(
       listArticlesListSpy.articlesList.articles[0].image,
     )
+  })
+
+  it('should render a favorite heart icon on article', async () => {
+    makeSut()
+
+    const favoriteHeartIcon = await screen.findByTestId('favorite-heart-icon')
+
+    expect(favoriteHeartIcon).toBeTruthy()
   })
 })
