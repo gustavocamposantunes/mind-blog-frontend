@@ -47,14 +47,14 @@ describe('ArticlesPage', () => {
     const firstArticleContent = await screen.findByText(
       listArticlesListSpy.articlesList.articles[0].content,
     )
-    const firstArticleDate = await screen.findByTestId('published-at')
+    const firstArticleDate = await screen.findAllByTestId('published-at')
     const firstArticleImage = (await screen.findByAltText(
       listArticlesListSpy.articlesList.articles[0].title,
     )) as HTMLImageElement
 
     expect(firstArticleTitle).toBeTruthy()
     expect(firstArticleContent).toBeTruthy()
-    expect(firstArticleDate.textContent).toEqual(
+    expect(firstArticleDate[0].textContent).toEqual(
       expect.stringContaining(
         formatDateToShortMonth(
           listArticlesListSpy.articlesList.articles[0].publishedAt,
@@ -85,5 +85,17 @@ describe('ArticlesPage', () => {
     fireEvent.click(favoriteHeartIcon)
 
     expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
+  })
+
+  it('should render the pencil icon when an article is from the auth user', async () => {
+    const { listArticlesListSpy } = makeSut()
+
+    await screen.findByTestId(
+      `card-article-${listArticlesListSpy.articlesList.articles[1].id}`,
+    )
+
+    const pencilIcon = await screen.findByTestId('pencil-icon')
+
+    expect(pencilIcon).toBeTruthy()
   })
 })

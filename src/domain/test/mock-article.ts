@@ -28,8 +28,16 @@ export const mockArticle = (withContent = false): ArticleModel => ({
   updatedAt: faker.date.recent().toISOString(),
 })
 
+export const mockArticleLoggedUser = (): ArticleModel => ({
+  ...mockArticle(),
+  author: {
+    ...mockArticle().author,
+    id: 5,
+  },
+})
+
 export const mockArticlesList = (): ArticleListModel => ({
-  articles: [mockArticle()],
+  articles: [mockArticle(), mockArticleLoggedUser()],
   limit: 10,
   page: 1,
   total: 1,
