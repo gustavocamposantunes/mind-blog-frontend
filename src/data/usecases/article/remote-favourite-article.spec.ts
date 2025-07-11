@@ -1,7 +1,9 @@
-import { HttpPostClientSpy } from "@/data/test/mock-http-client";
-import { faker } from "@faker-js/faker";
-import { describe, expect, it } from "vitest";
-import { RemoteFavouriteArticle } from "./remote-favourite-article";
+import { faker } from '@faker-js/faker'
+import { describe, expect, it } from 'vitest'
+
+import { RemoteFavouriteArticle } from './remote-favourite-article'
+
+import { HttpPostClientSpy } from '@/data/test/mock-http-client'
 
 type SutTypes = {
   sut: RemoteFavouriteArticle
@@ -14,7 +16,7 @@ const makeSut = (url = faker.internet.url()): SutTypes => {
 
   return {
     sut,
-    httpPostClientSpy
+    httpPostClientSpy,
   }
 }
 
@@ -34,5 +36,19 @@ describe('RemoteFavouriteArticle', () => {
     expect(httpPostClientSpy.headers).toEqual({
       Authorization: `Bearer ${token}`,
     })
+  })
+
+  it('should returns an InternalServerError if HttpPostClient returns 500', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+
+    httpPostClientSpy.response = {
+      status: 500,
+      data: { message: 'Erro interno do servidor' },
+    }
+
+    const response = await sut.favorite(faker.number.int(), faker.string.uuid())
+
+    expect(response.statusCode).toBe(500)
+    expect(response.error).toBe('Erro interno do servidor')
   })
 })
