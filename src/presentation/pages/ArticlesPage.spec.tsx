@@ -172,11 +172,11 @@ describe('ArticlesPage', () => {
     it('should init the article favourited', async () => {
       makeSut()
 
-      const [_, favoriteHeartIcon] = await screen.findAllByTestId(
+      const favoriteHeartIcon = await screen.findAllByTestId(
         'favorite-heart-icon',
       )
 
-      expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
+      expect(favoriteHeartIcon[1].getAttribute('fill')).toBe('red')
     })
   })
 })
