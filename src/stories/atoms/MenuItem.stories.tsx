@@ -1,8 +1,9 @@
+import { Newspaper } from 'lucide-react'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
+
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { MenuItem } from '@/presentation/components/atoms'
-import { Newspaper } from 'lucide-react'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
 
 const meta = {
   title: 'Atoms/MenuItem',
@@ -12,9 +13,9 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
-    redirect: "/",
-    children: "Artigos",
-    iconStart: <Newspaper />
+    redirect: '/',
+    children: 'Artigos',
+    iconStart: <Newspaper />,
   },
   decorators: [
     (Story) => (
