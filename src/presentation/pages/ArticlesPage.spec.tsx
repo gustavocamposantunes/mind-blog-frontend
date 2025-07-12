@@ -169,14 +169,37 @@ describe('ArticlesPage', () => {
       expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
     })
 
-    it('should init the article favourited', async () => {
+    const setupFavouritedArticle = async () => {
       makeSut()
 
       const favoriteHeartIcon = await screen.findAllByTestId(
         'favorite-heart-icon',
       )
 
-      expect(favoriteHeartIcon[1].getAttribute('fill')).toBe('red')
+      return {
+        favoriteHeartIcon: favoriteHeartIcon[1],
+      }
+    }
+
+    it('should init the article favourited', async () => {
+      const { favoriteHeartIcon } = await setupFavouritedArticle()
+
+      expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
+    })
+
+    it('should not render add to favourite toast when article is already added', async () => {
+      const { favoriteHeartIcon } = await setupFavouritedArticle()
+
+      fireEvent.click(favoriteHeartIcon)
+
+      expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
+
+      expect(
+        await screen
+          .findByText('Artigo adicionado aos favoritos')
+          .then((el) => el)
+          .catch(() => null),
+      ).toBeFalsy()
     })
   })
 })
