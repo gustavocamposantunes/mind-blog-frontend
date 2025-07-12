@@ -1,4 +1,4 @@
-import { LogOut, UserPen } from 'lucide-react'
+import { LogIn, LogOut, NotebookText, UserPen } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 import { MenuItem } from '../atoms'
@@ -31,6 +31,7 @@ export const PageTemplate: React.FC<IPageTemplate> = ({ children }) => {
         <ul>
           {isLoggedIn ? (
             <MenuItem
+              iconStart={<NotebookText />}
               className="border-l-2 border-l-stone-700 pl-6"
               redirect="/article/new"
             >
@@ -38,6 +39,7 @@ export const PageTemplate: React.FC<IPageTemplate> = ({ children }) => {
             </MenuItem>
           ) : (
             <MenuItem
+              iconStart={<LogIn />}
               className="border-l-2 border-l-stone-700 pl-6"
               redirect="/login"
             >

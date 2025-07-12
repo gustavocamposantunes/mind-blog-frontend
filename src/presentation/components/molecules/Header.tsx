@@ -1,3 +1,4 @@
+import { House, Newspaper } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import logoDark from '../../assets/logo-dark.svg'
@@ -17,8 +18,14 @@ export const Header: React.FC<IHeader> = ({ children }) => {
       </Link>
       <nav className="flex pt-6">
         <ul className="flex gap-4 items-center">
-          <MenuItem redirect="/">Home</MenuItem>
-          <MenuItem className="pr-4" redirect="/articles">
+          <MenuItem redirect="/" iconStart={<House />}>
+            Home
+          </MenuItem>
+          <MenuItem
+            className="pr-4"
+            redirect="/articles"
+            iconStart={<Newspaper />}
+          >
             Artigos
           </MenuItem>
 
