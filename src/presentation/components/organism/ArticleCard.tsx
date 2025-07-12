@@ -75,9 +75,11 @@ export const ArticleCard: React.FC<IArticleCard> = ({
         data-testid="favorite-heart-icon"
         onClick={(e) => {
           e.stopPropagation()
-          favouriteArticleById(id, () => {
-            setFavorite(true)
-          })
+          if (!favorite) {
+            favouriteArticleById(id, () => {
+              setFavorite(true)
+            })
+          }
         }}
       />
     ) : null
