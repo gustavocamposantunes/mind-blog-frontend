@@ -245,5 +245,23 @@ describe('ArticlesPage', () => {
 
       expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
     })
+
+    it('should change favorite heart icon color on success', async () => {
+      makeSut()
+
+      const favoriteHeartIcons = await screen.findAllByTestId(
+        'favorite-heart-icon',
+      )
+
+      const favoriteHeartIcon = favoriteHeartIcons[1]
+
+      expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
+
+      fireEvent.click(favoriteHeartIcon)
+
+      await screen.findByText('Artigo removido dos favoritos')
+
+      expect(favoriteHeartIcon.getAttribute('fill')).toBe('white')
+    })
   })
 })
