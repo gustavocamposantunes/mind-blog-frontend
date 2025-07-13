@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker'
 import { describe, it, vi, beforeEach, expect } from 'vitest'
 
 import {
@@ -152,12 +153,32 @@ describe('EditArticlePage', () => {
   }
 
   describe('UpdateArticle', () => {
+    it('should don´t submit if fields are not updated', async () => {
+      makeSut()
+
+      await screen.findByText('Artigo carregado com sucesso')
+
+      const submitButton = await screen.findByRole('button', {
+        name: /salvar/i,
+      })
+
+      fireEvent.click(submitButton)
+
+      await screen.findByText('Nenhuma alteração realizada, atualize o artigo!')
+    })
+
     it('should render a toast.error if article update fails', async () => {
       const { updateArticleSpy, error } = setupUpdateFail()
 
       makeSut(undefined, updateArticleSpy)
 
       await screen.findByText('Artigo carregado com sucesso')
+
+      const textAreaTitle = await screen.findByTestId('textaread-title')
+
+      fireEvent.change(textAreaTitle, {
+        target: { value: faker.lorem.sentence() },
+      })
 
       const submitButton = screen.getByRole('button', { name: /salvar/i })
 
