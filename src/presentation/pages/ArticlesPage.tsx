@@ -36,9 +36,6 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     limit: 10,
   })
 
-  // total 20
-  // total / limit
-
   const { data, isLoading } = useArticlesList(listArticles, pagination)
 
   const { mutate: mutateFavouriteArticle } =
@@ -83,6 +80,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   if (!isLoading && data) {
     paginationComponent = (
       <CustomPagination
+        currentPage={pagination.page}
         totalPages={data?.total / pagination.limit}
         className="lg:col-span-2 xl:col-span-3 mt-4"
       />

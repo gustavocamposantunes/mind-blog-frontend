@@ -8,10 +8,12 @@ import {
 } from '../ui/pagination'
 
 type CustomPaginationProps = {
+  currentPage: number
   totalPages: number
 } & React.ComponentProps<'nav'>
 
 export const CustomPagination: React.FC<CustomPaginationProps> = ({
+  currentPage,
   totalPages,
   ...props
 }) => (
@@ -22,7 +24,13 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
       </PaginationItem>
       {Array.from({ length: totalPages }, (_, index) => (
         <PaginationItem key={index} data-testid="hint-page">
-          <PaginationLink href="#">{index + 1}</PaginationLink>
+          <PaginationLink
+            href="#"
+            isActive={currentPage === index + 1}
+            data-testid={currentPage === index + 1 ? 'active-page' : null}
+          >
+            {index + 1}
+          </PaginationLink>
         </PaginationItem>
       ))}
       <PaginationItem>
