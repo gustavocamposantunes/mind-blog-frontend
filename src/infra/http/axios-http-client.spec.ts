@@ -229,5 +229,32 @@ describe('AxiosHttpClient', () => {
         data: { message: 'An unknown error occurred' },
       })
     })
+
+    it('Should return the correct error response when axios.delete throws a known error', async () => {
+      const sut = makeSut()
+
+      mockedAxios.isAxiosError.mockImplementation(
+        (error): error is AxiosError => {
+          return Boolean(error?.isAxiosError)
+        },
+      )
+
+      const axiosError = new AxiosError('Request failed', 'ERR_BAD_REQUEST')
+      axiosError.isAxiosError = true
+      axiosError.response = {
+        status: 404,
+        statusText: 'Not Found',
+        data: { message: 'Not Found' },
+        headers: {},
+        config: { headers: new axios.AxiosHeaders() },
+      }
+
+      mockedAxios.delete.mockRejectedValueOnce(axiosError)
+
+      await expect(sut.delete(mockHttpRequest())).resolves.toEqual({
+        status: 404,
+        data: { message: 'Not Found' },
+      })
+    })
   })
 })
