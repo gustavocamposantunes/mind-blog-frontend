@@ -50,6 +50,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
         content: data?.data?.content,
         image: data?.data?.image,
       })
+    toast.success('Artigo carregado com sucesso')
   }, [data?.data])
 
   const content = isLoading ? (
