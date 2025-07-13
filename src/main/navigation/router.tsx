@@ -15,6 +15,7 @@ import {
   makeRemoteGetNews,
   makeRemoteFavouriteArticle,
   makeRemoteUnfavouriteArticle,
+  makeRemoteUpdateArticle,
 } from '@/main/factories/usecases'
 import {
   ArticlesPage,
@@ -85,7 +86,10 @@ export const Router = () => {
             path="/article/edit/:id"
             element={
               <PrivateRoute>
-                <EditArticlePage getArticletById={makeRemoteGetArticleById()} />
+                <EditArticlePage
+                  getArticletById={makeRemoteGetArticleById()}
+                  updateArticle={makeRemoteUpdateArticle()}
+                />
               </PrivateRoute>
             }
           />

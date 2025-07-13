@@ -137,8 +137,13 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
               id="title"
               name="title"
               data-testid="textaread-title"
-              readOnly
               value={editArticleParams.title}
+              onChange={(e) =>
+                setEditArticleParams({
+                  ...editArticleParams,
+                  title: e.target.value,
+                })
+              }
             />
           </div>
 
@@ -150,8 +155,13 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
               id="content"
               name="content"
               data-testid="textaread-content"
-              readOnly
               value={editArticleParams.content}
+              onChange={(e) =>
+                setEditArticleParams({
+                  ...editArticleParams,
+                  content: e.target.value,
+                })
+              }
             />
           </div>
         </section>
