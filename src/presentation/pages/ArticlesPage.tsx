@@ -1,11 +1,16 @@
 import { toast } from 'react-toastify'
 
-import { useArticlesList, useFavouriteArticle } from '../hooks'
+import {
+  useArticlesList,
+  useFavouriteArticle,
+  useUnfavouriteArticle,
+} from '../hooks'
 import { useAuthStore } from '../store'
 
 import type {
   FavouriteArticleUseCase,
   ListArticlesUseCase,
+  UnfavouriteArticleUseCase,
 } from '@/domain/usecases'
 
 import { ArticleCard } from '@/presentation/components/organism/ArticleCard'
@@ -14,20 +19,23 @@ import { ArticlesTemplate } from '@/presentation/components/templates'
 type ArticlessPageProps = {
   listArticles: ListArticlesUseCase
   favouriteArticle: FavouriteArticleUseCase
+  unfavouriteArticle: UnfavouriteArticleUseCase
 }
 
 export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   listArticles,
   favouriteArticle,
+  unfavouriteArticle,
 }) => {
   const { user, accessToken } = useAuthStore()
 
   const { data, isLoading } = useArticlesList(listArticles)
 
-  const { mutate } = useFavouriteArticle(favouriteArticle)
+  const { mutate: mutateFavouriteArticle } =
+    useFavouriteArticle(favouriteArticle)
 
   const favouriteArticleById = (id: number, favourite: () => void) => {
-    mutate(
+    mutateFavouriteArticle(
       {
         id,
         token: accessToken,
@@ -42,6 +50,21 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     )
   }
 
+  const { mutate: mutateUnfavouriteArticle } =
+    useUnfavouriteArticle(unfavouriteArticle)
+
+  const unfavouriteArticleById = (id: number) => {
+    mutateUnfavouriteArticle(
+      {
+        id,
+        token: accessToken,
+      },
+      {
+        onError: (error) => toast.error(error.message),
+      },
+    )
+  }
+
   return (
     <ArticlesTemplate isLoading={isLoading}>
       {data?.articles.map(({ ...props }) => (
@@ -51,6 +74,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
           isLoggedIn={!!accessToken}
           authUserId={user.id}
           favouriteArticleById={favouriteArticleById}
+          unfavouriteArticleById={unfavouriteArticleById}
         />
       ))}
     </ArticlesTemplate>
