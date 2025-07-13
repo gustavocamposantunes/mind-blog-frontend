@@ -53,7 +53,18 @@ export const mockArticleFavourited = (): ArticleModel => ({
 })
 
 export const mockArticlesList = (): ArticleListModel => ({
-  articles: [mockArticle(), mockArticleLoggedUser(), mockArticleFavourited()],
+  articles: [
+    mockArticle(),
+    mockArticleLoggedUser(),
+    mockArticleFavourited(),
+    mockArticle(),
+    mockArticle(),
+    mockArticle(),
+    mockArticle(),
+    mockArticle(),
+    mockArticle(),
+    mockArticle(),
+  ],
   limit: 10,
   page: 1,
   total: 1,

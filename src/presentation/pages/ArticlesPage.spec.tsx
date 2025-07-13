@@ -273,5 +273,15 @@ describe('ArticlesPage', () => {
 
       expect(pagination).toBeTruthy()
     })
+
+    it('should render the first 10 articles after data is loaded', async () => {
+      const { listArticlesListSpy } = makeSut()
+
+      await screen.findByTestId('pagination')
+
+      listArticlesListSpy.articlesList.articles.forEach((props) => {
+        expect(`card-article-${props.id}`).toBeTruthy()
+      })
+    })
   })
 })
