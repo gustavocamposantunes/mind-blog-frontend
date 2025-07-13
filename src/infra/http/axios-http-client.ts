@@ -89,9 +89,14 @@ export class AxiosHttpClient
   }
 
   async delete(params: HttpDeleteParams): Promise<HttpResponse> {
-    await axios.delete(params.url, {
+    const response = await axios.delete(params.url, {
       data: params.body,
       headers: params.headers,
     })
+
+    return {
+      status: response.status,
+      data: response.data,
+    }
   }
 }
