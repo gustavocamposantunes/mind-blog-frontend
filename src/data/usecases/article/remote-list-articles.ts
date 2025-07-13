@@ -1,5 +1,5 @@
 import type { ArticleListModel } from '@/domain/models'
-import type { ListArticlesUseCase } from '@/domain/usecases'
+import type { ListArticleParams, ListArticlesUseCase } from '@/domain/usecases'
 
 import {
   type HttpGetClient,
@@ -20,8 +20,13 @@ export class RemoteListArticles implements ListArticlesUseCase {
     this.url = url
     this.httpClient = httpClient
   }
-  async listAll(): Promise<HttpRemoteResponse<ArticleListModel>> {
-    const { status, data } = await this.httpClient.get({ url: this.url })
+  async listAll(
+    params: ListArticleParams,
+  ): Promise<HttpRemoteResponse<ArticleListModel>> {
+    const { status, data } = await this.httpClient.get({
+      url: this.url,
+      queryParams: params,
+    })
 
     switch (status) {
       case HttpStatusCode.ok:
