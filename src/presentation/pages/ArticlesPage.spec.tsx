@@ -298,5 +298,15 @@ describe('ArticlesPage', () => {
         paginationPreviousNext + paginationQuantity,
       )
     })
+
+    it('should render the first page as current on init', async () => {
+      makeSut()
+
+      await screen.findByTestId('pagination')
+
+      const firstPage = await screen.findByTestId('active-page')
+
+      expect(firstPage.textContent).toBe('1')
+    })
   })
 })
