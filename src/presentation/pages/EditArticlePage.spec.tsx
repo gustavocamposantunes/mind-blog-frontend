@@ -32,94 +32,101 @@ describe('EditArticlePage', () => {
     cleanup()
     vi.clearAllMocks()
   })
-  it('should render an error if article is not found', async () => {
-    const { getArticleByIdSpy } = setupNotFoundArticle()
+  describe('GetArticleByID', () => {
+    it('should render an error if article is not found', async () => {
+      const { getArticleByIdSpy } = setupNotFoundArticle()
 
-    makeSut(getArticleByIdSpy)
+      makeSut(getArticleByIdSpy)
 
-    await screen.findByText('Erro ao buscar artigo')
-  })
+      await screen.findByText('Erro ao buscar artigo')
+    })
 
-  it('should redirect to HomePage if article is not found', async () => {
-    const { getArticleByIdSpy } = setupNotFoundArticle()
+    it('should redirect to HomePage if article is not found', async () => {
+      const { getArticleByIdSpy } = setupNotFoundArticle()
 
-    makeSut(getArticleByIdSpy)
+      makeSut(getArticleByIdSpy)
 
-    await screen.findByTestId('home-page-mock')
-  })
+      await screen.findByTestId('home-page-mock')
+    })
 
-  it('should render an skeleton group when the article is not loaded yet', async () => {
-    makeSut()
+    it('should render an skeleton group when the article is not loaded yet', async () => {
+      makeSut()
 
-    await screen.findByTestId('skeleton-group')
-  })
+      await screen.findByTestId('skeleton-group')
+    })
 
-  it('should render the form header', async () => {
-    makeSut()
+    it('should render the form header', async () => {
+      makeSut()
 
-    await screen.findByTestId('form-header')
-  })
+      await screen.findByTestId('form-header')
+    })
 
-  it('should render a toast.success when article is loaded', async () => {
-    makeSut()
+    it('should render a toast.success when article is loaded', async () => {
+      makeSut()
 
-    const toastSuccessArticleLoaded = await screen.findByText(
-      'Artigo carregado com sucesso',
-    )
-
-    expect(toastSuccessArticleLoaded).toBeTruthy()
-  })
-
-  it('should render the title input filled', async () => {
-    const { getArticleByIdSpy } = makeSut()
-
-    const textAreaTitle = await screen.findByTestId('textaread-title')
-
-    await screen.findByText('Artigo carregado com sucesso')
-
-    expect(textAreaTitle).toHaveProperty('value', getArticleByIdSpy.data.title)
-  })
-
-  it('should render the content input filled', async () => {
-    const { getArticleByIdSpy } = makeSut()
-
-    const textAreaContent = await screen.findByTestId('textaread-content')
-
-    await screen.findByText('Artigo carregado com sucesso')
-
-    expect(textAreaContent).toHaveProperty(
-      'value',
-      getArticleByIdSpy.data.content,
-    )
-  })
-
-  it('should render the article image', async () => {
-    const { getArticleByIdSpy } = makeSut()
-
-    const articleImage = await screen.findByTestId('selected-image')
-
-    await screen.findByText('Artigo carregado com sucesso')
-
-    expect(articleImage).toHaveProperty('src', getArticleByIdSpy.data.image)
-  })
-
-  it('should change the article image if a new one is selected', async () => {
-    makeSut()
-
-    const inputPicture = await screen.findByTestId('input-picture')
-
-    const file = new File(['image content'], 'image.png', { type: 'image/png' })
-
-    fireEvent.change(inputPicture, { target: { files: [file] } })
-
-    const articleImage = (await screen.findByTestId(
-      'selected-image',
-    )) as HTMLImageElement
-
-    await waitFor(() => {
-      expect(articleImage.src).toBe(
-        `data:image/png;base64,${btoa('image content')}`,
+      const toastSuccessArticleLoaded = await screen.findByText(
+        'Artigo carregado com sucesso',
       )
+
+      expect(toastSuccessArticleLoaded).toBeTruthy()
+    })
+
+    it('should render the title input filled', async () => {
+      const { getArticleByIdSpy } = makeSut()
+
+      const textAreaTitle = await screen.findByTestId('textaread-title')
+
+      await screen.findByText('Artigo carregado com sucesso')
+
+      expect(textAreaTitle).toHaveProperty(
+        'value',
+        getArticleByIdSpy.data.title,
+      )
+    })
+
+    it('should render the content input filled', async () => {
+      const { getArticleByIdSpy } = makeSut()
+
+      const textAreaContent = await screen.findByTestId('textaread-content')
+
+      await screen.findByText('Artigo carregado com sucesso')
+
+      expect(textAreaContent).toHaveProperty(
+        'value',
+        getArticleByIdSpy.data.content,
+      )
+    })
+
+    it('should render the article image', async () => {
+      const { getArticleByIdSpy } = makeSut()
+
+      const articleImage = await screen.findByTestId('selected-image')
+
+      await screen.findByText('Artigo carregado com sucesso')
+
+      expect(articleImage).toHaveProperty('src', getArticleByIdSpy.data.image)
+    })
+
+    it('should change the article image if a new one is selected', async () => {
+      makeSut()
+
+      const inputPicture = await screen.findByTestId('input-picture')
+
+      const file = new File(['image content'], 'image.png', {
+        type: 'image/png',
+      })
+
+      fireEvent.change(inputPicture, { target: { files: [file] } })
+
+      const articleImage = (await screen.findByTestId(
+        'selected-image',
+      )) as HTMLImageElement
+
+      await waitFor(() => {
+        expect(articleImage.src).toBe(
+          `data:image/png;base64,${btoa('image content')}`,
+        )
+      })
     })
   })
 })
