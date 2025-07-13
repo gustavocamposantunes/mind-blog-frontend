@@ -196,4 +196,18 @@ describe('AxiosHttpClient', () => {
       })
     })
   })
+  describe('delete', () => {
+    beforeEach(() => {
+      mockedAxios.delete.mockResolvedValue(mockHttpResponse())
+    })
+    it('Should call axios.delete with correct values', async () => {
+      const { url, body, headers } = mockHttpRequest()
+      const sut = makeSut()
+      await sut.delete({ url, body, headers })
+      expect(mockedAxios.delete).toHaveBeenCalledWith(url, {
+        data: body,
+        headers,
+      })
+    })
+  })
 })
