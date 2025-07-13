@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest'
 
 import { RemoteUnfavouriteArticle } from './remote-unfavourite-article'
 
+import type { FavouriteModel } from '@/domain/models'
+
 import { HttpDeleteClientSpy } from '@/data/test/mock-http-client'
 
 type SutTypes = {
@@ -87,5 +89,27 @@ describe('RemoteUnfavouriteArticle', () => {
 
     expect(response.statusCode).toBe(502)
     expect(response.error).toBe('Erro inesperado')
+  })
+
+  it('should returns a FavouriteModel if HttpDeleteClient returns 200', async () => {
+    const { sut, httpDeleteClientSpy } = makeSut()
+
+    const favouriteModel: FavouriteModel = {
+      favouriteCount: faker.number.int(),
+      favourited: true,
+    }
+
+    httpDeleteClientSpy.response = {
+      status: 200,
+      data: favouriteModel,
+    }
+
+    const response = await sut.unfavourite(
+      faker.number.int(),
+      faker.string.uuid(),
+    )
+
+    expect(response.statusCode).toBe(200)
+    expect(response.data).toBe(favouriteModel)
   })
 })
