@@ -5,14 +5,23 @@ import { EditArticlePage } from '../pages/EditArticlePage'
 import { render } from './test-utils'
 
 import type { GetArticleByIdSpy } from './mock-get-article-by-id'
+import type { UpdateArticleSpy } from './mock-update-article'
 
-export const renderEditArticlePage = (getArticleByIdSpy: GetArticleByIdSpy) => {
+export const renderEditArticlePage = (
+  getArticleByIdSpy: GetArticleByIdSpy,
+  updateArticleSpy: UpdateArticleSpy,
+) => {
   render(
     <MemoryRouter initialEntries={['/article/edit/:id']}>
       <Routes>
         <Route
           path="/article/edit/:id"
-          element={<EditArticlePage getArticletById={getArticleByIdSpy} />}
+          element={
+            <EditArticlePage
+              getArticletById={getArticleByIdSpy}
+              updateArticle={updateArticleSpy}
+            />
+          }
         />
         <Route
           path="/"

@@ -1,23 +1,32 @@
 import { describe, it, vi, beforeEach, expect } from 'vitest'
 
-import { GetArticleByIdSpy, renderEditArticlePage } from '../test'
+import {
+  GetArticleByIdSpy,
+  renderEditArticlePage,
+  UpdateArticleSpy,
+} from '../test'
 import { cleanup, fireEvent, screen, waitFor } from '../test/test-utils'
 
 import { NotFoundError } from '@/domain/errors'
 
 type SutTypes = {
   getArticleByIdSpy: GetArticleByIdSpy
+  updateArticleSpy: UpdateArticleSpy
 }
 
-const makeSut = (getArticleByIdSpy = new GetArticleByIdSpy()): SutTypes => {
-  renderEditArticlePage(getArticleByIdSpy)
+const makeSut = (
+  getArticleByIdSpy = new GetArticleByIdSpy(),
+  updateArticleSpy = new UpdateArticleSpy(),
+): SutTypes => {
+  renderEditArticlePage(getArticleByIdSpy, updateArticleSpy)
 
   return {
     getArticleByIdSpy,
+    updateArticleSpy,
   }
 }
 
-const setupNotFoundArticle = (): SutTypes => {
+const setupNotFoundArticle = () => {
   const getArticleByIdSpy = new GetArticleByIdSpy()
 
   const error = new NotFoundError()
@@ -127,6 +136,34 @@ describe('EditArticlePage', () => {
           `data:image/png;base64,${btoa('image content')}`,
         )
       })
+    })
+  })
+
+  const setupUpdateFail = () => {
+    const updateArticleSpy = new UpdateArticleSpy()
+
+    const error = new NotFoundError()
+    vi.spyOn(updateArticleSpy, 'update').mockRejectedValueOnce(error)
+
+    return {
+      updateArticleSpy,
+      error,
+    }
+  }
+
+  describe('UpdateArticle', () => {
+    it('should render a toast.error if article update fails', async () => {
+      const { updateArticleSpy, error } = setupUpdateFail()
+
+      makeSut(undefined, updateArticleSpy)
+
+      await screen.findByText('Artigo carregado com sucesso')
+
+      const submitButton = screen.getByRole('button', { name: /salvar/i })
+
+      fireEvent.click(submitButton)
+
+      await screen.findByText(error.message)
     })
   })
 })
