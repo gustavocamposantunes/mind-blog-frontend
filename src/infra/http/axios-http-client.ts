@@ -89,14 +89,22 @@ export class AxiosHttpClient
   }
 
   async delete(params: HttpDeleteParams): Promise<HttpResponse> {
-    const response = await axios.delete(params.url, {
-      data: params.body,
-      headers: params.headers,
-    })
-
-    return {
-      status: response.status,
-      data: response.data,
+    try {
+      
+      const response = await axios.delete(params.url, {
+        data: params.body,
+        headers: params.headers,
+      })
+  
+      return {
+        status: response.status,
+        data: response.data,
+      }
+    } catch (error) {
+      return {
+        status: 500,
+        data: { message: 'An unknown error occurred' },
+      }
     }
   }
 }
