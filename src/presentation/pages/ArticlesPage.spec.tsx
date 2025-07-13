@@ -304,9 +304,21 @@ describe('ArticlesPage', () => {
 
       await screen.findByTestId('pagination')
 
-      const firstPage = await screen.findByTestId('active-page')
+      const firstPageActive = await screen.findByTestId('active-page')
 
-      expect(firstPage.textContent).toBe('1')
+      expect(firstPageActive.textContent).toBe('1')
+    })
+
+    it('should change to second page as current on click', async () => {
+      makeSut()
+
+      const secondPage = await screen.findByTestId('page-2')
+
+      fireEvent.click(secondPage)
+
+      const secondPageActive = await screen.findByTestId('active-page')
+
+      expect(secondPageActive.textContent).toBe('2')
     })
   })
 })
