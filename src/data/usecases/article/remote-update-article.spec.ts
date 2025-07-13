@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { RemoteUpdateArticle } from './remote-update-article'
 
 import { HttpPutClientSpy } from '@/data/test/mock-http-client'
-import { mockArticle } from '@/domain/test'
+import { mockArticle, mockUpdateArticleParams } from '@/domain/test'
 
 type SutTypes = {
   sut: RemoteUpdateArticle
@@ -26,11 +26,7 @@ describe('RemoteUpdateArticle', () => {
     const url = faker.internet.url()
     const { sut, httpPutClientSpy } = makeSut(url)
     const token = faker.string.uuid()
-    const body = {
-      id: faker.number.int(),
-      title: faker.lorem.sentence(),
-      content: faker.lorem.paragraph(10),
-    }
+    const body = mockUpdateArticleParams()
 
     await sut.update(token, body)
 
@@ -48,10 +44,10 @@ describe('RemoteUpdateArticle', () => {
       data: { message: 'Erro interno do servidor' },
     }
 
-    const response = await sut.update(faker.string.uuid(), {
-      id: faker.number.int(),
-      image: faker.image.urlLoremFlickr(),
-    })
+    const response = await sut.update(
+      faker.string.uuid(),
+      mockUpdateArticleParams(),
+    )
 
     expect(response.statusCode).toBe(500)
     expect(response.error).toBe('Erro interno do servidor')
@@ -64,10 +60,10 @@ describe('RemoteUpdateArticle', () => {
       data: { message: 'Credenciais inválidas' },
     }
 
-    const response = await sut.update(faker.string.uuid(), {
-      id: faker.number.int(),
-      image: faker.image.urlLoremFlickr(),
-    })
+    const response = await sut.update(
+      faker.string.uuid(),
+      mockUpdateArticleParams(),
+    )
 
     expect(response.statusCode).toBe(403)
     expect(response.error).toBe('Credenciais inválidas')
@@ -80,10 +76,10 @@ describe('RemoteUpdateArticle', () => {
       data: { message: 'Erro inesperado' },
     }
 
-    const response = await sut.update(faker.string.uuid(), {
-      id: faker.number.int(),
-      image: faker.image.urlLoremFlickr(),
-    })
+    const response = await sut.update(
+      faker.string.uuid(),
+      mockUpdateArticleParams(),
+    )
 
     expect(response.statusCode).toBe(502)
     expect(response.error).toBe('Erro inesperado')
@@ -98,10 +94,10 @@ describe('RemoteUpdateArticle', () => {
       data: article,
     }
 
-    const response = await sut.update(faker.string.uuid(), {
-      id: faker.number.int(),
-      image: faker.image.urlLoremFlickr(),
-    })
+    const response = await sut.update(
+      faker.string.uuid(),
+      mockUpdateArticleParams(),
+    )
 
     expect(response.statusCode).toBe(200)
     expect(response.data).toEqual(article)

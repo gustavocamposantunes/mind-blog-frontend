@@ -1,13 +1,22 @@
 import { faker } from '@faker-js/faker'
 
 import type { ArticleListModel, ArticleModel, FavouriteModel } from '../models'
-import type { RegisterArticleParams } from '@/domain/usecases'
+import type {
+  RegisterArticleParams,
+  UpdateArticleParams,
+} from '@/domain/usecases'
 
 export const mockRegisterArticleParams = (): RegisterArticleParams => ({
   title: faker.lorem.sentence(),
   content: faker.lorem.paragraphs(),
   image: faker.image.urlLoremFlickr({ category: 'nature' }),
   author_id: faker.number.int(),
+})
+
+export const mockUpdateArticleParams = (): UpdateArticleParams => ({
+  id: faker.number.int(),
+  title: faker.lorem.sentence(),
+  content: faker.lorem.paragraph(10),
 })
 
 export const mockArticle = (withContent = false): ArticleModel => ({
