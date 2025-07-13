@@ -1,0 +1,16 @@
+import type { HttpRemoteResponse } from '@/data/protocols'
+import type { ArticleModel } from '@/domain/models'
+
+export type UpdateArticleParams = {
+  id: number
+  title?: string
+  content?: string
+  image?: string
+}
+
+export interface UpdateArticleUseCase {
+  update(
+    token: string,
+    params: UpdateArticleParams,
+  ): Promise<HttpRemoteResponse<ArticleModel>>
+}

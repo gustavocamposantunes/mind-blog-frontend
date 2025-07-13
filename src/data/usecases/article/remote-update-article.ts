@@ -1,11 +1,21 @@
-import { HttpStatusCode, type HttpPutClient } from '@/data/protocols'
+import type { ArticleModel } from '@/domain/models'
+import type {
+  UpdateArticleParams,
+  UpdateArticleUseCase,
+} from '@/domain/usecases'
+
+import {
+  HttpStatusCode,
+  type HttpPutClient,
+  type HttpRemoteResponse,
+} from '@/data/protocols'
 import {
   InternalServerError,
   InvalidCredentialsError,
   UnexpectedError,
 } from '@/domain/errors'
 
-export class RemoteUpdateArticle {
+export class RemoteUpdateArticle implements UpdateArticleUseCase {
   private readonly url: string
   private readonly httpClient: HttpPutClient
 
@@ -16,17 +26,22 @@ export class RemoteUpdateArticle {
 
   async update(
     token: string,
-    updateArticleParams: { title?: string; content?: string; image?: string },
-  ) {
-    const { status } = await this.httpClient.put({
+    params: UpdateArticleParams,
+  ): Promise<HttpRemoteResponse<ArticleModel>> {
+    const { status, data } = await this.httpClient.put({
       url: this.url,
-      body: updateArticleParams,
+      body: params,
       headers: {
         ...(token && { Authorization: `Bearer ${token}` }),
       },
     })
 
     switch (status) {
+      case HttpStatusCode.ok:
+        return {
+          statusCode: status,
+          data: data as ArticleModel,
+        }
       case HttpStatusCode.serverError:
         return {
           statusCode: status,
