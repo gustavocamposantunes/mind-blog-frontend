@@ -237,5 +237,13 @@ describe('ArticlesPage', () => {
 
       expect(error).toBeTruthy()
     })
+
+    it('should mantain the heart icon fill red if an error occur', async () => {
+      const { mockedError, favoriteHeartIcon } = await setupUnfavouriteError()
+
+      await screen.findByText(mockedError.message)
+
+      expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
+    })
   })
 })
