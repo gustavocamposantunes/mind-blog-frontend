@@ -81,6 +81,9 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
         ...editArticleParams,
       },
       {
+        onSuccess: () => {
+          toast.success('Artigo atualizado com sucesso')
+        },
         onError: (error) => {
           toast.error(error.message)
         },
