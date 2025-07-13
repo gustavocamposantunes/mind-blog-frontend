@@ -264,4 +264,14 @@ describe('ArticlesPage', () => {
       expect(favoriteHeartIcon.getAttribute('fill')).toBe('white')
     })
   })
+
+  describe('Pagination', () => {
+    it('should render the pagination correctly after data is Loaded', async () => {
+      makeSut()
+
+      const pagination = await screen.findByTestId('pagination')
+
+      expect(pagination).toBeTruthy()
+    })
+  })
 })
