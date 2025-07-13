@@ -31,7 +31,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
 }) => {
   const { user, accessToken } = useAuthStore()
 
-  const [pagination] = useState({
+  const [pagination, setPagination] = useState({
     page: 1,
     limit: 10,
   })
@@ -83,6 +83,12 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
         currentPage={pagination.page}
         totalPages={data?.total / pagination.limit}
         className="lg:col-span-2 xl:col-span-3 mt-4"
+        changePage={(page: number) => {
+          setPagination({
+            ...pagination,
+            page,
+          })
+        }}
       />
     )
   }
