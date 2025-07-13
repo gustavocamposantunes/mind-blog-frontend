@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
@@ -30,7 +31,15 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
 }) => {
   const { user, accessToken } = useAuthStore()
 
-  const { data, isLoading } = useArticlesList(listArticles)
+  const [pagination] = useState({
+    page: 1,
+    limit: 10,
+  })
+
+  // total 20
+  // total / limit
+
+  const { data, isLoading } = useArticlesList(listArticles, pagination)
 
   const { mutate: mutateFavouriteArticle } =
     useFavouriteArticle(favouriteArticle)
@@ -70,10 +79,13 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     )
   }
 
-  let pagination
-  if (!isLoading) {
-    pagination = (
-      <CustomPagination className="lg:col-span-2 xl:col-span-3 mt-4" />
+  let paginationComponent
+  if (!isLoading && data) {
+    paginationComponent = (
+      <CustomPagination
+        totalPages={data?.total / pagination.limit}
+        className="lg:col-span-2 xl:col-span-3 mt-4"
+      />
     )
   }
 
@@ -89,7 +101,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
           unfavouriteArticleById={unfavouriteArticleById}
         />
       ))}
-      {pagination}
+      {paginationComponent}
     </ArticlesTemplate>
   )
 }

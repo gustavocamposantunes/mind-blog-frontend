@@ -4,26 +4,27 @@ import {
   PaginationItem,
   PaginationPrevious,
   PaginationLink,
-  PaginationEllipsis,
   PaginationNext,
 } from '../ui/pagination'
 
-type CustomPaginationProps = React.ComponentProps<'nav'>
+type CustomPaginationProps = {
+  totalPages: number
+} & React.ComponentProps<'nav'>
 
 export const CustomPagination: React.FC<CustomPaginationProps> = ({
+  totalPages,
   ...props
 }) => (
   <Pagination data-testid="pagination" {...props}>
-    <PaginationContent>
+    <PaginationContent data-testid="total-pages">
       <PaginationItem>
         <PaginationPrevious href="#" />
       </PaginationItem>
-      <PaginationItem>
-        <PaginationLink href="#">1</PaginationLink>
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationEllipsis />
-      </PaginationItem>
+      {Array.from({ length: totalPages }, (_, index) => (
+        <PaginationItem key={index} data-testid="hint-page">
+          <PaginationLink href="#">{index + 1}</PaginationLink>
+        </PaginationItem>
+      ))}
       <PaginationItem>
         <PaginationNext href="#" />
       </PaginationItem>

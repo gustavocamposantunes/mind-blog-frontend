@@ -1,12 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 
-import type { ListArticlesUseCase } from '@/domain/usecases'
+import type { ListArticleParams, ListArticlesUseCase } from '@/domain/usecases'
 
-export const useArticlesList = (loadArticlesList: ListArticlesUseCase) => {
+export const useArticlesList = (
+  loadArticlesList: ListArticlesUseCase,
+  pagination: ListArticleParams,
+) => {
   return useQuery({
     queryKey: ['articles'],
     queryFn: async () => {
-      const { data } = await loadArticlesList.listAll()
+      const { data } = await loadArticlesList.listAll(pagination)
       return data
     },
   })
