@@ -6,7 +6,10 @@ import { RemoteListArticles } from './remote-list-articles'
 import type { ArticleListModel } from '@/domain/models'
 
 import { HttpGetClientSpy } from '@/data/test/mock-http-client'
-import { mockArticlesList } from '@/domain/test'
+import {
+  mockArticlesList,
+  mockArticlesPaginationQueryParams,
+} from '@/domain/test'
 
 type SutTypes = {
   sut: RemoteListArticles
@@ -23,12 +26,15 @@ const makeSut = (url = faker.internet.url()): SutTypes => {
 }
 
 describe('RemoteListArticles', () => {
-  it('should call HttpGetClient with correct URL', async () => {
+  it('should call HttpGetClient with correct URL and queryParams', async () => {
     const url = faker.internet.url()
     const { sut, httpClientSpy } = makeSut(url)
-    await sut.listAll()
+
+    const pagination = mockArticlesPaginationQueryParams()
+    await sut.listAll(pagination)
 
     expect(httpClientSpy.url).toBe(url)
+    expect(httpClientSpy.queryParams).toBe(pagination)
   })
 
   it('should returns NotFoundError if HttpGetClient returns 404', async () => {
@@ -38,7 +44,7 @@ describe('RemoteListArticles', () => {
       data: { message: 'Artigo não encontrado' },
     }
 
-    const response = await sut.listAll()
+    const response = await sut.listAll(mockArticlesPaginationQueryParams())
 
     expect(response.statusCode).toBe(404)
     expect(response.error).toBe('Artigo não encontrado')
@@ -51,7 +57,7 @@ describe('RemoteListArticles', () => {
       data: { message: 'Erro interno do servidor' },
     }
 
-    const response = await sut.listAll()
+    const response = await sut.listAll(mockArticlesPaginationQueryParams())
 
     expect(response.statusCode).toBe(500)
     expect(response.error).toBe('Erro interno do servidor')
@@ -64,7 +70,7 @@ describe('RemoteListArticles', () => {
       data: { message: 'Erro inesperado' },
     }
 
-    const response = await sut.listAll()
+    const response = await sut.listAll(mockArticlesPaginationQueryParams())
 
     expect(response.statusCode).toBe(502)
     expect(response.error).toBe('Erro inesperado')
@@ -77,7 +83,7 @@ describe('RemoteListArticles', () => {
       status: 200,
       data: articleList,
     }
-    const response = await sut.listAll()
+    const response = await sut.listAll(mockArticlesPaginationQueryParams())
     expect(response.statusCode).toBe(200)
     expect(response.data).toEqual(articleList)
   })

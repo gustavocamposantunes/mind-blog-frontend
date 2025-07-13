@@ -2,9 +2,18 @@ import { faker } from '@faker-js/faker'
 
 import type { ArticleListModel, ArticleModel, FavouriteModel } from '../models'
 import type {
+  ListArticleParams,
   RegisterArticleParams,
   UpdateArticleParams,
 } from '@/domain/usecases'
+
+export const mockArticlesPaginationQueryParams = (
+  page = 1,
+  limit = 10,
+): ListArticleParams => ({
+  page,
+  limit,
+})
 
 export const mockRegisterArticleParams = (): RegisterArticleParams => ({
   title: faker.lorem.sentence(),
