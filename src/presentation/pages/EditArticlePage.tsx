@@ -10,6 +10,7 @@ import { Skeleton } from '../components/ui/skeleton'
 import { Textarea } from '../components/ui/textarea'
 import { useGetArticleById, useUpdateArticle } from '../hooks'
 import { useAuthStore } from '../store'
+import { buildUpdatePayload } from '../utils/buildUpdatePayload'
 import { toBase64 } from '../utils/toBase64'
 
 import type {
@@ -67,29 +68,31 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault()
 
-    const isUnchanged =
-      data?.title === editArticleParams.title &&
-      data.content === editArticleParams.content &&
-      data.image === editArticleParams.image
+    if (!data) return
 
-    if (isUnchanged) {
+    const payload = buildUpdatePayload(
+      Number(id),
+      {
+        title: data.title,
+        content: data.content,
+        image: data.image,
+      },
+      editArticleParams,
+    )
+
+    if (Object.keys(payload).length === 1) {
       toast.info('Nenhuma alteração realizada, atualize o artigo!')
+      return
     }
 
-    mutate(
-      {
-        id: Number(id),
-        ...editArticleParams,
+    mutate(payload, {
+      onSuccess: () => {
+        toast.success('Artigo atualizado com sucesso')
       },
-      {
-        onSuccess: () => {
-          toast.success('Artigo atualizado com sucesso')
-        },
-        onError: (error) => {
-          toast.error(error.message)
-        },
+      onError: (error) => {
+        toast.error(error.message)
       },
-    )
+    })
   }
 
   const content = isLoading ? (
