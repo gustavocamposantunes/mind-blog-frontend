@@ -53,4 +53,19 @@ describe('RemoteUpdateArticle', () => {
     expect(response.statusCode).toBe(500)
     expect(response.error).toBe('Erro interno do servidor')
   })
+
+  it('should returns an InvalidCredentialsError if HttpPutClient returns 403', async () => {
+    const { sut, httpPutClientSpy } = makeSut()
+    httpPutClientSpy.response = {
+      status: 403,
+      data: { message: 'Credenciais inválidas' },
+    }
+
+    const response = await sut.update(faker.string.uuid(), {
+      image: faker.image.urlLoremFlickr(),
+    })
+
+    expect(response.statusCode).toBe(403)
+    expect(response.error).toBe('Credenciais inválidas')
+  })
 })
