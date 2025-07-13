@@ -13,6 +13,7 @@ import type {
   UnfavouriteArticleUseCase,
 } from '@/domain/usecases'
 
+import { CustomPagination } from '@/presentation/components/organism'
 import { ArticleCard } from '@/presentation/components/organism/ArticleCard'
 import { ArticlesTemplate } from '@/presentation/components/templates'
 
@@ -69,6 +70,13 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     )
   }
 
+  let pagination
+  if (!isLoading) {
+    pagination = (
+      <CustomPagination className="lg:col-span-2 xl:col-span-3 mt-4" />
+    )
+  }
+
   return (
     <ArticlesTemplate isLoading={isLoading}>
       {data?.articles.map(({ ...props }) => (
@@ -81,6 +89,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
           unfavouriteArticleById={unfavouriteArticleById}
         />
       ))}
+      {pagination}
     </ArticlesTemplate>
   )
 }
