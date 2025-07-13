@@ -283,5 +283,20 @@ describe('ArticlesPage', () => {
         expect(`card-article-${props.id}`).toBeTruthy()
       })
     })
+
+    it('should render correct number of pages', async () => {
+      makeSut()
+
+      await screen.findByTestId('pagination')
+
+      const totalPages = await screen.findByTestId('total-pages')
+
+      const paginationPreviousNext = 2
+      const paginationQuantity = 2
+
+      expect(totalPages.childElementCount).toBe(
+        paginationPreviousNext + paginationQuantity,
+      )
+    })
   })
 })
