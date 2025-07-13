@@ -167,11 +167,7 @@ describe('EditArticlePage', () => {
       await screen.findByText('Nenhuma alteração realizada, atualize o artigo!')
     })
 
-    it('should render a toast.error if article update fails', async () => {
-      const { updateArticleSpy, error } = setupUpdateFail()
-
-      makeSut(undefined, updateArticleSpy)
-
+    const setupUpdateArticleSubmit = async () => {
       await screen.findByText('Artigo carregado com sucesso')
 
       const textAreaTitle = await screen.findByTestId('textaread-title')
@@ -183,8 +179,27 @@ describe('EditArticlePage', () => {
       const submitButton = screen.getByRole('button', { name: /salvar/i })
 
       fireEvent.click(submitButton)
+    }
+    it('should render a toast.error if article update fails', async () => {
+      const { updateArticleSpy, error } = setupUpdateFail()
+
+      makeSut(undefined, updateArticleSpy)
+
+      await setupUpdateArticleSubmit()
 
       await screen.findByText(error.message)
+    })
+
+    it('should render a toast.success when article is updated', async () => {
+      makeSut()
+
+      await setupUpdateArticleSubmit()
+
+      const toastUpdateSuccess = await screen.findByText(
+        'Artigo atualizado com sucesso',
+      )
+
+      expect(toastUpdateSuccess).toBeTruthy()
     })
   })
 })
