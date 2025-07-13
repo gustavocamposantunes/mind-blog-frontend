@@ -65,6 +65,16 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
 
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault()
+
+    const isUnchanged =
+      data?.title === editArticleParams.title &&
+      data.content === editArticleParams.content &&
+      data.image === editArticleParams.image
+
+    if (isUnchanged) {
+      toast.info('Nenhuma alteração realizada, atualize o artigo!')
+    }
+
     mutate(
       {
         id: Number(id),
