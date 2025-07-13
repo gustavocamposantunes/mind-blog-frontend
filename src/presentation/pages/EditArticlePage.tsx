@@ -8,17 +8,23 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Skeleton } from '../components/ui/skeleton'
 import { Textarea } from '../components/ui/textarea'
-import { useGetArticleById } from '../hooks'
+import { useGetArticleById, useUpdateArticle } from '../hooks'
+import { useAuthStore } from '../store'
 import { toBase64 } from '../utils/toBase64'
 
-import type { GetArticleByIdUseCase } from '@/domain/usecases'
+import type {
+  GetArticleByIdUseCase,
+  UpdateArticleUseCase,
+} from '@/domain/usecases'
 
 type EditArticlePageProps = {
   getArticletById: GetArticleByIdUseCase
+  updateArticle: UpdateArticleUseCase
 }
 
 export const EditArticlePage: React.FC<EditArticlePageProps> = ({
   getArticletById,
+  updateArticle,
 }) => {
   const [editArticleParams, setEditArticleParams] = useState<{
     title: string
@@ -53,6 +59,25 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
     toast.success('Artigo carregado com sucesso')
   }, [data?.data])
 
+  const { accessToken } = useAuthStore()
+
+  const { mutate } = useUpdateArticle(accessToken, updateArticle)
+
+  const onSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+    mutate(
+      {
+        id: Number(id),
+        ...editArticleParams,
+      },
+      {
+        onError: (error) => {
+          toast.error(error.message)
+        },
+      },
+    )
+  }
+
   const content = isLoading ? (
     <span data-testid="skeleton-group">
       <Skeleton />
@@ -61,7 +86,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
     </span>
   ) : (
     <PageTemplate>
-      <form>
+      <form onSubmit={onSubmit}>
         <FormHeader title="Editar Artigo" />
         <section className="mt-4 flex flex-col gap-4">
           <div>
