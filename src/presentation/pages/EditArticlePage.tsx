@@ -50,13 +50,14 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
   }, [error])
 
   useEffect(() => {
-    if (data)
+    if (data) {
       setEditArticleParams({
         title: data?.title,
         content: data?.content,
         image: data?.image,
       })
-    toast.success('Artigo carregado com sucesso')
+      toast.success('Artigo carregado com sucesso')
+    }
   }, [data])
 
   const { accessToken } = useAuthStore()
