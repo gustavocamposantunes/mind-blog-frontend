@@ -1,7 +1,14 @@
-import { HttpStatusCode, type HttpDeleteClient } from '@/data/protocols'
-import { InternalServerError, InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
+import type { ArticleModel } from '@/domain/models'
+import type { UnfavouriteArticleUseCase } from '@/domain/usecases/article/unfavorite-article.usecase'
 
-export class RemoteUnfavouriteArticle {
+import { HttpStatusCode, type HttpDeleteClient } from '@/data/protocols'
+import {
+  InternalServerError,
+  InvalidCredentialsError,
+  UnexpectedError,
+} from '@/domain/errors'
+
+export class RemoteUnfavouriteArticle implements UnfavouriteArticleUseCase {
   private readonly url: string
   private readonly httpClient: HttpDeleteClient
 
@@ -11,7 +18,7 @@ export class RemoteUnfavouriteArticle {
   }
 
   async unfavourite(id: number, token: string) {
-    const { status } = await this.httpClient.delete({
+    const { status, data } = await this.httpClient.delete({
       url: this.url,
       body: {
         id,
@@ -22,6 +29,11 @@ export class RemoteUnfavouriteArticle {
     })
 
     switch (status) {
+      case HttpStatusCode.ok:
+        return {
+          statusCode: status,
+          data: data as ArticleModel,
+        }
       case HttpStatusCode.serverError:
         return {
           statusCode: status,
