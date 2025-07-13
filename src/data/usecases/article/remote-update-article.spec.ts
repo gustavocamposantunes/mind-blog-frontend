@@ -68,4 +68,19 @@ describe('RemoteUpdateArticle', () => {
     expect(response.statusCode).toBe(403)
     expect(response.error).toBe('Credenciais inválidas')
   })
+
+  it('should return an UnexpectedError for other status codes', async () => {
+    const { sut, httpPutClientSpy } = makeSut()
+    httpPutClientSpy.response = {
+      status: 502,
+      data: { message: 'Erro inesperado' },
+    }
+
+    const response = await sut.update(faker.string.uuid(), {
+      image: faker.image.urlLoremFlickr(),
+    })
+
+    expect(response.statusCode).toBe(502)
+    expect(response.error).toBe('Erro inesperado')
+  })
 })
