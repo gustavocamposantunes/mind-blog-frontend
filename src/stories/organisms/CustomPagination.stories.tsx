@@ -9,6 +9,11 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  args: {
+    totalPages: 3,
+    currentPage: 1,
+    changePage: (page: number) => console.info(`Page change ${page}`),
+  },
 } satisfies Meta<typeof CustomPagination>
 export default meta
 type Story = StoryObj<typeof meta>
