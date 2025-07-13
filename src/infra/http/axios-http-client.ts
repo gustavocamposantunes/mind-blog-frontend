@@ -1,6 +1,8 @@
 import axios from 'axios'
 
 import type {
+  HttpDeleteClient,
+  HttpDeleteParams,
   HttpGetClient,
   HttpGetParams,
   HttpPostClient,
@@ -12,7 +14,7 @@ import type {
 
 // prettier-ignore
 export class AxiosHttpClient
-  implements HttpGetClient, HttpPostClient, HttpPutClient {
+  implements HttpGetClient, HttpPostClient, HttpPutClient, HttpDeleteClient {
   async get(params: HttpGetParams): Promise<HttpResponse> {
     try {
       const response = await axios.get(params.url, {
@@ -84,5 +86,12 @@ export class AxiosHttpClient
         data: { message: 'An unknown error occurred' },
       }
     }
+  }
+
+  async delete(params: HttpDeleteParams): Promise<HttpResponse> {
+    await axios.delete(params.url, {
+      data: params.body,
+      headers: params.headers,
+    })
   }
 }
