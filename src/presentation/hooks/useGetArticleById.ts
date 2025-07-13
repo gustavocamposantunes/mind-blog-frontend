@@ -9,7 +9,8 @@ export const useGetArticleById = (
   return useQuery({
     queryKey: ['article'],
     queryFn: async () => {
-      return await getArticle.getById(id)
+      const result = await getArticle.getById(id)
+      return result.data
     },
   })
 }
