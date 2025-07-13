@@ -51,4 +51,18 @@ describe('RemoteUnfavouriteArticle', () => {
     expect(response.statusCode).toBe(500)
     expect(response.error).toBe('Erro interno do servidor')
   })
+
+  it('should returns an InvalidCredentialsError if HttpDeleteClient returns 403', async () => {
+    const { sut, httpDeleteClientSpy } = makeSut()
+
+    httpDeleteClientSpy.response = {
+      status: 403,
+      data: { message: 'Credenciais inválidas' },
+    }
+
+    const response = await sut.unfavourite(faker.number.int(), faker.string.uuid())
+    
+    expect(response.statusCode).toBe(403)
+    expect(response.error).toBe('Credenciais inválidas')
+  })
 })
