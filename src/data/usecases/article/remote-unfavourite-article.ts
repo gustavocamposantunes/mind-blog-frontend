@@ -1,4 +1,5 @@
-import type { HttpDeleteClient } from '@/data/protocols'
+import { HttpStatusCode, type HttpDeleteClient } from '@/data/protocols'
+import { InternalServerError } from '@/domain/errors'
 
 export class RemoteUnfavouriteArticle {
   private readonly url: string
@@ -10,7 +11,7 @@ export class RemoteUnfavouriteArticle {
   }
 
   async unfavourite(id: number, token: string) {
-    await this.httpClient.delete({
+    const { status } = await this.httpClient.delete({
       url: this.url,
       body: {
         id,
@@ -19,5 +20,13 @@ export class RemoteUnfavouriteArticle {
         ...(token && { Authorization: `Bearer ${token}` }),
       },
     })
+
+    switch (status) {
+      case HttpStatusCode.serverError:
+        return {
+          statusCode: status,
+          error: new InternalServerError().message,
+        }
+    }
   }
 }
