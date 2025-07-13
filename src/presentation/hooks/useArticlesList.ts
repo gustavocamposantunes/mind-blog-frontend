@@ -7,7 +7,7 @@ export const useArticlesList = (
   pagination: ListArticleParams,
 ) => {
   return useQuery({
-    queryKey: ['articles'],
+    queryKey: ['articles', pagination],
     queryFn: async () => {
       const { data } = await loadArticlesList.listAll(pagination)
       return data
