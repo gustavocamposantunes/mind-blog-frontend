@@ -1,5 +1,9 @@
 import { HttpStatusCode, type HttpPutClient } from '@/data/protocols'
-import { InternalServerError, InvalidCredentialsError } from '@/domain/errors'
+import {
+  InternalServerError,
+  InvalidCredentialsError,
+  UnexpectedError,
+} from '@/domain/errors'
 
 export class RemoteUpdateArticle {
   private readonly url: string
@@ -32,6 +36,11 @@ export class RemoteUpdateArticle {
         return {
           statusCode: status,
           error: new InvalidCredentialsError().message,
+        }
+      default:
+        return {
+          statusCode: status,
+          error: new UnexpectedError().message,
         }
     }
   }
