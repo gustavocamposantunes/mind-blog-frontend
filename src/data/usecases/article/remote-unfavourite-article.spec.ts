@@ -37,4 +37,18 @@ describe('RemoteUnfavouriteArticle', () => {
       Authorization: `Bearer ${token}`,
     })
   })
+
+  it('should returns an InternalServerError if HttpPostClient returns 500', async () => {
+    const { sut, httpDeleteClientSpy } = makeSut()
+
+    httpDeleteClientSpy.response = {
+      status: 500,
+      data: { message: 'Erro interno do servidor' },
+    }
+
+    const response = await sut.unfavourite(faker.number.int(), faker.string.uuid())
+
+    expect(response.statusCode).toBe(500)
+    expect(response.error).toBe('Erro interno do servidor')
+  })
 })
