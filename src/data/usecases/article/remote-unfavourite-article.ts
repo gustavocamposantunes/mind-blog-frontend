@@ -1,5 +1,5 @@
 import { HttpStatusCode, type HttpDeleteClient } from '@/data/protocols'
-import { InternalServerError, InvalidCredentialsError } from '@/domain/errors'
+import { InternalServerError, InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
 
 export class RemoteUnfavouriteArticle {
   private readonly url: string
@@ -31,6 +31,11 @@ export class RemoteUnfavouriteArticle {
         return {
           statusCode: status,
           error: new InvalidCredentialsError().message,
+        }
+      default:
+        return {
+          statusCode: status,
+          error: new UnexpectedError().message,
         }
     }
   }
