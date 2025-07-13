@@ -60,17 +60,24 @@ describe('EditArticlePage', () => {
     await screen.findByTestId('form-header')
   })
 
+  it('should render a toast.success when article is loaded', async () => {
+    makeSut()
+
+    const toastSuccessArticleLoaded = await screen.findByText(
+      'Artigo carregado com sucesso',
+    )
+
+    expect(toastSuccessArticleLoaded).toBeTruthy()
+  })
+
   it('should render the title input filled', async () => {
     const { getArticleByIdSpy } = makeSut()
 
     const textAreaTitle = await screen.findByTestId('textaread-title')
 
-    await waitFor(() => {
-      expect(textAreaTitle).toHaveProperty(
-        'value',
-        getArticleByIdSpy.data.title,
-      )
-    })
+    await screen.findByText('Artigo carregado com sucesso')
+
+    expect(textAreaTitle).toHaveProperty('value', getArticleByIdSpy.data.title)
   })
 
   it('should render the content input filled', async () => {
@@ -78,12 +85,12 @@ describe('EditArticlePage', () => {
 
     const textAreaContent = await screen.findByTestId('textaread-content')
 
-    await waitFor(() => {
-      expect(textAreaContent).toHaveProperty(
-        'value',
-        getArticleByIdSpy.data.content,
-      )
-    })
+    await screen.findByText('Artigo carregado com sucesso')
+
+    expect(textAreaContent).toHaveProperty(
+      'value',
+      getArticleByIdSpy.data.content,
+    )
   })
 
   it('should render the article image', async () => {
@@ -91,9 +98,9 @@ describe('EditArticlePage', () => {
 
     const articleImage = await screen.findByTestId('selected-image')
 
-    await waitFor(() => {
-      expect(articleImage).toHaveProperty('src', getArticleByIdSpy.data.image)
-    })
+    await screen.findByText('Artigo carregado com sucesso')
+
+    expect(articleImage).toHaveProperty('src', getArticleByIdSpy.data.image)
   })
 
   it('should change the article image if a new one is selected', async () => {
