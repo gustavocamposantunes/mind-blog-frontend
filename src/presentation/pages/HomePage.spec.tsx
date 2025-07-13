@@ -1,8 +1,10 @@
+import { beforeEach } from 'node:test'
+
 import { describe, expect, it, vi } from 'vitest'
 
 import { GetNewsSpy, renderHomePageWithRouter } from '../test'
 
-import { screen } from '@/presentation/test/test-utils'
+import { cleanup, screen } from '@/presentation/test/test-utils'
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
@@ -13,8 +15,8 @@ type SutTypes = {
   getNewsSpy: GetNewsSpy
 }
 
-const makeSut = (timeout = 0): SutTypes => {
-  const getNewsSpy = new GetNewsSpy(timeout)
+const makeSut = (): SutTypes => {
+  const getNewsSpy = new GetNewsSpy()
   renderHomePageWithRouter(getNewsSpy)
 
   return {
@@ -23,22 +25,24 @@ const makeSut = (timeout = 0): SutTypes => {
 }
 
 describe('HomePage', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    cleanup()
+  })
   it('should render a skeleton while promise is pending', () => {
-    const timeout = 2000
-    makeSut(timeout)
+    makeSut()
 
     const skeletonNews = screen.getByTestId('skeleton-news')
 
     expect(skeletonNews).toBeTruthy()
   })
 
-  it('should render a list of articles after load', () => {
+  it('should render a list of articles after load', async () => {
     makeSut()
 
-    const listArticles = screen.getByTestId('list-news')
-    const newArticleList = screen.getAllByTestId('new-article')
+    const listArticles = await screen.findByTestId('list-news')
 
     expect(listArticles).toBeTruthy()
-    expect(newArticleList.length).toBe(7)
+    expect(listArticles.querySelectorAll('article').length).toBe(7)
   })
 })
