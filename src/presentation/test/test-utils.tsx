@@ -12,8 +12,9 @@ const queryClient = new QueryClient({
   },
 })
 
-const customRender = (ui: ReactNode, options = {}) =>
-  render(ui, {
+const customRender = (ui: ReactNode, options = {}) => {
+  queryClient.clear()
+  return render(ui, {
     wrapper: ({ children }) => (
       <QueryClientProvider client={queryClient}>
         {children}
@@ -34,6 +35,7 @@ const customRender = (ui: ReactNode, options = {}) =>
     ),
     ...options,
   })
+}
 
 export {
   render as baseRender,

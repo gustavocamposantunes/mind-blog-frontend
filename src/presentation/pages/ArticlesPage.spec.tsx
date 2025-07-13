@@ -44,16 +44,22 @@ const makeSut = (
 }
 
 describe('ArticlesPage', () => {
-  beforeEach(cleanup)
+  beforeEach(() => {
+    cleanup()
+  })
+
+  const setupAssertSkeletons = async () => {
+    const skeletons = await screen.findAllByTestId('custom-skeleton')
+
+    expect(skeletons).toBeTruthy()
+    expect(skeletons.length).toBe(6)
+  }
 
   describe('List', () => {
     it('should render skeletons while is loading', async () => {
       makeSut()
 
-      const skeletons = await screen.findAllByTestId('custom-skeleton')
-
-      expect(skeletons).toBeTruthy()
-      expect(skeletons.length).toBe(6)
+      await setupAssertSkeletons()
     })
 
     it('should render the articles', async () => {
@@ -309,16 +315,28 @@ describe('ArticlesPage', () => {
       expect(firstPageActive.textContent).toBe('1')
     })
 
-    it('should change to second page as current on click', async () => {
-      makeSut()
-
+    const setupChangeToSecondPage = async () => {
       const secondPage = await screen.findByTestId('page-2')
 
       fireEvent.click(secondPage)
+    }
+
+    it('should change to second page as current on click', async () => {
+      makeSut()
+
+      await setupChangeToSecondPage()
 
       const secondPageActive = await screen.findByTestId('active-page')
 
       expect(secondPageActive.textContent).toBe('2')
+    })
+
+    it('should reload when current page is changed', async () => {
+      makeSut()
+
+      await setupChangeToSecondPage()
+
+      await setupAssertSkeletons()
     })
   })
 })
