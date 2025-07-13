@@ -53,7 +53,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   const { mutate: mutateUnfavouriteArticle } =
     useUnfavouriteArticle(unfavouriteArticle)
 
-  const unfavouriteArticleById = (id: number) => {
+  const unfavouriteArticleById = (id: number, unfavourite: () => void) => {
     mutateUnfavouriteArticle(
       {
         id,
@@ -61,6 +61,10 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
       },
       {
         onError: (error) => toast.error(error.message),
+        onSuccess: () => {
+          unfavourite()
+          toast.info('Artigo removido dos favoritos')
+        },
       },
     )
   }

@@ -30,7 +30,7 @@ interface IArticleCard {
   isLoggedIn?: boolean
   authUserId?: number
   favouriteArticleById: (id: number, favourite: () => void) => void
-  unfavouriteArticleById: (id: number) => void
+  unfavouriteArticleById: (id: number, unfavourite: () => void) => void
   favourited?: boolean
 }
 
@@ -82,7 +82,9 @@ export const ArticleCard: React.FC<IArticleCard> = ({
               setFavorite(true)
             })
           } else {
-            unfavouriteArticleById(id)
+            unfavouriteArticleById(id, () => {
+              setFavorite(false)
+            })
           }
         }}
       />
