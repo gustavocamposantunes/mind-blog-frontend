@@ -46,7 +46,10 @@ describe('RemoteUnfavouriteArticle', () => {
       data: { message: 'Erro interno do servidor' },
     }
 
-    const response = await sut.unfavourite(faker.number.int(), faker.string.uuid())
+    const response = await sut.unfavourite(
+      faker.number.int(),
+      faker.string.uuid(),
+    )
 
     expect(response.statusCode).toBe(500)
     expect(response.error).toBe('Erro interno do servidor')
@@ -60,9 +63,29 @@ describe('RemoteUnfavouriteArticle', () => {
       data: { message: 'Credenciais inválidas' },
     }
 
-    const response = await sut.unfavourite(faker.number.int(), faker.string.uuid())
-    
+    const response = await sut.unfavourite(
+      faker.number.int(),
+      faker.string.uuid(),
+    )
+
     expect(response.statusCode).toBe(403)
     expect(response.error).toBe('Credenciais inválidas')
+  })
+
+  it('should returns an UnexpectedError when HttpDeleteClient returns other error status codes', async () => {
+    const { sut, httpDeleteClientSpy } = makeSut()
+
+    httpDeleteClientSpy.response = {
+      status: 502,
+      data: { message: 'Erro inesperado' },
+    }
+
+    const response = await sut.unfavourite(
+      faker.number.int(),
+      faker.string.uuid(),
+    )
+
+    expect(response.statusCode).toBe(502)
+    expect(response.error).toBe('Erro inesperado')
   })
 })
