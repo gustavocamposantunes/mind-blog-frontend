@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { RemoteUpdateArticle } from './remote-update-article'
 
 import { HttpPutClientSpy } from '@/data/test/mock-http-client'
+import { mockArticle } from '@/domain/test'
 
 type SutTypes = {
   sut: RemoteUpdateArticle
@@ -26,6 +27,7 @@ describe('RemoteUpdateArticle', () => {
     const { sut, httpPutClientSpy } = makeSut(url)
     const token = faker.string.uuid()
     const body = {
+      id: faker.number.int(),
       title: faker.lorem.sentence(),
       content: faker.lorem.paragraph(10),
     }
@@ -47,6 +49,7 @@ describe('RemoteUpdateArticle', () => {
     }
 
     const response = await sut.update(faker.string.uuid(), {
+      id: faker.number.int(),
       image: faker.image.urlLoremFlickr(),
     })
 
@@ -62,6 +65,7 @@ describe('RemoteUpdateArticle', () => {
     }
 
     const response = await sut.update(faker.string.uuid(), {
+      id: faker.number.int(),
       image: faker.image.urlLoremFlickr(),
     })
 
@@ -77,10 +81,29 @@ describe('RemoteUpdateArticle', () => {
     }
 
     const response = await sut.update(faker.string.uuid(), {
+      id: faker.number.int(),
       image: faker.image.urlLoremFlickr(),
     })
 
     expect(response.statusCode).toBe(502)
     expect(response.error).toBe('Erro inesperado')
+  })
+
+  it('should return an ArticleModel if HttpPutClient returns 200', async () => {
+    const { sut, httpPutClientSpy } = makeSut()
+    const article = mockArticle()
+
+    httpPutClientSpy.response = {
+      status: 200,
+      data: article,
+    }
+
+    const response = await sut.update(faker.string.uuid(), {
+      id: faker.number.int(),
+      image: faker.image.urlLoremFlickr(),
+    })
+
+    expect(response.statusCode).toBe(200)
+    expect(response.data).toEqual(article)
   })
 })
