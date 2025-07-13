@@ -9,6 +9,16 @@ import {
 import { cleanup, fireEvent, screen, waitFor } from '../test/test-utils'
 
 import { NotFoundError } from '@/domain/errors'
+import { mockArticle } from '@/domain/test'
+
+let mockId = 1
+
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
+  useParams: () => ({
+    id: mockId,
+  }),
+}))
 
 type SutTypes = {
   getArticleByIdSpy: GetArticleByIdSpy
@@ -172,13 +182,19 @@ describe('EditArticlePage', () => {
 
       const textAreaTitle = await screen.findByTestId('textaread-title')
 
+      const newTitle = faker.lorem.sentence()
+
       fireEvent.change(textAreaTitle, {
-        target: { value: faker.lorem.sentence() },
+        target: { value: newTitle },
       })
 
       const submitButton = screen.getByRole('button', { name: /salvar/i })
 
       fireEvent.click(submitButton)
+
+      return {
+        newTitle,
+      }
     }
     it('should render a toast.error if article update fails', async () => {
       const { updateArticleSpy, error } = setupUpdateFail()
@@ -200,6 +216,26 @@ describe('EditArticlePage', () => {
       )
 
       expect(toastUpdateSuccess).toBeTruthy()
+    })
+
+    it('should send only the altered fields to update', async () => {
+      const updateArticleSpy = new UpdateArticleSpy()
+      mockId = updateArticleSpy.params.id
+      vi.spyOn(updateArticleSpy, 'update').mockResolvedValueOnce({
+        statusCode: 200,
+        data: mockArticle(),
+      })
+
+      makeSut(undefined, updateArticleSpy)
+
+      const { newTitle } = await setupUpdateArticleSubmit()
+
+      await screen.findByText('Artigo atualizado com sucesso')
+
+      expect(updateArticleSpy.update).toHaveBeenCalledWith('', {
+        id: updateArticleSpy.params.id,
+        title: newTitle,
+      })
     })
   })
 })
