@@ -209,5 +209,12 @@ describe('AxiosHttpClient', () => {
         headers,
       })
     })
+
+    it('Should return correct response on axios.delete', async () => {
+      const sut = makeSut()
+      const httpResponse = await sut.delete(mockHttpRequest())
+      const axiosResponse = await mockedAxios.delete.mock.results[0].value
+      expect(httpResponse).toEqual(axiosResponse)
+    })
   })
 })
