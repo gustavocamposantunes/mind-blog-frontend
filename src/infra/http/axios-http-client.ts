@@ -101,6 +101,13 @@ export class AxiosHttpClient
         data: response.data,
       }
     } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return {
+          status: error.response.status,
+          data: error.response.data,
+        }
+      }
+      
       return {
         status: 500,
         data: { message: 'An unknown error occurred' },
