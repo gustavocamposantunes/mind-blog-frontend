@@ -6,10 +6,12 @@ import { render } from './test-utils'
 
 import type { FavouriteArticleSpy } from './mock-favourite-article'
 import type { ListArticlesSpy } from './mock-list-articles'
+import type { UnfavouriteArticleSpy } from './mock-unfavourite-article'
 
 export const renderArticlesPageWithRouter = (
   listArticlesSpy: ListArticlesSpy,
   favouriteArticleSpy: FavouriteArticleSpy,
+  unfavouriteArticleSpy: UnfavouriteArticleSpy,
 ) => {
   render(
     <MemoryRouter initialEntries={['/articles']}>
@@ -20,6 +22,7 @@ export const renderArticlesPageWithRouter = (
             <ArticlesPage
               listArticles={listArticlesSpy}
               favouriteArticle={favouriteArticleSpy}
+              unfavouriteArticle={unfavouriteArticleSpy}
             />
           }
         />
