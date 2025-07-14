@@ -21,19 +21,28 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
   changePage,
   ...props
 }) => {
-  let previousToogle: undefined | ReactNode
+  let previousPageToogle: undefined | ReactNode
+  let nextPageToogle: undefined | ReactNode
 
   if (currentPage !== 1) {
-    previousToogle = (
+    previousPageToogle = (
       <PaginationItem>
-        <PaginationPrevious data-testid="previous-toogle" href="#" />
+        <PaginationPrevious data-testid="previous-page-toogle" href="#" />
+      </PaginationItem>
+    )
+  }
+
+  if (currentPage !== totalPages) {
+    nextPageToogle = (
+      <PaginationItem>
+        <PaginationNext href="#" data-testid="next-page-toogle" />
       </PaginationItem>
     )
   }
   return (
     <Pagination data-testid="pagination" {...props}>
       <PaginationContent data-testid="total-pages">
-        {previousToogle}
+        {previousPageToogle}
         {Array.from({ length: totalPages }, (_, index) => (
           <PaginationItem
             key={index}
@@ -51,9 +60,7 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
             </PaginationLink>
           </PaginationItem>
         ))}
-        <PaginationItem>
-          <PaginationNext href="#" />
-        </PaginationItem>
+        {nextPageToogle}
       </PaginationContent>
     </Pagination>
   )
