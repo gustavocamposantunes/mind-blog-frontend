@@ -344,9 +344,23 @@ describe('ArticlesPage', () => {
 
       await screen.findByTestId('page-2')
 
-      const previousToogle = screen.queryByTestId('previous-toogle')
+      const previousPageToogle = screen.queryByTestId('previous-page-toogle')
 
-      expect(previousToogle).toBeFalsy()
+      expect(previousPageToogle).toBeFalsy()
+    })
+
+    it('should not render the NextPage toogle if the current page is the latest', async () => {
+      makeSut()
+
+      await setupChangeToSecondPage()
+
+      const secondPageActive = await screen.findByTestId('active-page')
+
+      expect(secondPageActive.textContent).toBe('2')
+
+      const nextPageToogle = screen.queryByTestId('next-page-toogle')
+
+      expect(nextPageToogle).toBeFalsy()
     })
   })
 })
