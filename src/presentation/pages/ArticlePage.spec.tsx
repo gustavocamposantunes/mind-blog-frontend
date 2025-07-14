@@ -166,7 +166,7 @@ describe('ArticlePage', () => {
   })
 
   describe('Unfavourited', () => {
-    it('should render a toast.error when heart icon is clicked and returns an error from api', async () => {
+    const setupUnfavouriteError = async () => {
       const getArticleByIdSpy = new GetArticleByIdSpy(true)
       const unfavouriteArticleSpy = new UnfavouriteArticleSpy()
       const mockedError = new UnexpectedError()
@@ -180,9 +180,25 @@ describe('ArticlePage', () => {
 
       fireEvent.click(favouriteToogle)
 
+      return {
+        mockedError,
+        favouriteToogle,
+      }
+    }
+    it('should render a toast.error when heart icon is clicked and returns an error from api', async () => {
+      const { mockedError } = await setupUnfavouriteError()
+
       const error = await screen.findByText(mockedError.message)
 
       expect(error).toBeTruthy()
+    })
+
+    it('should mantain the heart icon fill red if an error occur', async () => {
+      const { mockedError, favouriteToogle } = await setupUnfavouriteError()
+
+      await screen.findByText(mockedError.message)
+
+      expect(favouriteToogle.getAttribute('fill')).toBe('red')
     })
   })
 })
