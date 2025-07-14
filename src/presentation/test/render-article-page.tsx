@@ -4,13 +4,18 @@ import { ArticlePage } from '../pages'
 
 import { render } from './test-utils'
 
+import type { FavouriteArticleSpy } from './mock-favourite-article'
 import type { GetArticleByIdSpy } from './mock-get-article-by-id'
 
 export const renderArticlePageWithRouter = (
   getArticleByIdSpy: GetArticleByIdSpy,
+  favouriteArticleSpy: FavouriteArticleSpy,
 ) => {
   const ArticlePageComponent = () => (
-    <ArticlePage getArticletById={getArticleByIdSpy} />
+    <ArticlePage
+      getArticletById={getArticleByIdSpy}
+      favouriteArticle={favouriteArticleSpy}
+    />
   )
 
   const Stub = createRoutesStub([
