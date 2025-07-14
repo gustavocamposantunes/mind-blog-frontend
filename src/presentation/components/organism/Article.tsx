@@ -18,6 +18,7 @@ interface IArticle {
   }
   favourited: boolean
   favouriteArticleById: (id: number, favourite: () => void) => void
+  unfavouriteArticleById: (id: number) => void
 }
 
 export const Article: React.FC<IArticle> = ({
@@ -29,6 +30,7 @@ export const Article: React.FC<IArticle> = ({
   author,
   favourited,
   favouriteArticleById,
+  unfavouriteArticleById,
 }) => {
   const formatterdDate = formatDateToShortMonth(
     publishedAt || new Date().toISOString(),
@@ -56,6 +58,8 @@ export const Article: React.FC<IArticle> = ({
                 favouriteArticleById(id, () => {
                   setFavorite(true)
                 })
+              } else {
+                unfavouriteArticleById(id)
               }
             }}
           />

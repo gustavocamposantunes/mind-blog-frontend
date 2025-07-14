@@ -2,12 +2,17 @@ import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { Article } from '../components/organism'
-import { useFavouriteArticle, useGetArticleById } from '../hooks'
+import {
+  useFavouriteArticle,
+  useGetArticleById,
+  useUnfavouriteArticle,
+} from '../hooks'
 import { useAuthStore } from '../store'
 
 import type {
   FavouriteArticleUseCase,
   GetArticleByIdUseCase,
+  UnfavouriteArticleUseCase,
 } from '@/domain/usecases'
 
 import { ArticleTemplate } from '@/presentation/components/templates'
@@ -15,11 +20,13 @@ import { ArticleTemplate } from '@/presentation/components/templates'
 type ArticlePageProps = {
   getArticletById: GetArticleByIdUseCase
   favouriteArticle: FavouriteArticleUseCase
+  unfavouriteArticle: UnfavouriteArticleUseCase
 }
 
 export const ArticlePage: React.FC<ArticlePageProps> = ({
   getArticletById,
   favouriteArticle,
+  unfavouriteArticle,
 }) => {
   const { accessToken } = useAuthStore()
 
@@ -48,6 +55,21 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
     )
   }
 
+  const { mutate: mutateUnfavouriteArticle } =
+    useUnfavouriteArticle(unfavouriteArticle)
+
+  const unfavouriteArticleById = (id: number) => {
+    mutateUnfavouriteArticle(
+      {
+        id,
+        token: accessToken,
+      },
+      {
+        onError: (error) => toast.error(error.message),
+      },
+    )
+  }
+
   return (
     <ArticleTemplate isLoading={isLoading} error={error}>
       {data && (
@@ -64,6 +86,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
           }}
           favourited={data.favourited}
           favouriteArticleById={favouriteArticleById}
+          unfavouriteArticleById={unfavouriteArticleById}
         />
       )}
     </ArticleTemplate>
