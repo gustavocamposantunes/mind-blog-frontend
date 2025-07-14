@@ -62,7 +62,7 @@ export const PageTemplate: React.FC<IPageTemplate> = ({ children }) => {
           </Button>
         )}
       </Header>
-      <main className="px-4 md:px-[10%] mt-6">{children}</main>
+      <main className="px-4 md:px-[5%] mt-6">{children}</main>
     </>
   )
 }

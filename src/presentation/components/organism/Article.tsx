@@ -5,6 +5,7 @@ import { CustomAvatar } from '../molecules'
 import { formatDateToShortMonth } from '@/presentation/utils/dateFormatter'
 
 interface IArticle {
+  id: number
   title: string
   publishedAt: string
   image?: string
@@ -14,14 +15,17 @@ interface IArticle {
     name: string
     avatar?: string
   }
+  favouriteArticleById: (id: number) => void
 }
 
 export const Article: React.FC<IArticle> = ({
+  id,
   title,
   publishedAt,
   image,
   content,
   author,
+  favouriteArticleById,
 }) => {
   const formatterdDate = formatDateToShortMonth(
     publishedAt || new Date().toISOString(),
@@ -37,7 +41,11 @@ export const Article: React.FC<IArticle> = ({
               Por <b>{author?.name}</b> - {formatterdDate}
             </p>
           </span>
-          <Heart />
+          <Heart
+            data-testid="favourite-toogle"
+            className="cursor-pointer"
+            onClick={() => favouriteArticleById(id)}
+          />
         </span>
       </div>
       <img className="mt-5 w-full" src={image} alt={title} />
