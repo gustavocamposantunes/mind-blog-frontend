@@ -83,6 +83,16 @@ describe('ArticlePage', () => {
       expect(articleImage).toBeTruthy()
       expect(articleImage.src).toEqual(getArticleByIdSpy.data.image)
     })
+
+    it('should render the favourite count', async () => {
+      const { getArticleByIdSpy } = makeSut()
+
+      const favouriteCount = await screen.findByTestId('favourite-count')
+
+      expect(favouriteCount.textContent).toBe(
+        getArticleByIdSpy.data.favouriteCount.toString(),
+      )
+    })
   })
 
   const toogleFavourite = async () => {
