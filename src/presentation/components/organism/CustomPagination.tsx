@@ -7,6 +7,8 @@ import {
   PaginationNext,
 } from '../ui/pagination'
 
+import type { ReactNode } from 'react'
+
 type CustomPaginationProps = {
   currentPage: number
   totalPages: number
@@ -18,32 +20,41 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
   totalPages,
   changePage,
   ...props
-}) => (
-  <Pagination data-testid="pagination" {...props}>
-    <PaginationContent data-testid="total-pages">
+}) => {
+  let previousToogle: undefined | ReactNode
+
+  if (currentPage !== 1) {
+    previousToogle = (
       <PaginationItem>
-        <PaginationPrevious href="#" />
+        <PaginationPrevious data-testid="previous-toogle" href="#" />
       </PaginationItem>
-      {Array.from({ length: totalPages }, (_, index) => (
-        <PaginationItem
-          key={index}
-          data-testid="hint-page"
-          onClick={() => changePage(index + 1)}
-        >
-          <PaginationLink
-            href="#"
-            isActive={currentPage === index + 1}
-            data-testid={
-              currentPage === index + 1 ? 'active-page' : `page-${index + 1}`
-            }
+    )
+  }
+  return (
+    <Pagination data-testid="pagination" {...props}>
+      <PaginationContent data-testid="total-pages">
+        {previousToogle}
+        {Array.from({ length: totalPages }, (_, index) => (
+          <PaginationItem
+            key={index}
+            data-testid="hint-page"
+            onClick={() => changePage(index + 1)}
           >
-            {index + 1}
-          </PaginationLink>
+            <PaginationLink
+              href="#"
+              isActive={currentPage === index + 1}
+              data-testid={
+                currentPage === index + 1 ? 'active-page' : `page-${index + 1}`
+              }
+            >
+              {index + 1}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
+        <PaginationItem>
+          <PaginationNext href="#" />
         </PaginationItem>
-      ))}
-      <PaginationItem>
-        <PaginationNext href="#" />
-      </PaginationItem>
-    </PaginationContent>
-  </Pagination>
-)
+      </PaginationContent>
+    </Pagination>
+  )
+}
