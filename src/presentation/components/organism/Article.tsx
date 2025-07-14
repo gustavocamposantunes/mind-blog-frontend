@@ -48,6 +48,7 @@ export const Article: React.FC<IArticle> = ({
             data-testid="favourite-toogle"
             className="cursor-pointer"
             fill={favorite ? 'red' : 'white'}
+            color={favorite ? 'red' : undefined}
             onClick={() =>
               favouriteArticleById(id, () => {
                 setFavorite(true)
