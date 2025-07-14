@@ -44,6 +44,7 @@ export const Article: React.FC<IArticle> = ({
           <Heart
             data-testid="favourite-toogle"
             className="cursor-pointer"
+            fill="white"
             onClick={() => favouriteArticleById(id)}
           />
         </span>
