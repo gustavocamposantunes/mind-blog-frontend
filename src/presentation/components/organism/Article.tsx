@@ -51,11 +51,13 @@ export const Article: React.FC<IArticle> = ({
             className="cursor-pointer"
             fill={favorite ? 'red' : 'white'}
             color={favorite ? 'red' : undefined}
-            onClick={() =>
-              favouriteArticleById(id, () => {
-                setFavorite(true)
-              })
-            }
+            onClick={() => {
+              if (!favorite) {
+                favouriteArticleById(id, () => {
+                  setFavorite(true)
+                })
+              }
+            }}
           />
         </span>
       </div>
