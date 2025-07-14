@@ -71,31 +71,31 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault()
 
-    if (!data) return
+    if (data) {
+      const payload = buildUpdatePayload(
+        Number(id),
+        {
+          title: data.title,
+          content: data.content,
+          image: data.image,
+        },
+        editArticleParams,
+      )
 
-    const payload = buildUpdatePayload(
-      Number(id),
-      {
-        title: data.title,
-        content: data.content,
-        image: data.image,
-      },
-      editArticleParams,
-    )
+      if (Object.keys(payload).length === 1) {
+        toast.info('Nenhuma alteração realizada, atualize o artigo!')
+        return
+      }
 
-    if (Object.keys(payload).length === 1) {
-      toast.info('Nenhuma alteração realizada, atualize o artigo!')
-      return
+      mutate(payload, {
+        onSuccess: () => {
+          toast.success('Artigo atualizado com sucesso')
+        },
+        onError: (error) => {
+          toast.error(error.message)
+        },
+      })
     }
-
-    mutate(payload, {
-      onSuccess: () => {
-        toast.success('Artigo atualizado com sucesso')
-      },
-      onError: (error) => {
-        toast.error(error.message)
-      },
-    })
   }
 
   const content = isLoading ? (
