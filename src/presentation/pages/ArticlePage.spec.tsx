@@ -87,19 +87,25 @@ describe('ArticlePage', () => {
 
     fireEvent.click(favouriteToogle)
 
+    const toastError = await screen.findByText(mockedError.message)
+
     return {
-      mockedError,
+      toastError,
       favouriteToogle,
     }
   }
 
   describe('Favourite', () => {
     it('should render a toast.error if favourite article fails', async () => {
-      const { mockedError } = await setupFavouriteError()
-
-      const toastError = await screen.findByText(mockedError.message)
+      const { toastError } = await setupFavouriteError()
 
       expect(toastError).toBeTruthy()
+    })
+
+    it('should mantain the heart icon fill white if an error occur', async () => {
+      const { favouriteToogle } = await setupFavouriteError()
+
+      expect(favouriteToogle.getAttribute('fill')).toBe('white')
     })
   })
 })
