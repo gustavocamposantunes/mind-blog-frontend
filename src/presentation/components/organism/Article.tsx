@@ -18,7 +18,7 @@ interface IArticle {
   }
   favourited: boolean
   favouriteArticleById: (id: number, favourite: () => void) => void
-  unfavouriteArticleById: (id: number) => void
+  unfavouriteArticleById: (id: number, unfavourite: () => void) => void
 }
 
 export const Article: React.FC<IArticle> = ({
@@ -59,7 +59,9 @@ export const Article: React.FC<IArticle> = ({
                   setFavorite(true)
                 })
               } else {
-                unfavouriteArticleById(id)
+                unfavouriteArticleById(id, () => {
+                  setFavorite(false)
+                })
               }
             }}
           />
