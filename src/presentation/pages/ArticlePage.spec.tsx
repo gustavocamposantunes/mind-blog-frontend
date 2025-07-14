@@ -125,5 +125,14 @@ describe('ArticlePage', () => {
 
       expect(favouriteToogle.getAttribute('fill')).toBe('red')
     })
+
+    it('should init the article favourited', async () => {
+      const getArticleByIdSpy = new GetArticleByIdSpy(true)
+      makeSut(getArticleByIdSpy)
+
+      const favouriteToogle = await screen.findByTestId('favourite-toogle')
+
+      expect(favouriteToogle.getAttribute('fill')).toBe('red')
+    })
   })
 })

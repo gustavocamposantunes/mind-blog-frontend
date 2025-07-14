@@ -28,7 +28,10 @@ export const mockUpdateArticleParams = (): UpdateArticleParams => ({
   content: faker.lorem.paragraph(10),
 })
 
-export const mockArticle = (withContent = false): ArticleModel => ({
+export const mockArticle = (
+  withContent = false,
+  favourited = false,
+): ArticleModel => ({
   id: faker.number.int(),
   title: faker.lorem.sentence(),
   content: faker.lorem.paragraphs(withContent ? 50 : 1),
@@ -43,7 +46,7 @@ export const mockArticle = (withContent = false): ArticleModel => ({
     avatar: faker.image.avatar(),
   },
   favouriteCount: faker.number.int(),
-  favourited: false,
+  favourited,
   publishedAt: faker.date.past().toISOString(),
   updatedAt: faker.date.recent().toISOString(),
 })
