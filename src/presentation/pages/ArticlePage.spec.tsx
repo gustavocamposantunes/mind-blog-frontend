@@ -77,15 +77,23 @@ describe('ArticlePage', () => {
     })
   })
 
+  const toogleFavourite = async () => {
+    const favouriteToogle = await screen.findByTestId('favourite-toogle')
+
+    fireEvent.click(favouriteToogle)
+
+    return {
+      favouriteToogle,
+    }
+  }
+
   const setupFavouriteError = async () => {
     const favouriteArticleSpy = new FavouriteArticleSpy()
     const mockedError = new UnexpectedError()
     vi.spyOn(favouriteArticleSpy, 'favorite').mockRejectedValueOnce(mockedError)
     makeSut(undefined, favouriteArticleSpy)
 
-    const favouriteToogle = await screen.findByTestId('favourite-toogle')
-
-    fireEvent.click(favouriteToogle)
+    const { favouriteToogle } = await toogleFavourite()
 
     const toastError = await screen.findByText(mockedError.message)
 
@@ -106,6 +114,16 @@ describe('ArticlePage', () => {
       const { favouriteToogle } = await setupFavouriteError()
 
       expect(favouriteToogle.getAttribute('fill')).toBe('white')
+    })
+
+    it('should change favourite heart icon color on success', async () => {
+      makeSut()
+
+      const { favouriteToogle } = await toogleFavourite()
+
+      await screen.findByText('Artigo adicionado aos favoritos')
+
+      expect(favouriteToogle.getAttribute('fill')).toBe('red')
     })
   })
 })
