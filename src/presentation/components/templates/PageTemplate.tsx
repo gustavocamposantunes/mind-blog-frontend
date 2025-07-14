@@ -1,18 +1,13 @@
-import { LogIn, LogOut, NotebookText, UserPen } from 'lucide-react'
+import { LogIn, NotebookText } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 import { MenuItem } from '../atoms'
+import { Header } from '../molecules'
+import { UserDropdownMenu } from '../organism'
 import { Button } from '../ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '../ui/dropdown-menu'
 
 import type { ReactNode } from 'react'
 
-import { CustomAvatar, Header } from '@/presentation/components/molecules'
 import { useAuthStore } from '@/presentation/store'
 
 interface IPageTemplate {
@@ -49,26 +44,14 @@ export const PageTemplate: React.FC<IPageTemplate> = ({ children }) => {
         </ul>
         {isLoggedIn ? (
           <span className="ml-8">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="bg-white!">
-                <CustomAvatar src={user.image} />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => navigate('/profile')}>
-                  <UserPen />
-                  Perfil
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => {
-                    clearCurrentUser()
-                    navigate('/')
-                  }}
-                >
-                  <LogOut />
-                  Desconectar
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <UserDropdownMenu
+              user={user}
+              onProfileNavigate={() => navigate('/profile')}
+              onLogout={() => {
+                clearCurrentUser()
+                navigate('/')
+              }}
+            />
           </span>
         ) : (
           <Button
