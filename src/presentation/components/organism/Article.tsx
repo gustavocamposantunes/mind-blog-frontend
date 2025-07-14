@@ -1,12 +1,10 @@
-import { Heart } from 'lucide-react'
-import { useState } from 'react'
+import { type ReactNode } from 'react'
 
 import { CustomAvatar } from '../molecules'
 
 import { formatDateToShortMonth } from '@/presentation/utils/dateFormatter'
 
 interface IArticle {
-  id: number
   title: string
   publishedAt: string
   image?: string
@@ -16,28 +14,20 @@ interface IArticle {
     name: string
     avatar?: string
   }
-  favouriteCount: number
-  favourited: boolean
-  favouriteArticleById: (id: number, favourite: () => void) => void
-  unfavouriteArticleById: (id: number, unfavourite: () => void) => void
+  toogleFavouriteSlot?: ReactNode
 }
 
 export const Article: React.FC<IArticle> = ({
-  id,
   title,
   publishedAt,
   image,
   content,
   author,
-  favouriteCount,
-  favourited,
-  favouriteArticleById,
-  unfavouriteArticleById,
+  toogleFavouriteSlot,
 }) => {
   const formatterdDate = formatDateToShortMonth(
     publishedAt || new Date().toISOString(),
   )
-  const [favorite, setFavorite] = useState(favourited)
 
   return (
     <article>
@@ -50,29 +40,7 @@ export const Article: React.FC<IArticle> = ({
               Por <b>{author?.name}</b> - {formatterdDate}
             </p>
           </span>
-          <span
-            className="text-stone-500 flex gap-2 font-bold"
-            data-testid="favourite-count"
-          >
-            <Heart
-              data-testid="favourite-toogle"
-              className="cursor-pointer"
-              fill={favorite ? 'red' : 'white'}
-              color={favorite ? 'red' : undefined}
-              onClick={() => {
-                if (!favorite) {
-                  favouriteArticleById(id, () => {
-                    setFavorite(true)
-                  })
-                } else {
-                  unfavouriteArticleById(id, () => {
-                    setFavorite(false)
-                  })
-                }
-              }}
-            />
-            {favouriteCount}
-          </span>
+          {toogleFavouriteSlot}
         </span>
       </div>
       <img className="mt-5 w-full" src={image} alt={title} />

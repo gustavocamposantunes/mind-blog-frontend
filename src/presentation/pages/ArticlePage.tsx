@@ -1,3 +1,5 @@
+import { Heart } from 'lucide-react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -35,6 +37,44 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
     getArticletById,
     String(id),
   )
+
+  const [toogleFavourite, setToogleFavourite] = useState(data?.favourited)
+
+  useEffect(() => {
+    if (data) {
+      setToogleFavourite(data.favourited)
+    }
+  }, [data])
+
+  let toogleFavouriteSlot: ReactNode | undefined = undefined
+
+  if (accessToken && data) {
+    toogleFavouriteSlot = (
+      <span
+        className="text-stone-500 flex gap-2 font-bold"
+        data-testid="favourite-count"
+      >
+        <Heart
+          data-testid="favourite-toogle"
+          className="cursor-pointer"
+          fill={toogleFavourite ? 'red' : 'white'}
+          color={toogleFavourite ? 'red' : undefined}
+          onClick={() => {
+            if (!toogleFavourite) {
+              favouriteArticleById(data.id, () => {
+                setToogleFavourite(true)
+              })
+            } else {
+              unfavouriteArticleById(data.id, () => {
+                setToogleFavourite(false)
+              })
+            }
+          }}
+        />
+        {data.favouriteCount}
+      </span>
+    )
+  }
 
   const { mutate: mutateFavouriteArticle } =
     useFavouriteArticle(favouriteArticle)
@@ -78,7 +118,6 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
     <ArticleTemplate isLoading={isLoading} error={error}>
       {data && (
         <Article
-          id={data.id}
           title={data.title}
           publishedAt={data.publishedAt}
           image={data.image}
@@ -88,10 +127,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
             name: data.author.name,
             avatar: data.author.avatar,
           }}
-          favouriteCount={data.favouriteCount}
-          favourited={data.favourited}
-          favouriteArticleById={favouriteArticleById}
-          unfavouriteArticleById={unfavouriteArticleById}
+          toogleFavouriteSlot={toogleFavouriteSlot}
         />
       )}
     </ArticleTemplate>
