@@ -1,4 +1,5 @@
 import { Heart } from 'lucide-react'
+import { useState } from 'react'
 
 import { CustomAvatar } from '../molecules'
 
@@ -15,7 +16,7 @@ interface IArticle {
     name: string
     avatar?: string
   }
-  favouriteArticleById: (id: number) => void
+  favouriteArticleById: (id: number, favourite: () => void) => void
 }
 
 export const Article: React.FC<IArticle> = ({
@@ -30,6 +31,8 @@ export const Article: React.FC<IArticle> = ({
   const formatterdDate = formatDateToShortMonth(
     publishedAt || new Date().toISOString(),
   )
+  const [favorite, setFavorite] = useState(false)
+
   return (
     <article>
       <div className="flex flex-col gap-4 pb-6 border-b border-[#cecece]">
@@ -44,8 +47,12 @@ export const Article: React.FC<IArticle> = ({
           <Heart
             data-testid="favourite-toogle"
             className="cursor-pointer"
-            fill="white"
-            onClick={() => favouriteArticleById(id)}
+            fill={favorite ? 'red' : 'white'}
+            onClick={() =>
+              favouriteArticleById(id, () => {
+                setFavorite(true)
+              })
+            }
           />
         </span>
       </div>

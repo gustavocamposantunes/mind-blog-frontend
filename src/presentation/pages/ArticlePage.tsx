@@ -32,7 +32,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
   const { mutate: mutateFavouriteArticle } =
     useFavouriteArticle(favouriteArticle)
 
-  const favouriteArticleById = (id: number) => {
+  const favouriteArticleById = (id: number, favourite: () => void) => {
     mutateFavouriteArticle(
       {
         id,
@@ -40,6 +40,10 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
       },
       {
         onError: (error) => toast.error(error.message),
+        onSuccess: () => {
+          favourite()
+          toast.info('Artigo adicionado aos favoritos')
+        },
       },
     )
   }
