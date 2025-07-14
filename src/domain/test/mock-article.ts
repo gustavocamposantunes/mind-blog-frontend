@@ -31,6 +31,7 @@ export const mockUpdateArticleParams = (): UpdateArticleParams => ({
 export const mockArticle = (
   withContent = false,
   favourited = false,
+  author_id = faker.number.int(),
 ): ArticleModel => ({
   id: faker.number.int(),
   title: faker.lorem.sentence(),
@@ -41,7 +42,7 @@ export const mockArticle = (
     height: 700,
   }),
   author: {
-    id: faker.number.int(),
+    id: author_id,
     name: faker.person.fullName(),
     avatar: faker.image.avatar(),
   },

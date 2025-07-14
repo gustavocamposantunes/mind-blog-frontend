@@ -122,6 +122,20 @@ describe('ArticlePage', () => {
 
       expect(favouriteToogle).toBeFalsy()
     })
+
+    it('should don´t render the favourite toogle if logged user is the author', async () => {
+      const getArticleByIdSpy = new GetArticleByIdSpy(
+        false,
+        mockAuthStore.user.id,
+      )
+      makeSut(getArticleByIdSpy)
+
+      await screen.findByText(getArticleByIdSpy.data.title)
+
+      const favouriteToogle = screen.queryByTestId('favourite-toogle')
+
+      expect(favouriteToogle).toBeFalsy()
+    })
   })
 
   const toogleFavourite = async () => {
