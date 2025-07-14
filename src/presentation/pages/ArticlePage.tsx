@@ -30,7 +30,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
   favouriteArticle,
   unfavouriteArticle,
 }) => {
-  const { accessToken } = useAuthStore()
+  const { accessToken, user } = useAuthStore()
 
   const { id } = useParams<{ id: string }>()
   const { data, isLoading, error } = useGetArticleById(
@@ -48,7 +48,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
 
   let toogleFavouriteSlot: ReactNode | undefined = undefined
 
-  if (accessToken && data) {
+  if (accessToken && data && user.id !== data.author.id) {
     toogleFavouriteSlot = (
       <span
         className="text-stone-500 flex gap-2 font-bold"
