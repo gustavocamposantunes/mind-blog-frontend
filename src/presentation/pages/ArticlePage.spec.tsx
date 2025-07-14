@@ -136,6 +136,18 @@ describe('ArticlePage', () => {
 
       expect(favouriteToogle).toBeFalsy()
     })
+
+    it('should render a toogle edit if logged user is the author', async () => {
+      const getArticleByIdSpy = new GetArticleByIdSpy(
+        false,
+        mockAuthStore.user.id,
+      )
+      makeSut(getArticleByIdSpy)
+
+      const toogleEdit = await screen.findByTestId('toogle-edit')
+
+      expect(toogleEdit).toBeTruthy()
+    })
   })
 
   const toogleFavourite = async () => {
