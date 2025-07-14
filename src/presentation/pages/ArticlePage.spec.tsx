@@ -200,5 +200,21 @@ describe('ArticlePage', () => {
 
       expect(favouriteToogle.getAttribute('fill')).toBe('red')
     })
+
+    it('should change favourite heart icon color on success', async () => {
+      const getArticleByIdSpy = new GetArticleByIdSpy(true)
+
+      makeSut(getArticleByIdSpy)
+
+      const favouriteToogle = await screen.findByTestId('favourite-toogle')
+
+      expect(favouriteToogle.getAttribute('fill')).toBe('red')
+
+      fireEvent.click(favouriteToogle)
+
+      await screen.findByText('Artigo removido dos favoritos')
+
+      expect(favouriteToogle.getAttribute('fill')).toBe('white')
+    })
   })
 })
