@@ -91,6 +91,16 @@ describe('EditArticlePage', () => {
       expect(toastSuccessArticleLoaded).toBeTruthy()
     })
 
+    it('should render a toast.success only once', async () => {
+      makeSut()
+
+      const toastSuccessArticleLoaded = await screen.findAllByText(
+        'Artigo carregado com sucesso',
+      )
+
+      expect(toastSuccessArticleLoaded.length).toBe(1)
+    })
+
     it('should render the title input filled', async () => {
       const { getArticleByIdSpy } = makeSut()
 
