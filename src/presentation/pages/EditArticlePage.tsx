@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -50,14 +50,17 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
     }
   }, [error])
 
+  const hasShownSuccessToast = useRef(false)
+
   useEffect(() => {
-    if (data) {
+    if (data && !hasShownSuccessToast.current) {
       setEditArticleParams({
         title: data?.title,
         content: data?.content,
         image: data?.image,
       })
       toast.success('Artigo carregado com sucesso')
+      hasShownSuccessToast.current = true
     }
   }, [data])
 
