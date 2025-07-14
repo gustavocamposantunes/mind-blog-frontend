@@ -104,7 +104,7 @@ describe('EditArticlePage', () => {
     it('should render the title input filled', async () => {
       const { getArticleByIdSpy } = makeSut()
 
-      const textAreaTitle = await screen.findByTestId('textaread-title')
+      const textAreaTitle = await screen.findByTestId('textarea-title')
 
       await screen.findByText('Artigo carregado com sucesso')
 
@@ -117,7 +117,7 @@ describe('EditArticlePage', () => {
     it('should render the content input filled', async () => {
       const { getArticleByIdSpy } = makeSut()
 
-      const textAreaContent = await screen.findByTestId('textaread-content')
+      const textAreaContent = await screen.findByTestId('textarea-content')
 
       await screen.findByText('Artigo carregado com sucesso')
 
@@ -190,12 +190,20 @@ describe('EditArticlePage', () => {
     const setupUpdateArticleSubmit = async () => {
       await screen.findByText('Artigo carregado com sucesso')
 
-      const textAreaTitle = await screen.findByTestId('textaread-title')
+      const textAreaTitle = await screen.findByTestId('textarea-title')
+
+      const textAreaContent = await screen.findByTestId('textarea-content')
+
+      const newContent = faker.lorem.paragraph(3)
 
       const newTitle = faker.lorem.sentence()
 
       fireEvent.change(textAreaTitle, {
         target: { value: newTitle },
+      })
+
+      fireEvent.change(textAreaContent, {
+        target: { value: newContent },
       })
 
       const submitButton = screen.getByRole('button', { name: /salvar/i })
@@ -204,6 +212,7 @@ describe('EditArticlePage', () => {
 
       return {
         newTitle,
+        newContent,
       }
     }
     it('should render a toast.error if article update fails', async () => {
@@ -238,13 +247,14 @@ describe('EditArticlePage', () => {
 
       makeSut(undefined, updateArticleSpy)
 
-      const { newTitle } = await setupUpdateArticleSubmit()
+      const { newTitle, newContent } = await setupUpdateArticleSubmit()
 
       await screen.findByText('Artigo atualizado com sucesso')
 
       expect(updateArticleSpy.update).toHaveBeenCalledWith('', {
         id: updateArticleSpy.params.id,
         title: newTitle,
+        content: newContent,
       })
     })
   })

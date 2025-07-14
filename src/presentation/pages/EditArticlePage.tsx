@@ -143,7 +143,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
               placeholder="Edite o título"
               id="title"
               name="title"
-              data-testid="textaread-title"
+              data-testid="textarea-title"
               value={editArticleParams.title}
               onChange={(e) =>
                 setEditArticleParams({
@@ -161,7 +161,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
               placeholder="Edite o conteúdo"
               id="content"
               name="content"
-              data-testid="textaread-content"
+              data-testid="textarea-content"
               value={editArticleParams.content}
               onChange={(e) =>
                 setEditArticleParams({
