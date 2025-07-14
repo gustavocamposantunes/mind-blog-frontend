@@ -1,4 +1,4 @@
-import { createRoutesStub } from 'react-router-dom'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 
 import { ArticlePage } from '../pages'
 
@@ -13,20 +13,26 @@ export const renderArticlePageWithRouter = (
   favouriteArticleSpy: FavouriteArticleSpy,
   unfavouriteArticleSpy: UnfavouriteArticleSpy,
 ) => {
-  const ArticlePageComponent = () => (
-    <ArticlePage
-      getArticletById={getArticleByIdSpy}
-      favouriteArticle={favouriteArticleSpy}
-      unfavouriteArticle={unfavouriteArticleSpy}
-    />
+  render(
+    <MemoryRouter initialEntries={['/article/:id']}>
+      <Routes>
+        <Route
+          path="/article/:id"
+          element={
+            <ArticlePage
+              getArticletById={getArticleByIdSpy}
+              favouriteArticle={favouriteArticleSpy}
+              unfavouriteArticle={unfavouriteArticleSpy}
+            />
+          }
+        />
+        <Route
+          path="/article/edit/:id"
+          element={
+            <div data-testid="edit-article-page-mock">Edit Article Page</div>
+          }
+        />
+      </Routes>
+    </MemoryRouter>,
   )
-
-  const Stub = createRoutesStub([
-    {
-      path: '/article/:id',
-      Component: ArticlePageComponent,
-    },
-  ])
-
-  render(<Stub initialEntries={['/article/:id']} />)
 }

@@ -148,6 +148,24 @@ describe('ArticlePage', () => {
 
       expect(toogleEdit).toBeTruthy()
     })
+
+    it('should redirect to the EditArticlePage if toogle edit is clicked', async () => {
+      const getArticleByIdSpy = new GetArticleByIdSpy(
+        false,
+        mockAuthStore.user.id,
+      )
+      makeSut(getArticleByIdSpy)
+
+      const toogleEdit = await screen.findByTestId('toogle-edit')
+
+      fireEvent.click(toogleEdit)
+
+      const EditArticlePage = await screen.findByTestId(
+        'edit-article-page-mock',
+      )
+
+      expect(EditArticlePage).toBeTruthy()
+    })
   })
 
   const toogleFavourite = async () => {
