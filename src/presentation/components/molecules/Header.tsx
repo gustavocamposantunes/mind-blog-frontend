@@ -12,12 +12,12 @@ interface IHeader {
 
 export const Header: React.FC<IHeader> = ({ children }) => {
   return (
-    <header className="w-full flex flex-col md:flex-row items-center md:items-start justify-between px-[10%] pt-4">
+    <header className="w-full flex flex-col md:flex-row items-center justify-between px-[5%] pt-4">
       <Link to="/">
         <img src={logoDark} alt="logo" />
       </Link>
-      <nav className="flex pt-6">
-        <ul className="flex gap-4 items-center">
+      <nav className="flex pt-6 wraṕ">
+        <ul className="flex gap-4 items-center flex-wrap justify-center">
           <MenuItem redirect="/" iconStart={<House />}>
             Home
           </MenuItem>
