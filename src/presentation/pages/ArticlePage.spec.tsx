@@ -10,10 +10,17 @@ import { cleanup, fireEvent, screen } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
 
 import { UnexpectedError } from '@/domain/errors'
+import { mockAuthenticateUserModel } from '@/domain/test'
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
   useNavigate: () => vi.fn(),
+}))
+
+let mockAuthStore = mockAuthenticateUserModel()
+
+vi.mock('../store/auth-store', async () => ({
+  useAuthStore: () => mockAuthStore,
 }))
 
 type SutTypes = {
@@ -41,7 +48,10 @@ const makeSut = (
 }
 
 describe('ArticlePage', () => {
-  beforeEach(cleanup)
+  beforeEach(() => {
+    cleanup()
+    mockAuthStore = mockAuthenticateUserModel()
+  })
   describe('Article', () => {
     it('should render a skeleton group while the content is loading', async () => {
       makeSut()
@@ -92,6 +102,25 @@ describe('ArticlePage', () => {
       expect(favouriteCount.textContent).toBe(
         getArticleByIdSpy.data.favouriteCount.toString(),
       )
+    })
+
+    it('should don´t render the favourite toogle if user is not logged in', async () => {
+      mockAuthStore = {
+        accessToken: '',
+        user: {
+          id: 0,
+          name: '',
+          email: '',
+        },
+      }
+
+      const { getArticleByIdSpy } = makeSut()
+
+      await screen.findByText(getArticleByIdSpy.data.title)
+
+      const favouriteToogle = screen.queryByTestId('favourite-toogle')
+
+      expect(favouriteToogle).toBeFalsy()
     })
   })
 
