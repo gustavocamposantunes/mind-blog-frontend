@@ -1,6 +1,6 @@
-import { Heart } from 'lucide-react'
+import { Heart, PencilIcon } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { Article } from '../components/organism'
@@ -47,6 +47,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
   }, [data])
 
   let toogleFavouriteSlot: ReactNode | undefined = undefined
+  let toogleEditSlot: ReactNode | undefined = undefined
 
   if (accessToken && data && user.id !== data.author.id) {
     toogleFavouriteSlot = (
@@ -73,6 +74,12 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
         />
         {data.favouriteCount}
       </span>
+    )
+  } else if (accessToken) {
+    toogleEditSlot = (
+      <Link to={`/article/edit/${id}`} data-testid="toogle-edit">
+        <PencilIcon />
+      </Link>
     )
   }
 
@@ -128,6 +135,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
             avatar: data.author.avatar,
           }}
           toogleFavouriteSlot={toogleFavouriteSlot}
+          toogleEditSlot={toogleEditSlot}
         />
       )}
     </ArticleTemplate>

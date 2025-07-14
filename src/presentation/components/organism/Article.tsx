@@ -15,6 +15,7 @@ interface IArticle {
     avatar?: string
   }
   toogleFavouriteSlot?: ReactNode
+  toogleEditSlot?: ReactNode
 }
 
 export const Article: React.FC<IArticle> = ({
@@ -24,6 +25,7 @@ export const Article: React.FC<IArticle> = ({
   content,
   author,
   toogleFavouriteSlot,
+  toogleEditSlot,
 }) => {
   const formatterdDate = formatDateToShortMonth(
     publishedAt || new Date().toISOString(),
@@ -41,6 +43,7 @@ export const Article: React.FC<IArticle> = ({
             </p>
           </span>
           {toogleFavouriteSlot}
+          {toogleEditSlot}
         </span>
       </div>
       <img className="mt-5 w-full" src={image} alt={title} />
