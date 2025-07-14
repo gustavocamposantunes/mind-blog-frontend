@@ -16,6 +16,7 @@ interface IArticle {
     name: string
     avatar?: string
   }
+  favouriteCount: number
   favourited: boolean
   favouriteArticleById: (id: number, favourite: () => void) => void
   unfavouriteArticleById: (id: number, unfavourite: () => void) => void
@@ -28,6 +29,7 @@ export const Article: React.FC<IArticle> = ({
   image,
   content,
   author,
+  favouriteCount,
   favourited,
   favouriteArticleById,
   unfavouriteArticleById,
@@ -48,23 +50,29 @@ export const Article: React.FC<IArticle> = ({
               Por <b>{author?.name}</b> - {formatterdDate}
             </p>
           </span>
-          <Heart
-            data-testid="favourite-toogle"
-            className="cursor-pointer"
-            fill={favorite ? 'red' : 'white'}
-            color={favorite ? 'red' : undefined}
-            onClick={() => {
-              if (!favorite) {
-                favouriteArticleById(id, () => {
-                  setFavorite(true)
-                })
-              } else {
-                unfavouriteArticleById(id, () => {
-                  setFavorite(false)
-                })
-              }
-            }}
-          />
+          <span
+            className="text-stone-500 flex gap-2 font-bold"
+            data-testid="favourite-count"
+          >
+            <Heart
+              data-testid="favourite-toogle"
+              className="cursor-pointer"
+              fill={favorite ? 'red' : 'white'}
+              color={favorite ? 'red' : undefined}
+              onClick={() => {
+                if (!favorite) {
+                  favouriteArticleById(id, () => {
+                    setFavorite(true)
+                  })
+                } else {
+                  unfavouriteArticleById(id, () => {
+                    setFavorite(false)
+                  })
+                }
+              }}
+            />
+            {favouriteCount}
+          </span>
         </span>
       </div>
       <img className="mt-5 w-full" src={image} alt={title} />
