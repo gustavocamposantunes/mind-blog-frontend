@@ -16,6 +16,7 @@ interface IArticle {
     name: string
     avatar?: string
   }
+  favourited: boolean
   favouriteArticleById: (id: number, favourite: () => void) => void
 }
 
@@ -26,12 +27,13 @@ export const Article: React.FC<IArticle> = ({
   image,
   content,
   author,
+  favourited,
   favouriteArticleById,
 }) => {
   const formatterdDate = formatDateToShortMonth(
     publishedAt || new Date().toISOString(),
   )
-  const [favorite, setFavorite] = useState(false)
+  const [favorite, setFavorite] = useState(favourited)
 
   return (
     <article>

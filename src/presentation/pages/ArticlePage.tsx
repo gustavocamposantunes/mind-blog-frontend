@@ -62,6 +62,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
             name: data.author.name,
             avatar: data.author.avatar,
           }}
+          favourited={data.favourited}
           favouriteArticleById={favouriteArticleById}
         />
       )}
