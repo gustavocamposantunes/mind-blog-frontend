@@ -126,13 +126,34 @@ describe('ArticlePage', () => {
       expect(favouriteToogle.getAttribute('fill')).toBe('red')
     })
 
-    it('should init the article favourited', async () => {
+    const favouritedArticleSetup = async () => {
       const getArticleByIdSpy = new GetArticleByIdSpy(true)
       makeSut(getArticleByIdSpy)
 
       const favouriteToogle = await screen.findByTestId('favourite-toogle')
 
+      return {
+        favouriteToogle,
+      }
+    }
+
+    it('should init the article favourited', async () => {
+      const { favouriteToogle } = await favouritedArticleSetup()
+
       expect(favouriteToogle.getAttribute('fill')).toBe('red')
+    })
+
+    it('should not render add to favourite toast when article is already added', async () => {
+      const { favouriteToogle } = await favouritedArticleSetup()
+
+      fireEvent.click(favouriteToogle)
+
+      expect(
+        await screen
+          .findByText('Artigo adicionado aos favoritos')
+          .then((el) => el)
+          .catch(() => null),
+      ).toBeFalsy()
     })
   })
 })
