@@ -297,7 +297,7 @@ describe('ArticlesPage', () => {
 
       const totalPages = await screen.findByTestId('total-pages')
 
-      const paginationPreviousNext = 2
+      const paginationPreviousNext = 1
       const paginationQuantity = 2
 
       expect(totalPages.childElementCount).toBe(
@@ -337,6 +337,16 @@ describe('ArticlesPage', () => {
       await setupChangeToSecondPage()
 
       await setupAssertSkeletons()
+    })
+
+    it('should not render PreviousPage toogle if first page is the current', async () => {
+      makeSut()
+
+      await screen.findByTestId('page-2')
+
+      const previousToogle = screen.queryByTestId('previous-toogle')
+
+      expect(previousToogle).toBeFalsy()
     })
   })
 })
