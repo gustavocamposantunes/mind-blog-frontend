@@ -58,7 +58,10 @@ export const Router = () => {
           <Route
             path="/articles/:id"
             element={
-              <ArticlePage getArticletById={makeRemoteGetArticleById()} />
+              <ArticlePage
+                getArticletById={makeRemoteGetArticleById()}
+                favouriteArticle={makeRemoteFavouriteArticle()}
+              />
             }
           />
           <Route
