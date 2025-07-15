@@ -39,6 +39,25 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
       </PaginationItem>
     )
   }
+
+  const currentPageLinkClassName = (isCurrentPage: boolean) =>
+    isCurrentPage ? 'bg-stone-300 text-white' : undefined
+
+  const pageTestID = (isCurrentPage: boolean, id: number) =>
+    isCurrentPage ? 'active-page' : `page-${id}`
+
+  const firstLastPageTestID = (index: number) => {
+    if (index === 0) {
+      return 'first-page'
+    }
+
+    if (index + 1 === totalPages) {
+      return `last-page-${index + 1}`
+    }
+
+    return
+  }
+
   return (
     <Pagination data-testid="pagination" {...props}>
       <PaginationContent data-testid="total-pages">
@@ -46,15 +65,14 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
         {Array.from({ length: totalPages }, (_, index) => (
           <PaginationItem
             key={index}
-            data-testid="hint-page"
+            data-testid={firstLastPageTestID(index)}
             onClick={() => changePage(index + 1)}
           >
             <PaginationLink
               href="#"
               isActive={currentPage === index + 1}
-              data-testid={
-                currentPage === index + 1 ? 'active-page' : `page-${index + 1}`
-              }
+              className={currentPageLinkClassName(currentPage === index + 1)}
+              data-testid={pageTestID(currentPage === index + 1, index + 1)}
             >
               {index + 1}
             </PaginationLink>
