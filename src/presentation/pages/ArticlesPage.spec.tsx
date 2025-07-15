@@ -10,7 +10,7 @@ import { cleanup, fireEvent, screen } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
 
 import { UnexpectedError } from '@/domain/errors'
-import { mockAuthenticateUserModel } from '@/domain/test'
+import { mockArticlesList, mockAuthenticateUserModel } from '@/domain/test'
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
@@ -361,6 +361,19 @@ describe('ArticlesPage', () => {
       const nextPageToogle = screen.queryByTestId('next-page-toogle')
 
       expect(nextPageToogle).toBeFalsy()
+    })
+
+    it('should always show the first and last page', async () => {
+      const listArticlesListSpy = new ListArticlesSpy(mockArticlesList(60))
+      makeSut(listArticlesListSpy)
+
+      await screen.findByTestId('pagination')
+
+      const firstPage = screen.getByTestId('first-page')
+      const lastPage = screen.getByTestId('last-page-6')
+
+      expect(firstPage).toBeTruthy()
+      expect(lastPage).toBeTruthy()
     })
   })
 })

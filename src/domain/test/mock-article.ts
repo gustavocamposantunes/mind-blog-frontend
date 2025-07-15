@@ -65,7 +65,7 @@ export const mockArticleFavourited = (): ArticleModel => ({
   favourited: true,
 })
 
-export const mockArticlesList = (): ArticleListModel => ({
+export const mockArticlesList = (total = 20): ArticleListModel => ({
   articles: [
     mockArticle(),
     mockArticleLoggedUser(),
@@ -80,7 +80,7 @@ export const mockArticlesList = (): ArticleListModel => ({
   ],
   limit: 10,
   page: 1,
-  total: 20,
+  total,
 })
 
 export const mockFavouriteArticle = (): FavouriteModel => ({
