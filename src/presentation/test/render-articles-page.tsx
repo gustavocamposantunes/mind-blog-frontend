@@ -13,7 +13,7 @@ export const renderArticlesPageWithRouter = (
   favouriteArticleSpy: FavouriteArticleSpy,
   unfavouriteArticleSpy: UnfavouriteArticleSpy,
 ) => {
-  render(
+  const ArticlesMemoryRouter = () => (
     <MemoryRouter initialEntries={['/articles']}>
       <Routes>
         <Route
@@ -33,6 +33,11 @@ export const renderArticlesPageWithRouter = (
           }
         />
       </Routes>
-    </MemoryRouter>,
+    </MemoryRouter>
   )
+  const { rerender } = render(<ArticlesMemoryRouter />)
+
+  return {
+    rerender: () => rerender(<ArticlesMemoryRouter />),
+  }
 }

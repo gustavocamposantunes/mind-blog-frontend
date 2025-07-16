@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest'
 
 import {
   FavouriteArticleSpy,
@@ -26,9 +26,20 @@ vi.mock('../store/auth-store', async () => ({
   useAuthStore: () => mockAuthenticateUserModel(),
 }))
 
+vi.mock('react-responsive', async () => {
+  return {
+    useMediaQuery: vi.fn(),
+  }
+})
+
+const useMediaQueryMock = vi.mocked(
+  await import('react-responsive').then((mod) => mod.useMediaQuery),
+)
+
 type SutTypes = {
   listArticlesListSpy: ListArticlesSpy
   favouriteArticleSpy: FavouriteArticleSpy
+  rerender: () => void
 }
 
 const makeSut = (
@@ -36,7 +47,7 @@ const makeSut = (
   favouriteArticleSpy = new FavouriteArticleSpy(),
   unfavouriteArticleSpy = new UnfavouriteArticleSpy(),
 ): SutTypes => {
-  renderArticlesPageWithRouter(
+  const { rerender } = renderArticlesPageWithRouter(
     listArticlesListSpy,
     favouriteArticleSpy,
     unfavouriteArticleSpy,
@@ -45,15 +56,26 @@ const makeSut = (
   return {
     listArticlesListSpy,
     favouriteArticleSpy,
+    rerender,
   }
 }
-
+let currentParams: Record<string, string> = {}
+let setSearchParamsMock: Mock
 describe('ArticlesPage', () => {
   beforeEach(() => {
     cleanup()
+
+    currentParams = { page: '1', limit: '10' }
+
+    setSearchParamsMock = vi.fn((newParams: Record<string, string>) => {
+      currentParams = {
+        ...currentParams,
+        ...newParams,
+      }
+    })
     useSearchParamsMock.mockImplementation(() => [
-      new URLSearchParams('page=1&limit=10'),
-      vi.fn(),
+      new URLSearchParams(currentParams),
+      setSearchParamsMock,
     ])
   })
 
@@ -281,6 +303,11 @@ describe('ArticlesPage', () => {
   })
 
   describe('Pagination', () => {
+    beforeEach(() => {
+      useMediaQueryMock.mockImplementation(({ maxWidth }) => {
+        return maxWidth === 1279
+      })
+    })
     it('should render the pagination correctly after data is loaded', async () => {
       makeSut()
 
@@ -328,18 +355,22 @@ describe('ArticlesPage', () => {
     }
 
     it('should change to second page as current on click', async () => {
-      makeSut()
+      const { rerender } = makeSut()
 
       await setupChangeToSecondPage()
+
+      rerender()
 
       const secondPage = await screen.findByTestId('page-2')
       expect(secondPage).toHaveAttribute('data-active', 'true')
     })
 
     it('should reload when current page is changed', async () => {
-      makeSut()
+      const { rerender } = makeSut()
 
       await setupChangeToSecondPage()
+
+      rerender()
 
       await setupAssertSkeletons()
     })
@@ -354,9 +385,11 @@ describe('ArticlesPage', () => {
     })
 
     it('should not render the NextPage toggle if the current page is the latest', async () => {
-      makeSut()
+      const { rerender } = makeSut()
 
       await setupChangeToSecondPage()
+
+      rerender()
 
       const secondPage = await screen.findByTestId('page-2')
       expect(secondPage).toHaveAttribute('data-active', 'true')
@@ -393,6 +426,10 @@ describe('ArticlesPage', () => {
     })
 
     it('should define the page and limit based in search params', async () => {
+      useMediaQueryMock.mockImplementation(({ maxWidth }) => {
+        return maxWidth === 1024
+      })
+
       useSearchParamsMock.mockImplementation(() => [
         new URLSearchParams('page=2&limit=5'),
         vi.fn(),
@@ -403,6 +440,36 @@ describe('ArticlesPage', () => {
       const secondPage = await screen.findByTestId('page-2')
       expect(secondPage).toHaveAttribute('data-active', 'true')
       expect(listArticlesListSpy.page).toBe(2)
+      expect(listArticlesListSpy.limit).toBe(5)
+    })
+
+    it('should change the search param limit based on screen size', async () => {
+      const setSearchParamsMock = vi.fn()
+      useSearchParamsMock.mockImplementation(() => [
+        new URLSearchParams('page=1&limit=10'),
+        setSearchParamsMock,
+      ])
+
+      useMediaQueryMock.mockImplementation(({ maxWidth }) => {
+        return maxWidth === 1024
+      })
+
+      const { listArticlesListSpy } = makeSut()
+
+      const articlesLink = screen.getByRole('link', {
+        name: /artigos/i,
+      })
+
+      expect(articlesLink).toHaveAttribute(
+        'href',
+        `/articles?page=1&limit=${listArticlesListSpy.limit}`,
+      )
+
+      expect(setSearchParamsMock).toHaveBeenCalledWith({
+        page: '1',
+        limit: String(listArticlesListSpy.limit),
+      })
+
       expect(listArticlesListSpy.limit).toBe(5)
     })
   })
