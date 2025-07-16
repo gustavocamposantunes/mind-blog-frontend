@@ -10,6 +10,8 @@ import {
   mockArticlesList,
   mockArticlesPaginationQueryParams,
 } from '@/domain/test'
+import { HttpStatusCode } from '@/data/protocols'
+import { InternalServerError, NotFoundError, UnexpectedError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteListArticles
@@ -40,40 +42,34 @@ describe('RemoteListArticles', () => {
   it('should returns NotFoundError if HttpGetClient returns 404', async () => {
     const { sut, httpClientSpy } = makeSut()
     httpClientSpy.response = {
-      status: 404,
-      data: { message: 'Artigo não encontrado' },
+      status: HttpStatusCode.notFound,
     }
 
-    const response = await sut.listAll(mockArticlesPaginationQueryParams())
+    const promise = sut.listAll(mockArticlesPaginationQueryParams())
 
-    expect(response.statusCode).toBe(404)
-    expect(response.error).toBe('Artigo não encontrado')
+    await expect(promise).rejects.toThrow(new NotFoundError())
   })
 
   it('should returns an InternalServerError if HttpGetClient returns 500', async () => {
     const { sut, httpClientSpy } = makeSut()
     httpClientSpy.response = {
-      status: 500,
-      data: { message: 'Erro interno do servidor' },
+      status: HttpStatusCode.serverError,
     }
 
-    const response = await sut.listAll(mockArticlesPaginationQueryParams())
+    const promise = sut.listAll(mockArticlesPaginationQueryParams())
 
-    expect(response.statusCode).toBe(500)
-    expect(response.error).toBe('Erro interno do servidor')
+    await expect(promise).rejects.toThrow(new InternalServerError())
   })
 
   it('should returns UnexpectedError for other status codes', async () => {
     const { sut, httpClientSpy } = makeSut()
     httpClientSpy.response = {
       status: 502,
-      data: { message: 'Erro inesperado' },
     }
 
-    const response = await sut.listAll(mockArticlesPaginationQueryParams())
+    const promise = sut.listAll(mockArticlesPaginationQueryParams())
 
-    expect(response.statusCode).toBe(502)
-    expect(response.error).toBe('Erro inesperado')
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
   it('should returns an ArticleListModel if HttpGetClient returns 200', async () => {
