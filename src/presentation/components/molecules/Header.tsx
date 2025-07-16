@@ -6,11 +6,15 @@ import { MenuItem } from '../atoms/MenuItem'
 
 import type { ReactNode } from 'react'
 
+import { useResponsiveLimit } from '@/presentation/hooks/useResponsiveLimit'
+
 interface IHeader {
   children: ReactNode
 }
 
 export const Header: React.FC<IHeader> = ({ children }) => {
+  const limit = useResponsiveLimit()
+
   return (
     <header className="w-full flex flex-col md:flex-row items-center justify-between px-[5%] pt-4">
       <Link to="/">
@@ -23,7 +27,7 @@ export const Header: React.FC<IHeader> = ({ children }) => {
           </MenuItem>
           <MenuItem
             className="pr-4"
-            redirect="/articles"
+            redirect={`/articles?page=1&limit=${limit}`}
             iconStart={<Newspaper />}
           >
             Artigos
