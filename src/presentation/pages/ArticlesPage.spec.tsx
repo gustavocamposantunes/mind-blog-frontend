@@ -398,7 +398,7 @@ describe('ArticlesPage', () => {
       expect(nextPageToggle).toBeFalsy()
     })
 
-    it('should change to NextPage when toogle is clicked', async () => {
+    const setupChangeToNextPage = async () => {
       const { rerender } = makeSut()
 
       const firstPage = await screen.findByTestId('page-1')
@@ -409,8 +409,30 @@ describe('ArticlesPage', () => {
 
       rerender()
 
+      return {
+        rerender: () => rerender(),
+      }
+    }
+
+    it('should change to NextPage when toogle is clicked', async () => {
+      await setupChangeToNextPage()
+
       const secondPage = await screen.findByTestId('page-2')
       expect(secondPage).toHaveAttribute('data-active', 'true')
+    })
+
+    it('should change to PreviousPage when toogle is clicked', async () => {
+      const { rerender } = await setupChangeToNextPage()
+
+      const previousPageToogle = await screen.findByTestId(
+        'previous-page-toogle',
+      )
+      fireEvent.click(previousPageToogle)
+
+      rerender()
+
+      const firstPage = await screen.findByTestId('page-1')
+      expect(firstPage).toHaveAttribute('data-active', 'true')
     })
 
     const setupRenderSixPages = async () => {
