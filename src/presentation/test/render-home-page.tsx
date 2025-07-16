@@ -1,4 +1,4 @@
-import { createRoutesStub } from 'react-router-dom'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 
 import { HomePage } from '../pages'
 
@@ -7,14 +7,12 @@ import { render } from './test-utils'
 import type { GetNewsSpy } from './mock-get-news'
 
 export const renderHomePageWithRouter = (getNewsSpy: GetNewsSpy) => {
-  const HomePageComponent = () => <HomePage getNews={getNewsSpy} />
-
-  const Stub = createRoutesStub([
-    {
-      path: '/',
-      Component: HomePageComponent,
-    },
-  ])
-
-  render(<Stub initialEntries={['/']} />)
+  render(
+    <MemoryRouter initialEntries={['/']}>
+      <Routes>
+        <Route path="/" element={<HomePage getNews={getNewsSpy} />} />
+        <Route path="/articles" element={<div>Articles Page</div>} />
+      </Routes>
+    </MemoryRouter>,
+  )
 }
