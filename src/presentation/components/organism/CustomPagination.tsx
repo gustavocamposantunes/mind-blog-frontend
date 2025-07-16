@@ -5,9 +5,8 @@ import {
   PaginationPrevious,
   PaginationLink,
   PaginationNext,
+  PaginationEllipsis,
 } from '../ui/pagination'
-
-import type { ReactNode } from 'react'
 
 type CustomPaginationProps = {
   currentPage: number
@@ -21,64 +20,93 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
   changePage,
   ...props
 }) => {
-  let previousPageToogle: undefined | ReactNode
-  let nextPageToogle: undefined | ReactNode
+  const renderEllipsis = (key: string) => (
+    <PaginationItem key={key} data-testid="pagination-ellipsis">
+      <PaginationEllipsis />
+    </PaginationItem>
+  )
 
-  if (currentPage !== 1) {
-    previousPageToogle = (
-      <PaginationItem>
-        <PaginationPrevious data-testid="previous-page-toogle" href="#" />
+  const renderPage = (page: number) => {
+    const isCurrent = page === currentPage
+    return (
+      <PaginationItem
+        key={page}
+        data-testid={`page-${page}`}
+        data-active={isCurrent || undefined}
+        data-first={page === 1 || undefined}
+        data-last={page === totalPages || undefined}
+        onClick={() => changePage(page)}
+      >
+        <PaginationLink
+          href="#"
+          isActive={isCurrent}
+          className={isCurrent ? 'bg-stone-300 text-white' : undefined}
+        >
+          {page}
+        </PaginationLink>
       </PaginationItem>
     )
   }
 
-  if (currentPage !== totalPages) {
-    nextPageToogle = (
-      <PaginationItem>
-        <PaginationNext href="#" data-testid="next-page-toogle" />
-      </PaginationItem>
-    )
-  }
+  const getPages = (): (number | 'ellipsis')[] => {
+    const pages: (number | 'ellipsis')[] = []
 
-  const currentPageLinkClassName = (isCurrentPage: boolean) =>
-    isCurrentPage ? 'bg-stone-300 text-white' : undefined
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i)
+      }
+    } else {
+      pages.push(1)
 
-  const pageTestID = (isCurrentPage: boolean, id: number) =>
-    isCurrentPage ? 'active-page' : `page-${id}`
+      if (currentPage > 3) {
+        pages.push('ellipsis')
+      }
 
-  const firstLastPageTestID = (index: number) => {
-    if (index === 0) {
-      return 'first-page'
+      const start = Math.max(2, currentPage - 1)
+      const end = Math.min(totalPages - 1, currentPage + 1)
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i)
+      }
+
+      if (currentPage < totalPages - 2) {
+        pages.push('ellipsis')
+      }
+
+      pages.push(totalPages)
     }
 
-    if (index + 1 === totalPages) {
-      return `last-page-${index + 1}`
-    }
-
-    return
+    return pages
   }
 
   return (
     <Pagination data-testid="pagination" {...props}>
       <PaginationContent data-testid="total-pages">
-        {previousPageToogle}
-        {Array.from({ length: totalPages }, (_, index) => (
-          <PaginationItem
-            key={index}
-            data-testid={firstLastPageTestID(index)}
-            onClick={() => changePage(index + 1)}
-          >
-            <PaginationLink
+        {currentPage !== 1 && (
+          <PaginationItem>
+            <PaginationPrevious
               href="#"
-              isActive={currentPage === index + 1}
-              className={currentPageLinkClassName(currentPage === index + 1)}
-              data-testid={pageTestID(currentPage === index + 1, index + 1)}
-            >
-              {index + 1}
-            </PaginationLink>
+              data-testid="previous-page-toogle"
+              onClick={() => changePage(currentPage - 1)}
+            />
           </PaginationItem>
-        ))}
-        {nextPageToogle}
+        )}
+
+        {getPages().map((page, index) =>
+          page === 'ellipsis'
+            ? renderEllipsis(`ellipsis-${index}`)
+            : renderPage(page),
+        )}
+
+        {currentPage !== totalPages && (
+          <PaginationItem>
+            <PaginationNext
+              href="#"
+              data-testid="next-page-toogle"
+              onClick={() => changePage(currentPage + 1)}
+            />
+          </PaginationItem>
+        )}
       </PaginationContent>
     </Pagination>
   )
