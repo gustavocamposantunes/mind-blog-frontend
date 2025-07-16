@@ -5,13 +5,17 @@ import { RemoteListArticles } from './remote-list-articles'
 
 import type { ArticleListModel } from '@/domain/models'
 
+import { HttpStatusCode } from '@/data/protocols'
 import { HttpGetClientSpy } from '@/data/test/mock-http-client'
+import {
+  InternalServerError,
+  NotFoundError,
+  UnexpectedError,
+} from '@/domain/errors'
 import {
   mockArticlesList,
   mockArticlesPaginationQueryParams,
 } from '@/domain/test'
-import { HttpStatusCode } from '@/data/protocols'
-import { InternalServerError, NotFoundError, UnexpectedError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteListArticles

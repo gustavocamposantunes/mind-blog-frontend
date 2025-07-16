@@ -34,9 +34,12 @@ export class RemoteListArticles implements ListArticlesUseCase {
           statusCode: status,
           data: data as ArticleListModel,
         }
-      case HttpStatusCode.notFound: throw new NotFoundError()
-      case HttpStatusCode.serverError: throw new InternalServerError()
-      default: throw new UnexpectedError()
+      case HttpStatusCode.notFound:
+        throw new NotFoundError()
+      case HttpStatusCode.serverError:
+        throw new InternalServerError()
+      default:
+        throw new UnexpectedError()
     }
   }
 }
