@@ -29,20 +29,22 @@ describe('HomePage', () => {
     vi.clearAllMocks()
     cleanup()
   })
-  it('should render a skeleton while promise is pending', () => {
-    makeSut()
+  describe('Featured Articles', () => {
+    it('should render a skeleton while promise is pending', () => {
+      makeSut()
 
-    const skeletonNews = screen.getByTestId('skeleton-news')
+      const skeletonNews = screen.getByTestId('skeleton-news')
 
-    expect(skeletonNews).toBeTruthy()
-  })
+      expect(skeletonNews).toBeTruthy()
+    })
 
-  it('should render a list of articles after load', async () => {
-    makeSut()
+    it('should render a list of articles after load', async () => {
+      makeSut()
 
-    const listArticles = await screen.findByTestId('list-news')
+      const listArticles = await screen.findByTestId('list-news')
 
-    expect(listArticles).toBeTruthy()
-    expect(listArticles.querySelectorAll('article').length).toBe(7)
+      expect(listArticles).toBeTruthy()
+      expect(listArticles.querySelectorAll('article').length).toBe(7)
+    })
   })
 })
