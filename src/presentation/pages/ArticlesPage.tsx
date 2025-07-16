@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import {
   useArticlesList,
   useFavouriteArticle,
+  useResponsiveLimit,
   useUnfavouriteArticle,
 } from '../hooks'
 import { useAuthStore } from '../store'
@@ -31,17 +32,32 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   unfavouriteArticle,
 }) => {
   const { user, accessToken } = useAuthStore()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const responsiveLimit = useResponsiveLimit()
 
-  const page = searchParams.get('page')
-  const limit = searchParams.get('limit')
+  const currentPage = Number(searchParams.get('page') ?? 1)
+  const currentLimit = responsiveLimit
 
-  const [pagination, setPagination] = useState({
-    page: Number(page),
-    limit: Number(limit),
+  useEffect(() => {
+    const currentSearchPage = searchParams.get('page')
+    const currentSearchLimit = searchParams.get('limit')
+
+    const shouldUpdate =
+      currentSearchPage !== String(currentPage) ||
+      currentSearchLimit !== String(currentLimit)
+
+    if (shouldUpdate) {
+      setSearchParams({
+        page: String(currentPage),
+        limit: String(currentLimit),
+      })
+    }
+  }, [currentPage, currentLimit, setSearchParams, searchParams])
+
+  const { data, isLoading } = useArticlesList(listArticles, {
+    page: currentPage,
+    limit: currentLimit,
   })
-
-  const { data, isLoading } = useArticlesList(listArticles, pagination)
 
   const { mutate: mutateFavouriteArticle } =
     useFavouriteArticle(favouriteArticle)
@@ -85,13 +101,13 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   if (!isLoading && data) {
     paginationComponent = (
       <CustomPagination
-        currentPage={pagination.page}
-        totalPages={data?.total / pagination.limit}
+        currentPage={currentPage}
+        totalPages={data?.total / currentLimit}
         className="lg:col-span-2 xl:col-span-3 mt-4"
         changePage={(page: number) => {
-          setPagination({
-            ...pagination,
-            page,
+          setSearchParams({
+            page: String(page),
+            limit: String(currentLimit),
           })
         }}
       />
