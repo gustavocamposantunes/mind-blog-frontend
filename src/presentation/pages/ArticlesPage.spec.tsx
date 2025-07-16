@@ -1,4 +1,4 @@
-import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
   FavouriteArticleSpy,
@@ -12,14 +12,12 @@ import { formatDateToShortMonth } from '../utils/dateFormatter'
 import { UnexpectedError } from '@/domain/errors'
 import { mockArticlesList, mockAuthenticateUserModel } from '@/domain/test'
 
-// eslint-disable-next-line prefer-const
-let useSearchParamsMock: Mock
+let useSearchParamsMock = vi.fn()
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
   useNavigate: () => vi.fn(),
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  useSearchParams: (...args: any[]) => useSearchParamsMock(...args),
+  useSearchParams: (...args: unknown[]) => useSearchParamsMock(...args),
 }))
 
 useSearchParamsMock = vi.fn()
