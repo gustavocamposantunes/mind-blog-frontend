@@ -398,6 +398,21 @@ describe('ArticlesPage', () => {
       expect(nextPageToggle).toBeFalsy()
     })
 
+    it('should change to NextPage when toogle is clicked', async () => {
+      const { rerender } = makeSut()
+
+      const firstPage = await screen.findByTestId('page-1')
+      expect(firstPage).toHaveAttribute('data-active', 'true')
+
+      const nextPageToogle = await screen.findByTestId('next-page-toogle')
+      fireEvent.click(nextPageToogle)
+
+      rerender()
+
+      const secondPage = await screen.findByTestId('page-2')
+      expect(secondPage).toHaveAttribute('data-active', 'true')
+    })
+
     const setupRenderSixPages = async () => {
       const listArticlesListSpy = new ListArticlesSpy(mockArticlesList(60))
       makeSut(listArticlesListSpy)
