@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import {
@@ -30,10 +31,14 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   unfavouriteArticle,
 }) => {
   const { user, accessToken } = useAuthStore()
+  const [searchParams] = useSearchParams()
+
+  const page = searchParams.get('page')
+  const limit = searchParams.get('limit')
 
   const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 10,
+    page: Number(page),
+    limit: Number(limit),
   })
 
   const { data, isLoading } = useArticlesList(listArticles, pagination)
