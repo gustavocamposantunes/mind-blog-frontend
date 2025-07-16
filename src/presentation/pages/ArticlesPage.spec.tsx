@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
   FavouriteArticleSpy,
@@ -12,10 +12,17 @@ import { formatDateToShortMonth } from '../utils/dateFormatter'
 import { UnexpectedError } from '@/domain/errors'
 import { mockArticlesList, mockAuthenticateUserModel } from '@/domain/test'
 
+// eslint-disable-next-line prefer-const
+let useSearchParamsMock: Mock
+
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
   useNavigate: () => vi.fn(),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  useSearchParams: (...args: any[]) => useSearchParamsMock(...args),
 }))
+
+useSearchParamsMock = vi.fn()
 
 vi.mock('../store/auth-store', async () => ({
   useAuthStore: () => mockAuthenticateUserModel(),
@@ -46,6 +53,10 @@ const makeSut = (
 describe('ArticlesPage', () => {
   beforeEach(() => {
     cleanup()
+    useSearchParamsMock.mockImplementation(() => [
+      new URLSearchParams('page=1&limit=10'),
+      vi.fn(),
+    ])
   })
 
   const setupAssertSkeletons = async () => {
@@ -381,6 +392,20 @@ describe('ArticlesPage', () => {
 
       expect(numberedPages.length).toBeLessThanOrEqual(5)
       expect(ellipses.length).toBeLessThanOrEqual(2)
+    })
+
+    it('should define the page and limit based in search params', async () => {
+      useSearchParamsMock.mockImplementation(() => [
+        new URLSearchParams('page=2&limit=5'),
+        vi.fn(),
+      ])
+
+      const { listArticlesListSpy } = makeSut()
+
+      const secondPage = await screen.findByTestId('page-2')
+      expect(secondPage).toHaveAttribute('data-active', 'true')
+      expect(listArticlesListSpy.page).toBe(2)
+      expect(listArticlesListSpy.limit).toBe(5)
     })
   })
 })
