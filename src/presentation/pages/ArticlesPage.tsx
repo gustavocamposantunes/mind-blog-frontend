@@ -35,7 +35,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   const [searchParams, setSearchParams] = useSearchParams()
   const responsiveLimit = useResponsiveLimit()
 
-  const currentPage = Number(searchParams.get('page') ?? 1)
+  const currentPage = Number(searchParams.get('page'))
   const currentLimit = responsiveLimit
 
   useEffect(() => {
