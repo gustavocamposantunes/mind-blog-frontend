@@ -272,11 +272,10 @@ describe('ArticlesPage', () => {
   })
 
   describe('Pagination', () => {
-    it('should render the pagination correctly after data is Loaded', async () => {
+    it('should render the pagination correctly after data is loaded', async () => {
       makeSut()
 
       const pagination = await screen.findByTestId('pagination')
-
       expect(pagination).toBeTruthy()
     })
 
@@ -286,7 +285,7 @@ describe('ArticlesPage', () => {
       await screen.findByTestId('pagination')
 
       listArticlesListSpy.articlesList.articles.forEach((props) => {
-        expect(`card-article-${props.id}`).toBeTruthy()
+        expect(screen.getByTestId(`card-article-${props.id}`)).toBeTruthy()
       })
     })
 
@@ -310,14 +309,12 @@ describe('ArticlesPage', () => {
 
       await screen.findByTestId('pagination')
 
-      const firstPageActive = await screen.findByTestId('active-page')
-
-      expect(firstPageActive.textContent).toBe('1')
+      const firstPage = await screen.findByTestId('page-1')
+      expect(firstPage).toHaveAttribute('data-active', 'true')
     })
 
     const setupChangeToSecondPage = async () => {
       const secondPage = await screen.findByTestId('page-2')
-
       fireEvent.click(secondPage)
     }
 
@@ -326,9 +323,8 @@ describe('ArticlesPage', () => {
 
       await setupChangeToSecondPage()
 
-      const secondPageActive = await screen.findByTestId('active-page')
-
-      expect(secondPageActive.textContent).toBe('2')
+      const secondPage = await screen.findByTestId('page-2')
+      expect(secondPage).toHaveAttribute('data-active', 'true')
     })
 
     it('should reload when current page is changed', async () => {
@@ -339,41 +335,52 @@ describe('ArticlesPage', () => {
       await setupAssertSkeletons()
     })
 
-    it('should not render PreviousPage toogle if first page is the current', async () => {
+    it('should not render PreviousPage toggle if first page is the current', async () => {
       makeSut()
 
-      await screen.findByTestId('page-2')
+      await screen.findByTestId('page-1')
 
-      const previousPageToogle = screen.queryByTestId('previous-page-toogle')
-
-      expect(previousPageToogle).toBeFalsy()
+      const previousPageToggle = screen.queryByTestId('previous-page-toogle')
+      expect(previousPageToggle).toBeFalsy()
     })
 
-    it('should not render the NextPage toogle if the current page is the latest', async () => {
+    it('should not render the NextPage toggle if the current page is the latest', async () => {
       makeSut()
 
       await setupChangeToSecondPage()
 
-      const secondPageActive = await screen.findByTestId('active-page')
+      const secondPage = await screen.findByTestId('page-2')
+      expect(secondPage).toHaveAttribute('data-active', 'true')
 
-      expect(secondPageActive.textContent).toBe('2')
-
-      const nextPageToogle = screen.queryByTestId('next-page-toogle')
-
-      expect(nextPageToogle).toBeFalsy()
+      const nextPageToggle = screen.queryByTestId('next-page-toogle')
+      expect(nextPageToggle).toBeFalsy()
     })
 
-    it('should always show the first and last page', async () => {
+    const setupRenderSixPages = async () => {
       const listArticlesListSpy = new ListArticlesSpy(mockArticlesList(60))
       makeSut(listArticlesListSpy)
 
       await screen.findByTestId('pagination')
+    }
 
-      const firstPage = screen.getByTestId('first-page')
-      const lastPage = screen.getByTestId('last-page-6')
+    it('should always show the first and last page', async () => {
+      await setupRenderSixPages()
 
-      expect(firstPage).toBeTruthy()
-      expect(lastPage).toBeTruthy()
+      const firstPage = screen.getByTestId('page-1')
+      const lastPage = screen.getByTestId('page-6')
+
+      expect(firstPage).toHaveAttribute('data-first')
+      expect(lastPage).toHaveAttribute('data-last')
+    })
+
+    it('should render at most five numbered pages and include ellipsis if needed', async () => {
+      await setupRenderSixPages()
+
+      const numberedPages = screen.getAllByTestId(/^page-/)
+      const ellipses = screen.queryAllByTestId('pagination-ellipsis')
+
+      expect(numberedPages.length).toBeLessThanOrEqual(5)
+      expect(ellipses.length).toBeLessThanOrEqual(2)
     })
   })
 })
