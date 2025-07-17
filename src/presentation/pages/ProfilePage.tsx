@@ -64,7 +64,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         profileParams,
       )
 
-      if (Object.keys(payload).length === 0) return
+      if (Object.keys(payload).length === 0) {
+        toast.info('Nenhuma alteração realizada, atualize o perfil!')
+        return
+      }
 
       mutate(payload, {
         onSuccess: () => {
