@@ -82,6 +82,14 @@ describe('HomePage', () => {
         expect(errorMessage).toBeInTheDocument()
         expect(errorMessage.textContent).toBe(error.message)
       })
+
+      it('should render skeletons while the most favouriteds is loading', async () => {
+        makeSut()
+
+        const skeletons = await screen.findAllByTestId('skeleton-favourits')
+
+        expect(skeletons.length).toBe(3)
+      })
     })
 
     describe('News', () => {
