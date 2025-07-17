@@ -1,4 +1,4 @@
-import { CustomSkeleton } from '../atoms'
+import { CustomSkeleton, ErrorMessage } from '../atoms'
 
 import { PageTemplate } from './PageTemplate'
 
@@ -7,11 +7,13 @@ import type { ReactNode } from 'react'
 interface IArticlesTemplate {
   isLoading: boolean
   children: ReactNode
+  error: Error | null
 }
 
 export const ArticlesTemplate: React.FC<IArticlesTemplate> = ({
   isLoading,
   children,
+  error,
 }) => (
   <PageTemplate>
     <section className="grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -24,8 +26,11 @@ export const ArticlesTemplate: React.FC<IArticlesTemplate> = ({
           <CustomSkeleton />
           <CustomSkeleton />
         </>
-      ) : null}
-      {children}
+      ) : error ? (
+        <ErrorMessage error={error} />
+      ) : (
+        children
+      )}
     </section>
   </PageTemplate>
 )

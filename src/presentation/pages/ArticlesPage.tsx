@@ -54,7 +54,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     }
   }, [currentPage, currentLimit, setSearchParams, searchParams])
 
-  const { data, isLoading } = useArticlesList(listArticles, {
+  const { data, isLoading, error } = useArticlesList(listArticles, {
     page: currentPage,
     limit: currentLimit,
   })
@@ -115,7 +115,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   }
 
   return (
-    <ArticlesTemplate isLoading={isLoading}>
+    <ArticlesTemplate isLoading={isLoading} error={error}>
       {data?.articles.map(({ ...props }) => (
         <ArticleCard
           key={props.id}
