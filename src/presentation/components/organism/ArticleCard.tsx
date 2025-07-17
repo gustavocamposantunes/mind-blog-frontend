@@ -105,7 +105,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
         />
         {favourite ? (
           <div className="flex flex-1 items-center justify-center">
-            <h1 className="irish-grove-font">{favourite}</h1>
+            <h1 className="irish-grove-font text-4xl">{favourite}</h1>
           </div>
         ) : null}
       </div>
