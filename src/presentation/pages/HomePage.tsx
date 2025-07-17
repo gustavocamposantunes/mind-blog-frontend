@@ -1,8 +1,10 @@
 import { Heart } from 'lucide-react'
 
+import { ErrorMessage } from '../components/atoms'
 import { Skeleton } from '../components/ui/skeleton'
-import { useGetNews } from '../hooks'
+import { useArticlesList, useGetNews } from '../hooks'
 
+import type { ListArticlesUseCase } from '@/domain/usecases'
 import type { GetNewsUseCase } from '@/domain/usecases/news/get-news.usecase'
 
 import { ArticleCard } from '@/presentation/components/organism/ArticleCard'
@@ -11,10 +13,19 @@ import { HomeTemplate } from '@/presentation/components/templates'
 
 type HomePageProps = {
   getNews: GetNewsUseCase
+  listArticles: ListArticlesUseCase
 }
 
-export const HomePage: React.FC<HomePageProps> = ({ getNews }) => {
+export const HomePage: React.FC<HomePageProps> = ({
+  getNews,
+  listArticles,
+}) => {
   const { isLoading, data } = useGetNews(getNews)
+  const { error } = useArticlesList(listArticles, {
+    page: 1,
+    limit: 3,
+    filters: ['mostFavouriteds'],
+  })
   return (
     <HomeTemplate>
       <ArticleCard
@@ -33,6 +44,7 @@ export const HomePage: React.FC<HomePageProps> = ({ getNews }) => {
         <Heart />
         <h1 className="text-3xl py-2">Mais curtidos</h1>
       </span>
+      {error ? <ErrorMessage error={error}></ErrorMessage> : null}
       <ArticleCard
         id={1}
         title="Dominando TypeScript: Por que a Tipagem Estática Está Transformando o Desenvolvimento JavaScript"
