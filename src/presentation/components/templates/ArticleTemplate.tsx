@@ -1,4 +1,4 @@
-import { CustomSkeleton } from '../atoms'
+import { CustomSkeleton, ErrorMessage } from '../atoms'
 
 import { PageTemplate } from './PageTemplate'
 
@@ -23,9 +23,7 @@ export const ArticleTemplate: React.FC<IArticleTemplate> = ({
         <CustomSkeleton />
       </span>
     ) : error ? (
-      <p data-testid="error-wrapper" className="text-red-500">
-        {error.message}
-      </p>
+      <ErrorMessage error={error} />
     ) : (
       <>{children}</>
     )}
