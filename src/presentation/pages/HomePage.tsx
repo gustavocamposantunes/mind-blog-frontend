@@ -21,14 +21,15 @@ export const HomePage: React.FC<HomePageProps> = ({
   listArticles,
 }) => {
   const { isLoading, data } = useGetNews(getNews)
-  const { error, isLoading: isLoadingFavourites } = useArticlesList(
-    listArticles,
-    {
-      page: 1,
-      limit: 3,
-      filters: ['mostFavouriteds'],
-    },
-  )
+  const {
+    error,
+    isLoading: isLoadingFavourites,
+    data: dataFavourites,
+  } = useArticlesList(listArticles, {
+    page: 1,
+    limit: 3,
+    filters: ['mostFavouriteds'],
+  })
   return (
     <HomeTemplate>
       <ArticleCard
@@ -55,24 +56,20 @@ export const HomePage: React.FC<HomePageProps> = ({
           <Skeleton data-testid="skeleton-favourits" />
         </>
       ) : null}
-      <ArticleCard
-        id={1}
-        title="Dominando TypeScript: Por que a Tipagem Estática Está Transformando o Desenvolvimento JavaScript"
-        content="TypeScript, uma superconjunto de JavaScript, tem se tornado uma escolha popular entre desenvolvedores para garantir código mais seguro e fácil de manter. Neste artigo, vamos explorar os benefícios da tipagem estática no..."
-        favourite="01"
-      />
-      <ArticleCard
-        id={1}
-        title="Dominando TypeScript: Por que a Tipagem Estática Está Transformando o Desenvolvimento JavaScript"
-        content="TypeScript, uma superconjunto de JavaScript, tem se tornado uma escolha popular entre desenvolvedores para garantir código mais seguro e fácil de manter. Neste artigo, vamos explorar os benefícios da tipagem estática no..."
-        favourite="02"
-      />
-      <ArticleCard
-        id={1}
-        title="Dominando TypeScript: Por que a Tipagem Estática Está Transformando o Desenvolvimento JavaScript"
-        content="TypeScript, uma superconjunto de JavaScript, tem se tornado uma escolha popular entre desenvolvedores para garantir código mais seguro e fácil de manter. Neste artigo, vamos explorar os benefícios da tipagem estática no..."
-        favourite="03"
-      />
+      {dataFavourites
+        ? dataFavourites.articles.map(
+            ({ id, title, content, image }, index) => (
+              <ArticleCard
+                key={id}
+                id={id}
+                title={title}
+                content={content}
+                image={image}
+                favourite={`0${index}`}
+              />
+            ),
+          )
+        : null}
     </HomeTemplate>
   )
 }
