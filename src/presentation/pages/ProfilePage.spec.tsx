@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
   GetProfileSpy,
-  PutProfileSpy,
+  UpdateProfileSpy,
   renderProfilePageWithRouter,
 } from '../test'
 import { cleanup, fireEvent, screen, waitFor } from '../test/test-utils'
@@ -18,18 +18,18 @@ vi.mock('react-router-dom', async () => ({
 
 type SutTypes = {
   getProfileSpy: GetProfileSpy
-  putProfileSpy: PutProfileSpy
+  updateProfileSpy: UpdateProfileSpy
 }
 
 const makeSut = (): SutTypes => {
   const getProfileSpy = new GetProfileSpy()
-  const putProfileSpy = new PutProfileSpy()
+  const updateProfileSpy = new UpdateProfileSpy()
 
-  renderProfilePageWithRouter(getProfileSpy, putProfileSpy)
+  renderProfilePageWithRouter(getProfileSpy, updateProfileSpy)
 
   return {
     getProfileSpy,
-    putProfileSpy,
+    updateProfileSpy,
   }
 }
 
@@ -102,12 +102,12 @@ describe('ProfilePage', () => {
 
   it('should render a toast.error if update fails', async () => {
     const getProfileSpy = new GetProfileSpy()
-    const putProfileSpy = new PutProfileSpy()
+    const updateProfileSpy = new UpdateProfileSpy()
 
     const error = new UnexpectedError()
-    vi.spyOn(putProfileSpy, 'update').mockRejectedValueOnce(error)
+    vi.spyOn(updateProfileSpy, 'update').mockRejectedValueOnce(error)
 
-    renderProfilePageWithRouter(getProfileSpy, putProfileSpy)
+    renderProfilePageWithRouter(getProfileSpy, updateProfileSpy)
 
     submitForm()
 

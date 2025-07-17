@@ -7,7 +7,7 @@ import type {
 
 import { mockUser } from '@/domain/test'
 
-export class PutProfileSpy implements UpdateProfileUseCase {
+export class UpdateProfileSpy implements UpdateProfileUseCase {
   token?: string
   user = mockUser()
   updateProfile?: UpdateProfileParams

@@ -5,14 +5,14 @@ import { ProfilePage } from '../pages'
 import { render } from './test-utils'
 
 import type { GetProfileSpy } from './mock-get-profile'
-import type { PutProfileSpy } from './mock-put-profile'
+import type { UpdateProfileSpy } from './mock-put-profile'
 
 export const renderProfilePageWithRouter = (
   getProfileSpy: GetProfileSpy,
-  putProfileSpy: PutProfileSpy,
+  updateProfileSpy: UpdateProfileSpy,
 ) => {
   const ProfilePageComponent = () => (
-    <ProfilePage getProfile={getProfileSpy} updateProfile={putProfileSpy} />
+    <ProfilePage getProfile={getProfileSpy} updateProfile={updateProfileSpy} />
   )
 
   const Stub = createRoutesStub([
