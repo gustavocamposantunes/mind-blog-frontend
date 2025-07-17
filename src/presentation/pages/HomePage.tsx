@@ -1,3 +1,6 @@
+import { Separator } from '@radix-ui/react-separator'
+import { Heart, Highlighter } from 'lucide-react'
+
 import { Skeleton } from '../components/ui/skeleton'
 import { useGetNews } from '../hooks'
 
@@ -26,8 +29,12 @@ export const HomePage: React.FC<HomePageProps> = ({ getNews }) => {
         {isLoading ? (
           <Skeleton data-testid="skeleton-news" />
         ) : (
-          <News news={data?.data?.articles} className="xl:col-span-1" />
+          <News news={data?.articles} className="xl:col-span-1" />
         )}
+        <span className="lg:col-spa2 xl:col-span-3 flex items-center gap-2">
+          <Heart />
+          <h1 className="text-3xl py-2">Mais curtidos</h1>
+        </span>
         <ArticleCard
           id={1}
           title="Dominando TypeScript: Por que a Tipagem Estática Está Transformando o Desenvolvimento JavaScript"

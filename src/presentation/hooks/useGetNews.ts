@@ -6,7 +6,9 @@ export const useGetNews = (getNews: GetNewsUseCase) => {
   return useQuery({
     queryKey: ['news'],
     queryFn: async () => {
-      return await getNews.getNews()
+      const { data } = await getNews.getNews()
+
+      return data
     },
   })
 }
