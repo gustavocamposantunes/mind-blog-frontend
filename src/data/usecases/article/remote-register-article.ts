@@ -33,7 +33,7 @@ export class RemoteRegisterArticle implements RegisterArticleUseCase {
     })
 
     switch (status) {
-      case HttpStatusCode.ok:
+      case HttpStatusCode.created:
         return {
           statusCode: status,
           data: data as ArticleModel,

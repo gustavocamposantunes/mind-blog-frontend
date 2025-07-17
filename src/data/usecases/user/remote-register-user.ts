@@ -26,7 +26,7 @@ export class RemoteRegisterUser implements RegisterUserUseCase {
     })
 
     switch (status) {
-      case HttpStatusCode.ok:
+      case HttpStatusCode.created:
         return {
           statusCode: status,
           data: data as AuthenticateUserModel,

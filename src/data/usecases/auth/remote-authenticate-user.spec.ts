@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 
 import { RemoteAuthenticateUser } from './remote-authenticate-user'
 
+import { HttpStatusCode } from '@/data/protocols'
 import { HttpPostClientSpy } from '@/data/test/mock-http-client'
 import {
   InternalServerError,
@@ -17,6 +18,9 @@ import {
 
 const makeSut = (url = faker.internet.url()) => {
   const httpPostClientSpy = new HttpPostClientSpy()
+  httpPostClientSpy.response = {
+    status: HttpStatusCode.ok,
+  }
   const sut = new RemoteAuthenticateUser(url, httpPostClientSpy)
 
   return {

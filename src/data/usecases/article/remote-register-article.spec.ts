@@ -66,11 +66,11 @@ describe('RemoteRegisterArticle', () => {
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
-  it('should returns an ArticleModel if HttpPostClient returns 200', async () => {
+  it('should returns an ArticleModel if HttpPostClient returns 201', async () => {
     const { sut, httpPostSpy } = makeSut()
     const article = mockArticle()
     httpPostSpy.response = {
-      status: 200,
+      status: 201,
       data: article,
     }
 
@@ -79,7 +79,7 @@ describe('RemoteRegisterArticle', () => {
       faker.string.uuid(),
     )
 
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(201)
     expect(response.data).toEqual(article)
   })
 })

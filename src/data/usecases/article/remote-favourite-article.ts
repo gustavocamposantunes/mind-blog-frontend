@@ -36,7 +36,7 @@ export class RemoteFavouriteArticle implements FavouriteArticleUseCase {
     })
 
     switch (status) {
-      case HttpStatusCode.ok:
+      case HttpStatusCode.created:
         return {
           statusCode: status,
           data: data as FavouriteModel,

@@ -67,13 +67,13 @@ describe('RemoteRegisterUser', () => {
     const authenticateUserModel = mockAuthenticateUserModel()
 
     httpPostClientSpy.response = {
-      status: 200,
+      status: 201,
       data: authenticateUserModel,
     }
 
     const response = await sut.register(registerUserParams)
 
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(201)
     expect(response.data).toEqual(authenticateUserModel)
   })
 })
