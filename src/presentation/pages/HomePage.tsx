@@ -21,11 +21,14 @@ export const HomePage: React.FC<HomePageProps> = ({
   listArticles,
 }) => {
   const { isLoading, data } = useGetNews(getNews)
-  const { error } = useArticlesList(listArticles, {
-    page: 1,
-    limit: 3,
-    filters: ['mostFavouriteds'],
-  })
+  const { error, isLoading: isLoadingFavourites } = useArticlesList(
+    listArticles,
+    {
+      page: 1,
+      limit: 3,
+      filters: ['mostFavouriteds'],
+    },
+  )
   return (
     <HomeTemplate>
       <ArticleCard
@@ -45,6 +48,13 @@ export const HomePage: React.FC<HomePageProps> = ({
         <h1 className="text-3xl py-2">Mais curtidos</h1>
       </span>
       {error ? <ErrorMessage error={error}></ErrorMessage> : null}
+      {isLoadingFavourites ? (
+        <>
+          <Skeleton data-testid="skeleton-favourits" />
+          <Skeleton data-testid="skeleton-favourits" />
+          <Skeleton data-testid="skeleton-favourits" />
+        </>
+      ) : null}
       <ArticleCard
         id={1}
         title="Dominando TypeScript: Por que a Tipagem Estática Está Transformando o Desenvolvimento JavaScript"
