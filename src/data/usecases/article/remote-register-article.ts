@@ -33,21 +33,13 @@ export class RemoteRegisterArticle implements RegisterArticleUseCase {
     })
 
     switch (status) {
-      case HttpStatusCode.ok:
+      case HttpStatusCode.created:
         return {
           statusCode: status,
           data: data as ArticleModel,
         }
-      case HttpStatusCode.serverError:
-        return {
-          statusCode: status,
-          error: new InternalServerError().message,
-        }
-      default:
-        return {
-          statusCode: status,
-          error: new UnexpectedError().message,
-        }
+      case HttpStatusCode.serverError: throw  new InternalServerError()
+      default: throw new UnexpectedError()
     }
   }
 }

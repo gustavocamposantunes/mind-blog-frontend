@@ -5,6 +5,7 @@ import { RemoteUpdateArticle } from './remote-update-article'
 
 import { HttpPutClientSpy } from '@/data/test/mock-http-client'
 import { mockArticle, mockUpdateArticleParams } from '@/domain/test'
+import { InternalServerError, InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteUpdateArticle
@@ -41,16 +42,14 @@ describe('RemoteUpdateArticle', () => {
     const { sut, httpPutClientSpy } = makeSut()
     httpPutClientSpy.response = {
       status: 500,
-      data: { message: 'Erro interno do servidor' },
     }
 
-    const response = await sut.update(
+    const promise = sut.update(
       faker.string.uuid(),
       mockUpdateArticleParams(),
     )
 
-    expect(response.statusCode).toBe(500)
-    expect(response.error).toBe('Erro interno do servidor')
+    await expect(promise).rejects.toThrow(new InternalServerError())
   })
 
   it('should returns an InvalidCredentialsError if HttpPutClient returns 403', async () => {
@@ -60,13 +59,12 @@ describe('RemoteUpdateArticle', () => {
       data: { message: 'Credenciais inválidas' },
     }
 
-    const response = await sut.update(
+    const promise = sut.update(
       faker.string.uuid(),
       mockUpdateArticleParams(),
     )
 
-    expect(response.statusCode).toBe(403)
-    expect(response.error).toBe('Credenciais inválidas')
+    await expect(promise).rejects.toThrow(new InvalidCredentialsError())
   })
 
   it('should return an UnexpectedError for other status codes', async () => {
@@ -76,13 +74,12 @@ describe('RemoteUpdateArticle', () => {
       data: { message: 'Erro inesperado' },
     }
 
-    const response = await sut.update(
+    const promise = sut.update(
       faker.string.uuid(),
       mockUpdateArticleParams(),
     )
 
-    expect(response.statusCode).toBe(502)
-    expect(response.error).toBe('Erro inesperado')
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
   it('should return an ArticleModel if HttpPutClient returns 200', async () => {

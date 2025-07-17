@@ -6,6 +6,7 @@ import { RemoteFavouriteArticle } from './remote-favourite-article'
 import type { FavouriteModel } from '@/domain/models'
 
 import { HttpPostClientSpy } from '@/data/test/mock-http-client'
+import { InternalServerError, InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteFavouriteArticle
@@ -45,13 +46,11 @@ describe('RemoteFavouriteArticle', () => {
 
     httpPostClientSpy.response = {
       status: 500,
-      data: { message: 'Erro interno do servidor' },
     }
 
-    const response = await sut.favorite(faker.number.int(), faker.string.uuid())
+    const promise = sut.favorite(faker.number.int(), faker.string.uuid())
 
-    expect(response.statusCode).toBe(500)
-    expect(response.error).toBe('Erro interno do servidor')
+    await expect(promise).rejects.toThrow(new InternalServerError())
   })
 
   it('should returns an InvalidCredentialsError if HttpPostClient returns 403', async () => {
@@ -59,13 +58,11 @@ describe('RemoteFavouriteArticle', () => {
 
     httpPostClientSpy.response = {
       status: 403,
-      data: { message: 'Credenciais inválidas' },
     }
 
-    const response = await sut.favorite(faker.number.int(), faker.string.uuid())
+    const promise = sut.favorite(faker.number.int(), faker.string.uuid())
 
-    expect(response.statusCode).toBe(403)
-    expect(response.error).toBe('Credenciais inválidas')
+    await expect(promise).rejects.toThrow(new InvalidCredentialsError())
   })
 
   it('should returns an UnexpectedError when HttpPostClient returns other error status codes', async () => {
@@ -73,13 +70,11 @@ describe('RemoteFavouriteArticle', () => {
 
     httpPostClientSpy.response = {
       status: 502,
-      data: { message: 'Erro inesperado' },
     }
 
-    const response = await sut.favorite(faker.number.int(), faker.string.uuid())
+    const promise = sut.favorite(faker.number.int(), faker.string.uuid())
 
-    expect(response.statusCode).toBe(502)
-    expect(response.error).toBe('Erro inesperado')
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
   it('should returns a FavouriteModel if HttpPostClient returns 201', async () => {

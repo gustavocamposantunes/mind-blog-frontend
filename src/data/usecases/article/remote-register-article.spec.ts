@@ -7,6 +7,7 @@ import type { RegisterArticleParams } from '@/domain/usecases'
 
 import { HttpPostClientSpy } from '@/data/test/mock-http-client'
 import { mockArticle, mockRegisterArticleParams } from '@/domain/test'
+import { InternalServerError, UnexpectedError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteRegisterArticle
@@ -40,16 +41,14 @@ describe('RemoteRegisterArticle', () => {
     const { sut, httpPostSpy } = makeSut()
     httpPostSpy.response = {
       status: 500,
-      data: { message: 'Erro interno do servidor' },
     }
 
-    const response = await sut.register(
+    const promise = sut.register(
       mockRegisterArticleParams(),
       faker.string.uuid(),
     )
 
-    expect(response.statusCode).toBe(500)
-    expect(response.error).toBe('Erro interno do servidor')
+    await expect(promise).rejects.toThrow(new InternalServerError())
   })
 
   it('should returns an UnexpectedError for other status codes', async () => {
@@ -59,20 +58,19 @@ describe('RemoteRegisterArticle', () => {
       data: { message: 'Erro inesperado' },
     }
 
-    const response = await sut.register(
+    const promise = sut.register(
       mockRegisterArticleParams(),
       faker.string.uuid(),
     )
 
-    expect(response.statusCode).toBe(502)
-    expect(response.error).toBe('Erro inesperado')
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
-  it('should returns an ArticleModel if HttpPostClient returns 200', async () => {
+  it('should returns an ArticleModel if HttpPostClient returns 201', async () => {
     const { sut, httpPostSpy } = makeSut()
     const article = mockArticle()
     httpPostSpy.response = {
-      status: 200,
+      status: 201,
       data: article,
     }
 
@@ -81,7 +79,7 @@ describe('RemoteRegisterArticle', () => {
       faker.string.uuid(),
     )
 
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(201)
     expect(response.data).toEqual(article)
   })
 })

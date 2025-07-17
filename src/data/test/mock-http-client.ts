@@ -33,7 +33,7 @@ export class HttpPutClientSpy implements HttpPutClient {
   body?: object
   headers?: Record<string, string>
   response: HttpResponse = {
-    status: HttpStatusCode.created,
+    status: HttpStatusCode.ok,
   }
 
   async put(params: HttpPutParams): Promise<HttpResponse> {
@@ -68,7 +68,7 @@ export class HttpDeleteClientSpy implements HttpDeleteClient {
   body?: object
   headers?: Record<string, string>
   response: HttpResponse = {
-    status: HttpStatusCode.created,
+    status: HttpStatusCode.ok,
   }
 
   async delete(params: HttpDeleteParams): Promise<HttpResponse> {

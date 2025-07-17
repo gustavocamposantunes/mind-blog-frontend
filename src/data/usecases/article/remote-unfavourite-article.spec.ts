@@ -6,6 +6,7 @@ import { RemoteUnfavouriteArticle } from './remote-unfavourite-article'
 import type { FavouriteModel } from '@/domain/models'
 
 import { HttpDeleteClientSpy } from '@/data/test/mock-http-client'
+import { InternalServerError, InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteUnfavouriteArticle
@@ -45,16 +46,14 @@ describe('RemoteUnfavouriteArticle', () => {
 
     httpDeleteClientSpy.response = {
       status: 500,
-      data: { message: 'Erro interno do servidor' },
     }
 
-    const response = await sut.unfavourite(
+    const promise = sut.unfavourite(
       faker.number.int(),
       faker.string.uuid(),
     )
 
-    expect(response.statusCode).toBe(500)
-    expect(response.error).toBe('Erro interno do servidor')
+    await expect(promise).rejects.toThrow(new InternalServerError())
   })
 
   it('should returns an InvalidCredentialsError if HttpDeleteClient returns 403', async () => {
@@ -62,16 +61,14 @@ describe('RemoteUnfavouriteArticle', () => {
 
     httpDeleteClientSpy.response = {
       status: 403,
-      data: { message: 'Credenciais inválidas' },
     }
 
-    const response = await sut.unfavourite(
+    const promise = sut.unfavourite(
       faker.number.int(),
       faker.string.uuid(),
     )
 
-    expect(response.statusCode).toBe(403)
-    expect(response.error).toBe('Credenciais inválidas')
+    await expect(promise).rejects.toThrow(new InvalidCredentialsError())
   })
 
   it('should returns an UnexpectedError when HttpDeleteClient returns other error status codes', async () => {
@@ -82,13 +79,12 @@ describe('RemoteUnfavouriteArticle', () => {
       data: { message: 'Erro inesperado' },
     }
 
-    const response = await sut.unfavourite(
+    const promise = sut.unfavourite(
       faker.number.int(),
       faker.string.uuid(),
     )
 
-    expect(response.statusCode).toBe(502)
-    expect(response.error).toBe('Erro inesperado')
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
   it('should returns a FavouriteModel if HttpDeleteClient returns 200', async () => {

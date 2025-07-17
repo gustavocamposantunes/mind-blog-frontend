@@ -4,6 +4,7 @@ import { describe, it, expect } from 'vitest'
 import { RemoteGetArticleById } from './remote-get-article-by-id'
 
 import { HttpGetClientSpy } from '@/data/test/mock-http-client'
+import { InternalServerError, NotFoundError, UnexpectedError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteGetArticleById
@@ -33,42 +34,36 @@ describe('RemoteGetArticleById', () => {
     const { sut, httpClientSpy } = makeSut()
     httpClientSpy.response = {
       status: 404,
-      data: { message: 'Artigo não encontrado' },
     }
 
     const articleId = faker.string.uuid()
-    const response = await sut.getById(articleId)
+    const promise = sut.getById(articleId)
 
-    expect(response.statusCode).toBe(404)
-    expect(response.error).toBe('Artigo não encontrado')
+    await expect(promise).rejects.toThrow(new NotFoundError())
   })
 
   it('should returns an InternalServerError if HttpGetClient returns 500', async () => {
     const { sut, httpClientSpy } = makeSut()
     httpClientSpy.response = {
       status: 500,
-      data: { message: 'Erro interno do servidor' },
     }
 
     const articleId = faker.string.uuid()
-    const response = await sut.getById(articleId)
+    const promise = sut.getById(articleId)
 
-    expect(response.statusCode).toBe(500)
-    expect(response.error).toBe('Erro interno do servidor')
+    await expect(promise).rejects.toThrow(new InternalServerError())
   })
 
   it('should returns UnexpectedError for other status codes', async () => {
     const { sut, httpClientSpy } = makeSut()
     httpClientSpy.response = {
       status: 502,
-      data: { message: 'Erro inesperado' },
     }
 
     const articleId = faker.string.uuid()
-    const response = await sut.getById(articleId)
+    const promise = sut.getById(articleId)
 
-    expect(response.statusCode).toBe(502)
-    expect(response.error).toBe('Erro inesperado')
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
   it('should returns an ArticleModel if HttpGetClient returns 200', async () => {
