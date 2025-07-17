@@ -93,6 +93,21 @@ describe('ArticlesPage', () => {
       await setupAssertSkeletons()
     })
 
+    it('should render a error message if there is an error', async () => {
+      const listArticlesListSpy = new ListArticlesSpy()
+
+      const error = new UnexpectedError()
+
+      vi.spyOn(listArticlesListSpy, 'listAll').mockRejectedValueOnce(error)
+
+      makeSut(listArticlesListSpy)
+
+      const errorMessage = await screen.findByTestId('error-message')
+
+      expect(errorMessage).toBeInTheDocument()
+      expect(errorMessage.textContent).toBe(error.message)
+    })
+
     it('should render the articles', async () => {
       const { listArticlesListSpy } = makeSut()
 
