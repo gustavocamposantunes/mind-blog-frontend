@@ -136,7 +136,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 type="lastName"
                 id="lastName"
                 placeholder="Digite seu sobrenome"
-                data-testid="input-lastname"
+                data-testid="input-last-name"
                 value={profileParams.lastName}
                 onChange={(e) =>
                   setProfileParams({
