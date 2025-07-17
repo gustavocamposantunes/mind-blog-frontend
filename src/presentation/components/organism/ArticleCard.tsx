@@ -29,8 +29,8 @@ interface IArticleCard {
   favourite?: string
   isLoggedIn?: boolean
   authUserId?: number
-  favouriteArticleById: (id: number, favourite: () => void) => void
-  unfavouriteArticleById: (id: number, unfavourite: () => void) => void
+  favouriteArticleById?: (id: number, favourite: () => void) => void
+  unfavouriteArticleById?: (id: number, unfavourite: () => void) => void
   favourited?: boolean
 }
 
@@ -46,8 +46,8 @@ export const ArticleCard: React.FC<IArticleCard> = ({
   favourite,
   isLoggedIn,
   authUserId,
-  favouriteArticleById,
-  unfavouriteArticleById,
+  favouriteArticleById = () => {},
+  unfavouriteArticleById = () => {},
   favourited,
 }) => {
   const [favorite, setFavorite] = useState(favourited)
