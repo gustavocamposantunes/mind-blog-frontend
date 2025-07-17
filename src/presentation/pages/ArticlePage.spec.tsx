@@ -69,8 +69,8 @@ describe('ArticlePage', () => {
 
       makeSut(getArticleByIdSpy, undefined)
 
-      const errorWrapper = await screen.findByTestId('error-wrapper')
-      expect(errorWrapper.textContent).toBe('Erro inesperado')
+      const errorMessage = await screen.findByTestId('error-message')
+      expect(errorMessage.textContent).toBe('Erro inesperado')
     })
 
     it('should render the article correctly', async () => {
