@@ -64,7 +64,11 @@ describe('buildUpdateArticlePayload', () => {
       image: 'new.png',
     }
 
-    const result = buildUpdateArticlePayload(id, originalWithUndefinedImage, edited)
+    const result = buildUpdateArticlePayload(
+      id,
+      originalWithUndefinedImage,
+      edited,
+    )
 
     expect(result).toEqual({
       id,
