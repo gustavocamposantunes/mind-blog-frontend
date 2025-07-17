@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { RemoteGetNews } from './remote-get-news'
 
 import { HttpGetClientSpy } from '@/data/test/mock-http-client'
+import { InternalServerError, UnexpectedError } from '@/domain/errors'
 import { mockNews } from '@/domain/test'
 
 type SutTypes = {
@@ -35,26 +36,22 @@ describe('RemoteGetNews', () => {
 
     httpGetClientSpy.response = {
       status: 500,
-      data: { message: 'Erro interno do servidor' },
     }
 
-    const response = await sut.getNews()
+    const promise = sut.getNews()
 
-    expect(response.statusCode).toBe(500)
-    expect(response.error).toBe('Erro interno do servidor')
+    await expect(promise).rejects.toThrow(new InternalServerError())
   })
 
   it('should return an UnexpectedError for other status codes', async () => {
     const { sut, httpGetClientSpy } = makeSut()
     httpGetClientSpy.response = {
       status: 502,
-      data: { message: 'Erro inesperado' },
     }
 
-    const response = await sut.getNews()
+    const promise = sut.getNews()
 
-    expect(response.statusCode).toBe(502)
-    expect(response.error).toBe('Erro inesperado')
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
   it('should return an NewsModel if HttpGetClient returns 200', async () => {

@@ -40,25 +40,13 @@ export class RemoteAuthenticateUser implements AuthenticateUserUseCase {
           data: data as AuthenticateUserModel,
         }
       case HttpStatusCode.unauthorized:
-        return {
-          statusCode: status,
-          error: new InvalidCredentialsError().message,
-        }
+        throw new InvalidCredentialsError()
       case HttpStatusCode.notFound:
-        return {
-          statusCode: status,
-          error: new NotFoundError('Usuário não encontrado').message,
-        }
+        throw new NotFoundError('Usuário não encontrado')
       case HttpStatusCode.serverError:
-        return {
-          statusCode: status,
-          error: new InternalServerError().message,
-        }
+        throw new InternalServerError()
       default:
-        return {
-          statusCode: status,
-          error: new UnexpectedError().message,
-        }
+        throw new UnexpectedError()
     }
   }
 }

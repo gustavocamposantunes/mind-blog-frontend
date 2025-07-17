@@ -81,7 +81,7 @@ describe('RemoteFavouriteArticle', () => {
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
-  it('should returns a FavouriteModel if HttpPostClient returns 201', async () => {
+  it('should returns a FavouriteModel if HttpPostClient returns 200', async () => {
     const { sut, httpPostClientSpy } = makeSut()
 
     const favouriteModel: FavouriteModel = {
@@ -90,13 +90,13 @@ describe('RemoteFavouriteArticle', () => {
     }
 
     httpPostClientSpy.response = {
-      status: 201,
+      status: 200,
       data: favouriteModel,
     }
 
     const response = await sut.favorite(faker.number.int(), faker.string.uuid())
 
-    expect(response.statusCode).toBe(201)
+    expect(response.statusCode).toBe(200)
     expect(response.data).toBe(favouriteModel)
   })
 })

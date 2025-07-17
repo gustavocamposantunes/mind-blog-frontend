@@ -5,6 +5,12 @@ import { RemoteAuthenticateUser } from './remote-authenticate-user'
 
 import { HttpPostClientSpy } from '@/data/test/mock-http-client'
 import {
+  InternalServerError,
+  InvalidCredentialsError,
+  NotFoundError,
+  UnexpectedError,
+} from '@/domain/errors'
+import {
   mockAuthenticateUserModel,
   mockAuthenticationParams,
 } from '@/domain/test/mock-authentication'
@@ -38,24 +44,23 @@ describe('RemoteAuthenticateUser', () => {
     }
 
     const authenticationParams = mockAuthenticationParams()
-    const response = await sut.auth(authenticationParams)
+    const promise = sut.auth(authenticationParams)
 
-    expect(response.statusCode).toBe(401)
-    expect(response.error).toBe('Credenciais inválidas')
+    await expect(promise).rejects.toThrow(new InvalidCredentialsError())
   })
 
   it('should returns a NotFoundError if HttpPostClient returns 404', async () => {
     const { sut, httpPostClientSpy } = makeSut()
     httpPostClientSpy.response = {
       status: 404,
-      data: { message: 'Usuário não encontrado' },
     }
 
     const authenticationParams = mockAuthenticationParams()
-    const response = await sut.auth(authenticationParams)
+    const promise = sut.auth(authenticationParams)
 
-    expect(response.statusCode).toBe(404)
-    expect(response.error).toBe('Usuário não encontrado')
+    await expect(promise).rejects.toThrow(
+      new NotFoundError('Usuário não encontrado'),
+    )
   })
 
   it('should returns an InternalServerError if HttpPostClient returns 500', async () => {
@@ -65,10 +70,9 @@ describe('RemoteAuthenticateUser', () => {
       data: { message: 'Erro interno do servidor' },
     }
     const authenticationParams = mockAuthenticationParams()
-    const response = await sut.auth(authenticationParams)
+    const promise = sut.auth(authenticationParams)
 
-    expect(response.statusCode).toBe(500)
-    expect(response.error).toBe('Erro interno do servidor')
+    await expect(promise).rejects.toThrow(new InternalServerError())
   })
 
   it('should returns an UnexpectedError for other status codes', async () => {
@@ -79,10 +83,9 @@ describe('RemoteAuthenticateUser', () => {
     }
 
     const authenticationParams = mockAuthenticationParams()
-    const response = await sut.auth(authenticationParams)
+    const promise = sut.auth(authenticationParams)
 
-    expect(response.statusCode).toBe(502)
-    expect(response.error).toBe('Erro inesperado')
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
   it('should returns a valid AuthenticateUserModel on success', async () => {

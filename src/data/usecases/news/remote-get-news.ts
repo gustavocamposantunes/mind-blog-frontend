@@ -29,15 +29,9 @@ export class RemoteGetNews implements GetNewsUseCase {
           data: data as NewsModel,
         }
       case HttpStatusCode.serverError:
-        return {
-          statusCode: status,
-          error: new InternalServerError().message,
-        }
+        throw new InternalServerError()
       default:
-        return {
-          statusCode: status,
-          error: new UnexpectedError().message,
-        }
+        throw new UnexpectedError()
     }
   }
 }

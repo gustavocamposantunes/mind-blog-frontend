@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { RemoteUpdateProfile } from './remote-update-profile'
 
 import { HttpPutClientSpy } from '@/data/test/mock-http-client'
+import { InternalServerError, UnexpectedError } from '@/domain/errors'
 import { mockUser } from '@/domain/test'
 
 type SutTypes = {
@@ -43,30 +44,26 @@ describe('RemoteUpdateProfile', () => {
     const { sut, httpPutClientSpy } = makeSut()
     httpPutClientSpy.response = {
       status: 500,
-      data: { message: 'Erro interno do servidor' },
     }
 
-    const response = await sut.update(faker.string.uuid(), {
+    const promise = sut.update(faker.string.uuid(), {
       image: faker.image.urlLoremFlickr(),
     })
 
-    expect(response.statusCode).toBe(500)
-    expect(response.error).toBe('Erro interno do servidor')
+    await expect(promise).rejects.toThrow(new InternalServerError())
   })
 
   it('should return an UnexpectedError for other status codes', async () => {
     const { sut, httpPutClientSpy } = makeSut()
     httpPutClientSpy.response = {
       status: 502,
-      data: { message: 'Erro inesperado' },
     }
 
-    const response = await sut.update(faker.string.uuid(), {
+    const promise = sut.update(faker.string.uuid(), {
       image: faker.image.urlLoremFlickr(),
     })
 
-    expect(response.statusCode).toBe(502)
-    expect(response.error).toBe('Erro inesperado')
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
   it('should return an UserModel if HttpPutClient returns 200', async () => {

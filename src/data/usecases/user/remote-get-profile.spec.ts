@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { RemoteGetProfile } from './remote-get-profile'
 
 import { HttpGetClientSpy } from '@/data/test/mock-http-client'
+import { InternalServerError, UnexpectedError } from '@/domain/errors'
 import { mockUser } from '@/domain/test'
 
 type SutTypes = {
@@ -38,13 +39,11 @@ describe('RemoteGetProfile', () => {
     const { sut, httpGetClientSpy } = makeSut()
     httpGetClientSpy.response = {
       status: 500,
-      data: { message: 'Erro interno do servidor' },
     }
 
-    const response = await sut.getProfile(faker.string.uuid())
+    const promise = sut.getProfile(faker.string.uuid())
 
-    expect(response.statusCode).toBe(500)
-    expect(response.error).toBe('Erro interno do servidor')
+    await expect(promise).rejects.toThrow(new InternalServerError())
   })
 
   it('should return an UnexpectedError for other status codes', async () => {
@@ -54,10 +53,9 @@ describe('RemoteGetProfile', () => {
       data: { message: 'Erro inesperado' },
     }
 
-    const response = await sut.getProfile(faker.string.uuid())
+    const promise = sut.getProfile(faker.string.uuid())
 
-    expect(response.statusCode).toBe(502)
-    expect(response.error).toBe('Erro inesperado')
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 
   it('should return an UserModel if HttpGetClient returns 200', async () => {

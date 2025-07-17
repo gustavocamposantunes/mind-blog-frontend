@@ -36,15 +36,9 @@ export class RemoteUpdateProfile implements UpdateProfileUseCase {
           data: data as UserModel,
         })
       case HttpStatusCode.serverError:
-        return {
-          statusCode: status,
-          error: new InternalServerError().message,
-        }
+        throw new InternalServerError()
       default:
-        return {
-          statusCode: status,
-          error: new UnexpectedError().message,
-        }
+        throw new UnexpectedError()
     }
   }
 }
