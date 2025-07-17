@@ -1,5 +1,6 @@
 export * from './Article'
 export * from './ArticleCard'
 export * from './CustomPagination'
+export * from './FavouritesList'
 export * from './News'
 export * from './UserDropDownMenu'
