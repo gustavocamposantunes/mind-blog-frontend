@@ -1,7 +1,9 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 
-import { GetNewsSpy, renderHomePageWithRouter } from '../test'
+import { GetNewsSpy, ListArticlesSpy, renderHomePageWithRouter } from '../test'
 
+import { UnexpectedError } from '@/domain/errors'
+import { mockMostFavouritedsArticlesList } from '@/domain/test'
 import { cleanup, screen } from '@/presentation/test/test-utils'
 
 vi.mock('react-router-dom', async () => ({
@@ -23,9 +25,11 @@ type SutTypes = {
   getNewsSpy: GetNewsSpy
 }
 
-const makeSut = (): SutTypes => {
-  const getNewsSpy = new GetNewsSpy()
-  renderHomePageWithRouter(getNewsSpy)
+const makeSut = (
+  getNewsSpy = new GetNewsSpy(),
+  listArticlesSpy = new ListArticlesSpy(mockMostFavouritedsArticlesList()),
+): SutTypes => {
+  renderHomePageWithRouter(getNewsSpy, listArticlesSpy)
 
   return {
     getNewsSpy,
@@ -64,21 +68,39 @@ describe('HomePage', () => {
   })
 
   describe('Featured Articles', () => {
-    it('should render a skeleton while promise is pending', () => {
-      makeSut()
+    describe('Most Favourited Articles', () => {
+      it('should render a error message if most favouriteds articles fails', async () => {
+        const listArticlesSpy = new ListArticlesSpy()
 
-      const skeletonNews = screen.getByTestId('skeleton-news')
+        const error = new UnexpectedError()
+        vi.spyOn(listArticlesSpy, 'listAll').mockRejectedValueOnce(error)
 
-      expect(skeletonNews).toBeTruthy()
+        makeSut(undefined, listArticlesSpy)
+
+        const errorMessage = await screen.findByTestId('error-message')
+
+        expect(errorMessage).toBeInTheDocument()
+        expect(errorMessage.textContent).toBe(error.message)
+      })
     })
 
-    it('should render a list of articles after load', async () => {
-      makeSut()
+    describe('News', () => {
+      it('should render a skeleton while promise is pending', () => {
+        makeSut()
 
-      const listArticles = await screen.findByTestId('list-news')
+        const skeletonNews = screen.getByTestId('skeleton-news')
 
-      expect(listArticles).toBeTruthy()
-      expect(listArticles.querySelectorAll('article').length).toBe(7)
+        expect(skeletonNews).toBeTruthy()
+      })
+
+      it('should render a list of articles after load', async () => {
+        makeSut()
+
+        const listArticles = await screen.findByTestId('list-news')
+
+        expect(listArticles).toBeTruthy()
+        expect(listArticles.querySelectorAll('article').length).toBe(7)
+      })
     })
   })
 })

@@ -32,6 +32,7 @@ export const mockArticle = (
   withContent = false,
   favourited = false,
   author_id = faker.number.int(),
+  favouriteCount = faker.number.int(),
 ): ArticleModel => ({
   id: faker.number.int(),
   title: faker.lorem.sentence(),
@@ -46,7 +47,7 @@ export const mockArticle = (
     name: faker.person.fullName(),
     avatar: faker.image.avatar(),
   },
-  favouriteCount: faker.number.int(),
+  favouriteCount,
   favourited,
   publishedAt: faker.date.past().toISOString(),
   updatedAt: faker.date.recent().toISOString(),
@@ -81,6 +82,18 @@ export const mockArticlesList = (total = 20): ArticleListModel => ({
   limit: 10,
   page: 1,
   total,
+})
+
+export const mockMostFavouritedsArticlesList = (): ArticleListModel => ({
+  articles: [
+    mockArticle(undefined, undefined, undefined, 100),
+    mockArticle(undefined, undefined, undefined, 80),
+    mockArticle(undefined, undefined, undefined, 70),
+  ],
+  filters: ['mostFavouriteds'],
+  limit: 3,
+  page: 1,
+  total: 20,
 })
 
 export const mockFavouriteArticle = (): FavouriteModel => ({
