@@ -65,7 +65,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 title={title}
                 content={content}
                 image={image}
-                favourite={`0${index}`}
+                favourite={`0${index + 1}`}
               />
             ),
           )
