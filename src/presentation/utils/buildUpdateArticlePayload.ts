@@ -2,7 +2,7 @@ import type { ArticleModel } from '@/domain/models'
 
 type EditableFields = Pick<ArticleModel, 'title' | 'content' | 'image'>
 
-export function buildUpdatePayload(
+export function buildUpdateArticlePayload(
   id: number,
   original: EditableFields,
   edited: EditableFields,

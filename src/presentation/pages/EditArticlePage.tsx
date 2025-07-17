@@ -10,7 +10,7 @@ import { Skeleton } from '../components/ui/skeleton'
 import { Textarea } from '../components/ui/textarea'
 import { useGetArticleById, useUpdateArticle } from '../hooks'
 import { useAuthStore } from '../store'
-import { buildUpdatePayload } from '../utils/buildUpdatePayload'
+import { buildUpdateArticlePayload } from '../utils/buildUpdateArticlePayload'
 import { toBase64 } from '../utils/toBase64'
 
 import type {
@@ -72,7 +72,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
     event.preventDefault()
 
     if (data) {
-      const payload = buildUpdatePayload(
+      const payload = buildUpdateArticlePayload(
         Number(id),
         {
           title: data.title,

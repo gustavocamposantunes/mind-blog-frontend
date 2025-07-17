@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 
-import { buildUpdatePayload } from './buildUpdatePayload'
+import { buildUpdateArticlePayload } from './buildUpdateArticlePayload'
 
-describe('buildUpdatePayload', () => {
+describe('buildUpdateArticlePayload', () => {
   const id = 123
   const original = {
     title: 'Original Title',
@@ -17,7 +17,7 @@ describe('buildUpdatePayload', () => {
       image: 'original.png',
     }
 
-    const result = buildUpdatePayload(id, original, edited)
+    const result = buildUpdateArticlePayload(id, original, edited)
 
     expect(result).toEqual({
       id,
@@ -32,7 +32,7 @@ describe('buildUpdatePayload', () => {
       image: 'new-image.jpg',
     }
 
-    const result = buildUpdatePayload(id, original, edited)
+    const result = buildUpdateArticlePayload(id, original, edited)
 
     expect(result).toEqual({
       id,
@@ -45,7 +45,7 @@ describe('buildUpdatePayload', () => {
   it('should return only the id if nothing changed', () => {
     const edited = { ...original }
 
-    const result = buildUpdatePayload(id, original, edited)
+    const result = buildUpdateArticlePayload(id, original, edited)
 
     expect(result).toEqual({
       id,
@@ -64,7 +64,7 @@ describe('buildUpdatePayload', () => {
       image: 'new.png',
     }
 
-    const result = buildUpdatePayload(id, originalWithUndefinedImage, edited)
+    const result = buildUpdateArticlePayload(id, originalWithUndefinedImage, edited)
 
     expect(result).toEqual({
       id,
