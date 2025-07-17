@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { FormHeader } from '../components/molecules'
@@ -7,6 +7,7 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { useGetProfile, useUpdateProfile } from '../hooks'
 import { useAuthStore } from '../store/auth-store'
+import { buildUpdateProfilePayload } from '../utils/buildUpdateProfilePayload'
 import { toBase64 } from '../utils/toBase64'
 
 import type { GetProfileUseCase } from '@/domain/usecases'
@@ -21,52 +22,64 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   getProfile,
   updateProfile,
 }) => {
-  const [profileParams, setProfileParams] = useState({
-    name: '',
-    surrname: '',
+  const [profileParams, setProfileParams] = useState<{
+    firstName: string
+    lastName: string
+    image?: string
+  }>({
+    firstName: '',
+    lastName: '',
     image: '',
   })
 
   const { accessToken } = useAuthStore()
 
-  const { data, status } = useGetProfile(getProfile, accessToken)
+  const { data } = useGetProfile(getProfile, accessToken)
   const { mutate } = useUpdateProfile(accessToken, updateProfile)
 
-  const nameParts = data?.data?.name.split(' ')
-
-  const name = nameParts?.[0] ?? ''
-  const surrname = nameParts?.slice(1).join(' ') ?? ''
+  const hasShownSuccessToast = useRef(false)
 
   useEffect(() => {
-    setProfileParams({
-      image: data?.data?.image ?? '',
-      name,
-      surrname,
-    })
-  }, [status === 'success'])
+    if (data) {
+      setProfileParams({
+        image: data?.image,
+        firstName: data?.firstName,
+        lastName: data?.lastName,
+      })
+      toast.success('Perfil carregado com sucesso')
+      hasShownSuccessToast.current = true
+    }
+  }, [data])
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const onSubmit = (event: React.FormEvent) => {
     event.preventDefault()
 
-    mutate(
-      {
-        image: profileParams.image,
-        name: `${profileParams.name} ${profileParams.surrname}`,
-      },
-      {
+    if (data) {
+      const payload = buildUpdateProfilePayload(
+        {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          image: data.image,
+        },
+        profileParams,
+      )
+
+      if (Object.keys(payload).length === 0) return
+
+      mutate(payload, {
         onSuccess: () => {
           toast.success('Perfil alterado com sucesso')
         },
         onError: (error) => {
           toast.error(error.message)
         },
-      },
-    )
+      })
+    }
   }
 
   return (
     <PageTemplate>
-      <form className="w-full flex flex-col gap-6" onSubmit={handleSubmit}>
+      <form className="w-full flex flex-col gap-6" onSubmit={onSubmit}>
         <FormHeader title="Editar Perfil" />
         <section className="mt-4 flex flex-col gap-4">
           <div className="flex flex-col gap-4">
@@ -102,23 +115,35 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 Nome
               </Label>
               <Input
-                type="name"
-                id="name"
+                type="first-name"
+                id="first-name"
                 placeholder="Digite seu nome"
-                defaultValue={name}
-                data-testid="input-name"
+                data-testid="input-first-name"
+                value={profileParams.firstName}
+                onChange={(e) =>
+                  setProfileParams({
+                    ...profileParams,
+                    firstName: e.target.value,
+                  })
+                }
               />
             </div>
             <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="surrname" className="text-stone-950">
+              <Label htmlFor="lastName" className="text-stone-950">
                 Sobrenome
               </Label>
               <Input
-                type="surrname"
-                id="surrname"
+                type="lastName"
+                id="lastName"
                 placeholder="Digite seu sobrenome"
-                data-testid="input-surrname"
-                defaultValue={surrname}
+                data-testid="input-lastname"
+                value={profileParams.lastName}
+                onChange={(e) =>
+                  setProfileParams({
+                    ...profileParams,
+                    lastName: e.target.value,
+                  })
+                }
               />
             </div>
           </div>
