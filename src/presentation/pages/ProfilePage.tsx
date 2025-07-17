@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { FormHeader } from '../components/molecules'
-import { PageTemplate } from '../components/templates'
+import { ProfileTemplate } from '../components/templates'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { useGetProfile, useUpdateProfile } from '../hooks'
@@ -34,7 +34,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
   const { accessToken } = useAuthStore()
 
-  const { data } = useGetProfile(getProfile, accessToken)
+  const { data, error } = useGetProfile(getProfile, accessToken)
   const { mutate } = useUpdateProfile(accessToken, updateProfile)
 
   const hasShownSuccessToast = useRef(false)
@@ -78,7 +78,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   }
 
   return (
-    <PageTemplate>
+    <ProfileTemplate error={error}>
       <form className="w-full flex flex-col gap-6" onSubmit={onSubmit}>
         <FormHeader title="Editar Perfil" />
         <section className="mt-4 flex flex-col gap-4">
@@ -149,6 +149,6 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </div>
         </section>
       </form>
-    </PageTemplate>
+    </ProfileTemplate>
   )
 }
