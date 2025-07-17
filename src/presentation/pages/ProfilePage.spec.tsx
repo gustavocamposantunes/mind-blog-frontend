@@ -44,6 +44,21 @@ const makeSut = (
 describe('ProfilePage', () => {
   beforeEach(cleanup)
   describe('GetProfile', () => {
+    it('should render an error if profile is not found', async () => {
+      const getProfileSpy = new GetProfileSpy()
+
+      const error = new UnexpectedError()
+
+      vi.spyOn(getProfileSpy, 'getProfile').mockRejectedValueOnce(error)
+
+      makeSut(getProfileSpy)
+
+      const errorMessage = await screen.findByTestId('error-message')
+
+      expect(errorMessage).toBeInTheDocument()
+      expect(errorMessage.textContent).toBe(error.message)
+    })
+
     it('should render the fields with returned data from get profile api', async () => {
       const { getProfileSpy } = makeSut()
 
