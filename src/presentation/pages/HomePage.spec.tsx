@@ -23,6 +23,7 @@ const useMediaQueryMock = vi.mocked(
 
 type SutTypes = {
   getNewsSpy: GetNewsSpy
+  listArticlesSpy: ListArticlesSpy
 }
 
 const makeSut = (
@@ -33,6 +34,7 @@ const makeSut = (
 
   return {
     getNewsSpy,
+    listArticlesSpy,
   }
 }
 
@@ -89,6 +91,18 @@ describe('HomePage', () => {
         const skeletons = await screen.findAllByTestId('skeleton-favourits')
 
         expect(skeletons.length).toBe(3)
+      })
+
+      it('should render the most favouriteds after load', async () => {
+        const { listArticlesSpy } = makeSut()
+
+        await screen.findByTestId(
+          `card-article-${listArticlesSpy.articlesList.articles[0].id}`,
+        )
+
+        listArticlesSpy.articlesList.articles.map(({ id }) => {
+          expect(screen.getByTestId(`card-article-${id}`)).toBeInTheDocument()
+        })
       })
     })
 
