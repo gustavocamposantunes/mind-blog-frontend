@@ -31,9 +31,12 @@ export class RemoteGetArticleById implements GetArticleByIdUseCase {
           statusCode: status,
           data: data as ArticleModel,
         }
-      case HttpStatusCode.notFound: throw new NotFoundError()
-      case HttpStatusCode.serverError: throw new InternalServerError()
-      default: throw new UnexpectedError()
+      case HttpStatusCode.notFound:
+        throw new NotFoundError()
+      case HttpStatusCode.serverError:
+        throw new InternalServerError()
+      default:
+        throw new UnexpectedError()
     }
   }
 }

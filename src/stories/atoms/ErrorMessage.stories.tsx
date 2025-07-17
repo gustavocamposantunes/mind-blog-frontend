@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { ErrorMessage } from '@/presentation/components/atoms'
 import { UnexpectedError } from '@/domain/errors'
+import { ErrorMessage } from '@/presentation/components/atoms'
 
 const meta = {
   title: 'Atoms/ErrorMessage',
@@ -11,7 +11,7 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
-    error: new UnexpectedError()
+    error: new UnexpectedError(),
   },
 } satisfies Meta<typeof ErrorMessage>
 export default meta

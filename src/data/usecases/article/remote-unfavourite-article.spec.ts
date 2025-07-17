@@ -6,7 +6,11 @@ import { RemoteUnfavouriteArticle } from './remote-unfavourite-article'
 import type { FavouriteModel } from '@/domain/models'
 
 import { HttpDeleteClientSpy } from '@/data/test/mock-http-client'
-import { InternalServerError, InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
+import {
+  InternalServerError,
+  InvalidCredentialsError,
+  UnexpectedError,
+} from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteUnfavouriteArticle
@@ -48,10 +52,7 @@ describe('RemoteUnfavouriteArticle', () => {
       status: 500,
     }
 
-    const promise = sut.unfavourite(
-      faker.number.int(),
-      faker.string.uuid(),
-    )
+    const promise = sut.unfavourite(faker.number.int(), faker.string.uuid())
 
     await expect(promise).rejects.toThrow(new InternalServerError())
   })
@@ -63,10 +64,7 @@ describe('RemoteUnfavouriteArticle', () => {
       status: 403,
     }
 
-    const promise = sut.unfavourite(
-      faker.number.int(),
-      faker.string.uuid(),
-    )
+    const promise = sut.unfavourite(faker.number.int(), faker.string.uuid())
 
     await expect(promise).rejects.toThrow(new InvalidCredentialsError())
   })
@@ -79,10 +77,7 @@ describe('RemoteUnfavouriteArticle', () => {
       data: { message: 'Erro inesperado' },
     }
 
-    const promise = sut.unfavourite(
-      faker.number.int(),
-      faker.string.uuid(),
-    )
+    const promise = sut.unfavourite(faker.number.int(), faker.string.uuid())
 
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })

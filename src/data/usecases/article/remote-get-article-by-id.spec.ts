@@ -4,7 +4,11 @@ import { describe, it, expect } from 'vitest'
 import { RemoteGetArticleById } from './remote-get-article-by-id'
 
 import { HttpGetClientSpy } from '@/data/test/mock-http-client'
-import { InternalServerError, NotFoundError, UnexpectedError } from '@/domain/errors'
+import {
+  InternalServerError,
+  NotFoundError,
+  UnexpectedError,
+} from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteGetArticleById

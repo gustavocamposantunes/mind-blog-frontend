@@ -6,8 +6,8 @@ import { RemoteRegisterArticle } from './remote-register-article'
 import type { RegisterArticleParams } from '@/domain/usecases'
 
 import { HttpPostClientSpy } from '@/data/test/mock-http-client'
-import { mockArticle, mockRegisterArticleParams } from '@/domain/test'
 import { InternalServerError, UnexpectedError } from '@/domain/errors'
+import { mockArticle, mockRegisterArticleParams } from '@/domain/test'
 
 type SutTypes = {
   sut: RemoteRegisterArticle

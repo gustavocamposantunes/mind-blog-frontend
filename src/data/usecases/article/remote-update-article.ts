@@ -42,9 +42,12 @@ export class RemoteUpdateArticle implements UpdateArticleUseCase {
           statusCode: status,
           data: data as ArticleModel,
         }
-      case HttpStatusCode.serverError: throw new InternalServerError()
-      case HttpStatusCode.forbidden: throw new InvalidCredentialsError()
-      default: throw new UnexpectedError()
+      case HttpStatusCode.serverError:
+        throw new InternalServerError()
+      case HttpStatusCode.forbidden:
+        throw new InvalidCredentialsError()
+      default:
+        throw new UnexpectedError()
     }
   }
 }

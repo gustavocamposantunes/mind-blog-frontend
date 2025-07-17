@@ -6,7 +6,11 @@ import { RemoteFavouriteArticle } from './remote-favourite-article'
 import type { FavouriteModel } from '@/domain/models'
 
 import { HttpPostClientSpy } from '@/data/test/mock-http-client'
-import { InternalServerError, InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
+import {
+  InternalServerError,
+  InvalidCredentialsError,
+  UnexpectedError,
+} from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteFavouriteArticle

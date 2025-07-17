@@ -38,8 +38,10 @@ export class RemoteRegisterArticle implements RegisterArticleUseCase {
           statusCode: status,
           data: data as ArticleModel,
         }
-      case HttpStatusCode.serverError: throw  new InternalServerError()
-      default: throw new UnexpectedError()
+      case HttpStatusCode.serverError:
+        throw new InternalServerError()
+      default:
+        throw new UnexpectedError()
     }
   }
 }

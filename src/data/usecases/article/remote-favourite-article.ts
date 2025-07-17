@@ -41,9 +41,12 @@ export class RemoteFavouriteArticle implements FavouriteArticleUseCase {
           statusCode: status,
           data: data as FavouriteModel,
         }
-      case HttpStatusCode.serverError: throw new InternalServerError()
-      case HttpStatusCode.forbidden: throw new InvalidCredentialsError()
-      default: throw new UnexpectedError()
+      case HttpStatusCode.serverError:
+        throw new InternalServerError()
+      case HttpStatusCode.forbidden:
+        throw new InvalidCredentialsError()
+      default:
+        throw new UnexpectedError()
     }
   }
 }

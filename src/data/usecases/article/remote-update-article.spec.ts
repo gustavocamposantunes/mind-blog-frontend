@@ -4,8 +4,12 @@ import { describe, expect, it } from 'vitest'
 import { RemoteUpdateArticle } from './remote-update-article'
 
 import { HttpPutClientSpy } from '@/data/test/mock-http-client'
+import {
+  InternalServerError,
+  InvalidCredentialsError,
+  UnexpectedError,
+} from '@/domain/errors'
 import { mockArticle, mockUpdateArticleParams } from '@/domain/test'
-import { InternalServerError, InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteUpdateArticle
@@ -44,10 +48,7 @@ describe('RemoteUpdateArticle', () => {
       status: 500,
     }
 
-    const promise = sut.update(
-      faker.string.uuid(),
-      mockUpdateArticleParams(),
-    )
+    const promise = sut.update(faker.string.uuid(), mockUpdateArticleParams())
 
     await expect(promise).rejects.toThrow(new InternalServerError())
   })
@@ -59,10 +60,7 @@ describe('RemoteUpdateArticle', () => {
       data: { message: 'Credenciais inválidas' },
     }
 
-    const promise = sut.update(
-      faker.string.uuid(),
-      mockUpdateArticleParams(),
-    )
+    const promise = sut.update(faker.string.uuid(), mockUpdateArticleParams())
 
     await expect(promise).rejects.toThrow(new InvalidCredentialsError())
   })
@@ -74,10 +72,7 @@ describe('RemoteUpdateArticle', () => {
       data: { message: 'Erro inesperado' },
     }
 
-    const promise = sut.update(
-      faker.string.uuid(),
-      mockUpdateArticleParams(),
-    )
+    const promise = sut.update(faker.string.uuid(), mockUpdateArticleParams())
 
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
