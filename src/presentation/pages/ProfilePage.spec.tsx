@@ -65,7 +65,7 @@ describe('ProfilePage', () => {
       await screen.findByText('Perfil carregado com sucesso')
 
       const inputName = screen.getByTestId('input-first-name')
-      const inputLastName = screen.getByTestId('input-lastname')
+      const inputLastName = screen.getByTestId('input-last-name')
 
       expect(inputName).toHaveProperty('value', getProfileSpy.user.firstName)
       expect(inputLastName).toHaveProperty('value', getProfileSpy.user.lastName)
@@ -155,10 +155,13 @@ describe('ProfilePage', () => {
       makeSut(undefined, updateProfileSpy)
 
       await screen.findByText('Perfil carregado com sucesso')
-      const firstName = faker.person.firstName()
       const inputFirstName = screen.getByTestId('input-first-name')
+      const inputLastName = screen.getByTestId('input-last-name')
 
+      const firstName = faker.person.firstName()
+      const lastName = faker.person.lastName()
       fireEvent.change(inputFirstName, { target: { value: firstName } })
+      fireEvent.change(inputLastName, { target: { value: lastName } })
 
       submitForm()
 
@@ -168,6 +171,7 @@ describe('ProfilePage', () => {
         mockAuthStore.accessToken,
         {
           firstName,
+          lastName,
         },
       )
     })
