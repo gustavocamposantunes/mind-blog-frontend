@@ -127,6 +127,15 @@ describe('ProfilePage', () => {
       await screen.findByText('Perfil alterado com sucesso')
     })
 
+    it('should not submit if fields are not updated', async () => {
+      makeSut()
+      await screen.findByText('Perfil carregado com sucesso')
+
+      submitForm()
+
+      await screen.findByText('Nenhuma alteração realizada, atualize o perfil!')
+    })
+
     it('should render a toast.error if update fails', async () => {
       const updateProfileSpy = new UpdateProfileSpy()
 
