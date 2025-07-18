@@ -29,7 +29,10 @@ export const HomePage: React.FC<HomePageProps> = ({
 
   return (
     <HomeTemplate>
-      <FavouritesSlider isLoading={isLoadingFavourites} />
+      <FavouritesSlider
+        error={errorFavourites}
+        isLoading={isLoadingFavourites}
+      />
       <News
         isLoading={isLoadingNews}
         news={dataNews?.articles}
