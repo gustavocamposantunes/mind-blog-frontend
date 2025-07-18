@@ -70,7 +70,29 @@ describe('HomePage', () => {
   })
 
   describe('Featured Articles', () => {
+    const setupListArticlesError = () => {
+      const listArticlesSpy = new ListArticlesSpy()
+
+      const error = new UnexpectedError()
+      vi.spyOn(listArticlesSpy, 'listAll').mockRejectedValueOnce(error)
+
+      makeSut(undefined, listArticlesSpy)
+
+      return {
+        error,
+      }
+    }
+
     describe(`Favourites Slider`, () => {
+      it('should render a error message if Favourites Slider fails', async () => {
+        const { error } = setupListArticlesError()
+
+        const [errorMessage] = await screen.findAllByTestId('error-message')
+
+        expect(errorMessage).toBeInTheDocument()
+        expect(errorMessage.textContent).toBe(error.message)
+      })
+
       it('should render a slider skeleton before render the Favourites Slider', async () => {
         makeSut()
 
@@ -81,14 +103,10 @@ describe('HomePage', () => {
     })
     describe('Most Favourited Articles', () => {
       it('should render a error message if most favouriteds articles fails', async () => {
-        const listArticlesSpy = new ListArticlesSpy()
+        const { error } = setupListArticlesError()
 
-        const error = new UnexpectedError()
-        vi.spyOn(listArticlesSpy, 'listAll').mockRejectedValueOnce(error)
-
-        makeSut(undefined, listArticlesSpy)
-
-        const errorMessage = await screen.findByTestId('error-message')
+        const errorMessageList = await screen.findAllByTestId('error-message')
+        const errorMessage = errorMessageList[1]
 
         expect(errorMessage).toBeInTheDocument()
         expect(errorMessage.textContent).toBe(error.message)
