@@ -70,6 +70,15 @@ describe('HomePage', () => {
   })
 
   describe('Featured Articles', () => {
+    describe(`Favourites Slider`, () => {
+      it('should render a slider skeleton before render the Favourites Slider', async () => {
+        makeSut()
+
+        const skeletonSlider = await screen.findByTestId('skeleton-slider')
+
+        expect(skeletonSlider).toBeInTheDocument()
+      })
+    })
     describe('Most Favourited Articles', () => {
       it('should render a error message if most favouriteds articles fails', async () => {
         const listArticlesSpy = new ListArticlesSpy()
