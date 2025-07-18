@@ -32,6 +32,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       <FavouritesSlider
         error={errorFavourites}
         isLoading={isLoadingFavourites}
+        articles={dataFavourites?.articles}
       />
       <News
         isLoading={isLoadingNews}
