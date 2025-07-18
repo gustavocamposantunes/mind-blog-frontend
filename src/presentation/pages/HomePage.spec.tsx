@@ -100,6 +100,14 @@ describe('HomePage', () => {
 
         expect(skeletonSlider).toBeInTheDocument()
       })
+
+      it('should render a favourites slider after loaded', async () => {
+        makeSut()
+
+        const favouritesSlider = await screen.findByTestId('favourites-slider')
+
+        expect(favouritesSlider).toBeInTheDocument()
+      })
     })
     describe('Most Favourited Articles', () => {
       it('should render a error message if most favouriteds articles fails', async () => {
