@@ -131,12 +131,14 @@ describe('HomePage', () => {
       it('should render the most favouriteds after load', async () => {
         const { listArticlesSpy } = makeSut()
 
-        await screen.findByTestId(
+        await screen.findAllByTestId(
           `card-article-${listArticlesSpy.articlesList.articles[0].id}`,
         )
 
         listArticlesSpy.articlesList.articles.map(({ id }) => {
-          expect(screen.getByTestId(`card-article-${id}`)).toBeInTheDocument()
+          const cardsArticle = screen.getAllByTestId(`card-article-${id}`)
+          const cardArticle = cardsArticle[1]
+          expect(cardArticle).toBeInTheDocument()
         })
       })
     })
