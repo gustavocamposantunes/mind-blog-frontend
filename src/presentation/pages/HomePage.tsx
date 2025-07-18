@@ -1,10 +1,9 @@
-import { FavouritesList } from '../components/organism'
+import { FavouritesList, FavouritesSlider } from '../components/organism'
 import { useArticlesList, useGetNews } from '../hooks'
 
 import type { ListArticlesUseCase } from '@/domain/usecases'
 import type { GetNewsUseCase } from '@/domain/usecases/news/get-news.usecase'
 
-import { ArticleCard } from '@/presentation/components/organism/ArticleCard'
 import { News } from '@/presentation/components/organism/News'
 import { HomeTemplate } from '@/presentation/components/templates'
 
@@ -30,13 +29,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
   return (
     <HomeTemplate>
-      <ArticleCard
-        id={1}
-        className="xl:col-span-2"
-        title="Dominando TypeScript: Por que a Tipagem Estática Está Transformando o Desenvolvimento JavaScript"
-        content="TypeScript, uma superconjunto de JavaScript, tem se tornado uma escolha popular entre desenvolvedores para garantir código mais seguro e fácil de manter. Neste artigo, vamos explorar os benefícios da tipagem estática no..."
-        redirect="1"
-      />
+      <FavouritesSlider isLoading={isLoadingFavourites} />
       <News
         isLoading={isLoadingNews}
         news={dataNews?.articles}
