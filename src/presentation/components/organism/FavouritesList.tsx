@@ -24,15 +24,8 @@ export function FavouritesList({
 
   return (
     <>
-      {articles?.map(({ id, title, content, image }, index) => (
-        <ArticleCard
-          key={id}
-          id={id}
-          title={title}
-          content={content}
-          image={image}
-          favourite={`0${index + 1}`}
-        />
+      {articles?.map(({ ...props }, index) => (
+        <ArticleCard key={props.id} {...props} favourite={`0${index + 1}`} />
       ))}
     </>
   )
