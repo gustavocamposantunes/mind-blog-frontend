@@ -5,10 +5,7 @@ import { RemoteRegisterUser } from './remote-register-user'
 
 import { HttpPostClientSpy } from '@/data/test/mock-http-client'
 import { InternalServerError, UnexpectedError } from '@/domain/errors'
-import {
-  mockAuthenticateUserModel,
-  mockAuthenticationParams,
-} from '@/domain/test'
+import { mockAuthenticateUserModel, mockRegisterUser } from '@/domain/test'
 
 type SutTypes = {
   sut: RemoteRegisterUser
@@ -30,7 +27,7 @@ describe('RemoteRegisterUser', () => {
     const url = faker.internet.url()
     const { httpPostClientSpy, sut } = makeSut(url)
 
-    const registerUserParams = mockAuthenticationParams()
+    const registerUserParams = mockRegisterUser()
 
     await sut.register(registerUserParams)
 
@@ -43,7 +40,7 @@ describe('RemoteRegisterUser', () => {
     httpPostClientSpy.response = {
       status: 500,
     }
-    const registerUserParams = mockAuthenticationParams()
+    const registerUserParams = mockRegisterUser()
     const promise = sut.register(registerUserParams)
 
     await expect(promise).rejects.toThrow(new InternalServerError())
@@ -55,7 +52,7 @@ describe('RemoteRegisterUser', () => {
       status: 502,
     }
 
-    const registerUserParams = mockAuthenticationParams()
+    const registerUserParams = mockRegisterUser()
     const promise = sut.register(registerUserParams)
 
     await expect(promise).rejects.toThrow(new UnexpectedError())
@@ -63,7 +60,7 @@ describe('RemoteRegisterUser', () => {
 
   it('should returns a valid AuthenticateUserModel on success', async () => {
     const { sut, httpPostClientSpy } = makeSut()
-    const registerUserParams = mockAuthenticationParams()
+    const registerUserParams = mockRegisterUser()
     const authenticateUserModel = mockAuthenticateUserModel()
 
     httpPostClientSpy.response = {
