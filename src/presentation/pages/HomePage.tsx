@@ -24,7 +24,6 @@ export const HomePage: React.FC<HomePageProps> = ({
   } = useArticlesList(listArticles, {
     page: 1,
     limit: 3,
-    filters: ['mostFavouriteds'],
   })
 
   return (

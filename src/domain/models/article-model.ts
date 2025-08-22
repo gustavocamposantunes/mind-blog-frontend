@@ -16,11 +16,8 @@ export type ArticleModel = {
   updatedAt: string
 }
 
-export type Filters = 'mostFavouriteds'
-
 export type ArticleListModel = {
   articles: ArticleModel[]
-  filters?: Array<Filters>
   total: number
   limit: number
   page: number
