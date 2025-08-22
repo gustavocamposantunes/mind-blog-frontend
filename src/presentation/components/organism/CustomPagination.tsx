@@ -79,7 +79,7 @@ export const CustomPagination: React.FC<CustomPaginationProps> = ({
     return pages
   }
 
-  return (
+  return totalPages <= 1 ? null : (
     <Pagination data-testid="pagination" {...props}>
       <PaginationContent data-testid="total-pages">
         {currentPage !== 1 && (
