@@ -264,11 +264,24 @@ describe('ArticlesPage', () => {
         return maxWidth === 1279
       })
     })
+
     it('should render the pagination correctly after data is loaded', async () => {
       makeSut()
 
       const pagination = await screen.findByTestId('pagination')
       expect(pagination).toBeTruthy()
+    })
+
+    it('should not render the pagination if there is only one page', async () => {
+      const listArticlesListSpy = new ListArticlesSpy(mockArticlesList(5))
+      makeSut(listArticlesListSpy)
+
+      await screen.findByText(
+        listArticlesListSpy.articlesList.articles[0].title,
+      )
+
+      const pagination = screen.queryByTestId('pagination')
+      expect(pagination).not.toBeInTheDocument()
     })
 
     it('should render the first 10 articles after data is loaded', async () => {
