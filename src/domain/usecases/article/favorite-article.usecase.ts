@@ -3,7 +3,7 @@ import type { FavouriteModel } from '@/domain/models'
 
 export interface FavouriteArticleUseCase {
   favorite(
-    id: number,
+    articleId: number,
     token: string,
   ): Promise<HttpRemoteResponse<FavouriteModel>>
 }

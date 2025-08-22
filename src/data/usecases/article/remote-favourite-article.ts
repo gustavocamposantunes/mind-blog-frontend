@@ -22,13 +22,13 @@ export class RemoteFavouriteArticle implements FavouriteArticleUseCase {
   }
 
   async favorite(
-    id: number,
+    articleId: number,
     token: string,
   ): Promise<HttpRemoteResponse<FavouriteModel>> {
     const { status, data } = await this.httpClient.post({
       url: this.url,
       body: {
-        id,
+        articleId,
       },
       headers: {
         ...(token && { Authorization: `Bearer ${token}` }),

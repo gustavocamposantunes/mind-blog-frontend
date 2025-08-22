@@ -6,8 +6,14 @@ export const useFavouriteArticle = (
   favouriteArticle: FavouriteArticleUseCase,
 ) => {
   return useMutation({
-    mutationFn: async ({ id, token }: { id: number; token: string }) => {
-      const result = await favouriteArticle.favorite(id, token)
+    mutationFn: async ({
+      articleId,
+      token,
+    }: {
+      articleId: number
+      token: string
+    }) => {
+      const result = await favouriteArticle.favorite(articleId, token)
 
       return result.data
     },

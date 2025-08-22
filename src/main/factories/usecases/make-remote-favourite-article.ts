@@ -5,4 +5,7 @@ import type { FavouriteArticleUseCase } from '@/domain/usecases'
 import { RemoteFavouriteArticle } from '@/data/usecases'
 
 export const makeRemoteFavouriteArticle = (): FavouriteArticleUseCase =>
-  new RemoteFavouriteArticle(makeApiUrl('/favourite'), makeAxiosHttpClient())
+  new RemoteFavouriteArticle(
+    makeApiUrl('/articles/favorite'),
+    makeAxiosHttpClient(),
+  )

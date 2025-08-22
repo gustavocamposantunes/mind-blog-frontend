@@ -4,7 +4,6 @@ import {
   FavouriteArticleSpy,
   ListArticlesSpy,
   renderArticlesPageWithRouter,
-  UnfavouriteArticleSpy,
 } from '../test'
 import { cleanup, fireEvent, screen } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
@@ -45,12 +44,10 @@ type SutTypes = {
 const makeSut = (
   listArticlesListSpy = new ListArticlesSpy(),
   favouriteArticleSpy = new FavouriteArticleSpy(),
-  unfavouriteArticleSpy = new UnfavouriteArticleSpy(),
 ): SutTypes => {
   const { rerender } = renderArticlesPageWithRouter(
     listArticlesListSpy,
     favouriteArticleSpy,
-    unfavouriteArticleSpy,
   )
 
   return {
@@ -258,62 +255,6 @@ describe('ArticlesPage', () => {
           .then((el) => el)
           .catch(() => null),
       ).toBeFalsy()
-    })
-  })
-
-  describe('Unfavourite', () => {
-    const setupUnfavouriteError = async () => {
-      const unfavouriteArticleSpy = new UnfavouriteArticleSpy()
-      const mockedError = new UnexpectedError()
-      vi.spyOn(unfavouriteArticleSpy, 'unfavourite').mockRejectedValueOnce(
-        mockedError,
-      )
-      makeSut(undefined, undefined, unfavouriteArticleSpy)
-
-      const favoriteHeartIcons = await screen.findAllByTestId(
-        'favorite-heart-icon',
-      )
-
-      const favoriteHeartIcon = favoriteHeartIcons[1]
-      fireEvent.click(favoriteHeartIcon)
-
-      return {
-        mockedError,
-        favoriteHeartIcon,
-      }
-    }
-    it('should render a toast.error when heart icon is clicked and returns an error from api', async () => {
-      const { mockedError } = await setupUnfavouriteError()
-
-      const error = await screen.findByText(mockedError.message)
-
-      expect(error).toBeTruthy()
-    })
-
-    it('should mantain the heart icon fill red if an error occur', async () => {
-      const { mockedError, favoriteHeartIcon } = await setupUnfavouriteError()
-
-      await screen.findByText(mockedError.message)
-
-      expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
-    })
-
-    it('should change favorite heart icon color on success', async () => {
-      makeSut()
-
-      const favoriteHeartIcons = await screen.findAllByTestId(
-        'favorite-heart-icon',
-      )
-
-      const favoriteHeartIcon = favoriteHeartIcons[1]
-
-      expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
-
-      fireEvent.click(favoriteHeartIcon)
-
-      await screen.findByText('Artigo removido dos favoritos')
-
-      expect(favoriteHeartIcon.getAttribute('fill')).toBe('white')
     })
   })
 

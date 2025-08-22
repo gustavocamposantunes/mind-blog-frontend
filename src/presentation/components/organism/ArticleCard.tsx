@@ -29,7 +29,7 @@ interface IArticleCard {
   favourite?: string
   isLoggedIn?: boolean
   authUserId?: number
-  favouriteArticleById?: (id: number, favourite: () => void) => void
+  favouriteArticleById?: (id: number, favourite: () => boolean) => void
   unfavouriteArticleById?: (id: number, unfavourite: () => void) => void
   favourited?: boolean
 }
@@ -47,7 +47,6 @@ export const ArticleCard: React.FC<IArticleCard> = ({
   isLoggedIn,
   authUserId,
   favouriteArticleById = () => {},
-  unfavouriteArticleById = () => {},
   favourited,
 }) => {
   const [favorite, setFavorite] = useState(favourited)
@@ -77,15 +76,11 @@ export const ArticleCard: React.FC<IArticleCard> = ({
         data-testid="favorite-heart-icon"
         onClick={(e) => {
           e.stopPropagation()
-          if (!favorite) {
-            favouriteArticleById(id, () => {
-              setFavorite(true)
-            })
-          } else {
-            unfavouriteArticleById(id, () => {
-              setFavorite(false)
-            })
-          }
+          favouriteArticleById(id, () => {
+            setFavorite(!favorite)
+
+            return favorite ?? false
+          })
         }}
       />
     ) : null

@@ -4,7 +4,6 @@ import {
   FavouriteArticleSpy,
   GetArticleByIdSpy,
   renderArticlePageWithRouter,
-  UnfavouriteArticleSpy,
 } from '../test'
 import { cleanup, fireEvent, screen } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
@@ -26,24 +25,17 @@ vi.mock('../store/auth-store', async () => ({
 type SutTypes = {
   getArticleByIdSpy: GetArticleByIdSpy
   favouriteArticleSpy: FavouriteArticleSpy
-  unfavouriteArticleSpy: UnfavouriteArticleSpy
 }
 
 const makeSut = (
   getArticleByIdSpy = new GetArticleByIdSpy(),
   favouriteArticleSpy = new FavouriteArticleSpy(),
-  unfavouriteArticleSpy = new UnfavouriteArticleSpy(),
 ): SutTypes => {
-  renderArticlePageWithRouter(
-    getArticleByIdSpy,
-    favouriteArticleSpy,
-    unfavouriteArticleSpy,
-  )
+  renderArticlePageWithRouter(getArticleByIdSpy, favouriteArticleSpy)
 
   return {
     getArticleByIdSpy,
     favouriteArticleSpy,
-    unfavouriteArticleSpy,
   }
 }
 
@@ -245,43 +237,6 @@ describe('ArticlePage', () => {
           .then((el) => el)
           .catch(() => null),
       ).toBeFalsy()
-    })
-  })
-
-  describe('Unfavourited', () => {
-    const setupUnfavouriteError = async () => {
-      const getArticleByIdSpy = new GetArticleByIdSpy(true)
-      const unfavouriteArticleSpy = new UnfavouriteArticleSpy()
-      const mockedError = new UnexpectedError()
-      vi.spyOn(unfavouriteArticleSpy, 'unfavourite').mockRejectedValueOnce(
-        mockedError,
-      )
-
-      makeSut(getArticleByIdSpy, undefined, unfavouriteArticleSpy)
-
-      const favouriteToogle = await screen.findByTestId('favourite-toogle')
-
-      fireEvent.click(favouriteToogle)
-
-      return {
-        mockedError,
-        favouriteToogle,
-      }
-    }
-    it('should render a toast.error when heart icon is clicked and returns an error from api', async () => {
-      const { mockedError } = await setupUnfavouriteError()
-
-      const error = await screen.findByText(mockedError.message)
-
-      expect(error).toBeTruthy()
-    })
-
-    it('should mantain the heart icon fill red if an error occur', async () => {
-      const { mockedError, favouriteToogle } = await setupUnfavouriteError()
-
-      await screen.findByText(mockedError.message)
-
-      expect(favouriteToogle.getAttribute('fill')).toBe('red')
     })
 
     it('should change favourite heart icon color on success', async () => {

@@ -4,17 +4,12 @@ import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { Article } from '../components/organism'
-import {
-  useFavouriteArticle,
-  useGetArticleById,
-  useUnfavouriteArticle,
-} from '../hooks'
+import { useFavouriteArticle, useGetArticleById } from '../hooks'
 import { useAuthStore } from '../store'
 
 import type {
   FavouriteArticleUseCase,
   GetArticleByIdUseCase,
-  UnfavouriteArticleUseCase,
 } from '@/domain/usecases'
 
 import { ArticleTemplate } from '@/presentation/components/templates'
@@ -22,13 +17,11 @@ import { ArticleTemplate } from '@/presentation/components/templates'
 type ArticlePageProps = {
   getArticletById: GetArticleByIdUseCase
   favouriteArticle: FavouriteArticleUseCase
-  unfavouriteArticle: UnfavouriteArticleUseCase
 }
 
 export const ArticlePage: React.FC<ArticlePageProps> = ({
   getArticletById,
   favouriteArticle,
-  unfavouriteArticle,
 }) => {
   const { accessToken, user } = useAuthStore()
 
@@ -61,15 +54,11 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
           fill={toogleFavourite ? 'red' : 'white'}
           color={toogleFavourite ? 'red' : undefined}
           onClick={() => {
-            if (!toogleFavourite) {
-              favouriteArticleById(data.id, () => {
-                setToogleFavourite(true)
-              })
-            } else {
-              unfavouriteArticleById(data.id, () => {
-                setToogleFavourite(false)
-              })
-            }
+            favouriteArticleById(data.id, () => {
+              setToogleFavourite(!toogleFavourite)
+
+              return !!toogleFavourite
+            })
           }}
         />
         {data.favouriteCount}
@@ -86,36 +75,22 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
   const { mutate: mutateFavouriteArticle } =
     useFavouriteArticle(favouriteArticle)
 
-  const favouriteArticleById = (id: number, favourite: () => void) => {
+  const favouriteArticleById = (
+    articleId: number,
+    favourite: () => boolean,
+  ) => {
     mutateFavouriteArticle(
       {
-        id,
+        articleId,
         token: accessToken,
       },
       {
         onError: (error) => toast.error(error.message),
         onSuccess: () => {
-          favourite()
-          toast.info('Artigo adicionado aos favoritos')
-        },
-      },
-    )
-  }
-
-  const { mutate: mutateUnfavouriteArticle } =
-    useUnfavouriteArticle(unfavouriteArticle)
-
-  const unfavouriteArticleById = (id: number, unfavourite: () => void) => {
-    mutateUnfavouriteArticle(
-      {
-        id,
-        token: accessToken,
-      },
-      {
-        onError: (error) => toast.error(error.message),
-        onSuccess: () => {
-          unfavourite()
-          toast.info('Artigo removido dos favoritos')
+          const isFavourited = favourite()
+          toast.info(
+            `Artigo ${isFavourited ? 'removido dos' : 'adicionado aos'} favoritos`,
+          )
         },
       },
     )

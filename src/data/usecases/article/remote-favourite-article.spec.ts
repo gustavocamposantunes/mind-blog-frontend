@@ -33,13 +33,13 @@ describe('RemoteFavouriteArticle', () => {
 
     const { sut, httpPostClientSpy } = makeSut(url)
 
-    const id = faker.number.int()
+    const articleId = faker.number.int()
     const token = faker.string.uuid()
 
-    await sut.favorite(id, token)
+    await sut.favorite(articleId, token)
 
     expect(httpPostClientSpy.url).toBe(url)
-    expect(httpPostClientSpy.body).toStrictEqual({ id })
+    expect(httpPostClientSpy.body).toStrictEqual({ articleId })
     expect(httpPostClientSpy.headers).toEqual({
       Authorization: `Bearer ${token}`,
     })

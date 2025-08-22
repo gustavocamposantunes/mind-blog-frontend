@@ -6,14 +6,12 @@ import {
   useArticlesList,
   useFavouriteArticle,
   useResponsiveLimit,
-  useUnfavouriteArticle,
 } from '../hooks'
 import { useAuthStore } from '../store'
 
 import type {
   FavouriteArticleUseCase,
   ListArticlesUseCase,
-  UnfavouriteArticleUseCase,
 } from '@/domain/usecases'
 
 import { CustomPagination } from '@/presentation/components/organism'
@@ -23,13 +21,11 @@ import { ArticlesTemplate } from '@/presentation/components/templates'
 type ArticlessPageProps = {
   listArticles: ListArticlesUseCase
   favouriteArticle: FavouriteArticleUseCase
-  unfavouriteArticle: UnfavouriteArticleUseCase
 }
 
 export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   listArticles,
   favouriteArticle,
-  unfavouriteArticle,
 }) => {
   const { user, accessToken } = useAuthStore()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -62,36 +58,22 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   const { mutate: mutateFavouriteArticle } =
     useFavouriteArticle(favouriteArticle)
 
-  const favouriteArticleById = (id: number, favourite: () => void) => {
+  const favouriteArticleById = (
+    articleId: number,
+    favourite: () => boolean,
+  ) => {
     mutateFavouriteArticle(
       {
-        id,
+        articleId,
         token: accessToken,
       },
       {
         onError: (error) => toast.error(error.message),
         onSuccess: () => {
-          favourite()
-          toast.info('Artigo adicionado aos favoritos')
-        },
-      },
-    )
-  }
-
-  const { mutate: mutateUnfavouriteArticle } =
-    useUnfavouriteArticle(unfavouriteArticle)
-
-  const unfavouriteArticleById = (id: number, unfavourite: () => void) => {
-    mutateUnfavouriteArticle(
-      {
-        id,
-        token: accessToken,
-      },
-      {
-        onError: (error) => toast.error(error.message),
-        onSuccess: () => {
-          unfavourite()
-          toast.info('Artigo removido dos favoritos')
+          const isFavourited = favourite()
+          toast.info(
+            `Artigo ${isFavourited ? 'removido dos' : 'adicionado aos'} favoritos`,
+          )
         },
       },
     )
@@ -123,7 +105,6 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
           isLoggedIn={!!accessToken}
           authUserId={user.id}
           favouriteArticleById={favouriteArticleById}
-          unfavouriteArticleById={unfavouriteArticleById}
         />
       ))}
       {paginationComponent}

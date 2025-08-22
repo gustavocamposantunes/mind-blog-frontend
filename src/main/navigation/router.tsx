@@ -56,7 +56,6 @@ export const Router = () => {
               <ArticlesPage
                 listArticles={makeRemoteListArticles()}
                 favouriteArticle={makeRemoteFavouriteArticle()}
-                unfavouriteArticle={makeRemoteUnfavouriteArticle()}
               />
             }
           />
