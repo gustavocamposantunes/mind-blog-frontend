@@ -19,6 +19,7 @@ export class AxiosHttpClient
     try {
       const response = await axios.get(params.url, {
         params: params.queryParams,
+        headers: params.headers
       })
       return {
         status: response.status,
