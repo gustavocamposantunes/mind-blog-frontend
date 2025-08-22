@@ -8,6 +8,7 @@ export const mockGetRequest = () => ({
     categoryId: faker.string.uuid(),
     productId: faker.string.uuid(),
   },
+  headers: { 'Content-Type': 'application/json' },
 })
 
 export const mockHttpRequest = () => ({

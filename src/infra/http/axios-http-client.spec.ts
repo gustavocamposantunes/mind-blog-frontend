@@ -25,10 +25,13 @@ describe('AxiosHttpClient', () => {
       mockedAxios.get.mockResolvedValue(mockHttpResponse())
     })
     it('Should call axios.get with correct values', async () => {
-      const { url, queryParams } = mockGetRequest()
+      const { url, queryParams, headers } = mockGetRequest()
       const sut = makeSut()
-      await sut.get({ url, queryParams })
-      expect(mockedAxios.get).toHaveBeenCalledWith(url, { params: queryParams })
+      await sut.get({ url, queryParams, headers })
+      expect(mockedAxios.get).toHaveBeenCalledWith(url, {
+        params: queryParams,
+        headers,
+      })
     })
 
     it('Should return correct response on axios.get', async () => {
