@@ -55,4 +55,22 @@ describe('RemoteDeleteArticleById', () => {
 
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
+
+  it('should return a message if article is deleted successfully', async () => {
+    const { sut, httpDeleteClientSpy } = makeSut()
+    const articleId = faker.string.uuid()
+
+    httpDeleteClientSpy.response = {
+      status: 200,
+      data: {
+        message: 'Article deleted successfully',
+      },
+    }
+
+    const response = await sut.deleteById(articleId)
+    expect(response.statusCode).toBe(200)
+    expect(response.data).toEqual({
+      message: 'Article deleted successfully',
+    })
+  })
 })
