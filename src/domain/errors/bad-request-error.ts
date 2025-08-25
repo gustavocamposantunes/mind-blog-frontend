@@ -1,6 +1,6 @@
 export class BadRequestError extends Error {
-  constructor() {
-    super('Erro de validação')
+  constructor(validationMessage = 'Erro de validação') {
+    super(validationMessage)
     this.name = 'BadRequestError'
   }
 }
