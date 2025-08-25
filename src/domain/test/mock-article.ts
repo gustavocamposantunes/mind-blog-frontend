@@ -90,7 +90,6 @@ export const mockMostFavouritedsArticlesList = (): ArticleListModel => ({
     mockArticle(undefined, undefined, undefined, 80),
     mockArticle(undefined, undefined, undefined, 70),
   ],
-  filters: ['mostFavouriteds'],
   limit: 3,
   page: 1,
   total: 20,
