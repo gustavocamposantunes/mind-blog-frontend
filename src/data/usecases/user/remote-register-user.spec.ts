@@ -54,6 +54,7 @@ describe('RemoteRegisterUser', () => {
     const { sut, httpPostClientSpy } = makeSut()
     httpPostClientSpy.response = {
       status: 400,
+      error: { message: 'Erro de validação' },
     }
     const registerUserParams = mockRegisterUser()
     const promise = sut.register(registerUserParams)
