@@ -1,4 +1,5 @@
-import type { HttpDeleteClient } from '@/data/protocols'
+import { HttpStatusCode, type HttpDeleteClient } from '@/data/protocols'
+import { NotFoundError } from '@/domain/errors'
 
 export class RemoteDeleteArticleById {
   private readonly url: string
@@ -10,8 +11,13 @@ export class RemoteDeleteArticleById {
   }
 
   async deleteById(articleId: string) {
-    await this.httpDeleteClient.delete({
+    const { status } = await this.httpDeleteClient.delete({
       url: `${this.url}/${articleId}`,
     })
+
+    switch (status) {
+      case HttpStatusCode.notFound:
+        throw new NotFoundError()
+    }
   }
 }
