@@ -71,7 +71,7 @@ describe('NewArticlePage', () => {
     fireEvent.click(cancelButton)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/articles')
+      expect(mockNavigate).toHaveBeenCalledWith('/articles?page=1&limit=12')
     })
   })
 
@@ -81,7 +81,7 @@ describe('NewArticlePage', () => {
     setupSubmit()
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/articles')
+      expect(mockNavigate).toHaveBeenCalledWith('/articles?page=1&limit=12')
     })
   })
 

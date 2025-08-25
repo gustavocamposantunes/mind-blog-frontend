@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 
 import { FormHeader } from '../components/molecules'
 import { Input } from '../components/ui/input'
+import { useResponsiveLimit } from '../hooks'
 import { useRegisterArticle } from '../hooks/useRegisterArticle'
 import { useAuthStore } from '../store/auth-store'
 import { toBase64 } from '../utils/toBase64'
@@ -22,6 +23,7 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
   registerArticle,
 }) => {
   const navigate = useNavigate()
+  const limit = useResponsiveLimit()
   const { user, accessToken } = useAuthStore()
 
   const [registerArticleParams, setRegisterArticleParams] = useState({
@@ -42,7 +44,7 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
       },
       {
         onSuccess: () => {
-          navigate('/articles')
+          navigate(`/articles?page=1&limit=${limit}`)
         },
         onError: (error) => {
           toast.error(error.message)

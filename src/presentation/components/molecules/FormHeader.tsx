@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/presentation/components/ui/button'
+import { useResponsiveLimit } from '@/presentation/hooks'
 
 interface IFormHeader {
   title: string
@@ -8,6 +9,8 @@ interface IFormHeader {
 
 export const FormHeader: React.FC<IFormHeader> = ({ title }) => {
   const navigate = useNavigate()
+  const limit = useResponsiveLimit()
+
   return (
     <section className="flex justify-between w-full" data-testid="form-header">
       <h2 className="text-2xl font-semibold">{title}</h2>
@@ -15,7 +18,7 @@ export const FormHeader: React.FC<IFormHeader> = ({ title }) => {
         <Button
           className="orange-btn action-btn"
           type="button"
-          onClick={() => navigate('/articles')}
+          onClick={() => navigate(`/articles?page=1&limit=${limit}`)}
         >
           Cancelar
         </Button>
