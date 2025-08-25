@@ -50,7 +50,7 @@ describe('AxiosHttpClient', () => {
 
       await expect(sut.get(mockGetRequest())).resolves.toEqual({
         status: 500,
-        data: { message: 'An unknown error occurred' },
+        error: { message: 'An unknown error occurred' },
       })
     })
 
@@ -68,7 +68,7 @@ describe('AxiosHttpClient', () => {
       axiosError.response = {
         status: 404,
         statusText: 'Not Found',
-        data: { message: 'Not Found' },
+        data: { message: ['Not Found'] },
         headers: {},
         config: { headers: new axios.AxiosHeaders() },
       }
@@ -77,7 +77,7 @@ describe('AxiosHttpClient', () => {
 
       await expect(sut.get(mockGetRequest())).resolves.toEqual({
         status: 404,
-        data: { message: 'Not Found' },
+        error: { message: 'Not Found' },
       })
     })
   })
@@ -109,7 +109,7 @@ describe('AxiosHttpClient', () => {
 
       await expect(sut.post(mockHttpRequest())).resolves.toEqual({
         status: 500,
-        data: { message: 'An unknown error occurred' },
+        error: { message: 'An unknown error occurred' },
       })
     })
 
@@ -127,7 +127,7 @@ describe('AxiosHttpClient', () => {
       axiosError.response = {
         status: 404,
         statusText: 'Not Found',
-        data: { message: 'Not Found' },
+        data: { message: ['Not Found'] },
         headers: {},
         config: { headers: new axios.AxiosHeaders() },
       }
@@ -136,7 +136,7 @@ describe('AxiosHttpClient', () => {
 
       await expect(sut.post(mockHttpRequest())).resolves.toEqual({
         status: 404,
-        data: { message: 'Not Found' },
+        error: { message: 'Not Found' },
       })
     })
   })
@@ -168,7 +168,7 @@ describe('AxiosHttpClient', () => {
 
       await expect(sut.put(mockHttpRequest())).resolves.toEqual({
         status: 500,
-        data: { message: 'An unknown error occurred' },
+        error: { message: 'An unknown error occurred' },
       })
     })
 
@@ -186,7 +186,7 @@ describe('AxiosHttpClient', () => {
       axiosError.response = {
         status: 404,
         statusText: 'Not Found',
-        data: { message: 'Not Found' },
+        data: { message: ['Not Found'] },
         headers: {},
         config: { headers: new axios.AxiosHeaders() },
       }
@@ -195,7 +195,7 @@ describe('AxiosHttpClient', () => {
 
       await expect(sut.put(mockHttpRequest())).resolves.toEqual({
         status: 404,
-        data: { message: 'Not Found' },
+        error: { message: 'Not Found' },
       })
     })
   })
@@ -229,7 +229,7 @@ describe('AxiosHttpClient', () => {
 
       await expect(sut.delete(mockHttpRequest())).resolves.toEqual({
         status: 500,
-        data: { message: 'An unknown error occurred' },
+        error: { message: 'An unknown error occurred' },
       })
     })
 
@@ -247,7 +247,7 @@ describe('AxiosHttpClient', () => {
       axiosError.response = {
         status: 404,
         statusText: 'Not Found',
-        data: { message: 'Not Found' },
+        data: { message: ['Not Found'] },
         headers: {},
         config: { headers: new axios.AxiosHeaders() },
       }
@@ -256,7 +256,7 @@ describe('AxiosHttpClient', () => {
 
       await expect(sut.delete(mockHttpRequest())).resolves.toEqual({
         status: 404,
-        data: { message: 'Not Found' },
+        error: { message: 'Not Found' },
       })
     })
   })

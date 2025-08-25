@@ -29,13 +29,13 @@ export class AxiosHttpClient
       if (axios.isAxiosError(error) && error.response) {
         return {
           status: error.response.status,
-          data: error.response.data,
+          error: { message: error.response.data.message[0] } ,
         }
       }
 
       return {
         status: 500,
-        data: { message: 'An unknown error occurred' },
+        error: { message: 'An unknown error occurred' },
       }
     }
   }
@@ -54,13 +54,13 @@ export class AxiosHttpClient
       if (axios.isAxiosError(error) && error.response) {
         return {
           status: error.response.status,
-          data: error.response.data,
+          error: { message: error.response.data.message[0] } ,
         }
       }
 
       return {
         status: 500,
-        data: { message: 'An unknown error occurred' },
+        error: { message: 'An unknown error occurred' },
       }
     }
   }
@@ -78,13 +78,13 @@ export class AxiosHttpClient
       if (axios.isAxiosError(error) && error.response) {
         return {
           status: error.response.status,
-          data: error.response.data,
+          error: { message: error.response.data.message[0] } ,
         }
       }
 
       return {
         status: 500,
-        data: { message: 'An unknown error occurred' },
+        error: { message: 'An unknown error occurred' },
       }
     }
   }
@@ -105,13 +105,13 @@ export class AxiosHttpClient
       if (axios.isAxiosError(error) && error.response) {
         return {
           status: error.response.status,
-          data: error.response.data,
+          error: { message: error.response.data.message[0] } ,
         }
       }
       
       return {
         status: 500,
-        data: { message: 'An unknown error occurred' },
+        error: { message: 'An unknown error occurred' },
       }
     }
   }
