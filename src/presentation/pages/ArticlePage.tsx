@@ -106,7 +106,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
           content={data.content}
           author={{
             id: data.author.id,
-            name: data.author.name,
+            firstName: data.author.firstName,
             avatar: data.author.avatar,
           }}
           toogleFavouriteSlot={toogleFavouriteSlot}

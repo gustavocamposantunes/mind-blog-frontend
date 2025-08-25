@@ -1,6 +1,6 @@
 export type AuthorModel = {
   id: number
-  name: string
+  firstName: string
   avatar?: string
 }
 

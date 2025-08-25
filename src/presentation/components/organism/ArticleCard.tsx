@@ -114,7 +114,7 @@ export const ArticleCard: React.FC<IArticleCard> = ({
         <span className="flex items-center gap-2">
           <CustomAvatar src={author?.avatar}></CustomAvatar>
           <p data-testid="published-at">
-            Por <b>{author?.name}</b> - {formatterdDate}
+            Por <b>{author?.firstName}</b> - {formatterdDate}
           </p>
         </span>
         {editArticle}

@@ -11,7 +11,7 @@ interface IArticle {
   content: string
   author?: {
     id: number
-    name: string
+    firstName: string
     avatar?: string
   }
   toogleFavouriteSlot?: ReactNode
@@ -39,7 +39,7 @@ export const Article: React.FC<IArticle> = ({
           <span className="flex gap-2 items-center">
             <CustomAvatar src={author?.avatar} />
             <p data-testid="published-at">
-              Por <b>{author?.name}</b> - {formatterdDate}
+              Por <b>{author?.firstName}</b> - {formatterdDate}
             </p>
           </span>
           {toogleFavouriteSlot}
