@@ -12,7 +12,8 @@ export const HttpStatusCode = {
 export type HttpStatusCode =
   (typeof HttpStatusCode)[keyof typeof HttpStatusCode]
 
-export type HttpResponse<T = object, E = { message?: string }> = {
+export type HttpResponse<T = object, E = { message: string }> = {
   status: number
-  data?: T | E
+  data?: T
+  error?: E
 }
