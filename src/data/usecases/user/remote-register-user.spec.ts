@@ -4,7 +4,11 @@ import { describe, expect, it } from 'vitest'
 import { RemoteRegisterUser } from './remote-register-user'
 
 import { HttpPostClientSpy } from '@/data/test/mock-http-client'
-import { InternalServerError, UnexpectedError } from '@/domain/errors'
+import {
+  BadRequestError,
+  InternalServerError,
+  UnexpectedError,
+} from '@/domain/errors'
 import { mockAuthenticateUserModel, mockRegisterUser } from '@/domain/test'
 
 type SutTypes = {
@@ -44,6 +48,17 @@ describe('RemoteRegisterUser', () => {
     const promise = sut.register(registerUserParams)
 
     await expect(promise).rejects.toThrow(new InternalServerError())
+  })
+
+  it('should return a BadRequestError if HttpPostClient returns 400', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    httpPostClientSpy.response = {
+      status: 400,
+    }
+    const registerUserParams = mockRegisterUser()
+    const promise = sut.register(registerUserParams)
+
+    await expect(promise).rejects.toThrow(new BadRequestError())
   })
 
   it('should returns an UnexpectedError for other status codes', async () => {
