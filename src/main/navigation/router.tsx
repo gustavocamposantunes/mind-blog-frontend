@@ -14,7 +14,6 @@ import {
   makeRemoteUpdateProfile,
   makeRemoteGetNews,
   makeRemoteFavouriteArticle,
-  makeRemoteUnfavouriteArticle,
   makeRemoteUpdateArticle,
 } from '@/main/factories/usecases'
 import {
@@ -65,7 +64,6 @@ export const Router = () => {
               <ArticlePage
                 getArticletById={makeRemoteGetArticleById()}
                 favouriteArticle={makeRemoteFavouriteArticle()}
-                unfavouriteArticle={makeRemoteUnfavouriteArticle()}
               />
             }
           />
