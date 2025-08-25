@@ -4,6 +4,7 @@ import { describe, it, expect } from 'vitest'
 import { RemoteDeleteArticleById } from './remote-delete-article-by-id'
 
 import { HttpDeleteClientSpy } from '@/data/test/mock-http-client'
+import { NotFoundError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteDeleteArticleById
@@ -29,5 +30,17 @@ describe('RemoteDeleteArticleById', () => {
     await sut.deleteById(articleId)
 
     expect(httpDeleteClientSpy.url).toBe(`${url}/${articleId}`)
+  })
+
+  it('should throw NotFoundError if HttpDeleteClient returns 404', async () => {
+    const { sut, httpDeleteClientSpy } = makeSut()
+    httpDeleteClientSpy.response = {
+      status: 404,
+    }
+
+    const articleId = faker.string.uuid()
+    const promise = sut.deleteById(articleId)
+
+    await expect(promise).rejects.toThrow(new NotFoundError())
   })
 })
