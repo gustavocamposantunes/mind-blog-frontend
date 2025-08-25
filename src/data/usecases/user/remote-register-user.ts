@@ -6,7 +6,11 @@ import type {
   RegisterUserUseCase,
 } from '@/domain/usecases/user/register-user.usecase'
 
-import { InternalServerError, UnexpectedError } from '@/domain/errors'
+import {
+  BadRequestError,
+  InternalServerError,
+  UnexpectedError,
+} from '@/domain/errors'
 
 export class RemoteRegisterUser implements RegisterUserUseCase {
   private readonly url: string
@@ -35,6 +39,8 @@ export class RemoteRegisterUser implements RegisterUserUseCase {
         }
       case HttpStatusCode.serverError:
         throw new InternalServerError()
+      case HttpStatusCode.badRequest:
+        throw new BadRequestError()
       default:
         throw new UnexpectedError()
     }

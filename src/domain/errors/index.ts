@@ -1,3 +1,4 @@
+export * from './bad-request-error'
 export * from './internal-server-error'
 export * from './invalid-credentials-error'
 export * from './not-found-error'
