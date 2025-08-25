@@ -26,7 +26,7 @@ export class RemoteRegisterUser implements RegisterUserUseCase {
     data?: AuthenticateUserModel
     error?: string
   }> {
-    const { status, data } = await this.httpClient.post({
+    const { status, data, error } = await this.httpClient.post({
       url: this.url,
       body: registerUserParams,
     })
@@ -40,7 +40,7 @@ export class RemoteRegisterUser implements RegisterUserUseCase {
       case HttpStatusCode.serverError:
         throw new InternalServerError()
       case HttpStatusCode.badRequest:
-        throw new BadRequestError()
+        throw new BadRequestError(error?.message)
       default:
         throw new UnexpectedError()
     }
