@@ -1,5 +1,5 @@
 import { HttpStatusCode, type HttpDeleteClient } from '@/data/protocols'
-import { NotFoundError } from '@/domain/errors'
+import { NotFoundError, UnexpectedError } from '@/domain/errors'
 
 export class RemoteDeleteArticleById {
   private readonly url: string
@@ -16,8 +16,12 @@ export class RemoteDeleteArticleById {
     })
 
     switch (status) {
+      case HttpStatusCode.ok:
+        return {}
       case HttpStatusCode.notFound:
         throw new NotFoundError()
+      default:
+        throw new UnexpectedError()
     }
   }
 }
