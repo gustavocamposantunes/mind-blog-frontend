@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -34,9 +33,7 @@ export const CustomCard: React.FC<ICustomCard> = ({
       <CardTitle data-testid="header-title">{title}</CardTitle>
     </CardHeader>
     <CardContent data-testid="custom-card-content">
-      <CardDescription data-testid="card-description">
-        {description}
-      </CardDescription>
+      <p data-testid="card-description">{description}</p>
     </CardContent>
     <CardFooter
       className="flex justify-between mt-auto"
