@@ -11,7 +11,7 @@ import type { ReactNode } from 'react'
 interface ICustomCard {
   id: string
   onClick(): void
-  imageSlot: ReactNode
+  children: ReactNode
   title: string
   description: string
   footerChildren: ReactNode
@@ -20,7 +20,7 @@ interface ICustomCard {
 export const CustomCard: React.FC<ICustomCard> = ({
   id,
   onClick,
-  imageSlot,
+  children,
   title,
   description,
   footerChildren,
@@ -31,7 +31,7 @@ export const CustomCard: React.FC<ICustomCard> = ({
     onClick={onClick}
     data-testid={`custom-card-${id}`}
   >
-    {imageSlot}
+    {children}
     <CardHeader data-testid="custom-card-header">
       <CardTitle data-testid="header-title">{title}</CardTitle>
     </CardHeader>
