@@ -13,7 +13,7 @@ interface ICustomCard {
   onClick(): void
   title: string
   description: string
-  footerSlot: ReactNode
+  footerChildren: ReactNode
 }
 
 export const CustomCard: React.FC<ICustomCard> = ({
@@ -21,7 +21,7 @@ export const CustomCard: React.FC<ICustomCard> = ({
   onClick,
   title,
   description,
-  footerSlot,
+  footerChildren,
 }) => (
   <Card
     className="pt-0 cursor-pointer hover:shadow-lg transition-shadow"
@@ -39,7 +39,7 @@ export const CustomCard: React.FC<ICustomCard> = ({
       className="flex justify-between mt-auto"
       data-testid="custom-card-footer"
     >
-      {footerSlot}
+      {footerChildren}
     </CardFooter>
   </Card>
 )

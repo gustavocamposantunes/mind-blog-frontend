@@ -21,7 +21,7 @@ const makeSut = (
   data = {
     title: faker.lorem.sentence(),
     description: faker.lorem.paragraph(10),
-    footerSlot: <span></span>,
+    footerChildren: <span></span>,
   },
 ): SutTypes => {
   render(
@@ -30,7 +30,7 @@ const makeSut = (
       onClick={onClick}
       title={data.title}
       description={data.description}
-      footerSlot={data.footerSlot}
+      footerChildren={data.footerChildren}
     />,
   )
 
@@ -55,6 +55,8 @@ describe('CustomCard', () => {
 
     expect(mockNavigate).toHaveBeenCalledWith(`/article/${articleId}`)
   })
+
+  it('should render card header ', () => {})
 
   it('should render card header with correct title', () => {
     const { title } = makeSut()
