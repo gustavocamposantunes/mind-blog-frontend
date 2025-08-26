@@ -21,6 +21,7 @@ const makeSut = (
   data = {
     title: faker.lorem.sentence(),
     description: faker.lorem.paragraph(10),
+    footerSlot: <span></span>,
   },
 ): SutTypes => {
   render(
@@ -29,6 +30,7 @@ const makeSut = (
       onClick={onClick}
       title={data.title}
       description={data.description}
+      footerSlot={data.footerSlot}
     />,
   )
 
@@ -74,5 +76,14 @@ describe('CustomCard', () => {
 
     expect(cardDescription).toBeInTheDocument()
     expect(cardDescription?.textContent).toBe(description)
+  })
+
+  it('should render custom footer with correct slot', () => {
+    makeSut()
+
+    const cardFooter = screen.getByTestId('custom-card-footer')
+
+    expect(cardFooter).toBeInTheDocument()
+    expect(cardFooter.childElementCount).toBe(1)
   })
 })
