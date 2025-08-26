@@ -2,15 +2,19 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '../ui/card'
+
+import type { ReactNode } from 'react'
 
 interface ICustomCard {
   id: string
   onClick(): void
   title: string
   description: string
+  footerSlot: ReactNode
 }
 
 export const CustomCard: React.FC<ICustomCard> = ({
@@ -18,6 +22,7 @@ export const CustomCard: React.FC<ICustomCard> = ({
   onClick,
   title,
   description,
+  footerSlot,
 }) => (
   <Card
     className="pt-0 cursor-pointer hover:shadow-lg transition-shadow"
@@ -33,5 +38,11 @@ export const CustomCard: React.FC<ICustomCard> = ({
         {description}
       </CardDescription>
     </CardContent>
+    <CardFooter
+      className="flex justify-between mt-auto"
+      data-testid="custom-card-footer"
+    >
+      {footerSlot}
+    </CardFooter>
   </Card>
 )
