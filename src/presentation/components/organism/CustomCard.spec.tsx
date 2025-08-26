@@ -19,6 +19,7 @@ const makeSut = (
   articleId = faker.string.uuid(),
   onClick = () => {},
   data = {
+    imageSlot: <img data-testid="card-image" src="title" alt="title" />,
     title: faker.lorem.sentence(),
     description: faker.lorem.paragraph(10),
     footerChildren: <span></span>,
@@ -28,6 +29,7 @@ const makeSut = (
     <CustomCard
       id={articleId}
       onClick={onClick}
+      imageSlot={data.imageSlot}
       title={data.title}
       description={data.description}
       footerChildren={data.footerChildren}
@@ -56,7 +58,13 @@ describe('CustomCard', () => {
     expect(mockNavigate).toHaveBeenCalledWith(`/article/${articleId}`)
   })
 
-  it('should render card header ', () => {})
+  it('should render card image correctly', () => {
+    makeSut()
+
+    const cardImage = screen.getByTestId('card-image')
+
+    expect(cardImage).toBeInTheDocument()
+  })
 
   it('should render card header with correct title', () => {
     const { title } = makeSut()
