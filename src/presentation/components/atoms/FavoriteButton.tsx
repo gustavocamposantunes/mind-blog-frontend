@@ -12,7 +12,13 @@ export const FavoriteButton: React.FC<IFavoriteButton> = ({
 }) => {
   const [toogleFavorite, setToogleFavorite] = useState(isFavorited)
   return (
-    <Button data-testid="favorite-btn" onClick={() => setToogleFavorite(true)}>
+    <Button
+      data-testid="favorite-btn"
+      onClick={(e) => {
+        e.stopPropagation()
+        setToogleFavorite(!toogleFavorite)
+      }}
+    >
       <Heart
         data-testid="favorite-icon"
         fill={toogleFavorite ? 'red' : 'white'}
