@@ -30,4 +30,17 @@ describe('FavoriteButton', () => {
 
     expect(favoriteIcon.getAttribute('fill')).toBe('red')
   })
+
+  it('should change the fill color to white on click when is initiated red', () => {
+    render(<FavoriteButton isFavorited={true} />)
+
+    const favoriteIcon = screen.getByTestId('favorite-icon')
+
+    expect(favoriteIcon.getAttribute('fill')).toBe('red')
+
+    const favoriteBtn = screen.getByTestId('favorite-btn')
+    fireEvent.click(favoriteBtn)
+
+    expect(favoriteIcon.getAttribute('fill')).toBe('white')
+  })
 })
