@@ -5,10 +5,12 @@ import { Button } from '../ui/button'
 
 interface IFavoriteButton {
   isFavorited?: boolean
+  favoriteById: (id: number, favourite: () => boolean) => void
 }
 
 export const FavoriteButton: React.FC<IFavoriteButton> = ({
   isFavorited = false,
+  favoriteById,
 }) => {
   const [toogleFavorite, setToogleFavorite] = useState(isFavorited)
   return (
@@ -16,7 +18,11 @@ export const FavoriteButton: React.FC<IFavoriteButton> = ({
       data-testid="favorite-btn"
       onClick={(e) => {
         e.stopPropagation()
-        setToogleFavorite(!toogleFavorite)
+        favoriteById(1, () => {
+          setToogleFavorite(!toogleFavorite)
+
+          return toogleFavorite
+        })
       }}
     >
       <Heart
