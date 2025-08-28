@@ -19,20 +19,20 @@ const makeSut = (
   articleId = faker.string.uuid(),
   onClick = () => {},
   data = {
-    children: <div data-testid="card-children" />,
+    headerImageSrc: faker.image.urlLoremFlickr(),
     title: faker.lorem.sentence(),
     description: faker.lorem.paragraph(10),
-    footerChildren: <span></span>,
+    footer: <span></span>,
   },
 ): SutTypes => {
   render(
     <CustomCard
       id={articleId}
       onClick={onClick}
-      children={data.children}
+      headerImageSrc={data.headerImageSrc}
       title={data.title}
       description={data.description}
-      footerChildren={data.footerChildren}
+      footer={data.footer}
     />,
   )
 
@@ -58,12 +58,12 @@ describe('CustomCard', () => {
     expect(mockNavigate).toHaveBeenCalledWith(`/article/${articleId}`)
   })
 
-  it('should render card children correctly', () => {
+  it('should render the header image', () => {
     makeSut()
 
-    const cardChildren = screen.getByTestId('card-children')
+    const headerImage = screen.getByTestId('header-image')
 
-    expect(cardChildren).toBeInTheDocument()
+    expect(headerImage).toBeInTheDocument()
   })
 
   it('should render card header with correct title', () => {

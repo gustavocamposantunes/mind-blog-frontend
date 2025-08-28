@@ -1,11 +1,14 @@
-import { useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { PencilIcon, TrashIcon } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { FavoriteButton } from '../components/atoms'
+import { PublishedByInfo } from '../components/molecules'
+import { CustomCard } from '../components/organism/CustomCard'
 import {
   useArticlesList,
   useFavouriteArticle,
-  useResponsiveLimit,
+  useResponsivePagination,
 } from '../hooks'
 import { useAuthStore } from '../store'
 
@@ -15,7 +18,6 @@ import type {
 } from '@/domain/usecases'
 
 import { CustomPagination } from '@/presentation/components/organism'
-import { ArticleCard } from '@/presentation/components/organism/ArticleCard'
 import { ArticlesTemplate } from '@/presentation/components/templates'
 
 type ArticlessPageProps = {
@@ -27,28 +29,10 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   listArticles,
   favouriteArticle,
 }) => {
+  const navigate = useNavigate()
   const { user, accessToken } = useAuthStore()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const responsiveLimit = useResponsiveLimit()
-
-  const currentPage = Number(searchParams.get('page'))
-  const currentLimit = responsiveLimit
-
-  useEffect(() => {
-    const currentSearchPage = searchParams.get('page')
-    const currentSearchLimit = searchParams.get('limit')
-
-    const shouldUpdate =
-      currentSearchPage !== String(currentPage) ||
-      currentSearchLimit !== String(currentLimit)
-
-    if (shouldUpdate) {
-      setSearchParams({
-        page: String(currentPage),
-        limit: String(currentLimit),
-      })
-    }
-  }, [currentPage, currentLimit, setSearchParams, searchParams])
+  const { currentPage, currentLimit, setSearchParams } =
+    useResponsivePagination()
 
   const { data, isLoading, error } = useArticlesList(listArticles, {
     page: currentPage,
@@ -58,10 +42,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   const { mutate: mutateFavouriteArticle } =
     useFavouriteArticle(favouriteArticle)
 
-  const favouriteArticleById = (
-    articleId: number,
-    favourite: () => boolean,
-  ) => {
+  const favoriteById = (articleId: number, favourite: () => boolean) => {
     mutateFavouriteArticle(
       {
         articleId,
@@ -96,17 +77,56 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     )
   }
 
+  const isLoggedIn = !!accessToken
   return (
     <ArticlesTemplate isLoading={isLoading} error={error}>
-      {data?.articles.map(({ ...props }) => (
-        <ArticleCard
-          key={props.id}
-          {...props}
-          isLoggedIn={!!accessToken}
-          authUserId={user.id}
-          favouriteArticleById={favouriteArticleById}
-        />
-      ))}
+      {data?.articles.map(({ ...props }) => {
+        const isCurrentUser = user.id === props.author.id
+        let currentUserArticleAction
+        if (isCurrentUser && isLoggedIn) {
+          currentUserArticleAction = (
+            <>
+              <Link
+                to={`/article/edit/${props.id}`}
+                onClick={(e) => {
+                  e.stopPropagation()
+                }}
+              >
+                <PencilIcon data-testid="pencil-icon" />
+              </Link>
+              <TrashIcon data-testid="delete-icon" />
+            </>
+          )
+        }
+
+        return (
+          <CustomCard
+            key={props.id}
+            id={String(props.id)}
+            headerImageSrc={props.image}
+            title={props.title}
+            description={props.content}
+            onClick={() => {
+              navigate(`/articles/${props.id}`)
+            }}
+            footer={[
+              <PublishedByInfo
+                avatar={props.author.avatar}
+                author={props.author.firstName}
+                publishedAt={props.publishedAt}
+              />,
+              <span className="flex gap-4">
+                {currentUserArticleAction}
+                <FavoriteButton
+                  isFavorited={props.favourited}
+                  isCurrentUserAndLoggedIn={!isCurrentUser && isLoggedIn}
+                  favoriteById={favoriteById}
+                />
+              </span>,
+            ]}
+          />
+        )
+      })}
       {paginationComponent}
     </ArticlesTemplate>
   )

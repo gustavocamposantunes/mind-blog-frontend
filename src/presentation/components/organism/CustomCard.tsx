@@ -11,19 +11,19 @@ import type { ReactNode } from 'react'
 interface ICustomCard {
   id: string
   onClick(): void
-  children: ReactNode
+  headerImageSrc?: string
   title: string
   description: string
-  footerChildren: ReactNode
+  footer: ReactNode
 }
 
 export const CustomCard: React.FC<ICustomCard> = ({
   id,
   onClick,
-  children,
+  headerImageSrc,
   title,
   description,
-  footerChildren,
+  footer,
 }) => (
   <Card
     className="pt-0 cursor-pointer hover:shadow-lg transition-shadow"
@@ -31,9 +31,18 @@ export const CustomCard: React.FC<ICustomCard> = ({
     onClick={onClick}
     data-testid={`custom-card-${id}`}
   >
-    {children}
-    <CardHeader data-testid="custom-card-header">
-      <CardTitle data-testid="header-title">{title}</CardTitle>
+    <CardHeader className="px-0" data-testid="custom-card-header">
+      <div className="flex">
+        <img
+          data-testid="header-image"
+          className="flex-1"
+          src={headerImageSrc}
+          alt={title}
+        />
+      </div>
+      <CardTitle className="px-6" data-testid="header-title">
+        {title}
+      </CardTitle>
     </CardHeader>
     <CardContent data-testid="custom-card-content">
       <p data-testid="card-description">{description}</p>
@@ -42,7 +51,7 @@ export const CustomCard: React.FC<ICustomCard> = ({
       className="flex justify-between mt-auto"
       data-testid="custom-card-footer"
     >
-      {footerChildren}
+      {footer}
     </CardFooter>
   </Card>
 )

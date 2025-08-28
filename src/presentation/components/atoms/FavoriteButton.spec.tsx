@@ -13,7 +13,10 @@ type SutTypes = {
   mockFavoriteById: Mock
 }
 
-const makeSut = (isFavorited = false): SutTypes => {
+const makeSut = (
+  isFavorited = false,
+  isCurrentUserAndLoggedIn = true,
+): SutTypes => {
   const mockFavoriteById = vi
     .fn()
     .mockImplementation((id: number, favorited: () => boolean) => {
@@ -23,6 +26,7 @@ const makeSut = (isFavorited = false): SutTypes => {
     <FavoriteButton
       isFavorited={isFavorited}
       favoriteById={mockFavoriteById}
+      isCurrentUserAndLoggedIn={isCurrentUserAndLoggedIn}
     />,
   )
 
@@ -67,8 +71,7 @@ describe('FavoriteButton', () => {
   })
 
   it('should call favoriteById on click', () => {
-    const mockFavoriteById = vi.fn()
-    render(<FavoriteButton favoriteById={mockFavoriteById} />)
+    const { mockFavoriteById } = makeSut()
 
     const favoriteBtn = screen.getByTestId('favorite-btn')
     fireEvent.click(favoriteBtn)
@@ -76,12 +79,12 @@ describe('FavoriteButton', () => {
     expect(mockFavoriteById).toHaveBeenCalledOnce()
   })
 
-  it('shoulod call favoriteById on click', () => {
-    const { mockFavoriteById } = makeSut()
+  it('should not render if article is not from current user and logged in', () => {
+    const isCurrentUserAndLoggedIn = false
+    makeSut(true, isCurrentUserAndLoggedIn)
 
-    const favoriteBtn = screen.getByTestId('favorite-btn')
-    fireEvent.click(favoriteBtn)
+    const favoriteIcon = screen.queryByTestId('favorite-icon')
 
-    expect(mockFavoriteById).toHaveBeenCalledOnce()
+    expect(favoriteIcon).not.toBeInTheDocument()
   })
 })

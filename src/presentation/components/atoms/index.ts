@@ -1,5 +1,6 @@
 export * from './AuthForm'
 export * from './CustomSkeleton'
 export * from './ErrorMessage'
+export * from './FavoriteButton'
 export * from './FavouriteSkeleton'
 export * from './MenuItem'

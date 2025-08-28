@@ -13,9 +13,11 @@ import { mockArticlesList, mockAuthenticateUserModel } from '@/domain/test'
 
 let useSearchParamsMock = vi.fn()
 
+const mockNavigate = vi.fn()
+
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
-  useNavigate: () => vi.fn(),
+  useNavigate: () => mockNavigate,
   useSearchParams: (...args: unknown[]) => useSearchParamsMock(...args),
 }))
 
@@ -114,7 +116,7 @@ describe('ArticlesPage', () => {
       const firstArticleContent = await screen.findByText(
         listArticlesListSpy.articlesList.articles[0].content,
       )
-      const firstArticleDate = await screen.findAllByTestId('published-at')
+      const firstArticleDate = await screen.findAllByTestId('published-by-info')
       const firstArticleImage = (await screen.findByAltText(
         listArticlesListSpy.articlesList.articles[0].title,
       )) as HTMLImageElement
@@ -138,7 +140,7 @@ describe('ArticlesPage', () => {
       const { listArticlesListSpy } = makeSut()
 
       await screen.findByTestId(
-        `card-article-${listArticlesListSpy.articlesList.articles[1].id}`,
+        `custom-card-${listArticlesListSpy.articlesList.articles[1].id}`,
       )
 
       const pencilIcon = await screen.findByTestId('pencil-icon')
@@ -159,17 +161,26 @@ describe('ArticlesPage', () => {
 
       expect(editArticlePageMock).toBeTruthy()
     })
+
+    it('should call navigate with article/id when card is clicked', async () => {
+      const { listArticlesListSpy } = makeSut()
+      const articleId = listArticlesListSpy.articlesList.articles[0].id
+
+      const customCard = await screen.findByTestId(`custom-card-${articleId}`)
+
+      fireEvent.click(customCard)
+
+      expect(mockNavigate).toHaveBeenCalledWith(`/articles/${articleId}`)
+    })
   })
 
   describe('Favourite', () => {
-    it('should render a favorite heart icon on article', async () => {
+    it('should render a favorite button on article', async () => {
       makeSut()
 
-      const favoriteHeartIcon = await screen.findAllByTestId(
-        'favorite-heart-icon',
-      )
+      const favoriteBtn = await screen.findAllByTestId('favorite-btn')
 
-      expect(favoriteHeartIcon).toBeTruthy()
+      expect(favoriteBtn).toBeTruthy()
     })
 
     const setupFavouriteError = async () => {
@@ -180,15 +191,13 @@ describe('ArticlesPage', () => {
       )
       makeSut(undefined, favouriteArticleSpy)
 
-      const [favoriteHeartIcon] = await screen.findAllByTestId(
-        'favorite-heart-icon',
-      )
+      const [favoriteBtn] = await screen.findAllByTestId('favorite-btn')
 
-      fireEvent.click(favoriteHeartIcon)
+      fireEvent.click(favoriteBtn)
 
       return {
         mockedError,
-        favoriteHeartIcon,
+        favoriteBtn,
       }
     }
 
@@ -201,53 +210,55 @@ describe('ArticlesPage', () => {
     })
 
     it('should mantain the heart icon fill white if an error occur', async () => {
-      const { mockedError, favoriteHeartIcon } = await setupFavouriteError()
+      const { mockedError } = await setupFavouriteError()
 
       await screen.findByText(mockedError.message)
 
-      expect(favoriteHeartIcon.getAttribute('fill')).toBe('white')
+      const [favoriteIcon] = screen.getAllByTestId('favorite-icon')
+
+      expect(favoriteIcon.getAttribute('fill')).toBe('white')
     })
 
     it('should change favorite heart icon color on success', async () => {
       makeSut()
 
-      const [favoriteHeartIcon] = await screen.findAllByTestId(
-        'favorite-heart-icon',
-      )
+      const [favoriteIcon] = await screen.findAllByTestId('favorite-icon')
 
-      expect(favoriteHeartIcon.getAttribute('fill')).toBe('white')
+      expect(favoriteIcon.getAttribute('fill')).toBe('white')
 
-      fireEvent.click(favoriteHeartIcon)
+      const [favoriteBtn] = screen.getAllByTestId('favorite-btn')
+
+      fireEvent.click(favoriteBtn)
 
       await screen.findByText('Artigo adicionado aos favoritos')
 
-      expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
+      expect(favoriteIcon.getAttribute('fill')).toBe('red')
     })
 
     const setupFavouritedArticle = async () => {
       makeSut()
 
-      const favoriteHeartIcon = await screen.findAllByTestId(
-        'favorite-heart-icon',
-      )
+      const favoriteIcon = await screen.findAllByTestId('favorite-icon')
+      const favoriteButton = screen.getAllByTestId('favorite-btn')
 
       return {
-        favoriteHeartIcon: favoriteHeartIcon[1],
+        favoriteIcon: favoriteIcon[1],
+        favoriteButton: favoriteButton[1],
       }
     }
 
     it('should init the article favourited', async () => {
-      const { favoriteHeartIcon } = await setupFavouritedArticle()
+      const { favoriteIcon } = await setupFavouritedArticle()
 
-      expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
+      expect(favoriteIcon.getAttribute('fill')).toBe('red')
     })
 
     it('should not render add to favourite toast when article is already added', async () => {
-      const { favoriteHeartIcon } = await setupFavouritedArticle()
+      const { favoriteIcon, favoriteButton } = await setupFavouritedArticle()
 
-      fireEvent.click(favoriteHeartIcon)
+      fireEvent.click(favoriteButton)
 
-      expect(favoriteHeartIcon.getAttribute('fill')).toBe('red')
+      expect(favoriteIcon.getAttribute('fill')).toBe('red')
 
       expect(
         await screen
@@ -255,6 +266,16 @@ describe('ArticlesPage', () => {
           .then((el) => el)
           .catch(() => null),
       ).toBeFalsy()
+    })
+  })
+
+  describe('Delete', () => {
+    it('should render a delete icon on article', async () => {
+      makeSut()
+
+      const deleteIcon = await screen.findAllByTestId('delete-icon')
+
+      expect(deleteIcon).toBeTruthy()
     })
   })
 
@@ -290,7 +311,7 @@ describe('ArticlesPage', () => {
       await screen.findByTestId('pagination')
 
       listArticlesListSpy.articlesList.articles.forEach((props) => {
-        expect(screen.getByTestId(`card-article-${props.id}`)).toBeTruthy()
+        expect(screen.getByTestId(`custom-card-${props.id}`)).toBeTruthy()
       })
     })
 
