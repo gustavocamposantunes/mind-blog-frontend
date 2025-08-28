@@ -1,6 +1,5 @@
 import { PencilIcon, TrashIcon } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
 
 import { FavoriteButton } from '../components/atoms'
 import { PublishedByInfo } from '../components/molecules'
@@ -39,26 +38,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     limit: currentLimit,
   })
 
-  const { mutate: mutateFavouriteArticle } =
-    useFavouriteArticle(favouriteArticle)
-
-  const favoriteById = (articleId: number, favourite: () => boolean) => {
-    mutateFavouriteArticle(
-      {
-        articleId,
-        token: accessToken,
-      },
-      {
-        onError: (error) => toast.error(error.message),
-        onSuccess: () => {
-          const isFavourited = favourite()
-          toast.info(
-            `Artigo ${isFavourited ? 'removido dos' : 'adicionado aos'} favoritos`,
-          )
-        },
-      },
-    )
-  }
+  const { favoriteById } = useFavouriteArticle(favouriteArticle, accessToken)
 
   let paginationComponent
   if (!isLoading && data) {

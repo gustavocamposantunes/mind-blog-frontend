@@ -1,11 +1,13 @@
 import { useMutation } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
 
 import type { FavouriteArticleUseCase } from '@/domain/usecases'
 
 export const useFavouriteArticle = (
   favouriteArticle: FavouriteArticleUseCase,
+  accessToken: string,
 ) => {
-  return useMutation({
+  const { mutate } = useMutation({
     mutationFn: async ({
       articleId,
       token,
@@ -18,4 +20,24 @@ export const useFavouriteArticle = (
       return result.data
     },
   })
+
+  const favoriteById = (articleId: number, favourite: () => boolean) => {
+    mutate(
+      {
+        articleId,
+        token: accessToken,
+      },
+      {
+        onError: (error) => toast.error(error.message),
+        onSuccess: () => {
+          const isFavourited = favourite()
+          toast.info(
+            `Artigo ${isFavourited ? 'removido dos' : 'adicionado aos'} favoritos`,
+          )
+        },
+      },
+    )
+  }
+
+  return { mutate, favoriteById }
 }

@@ -1,7 +1,6 @@
 import { Heart, PencilIcon } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
 
 import { Article } from '../components/organism'
 import { useFavouriteArticle, useGetArticleById } from '../hooks'
@@ -54,7 +53,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
           fill={toogleFavourite ? 'red' : 'white'}
           color={toogleFavourite ? 'red' : undefined}
           onClick={() => {
-            favouriteArticleById(data.id, () => {
+            favoriteById(data.id, () => {
               setToogleFavourite(!toogleFavourite)
 
               return !!toogleFavourite
@@ -72,29 +71,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
     )
   }
 
-  const { mutate: mutateFavouriteArticle } =
-    useFavouriteArticle(favouriteArticle)
-
-  const favouriteArticleById = (
-    articleId: number,
-    favourite: () => boolean,
-  ) => {
-    mutateFavouriteArticle(
-      {
-        articleId,
-        token: accessToken,
-      },
-      {
-        onError: (error) => toast.error(error.message),
-        onSuccess: () => {
-          const isFavourited = favourite()
-          toast.info(
-            `Artigo ${isFavourited ? 'removido dos' : 'adicionado aos'} favoritos`,
-          )
-        },
-      },
-    )
-  }
+  const { favoriteById } = useFavouriteArticle(favouriteArticle, accessToken)
 
   return (
     <ArticleTemplate isLoading={isLoading} error={error}>
