@@ -6,9 +6,18 @@ import { PublishedByInfo } from './PublishedByInfo'
 import { cleanup, render, screen } from '@/presentation/test/test-utils'
 import { formatDateToShortMonth } from '@/presentation/utils/dateFormatter'
 
-const makeSut = (publishedAt = faker.date.anytime().toISOString()) => {
+const makeSut = (
+  publishedAt = faker.date.anytime().toISOString(),
+  author = faker.person.firstName(),
+) => {
   const avatar = faker.image.avatar()
-  render(<PublishedByInfo avatar={avatar} publishedAt={publishedAt} />)
+  render(
+    <PublishedByInfo
+      avatar={avatar}
+      author={author}
+      publishedAt={publishedAt}
+    />,
+  )
 }
 
 describe('PublishedByInfo', () => {
@@ -31,6 +40,17 @@ describe('PublishedByInfo', () => {
     expect(publishedByInfo).toBeInTheDocument()
     expect(publishedByInfo.textContent).toEqual(
       expect.stringContaining(formatDateToShortMonth(publishedAt)),
+    )
+  })
+
+  it('should render the author', () => {
+    const author = faker.person.firstName()
+    makeSut(undefined, author)
+
+    const publishedByInfo = screen.getByTestId('published-by-info')
+
+    expect(publishedByInfo.textContent).toEqual(
+      expect.stringContaining(`Por ${author}`),
     )
   })
 })
