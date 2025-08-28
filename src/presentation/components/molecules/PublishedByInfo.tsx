@@ -7,11 +7,13 @@ import { formatDateToShortMonth } from '@/presentation/utils/dateFormatter'
 
 interface IPublishedByInfo {
   avatar: string
+  author: string
   publishedAt: string
 }
 
 export const PublishedByInfo: React.FC<IPublishedByInfo> = ({
   avatar,
+  author,
   publishedAt,
 }) => {
   const formattedDate = formatDateToShortMonth(publishedAt)
@@ -25,7 +27,9 @@ export const PublishedByInfo: React.FC<IPublishedByInfo> = ({
         />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
-      <span data-testid="published-by-info">{formattedDate}</span>
+      <span data-testid="published-by-info">
+        Por {author} - {formattedDate}
+      </span>
     </div>
   )
 }
