@@ -1,11 +1,15 @@
+import { useNavigate } from 'react-router-dom'
 import { Autoplay, Parallax } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { ErrorMessage } from '../atoms'
+import { PublishedByInfo } from '../molecules'
+import { Button } from '../ui/button'
 import { Skeleton } from '../ui/skeleton'
 
-import { ArticleCard } from './ArticleCard'
+import { CustomCard } from './CustomCard'
 
+import type { ArticleModel } from '@/domain/models'
 import type React from 'react'
 
 import 'swiper/css'
@@ -13,12 +17,7 @@ import 'swiper/css'
 interface IFavouritesSlider {
   error: Error | null
   isLoading: boolean
-  articles?: {
-    id: number
-    title: string
-    content: string
-    image?: string
-  }[]
+  articles?: ArticleModel[]
 }
 
 export const FavouritesSlider: React.FC<IFavouritesSlider> = ({
@@ -26,6 +25,8 @@ export const FavouritesSlider: React.FC<IFavouritesSlider> = ({
   isLoading,
   articles,
 }) => {
+  const navigate = useNavigate()
+
   if (error) return <ErrorMessage error={error} />
   if (isLoading)
     return (
@@ -51,7 +52,28 @@ export const FavouritesSlider: React.FC<IFavouritesSlider> = ({
     >
       {articles?.map(({ ...props }) => (
         <SwiperSlide>
-          <ArticleCard key={props.id} {...props} redirect={String(props.id)} />
+          <CustomCard
+            key={props.id}
+            id={String(props.id)}
+            headerImageSrc={props.image}
+            title={props.title}
+            description={props.content}
+            onClick={() => {
+              navigate(`/articles/${props.id}`)
+            }}
+            footer={
+              <>
+                <PublishedByInfo
+                  avatar={props.author.avatar}
+                  author={props.author.firstName}
+                  publishedAt={props.publishedAt}
+                />
+                <Button className="orange-btn action-btn uppercase">
+                  Ler mais
+                </Button>
+              </>
+            }
+          />
         </SwiperSlide>
       ))}
     </Swiper>

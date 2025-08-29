@@ -132,11 +132,11 @@ describe('HomePage', () => {
         const { listArticlesSpy } = makeSut()
 
         await screen.findAllByTestId(
-          `card-article-${listArticlesSpy.articlesList.articles[0].id}`,
+          `custom-card-${listArticlesSpy.articlesList.articles[0].id}`,
         )
 
         listArticlesSpy.articlesList.articles.map(({ id }) => {
-          const cardsArticle = screen.getAllByTestId(`card-article-${id}`)
+          const cardsArticle = screen.getAllByTestId(`custom-card-${id}`)
           const cardArticle = cardsArticle[1]
           expect(cardArticle).toBeInTheDocument()
         })
