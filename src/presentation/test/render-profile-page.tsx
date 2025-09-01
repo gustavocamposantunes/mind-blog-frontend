@@ -5,7 +5,7 @@ import { ProfilePage } from '../pages'
 import { render } from './test-utils'
 
 import type { GetProfileSpy } from './mock-get-profile'
-import type { UpdateProfileSpy } from './mock-put-profile'
+import type { UpdateProfileSpy } from './mock-update-profile'
 
 export const renderProfilePageWithRouter = (
   getProfileSpy: GetProfileSpy,

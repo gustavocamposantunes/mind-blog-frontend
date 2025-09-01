@@ -19,7 +19,7 @@ const makeSut = (
 ): SutTypes => {
   const mockFavoriteById = vi
     .fn()
-    .mockImplementation((id: number, favorited: () => boolean) => {
+    .mockImplementation((_id: number, favorited: () => boolean) => {
       favorited()
     })
   render(

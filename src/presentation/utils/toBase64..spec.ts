@@ -14,7 +14,7 @@ describe('toBase64', () => {
 
   beforeEach(() => {
     mockFileReader = {
-      readAsDataURL: vi.fn(function (this: any, file: File) {
+      readAsDataURL: vi.fn(function (this: any, _file: File) {
         // Simula comportamento assíncrono
         setTimeout(() => {
           this.result = 'data:image/png;base64,ZmFrZS1pbWFnZS1kYXRh'

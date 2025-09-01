@@ -44,7 +44,7 @@ export const mockArticle = (
   }),
   author: {
     id: author_id,
-    name: faker.person.fullName(),
+    firstName: faker.person.fullName(),
     avatar: faker.image.avatar(),
   },
   favouriteCount,
