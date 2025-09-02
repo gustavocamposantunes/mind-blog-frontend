@@ -1,6 +1,6 @@
 import { UserPlus } from 'lucide-react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { AuthForm } from '../components/atoms'
@@ -145,6 +145,10 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
           Criar Conta
           <UserPlus />
         </Button>
+
+        <Link to="/" className="text-center mt-4">
+          Continuar sem login
+        </Link>
       </AuthForm>
     </RegisterUserTemplate>
   )

@@ -83,6 +83,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
           Entrar
           <LogIn />
         </Button>
+
+        <Link to="/" className="text-center mt-4">
+          Continuar sem login
+        </Link>
       </AuthForm>
     </LoginTemplate>
   )
