@@ -88,4 +88,13 @@ describe('LoginPage', () => {
     expect(registerUserLink.getAttribute('href')).toBeTruthy()
     expect(registerUserLink.getAttribute('href')).toContain('/register')
   })
+
+  it('should redirect to HomePage when user clicks to continue without login', () => {
+    makeSut()
+
+    const continueWithoutLoginLink = screen.getByText(/continuar sem login/i)
+
+    expect(continueWithoutLoginLink.getAttribute('href')).toBeTruthy()
+    expect(continueWithoutLoginLink.getAttribute('href')).toContain('/')
+  })
 })

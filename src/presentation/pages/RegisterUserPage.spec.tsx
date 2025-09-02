@@ -109,4 +109,13 @@ describe('RegisterUserPage', () => {
       expect(screen.getByTestId('login-page-mock')).toBeTruthy()
     })
   })
+
+  it('should redirect to HomePage when user clicks to continue without login', () => {
+    makeSut()
+
+    const continueWithoutLoginLink = screen.getByText(/continuar sem login/i)
+
+    expect(continueWithoutLoginLink.getAttribute('href')).toBeTruthy()
+    expect(continueWithoutLoginLink.getAttribute('href')).toContain('/')
+  })
 })
