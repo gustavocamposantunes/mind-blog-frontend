@@ -4,8 +4,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FavoriteButton } from '../components/atoms'
 import { PublishedByInfo } from '../components/molecules'
 import { CustomCard } from '../components/organism/CustomCard'
+import { Button } from '../components/ui/button'
 import {
   useArticlesList,
+  useDeleteArticle,
   useFavouriteArticle,
   useResponsivePagination,
 } from '../hooks'
@@ -15,6 +17,7 @@ import type {
   FavouriteArticleUseCase,
   ListArticlesUseCase,
 } from '@/domain/usecases'
+import type { DeleteArticleByIdUseCase } from '@/domain/usecases/article/delete-article-by-id.usecase'
 
 import { CustomPagination } from '@/presentation/components/organism'
 import { ArticlesTemplate } from '@/presentation/components/templates'
@@ -22,11 +25,13 @@ import { ArticlesTemplate } from '@/presentation/components/templates'
 type ArticlessPageProps = {
   listArticles: ListArticlesUseCase
   favouriteArticle: FavouriteArticleUseCase
+  deleteArticle: DeleteArticleByIdUseCase
 }
 
 export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   listArticles,
   favouriteArticle,
+  deleteArticle,
 }) => {
   const navigate = useNavigate()
   const { user, accessToken } = useAuthStore()
@@ -39,6 +44,8 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   })
 
   const { favoriteById } = useFavouriteArticle(favouriteArticle, accessToken)
+
+  const { deleteById } = useDeleteArticle(deleteArticle, accessToken)
 
   let paginationComponent
   if (!isLoading && data) {
@@ -74,7 +81,16 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
               >
                 <PencilIcon data-testid="pencil-icon" />
               </Link>
-              <TrashIcon data-testid="delete-icon" />
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  deleteById(props.id)
+                }}
+                className="bg-red-600!"
+                data-testid="delete-btn"
+              >
+                <TrashIcon data-testid="delete-icon" />
+              </Button>
             </>
           )
         }

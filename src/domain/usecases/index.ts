@@ -1,3 +1,4 @@
+export * from './article/delete-article-by-id.usecase'
 export * from './article/get-article-by-id.usecase'
 export * from './article/list-articles.usecase'
 export * from './article/register-article.usecase'

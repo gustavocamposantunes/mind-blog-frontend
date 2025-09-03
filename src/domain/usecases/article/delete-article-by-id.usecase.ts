@@ -1,5 +1,8 @@
 import type { HttpRemoteResponse } from '@/data/protocols'
 
-export interface DeleteArticleById {
-  deleteById(id: string): Promise<HttpRemoteResponse<{ message: string }>>
+export interface DeleteArticleByIdUseCase {
+  deleteById(
+    id: number,
+    token: string,
+  ): Promise<HttpRemoteResponse<{ message: string }>>
 }
