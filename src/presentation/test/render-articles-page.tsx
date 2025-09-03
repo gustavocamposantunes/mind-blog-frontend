@@ -4,12 +4,14 @@ import { ArticlesPage } from '../pages'
 
 import { render } from './test-utils'
 
+import type { DeleteArticleSpy } from './mock-delete-article-by-id'
 import type { FavouriteArticleSpy } from './mock-favourite-article'
 import type { ListArticlesSpy } from './mock-list-articles'
 
 export const renderArticlesPageWithRouter = (
   listArticlesSpy: ListArticlesSpy,
   favouriteArticleSpy: FavouriteArticleSpy,
+  deleteArticleSpy: DeleteArticleSpy,
 ) => {
   const ArticlesMemoryRouter = () => (
     <MemoryRouter initialEntries={['/articles']}>
@@ -20,6 +22,7 @@ export const renderArticlesPageWithRouter = (
             <ArticlesPage
               listArticles={listArticlesSpy}
               favouriteArticle={favouriteArticleSpy}
+              deleteArticle={deleteArticleSpy}
             />
           }
         />

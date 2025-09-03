@@ -22,14 +22,18 @@ const makeSut = (url = faker.internet.url()): SutTypes => {
 }
 
 describe('RemoteDeleteArticleById', () => {
-  it('should call HttpDeleteClient with correct URL', async () => {
+  it('should call HttpDeleteClient with correct URL and Headers', async () => {
     const url = faker.internet.url()
     const { sut, httpDeleteClientSpy } = makeSut(url)
     const articleId = faker.string.uuid()
+    const token = faker.string.uuid()
 
-    await sut.deleteById(articleId)
+    await sut.deleteById(articleId, token)
 
     expect(httpDeleteClientSpy.url).toBe(`${url}/${articleId}`)
+    expect(httpDeleteClientSpy.headers).toEqual({
+      Authorization: `Bearer ${token}`,
+    })
   })
 
   it('should throw NotFoundError if HttpDeleteClient returns 404', async () => {
@@ -39,7 +43,8 @@ describe('RemoteDeleteArticleById', () => {
     }
 
     const articleId = faker.string.uuid()
-    const promise = sut.deleteById(articleId)
+    const token = faker.string.uuid()
+    const promise = sut.deleteById(articleId, token)
 
     await expect(promise).rejects.toThrow(new NotFoundError())
   })
@@ -51,7 +56,8 @@ describe('RemoteDeleteArticleById', () => {
     }
 
     const articleId = faker.string.uuid()
-    const promise = sut.deleteById(articleId)
+    const token = faker.string.uuid()
+    const promise = sut.deleteById(articleId, token)
 
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
@@ -59,6 +65,7 @@ describe('RemoteDeleteArticleById', () => {
   it('should return a message if article is deleted successfully', async () => {
     const { sut, httpDeleteClientSpy } = makeSut()
     const articleId = faker.string.uuid()
+    const token = faker.string.uuid()
 
     httpDeleteClientSpy.response = {
       status: 200,
@@ -67,7 +74,7 @@ describe('RemoteDeleteArticleById', () => {
       },
     }
 
-    const response = await sut.deleteById(articleId)
+    const response = await sut.deleteById(articleId, token)
     expect(response.statusCode).toBe(200)
     expect(response.data).toEqual({
       message: 'Article deleted successfully',

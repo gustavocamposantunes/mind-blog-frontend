@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest'
 
 import {
+  DeleteArticleSpy,
   FavouriteArticleSpy,
   ListArticlesSpy,
   renderArticlesPageWithRouter,
@@ -40,21 +41,25 @@ const useMediaQueryMock = vi.mocked(
 type SutTypes = {
   listArticlesListSpy: ListArticlesSpy
   favouriteArticleSpy: FavouriteArticleSpy
+  deleteArticleSpy: DeleteArticleSpy
   rerender: () => void
 }
 
 const makeSut = (
   listArticlesListSpy = new ListArticlesSpy(),
   favouriteArticleSpy = new FavouriteArticleSpy(),
+  deleteArticleSpy = new DeleteArticleSpy(),
 ): SutTypes => {
   const { rerender } = renderArticlesPageWithRouter(
     listArticlesListSpy,
     favouriteArticleSpy,
+    deleteArticleSpy,
   )
 
   return {
     listArticlesListSpy,
     favouriteArticleSpy,
+    deleteArticleSpy,
     rerender,
   }
 }
@@ -276,6 +281,37 @@ describe('ArticlesPage', () => {
       const deleteIcon = await screen.findAllByTestId('delete-icon')
 
       expect(deleteIcon).toBeTruthy()
+    })
+
+    it('should render a toast.error when article is not deleted correctly', async () => {
+      const deleteArticleSpy = new DeleteArticleSpy()
+      const mockedError = new UnexpectedError()
+
+      vi.spyOn(deleteArticleSpy, 'deleteById').mockRejectedValueOnce(
+        mockedError,
+      )
+
+      makeSut(undefined, undefined, deleteArticleSpy)
+
+      const [deleteBtn] = await screen.findAllByTestId('delete-btn')
+
+      fireEvent.click(deleteBtn)
+
+      const error = await screen.findByText(mockedError.message)
+
+      expect(error).toBeInTheDocument()
+    })
+
+    it('should render a toast.success when article is deleted', async () => {
+      makeSut()
+
+      const [deleteBtn] = await screen.findAllByTestId('delete-btn')
+
+      fireEvent.click(deleteBtn)
+
+      const message = await screen.findByText('Artigo deletado com sucesso')
+
+      expect(message).toBeInTheDocument()
     })
   })
 
