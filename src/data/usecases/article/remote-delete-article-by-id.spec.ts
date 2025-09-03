@@ -25,7 +25,7 @@ describe('RemoteDeleteArticleById', () => {
   it('should call HttpDeleteClient with correct URL and Headers', async () => {
     const url = faker.internet.url()
     const { sut, httpDeleteClientSpy } = makeSut(url)
-    const articleId = faker.string.uuid()
+    const articleId = faker.number.int()
     const token = faker.string.uuid()
 
     await sut.deleteById(articleId, token)
@@ -42,7 +42,7 @@ describe('RemoteDeleteArticleById', () => {
       status: 404,
     }
 
-    const articleId = faker.string.uuid()
+    const articleId = faker.number.int()
     const token = faker.string.uuid()
     const promise = sut.deleteById(articleId, token)
 
@@ -55,7 +55,7 @@ describe('RemoteDeleteArticleById', () => {
       status: 502,
     }
 
-    const articleId = faker.string.uuid()
+    const articleId = faker.number.int()
     const token = faker.string.uuid()
     const promise = sut.deleteById(articleId, token)
 
@@ -64,7 +64,7 @@ describe('RemoteDeleteArticleById', () => {
 
   it('should return a message if article is deleted successfully', async () => {
     const { sut, httpDeleteClientSpy } = makeSut()
-    const articleId = faker.string.uuid()
+    const articleId = faker.number.int()
     const token = faker.string.uuid()
 
     httpDeleteClientSpy.response = {
