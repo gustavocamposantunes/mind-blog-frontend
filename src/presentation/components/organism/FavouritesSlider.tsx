@@ -47,7 +47,6 @@ export const FavouritesSlider: React.FC<IFavouritesSlider> = ({
         disableOnInteraction: false,
       }}
       parallax={true}
-      loop={true}
       data-testid="favourites-slider"
     >
       {articles?.map(({ ...props }) => (
@@ -56,6 +55,7 @@ export const FavouritesSlider: React.FC<IFavouritesSlider> = ({
             key={props.id}
             id={String(props.id)}
             headerImageSrc={props.image}
+            imageClassName="h-64 object-cover md:h-96 lg:h-[32rem]"
             title={props.title}
             description={props.content}
             onClick={() => {
