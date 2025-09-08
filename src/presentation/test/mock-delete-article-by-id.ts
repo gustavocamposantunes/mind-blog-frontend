@@ -4,8 +4,8 @@ import type { DeleteArticleByIdUseCase } from '@/domain/usecases/article/delete-
 
 export class DeleteArticleSpy implements DeleteArticleByIdUseCase {
   deleteById(
-    id: number,
-    token: string,
+    _id: number,
+    _token: string,
   ): Promise<HttpRemoteResponse<{ message: string }>> {
     return Promise.resolve({
       statusCode: 200,
