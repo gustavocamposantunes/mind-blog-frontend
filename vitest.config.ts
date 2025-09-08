@@ -20,6 +20,7 @@ export default defineConfig({
         'vitest.config.ts',
         '.storybook',
         'src/stories',
+        'dist',
       ],
       thresholds: {
         global: {
