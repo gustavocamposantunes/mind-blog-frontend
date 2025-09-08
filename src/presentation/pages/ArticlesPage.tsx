@@ -1,5 +1,5 @@
 import { PencilIcon, TrashIcon } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { FavoriteButton } from '../components/atoms'
 import { PublishedByInfo } from '../components/molecules'
@@ -73,14 +73,16 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
         if (isCurrentUser && isLoggedIn) {
           currentUserArticleAction = (
             <>
-              <Link
-                to={`/article/edit/${props.id}`}
+              <Button
                 onClick={(e) => {
                   e.stopPropagation()
+                  navigate(`/article/edit/${props.id}`)
                 }}
+                className="bg-blue-600!"
+                data-testid="edit-btn"
               >
                 <PencilIcon data-testid="pencil-icon" />
-              </Link>
+              </Button>
               <Button
                 onClick={(e) => {
                   e.stopPropagation()
@@ -100,6 +102,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
             key={props.id}
             id={String(props.id)}
             headerImageSrc={props.image}
+            imageClassName="min-h-[200px] lg:min-h-[250px] xl:min-h-[275px]"
             title={props.title}
             description={props.content}
             onClick={() => {
@@ -110,8 +113,9 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
                 avatar={props.author.avatar}
                 author={props.author.firstName}
                 publishedAt={props.publishedAt}
+                key={props.id + props.author.firstName}
               />,
-              <span className="flex gap-4">
+              <span className="flex gap-2" key={props.id + 'actions'}>
                 {currentUserArticleAction}
                 <FavoriteButton
                   isFavorited={props.favourited}

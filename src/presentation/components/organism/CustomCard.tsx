@@ -48,7 +48,7 @@ export const CustomCard: React.FC<ICustomCard> = ({
         <div className="flex">
           <img
             data-testid="header-image"
-            className={`flex-1 ${imageClassName}`}
+            className={`flex-1 ${imageClassName} ${rankingImage ? '' : 'rounded-tr-md'} rounded-tl-md`}
             src={headerImageSrc}
             alt={title}
           />

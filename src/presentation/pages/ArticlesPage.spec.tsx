@@ -153,18 +153,16 @@ describe('ArticlesPage', () => {
       expect(pencilIcon).toBeTruthy()
     })
 
-    it('should redirect to the article edit page when the pencil icon is clicked', async () => {
-      makeSut()
+    it('should redirect to the article edit page when the edit btn is clicked', async () => {
+      const { listArticlesListSpy } = makeSut()
 
-      const pencilIcon = await screen.findByTestId('pencil-icon')
+      const articleId = listArticlesListSpy.articlesList.articles[1].id
 
-      fireEvent.click(pencilIcon)
+      const editBtn = await screen.findByTestId('edit-btn')
 
-      const editArticlePageMock = await screen.findByTestId(
-        'edit-article-page-mock',
-      )
+      fireEvent.click(editBtn)
 
-      expect(editArticlePageMock).toBeTruthy()
+      expect(mockNavigate).toHaveBeenCalledWith(`/article/edit/${articleId}`)
     })
 
     it('should call navigate with article/id when card is clicked', async () => {
