@@ -6,7 +6,7 @@ import {
   ListArticlesSpy,
   renderArticlesPageWithRouter,
 } from '../test'
-import { cleanup, fireEvent, screen } from '../test/test-utils'
+import { cleanup, fireEvent, screen, waitFor } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
 
 import { UnexpectedError } from '@/domain/errors'
@@ -310,6 +310,25 @@ describe('ArticlesPage', () => {
       const message = await screen.findByText('Artigo deletado com sucesso')
 
       expect(message).toBeInTheDocument()
+    })
+
+    it('should reload the articles list after an article is deleted', async () => {
+      const listArticlesListSpy = new ListArticlesSpy()
+      const listAllSpy = vi.spyOn(listArticlesListSpy, 'listAll')
+      const { rerender } = makeSut(listArticlesListSpy)
+
+      await screen.findAllByTestId(
+        'custom-card-' + listArticlesListSpy.articlesList.articles[0].id,
+      )
+      expect(listAllSpy).toHaveBeenCalledTimes(1)
+
+      const [deleteBtn] = await screen.findAllByTestId('delete-btn')
+      fireEvent.click(deleteBtn)
+      rerender()
+
+      await waitFor(() => {
+        expect(listAllSpy).toHaveBeenCalledTimes(2)
+      })
     })
   })
 
