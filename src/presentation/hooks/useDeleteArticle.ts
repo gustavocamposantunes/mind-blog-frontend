@@ -6,6 +6,9 @@ import type { DeleteArticleByIdUseCase } from '@/domain/usecases'
 export const useDeleteArticle = (
   deleteArticle: DeleteArticleByIdUseCase,
   accessToken: string,
+  options?: {
+    onSuccess: () => void
+  },
 ) => {
   const { mutate } = useMutation({
     mutationFn: async ({
@@ -29,7 +32,12 @@ export const useDeleteArticle = (
       },
       {
         onError: (error) => toast.error(error.message),
-        onSuccess: () => toast.success('Artigo deletado com sucesso'),
+        onSuccess: () => {
+          if (options?.onSuccess) {
+            options.onSuccess()
+          }
+          toast.success('Artigo deletado com sucesso')
+        },
       },
     )
   }

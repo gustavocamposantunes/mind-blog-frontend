@@ -38,14 +38,18 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   const { currentPage, currentLimit, setSearchParams } =
     useResponsivePagination()
 
-  const { data, isLoading, error } = useArticlesList(listArticles, {
+  const { data, isLoading, error, refetch } = useArticlesList(listArticles, {
     page: currentPage,
     limit: currentLimit,
   })
 
   const { favoriteById } = useFavouriteArticle(favouriteArticle, accessToken)
 
-  const { deleteById } = useDeleteArticle(deleteArticle, accessToken)
+  const { deleteById } = useDeleteArticle(deleteArticle, accessToken, {
+    onSuccess: () => {
+      refetch()
+    },
+  })
 
   let paginationComponent
   if (!isLoading && data) {
