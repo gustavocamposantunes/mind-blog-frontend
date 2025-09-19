@@ -6,11 +6,13 @@ import {
 
 type CustomAvatarProps = {
   src?: string
+  fallbackText: string
 } & React.ComponentProps<typeof Avatar>
 
 export const CustomAvatar: React.FC<CustomAvatarProps> = ({
   className,
   src,
+  fallbackText,
 }) => (
   <Avatar className={className} data-testid="avatar">
     <AvatarImage
@@ -18,6 +20,6 @@ export const CustomAvatar: React.FC<CustomAvatarProps> = ({
       src={src ?? 'https://github.com/shadcn.png'}
       alt="avatar image"
     />
-    <AvatarFallback>CN</AvatarFallback>
+    <AvatarFallback>{fallbackText}</AvatarFallback>
   </Avatar>
 )

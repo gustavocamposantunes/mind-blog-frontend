@@ -4,7 +4,8 @@ import { useAuthStore } from './auth-store'
 
 const mockUser = {
   id: 1,
-  name: 'John Doe',
+  firstName: 'John',
+  lastName: 'Doe',
   email: 'john.doe@example.com',
   image: '',
 }
@@ -36,7 +37,13 @@ describe('useAuthStore', () => {
     clearCurrentUser()
 
     expect(accessToken).toBe('')
-    expect(user).toEqual({ id: 0, name: '', email: '', image: '' })
+    expect(user).toEqual({
+      id: 0,
+      firstName: '',
+      lastName: '',
+      email: '',
+      image: '',
+    })
   })
 
   it('should hydrate state from local storage', () => {

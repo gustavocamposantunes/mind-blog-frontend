@@ -13,7 +13,8 @@ export const mockAuthenticateUserModel = (): AuthenticateUserModel => ({
   user: {
     id: 5,
     email: faker.internet.email(),
-    name: faker.person.fullName(),
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
     image: faker.image.avatar(),
   },
 })

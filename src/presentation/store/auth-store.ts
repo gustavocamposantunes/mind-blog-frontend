@@ -8,7 +8,13 @@ const manageUserSession = new LocalManageUserSession()
 
 type AuthState = {
   accessToken: string
-  user: { id: number; name: string; email: string; image?: string }
+  user: {
+    id: number
+    firstName: string
+    lastName: string
+    email: string
+    image?: string
+  }
 }
 
 export type AuthStore = AuthState & {
@@ -20,7 +26,7 @@ export type AuthStore = AuthState & {
 
 export const useAuthStore = create<AuthStore>((set) => ({
   accessToken: '',
-  user: { id: 0, name: '', email: '', image: '' },
+  user: { id: 0, firstName: '', lastName: '', email: '', image: '' },
   isHydrated: false,
 
   setCurrentUser: (account) => {
@@ -30,7 +36,10 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
   clearCurrentUser: () => {
     manageUserSession.clear()
-    set({ accessToken: '', user: { id: 0, name: '', email: '', image: '' } })
+    set({
+      accessToken: '',
+      user: { id: 0, firstName: '', lastName: '', email: '', image: '' },
+    })
   },
 
   hydrate: () => {
