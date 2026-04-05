@@ -101,7 +101,8 @@ describe('ArticlePage', () => {
         accessToken: '',
         user: {
           id: 0,
-          name: '',
+          firstName: '',
+          lastName: '',
           email: '',
         },
       }

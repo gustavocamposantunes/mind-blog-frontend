@@ -6,7 +6,7 @@ import {
 
 type CustomAvatarProps = {
   src?: string
-  fallbackText: string
+  fallbackText?: string
 } & React.ComponentProps<typeof Avatar>
 
 export const CustomAvatar: React.FC<CustomAvatarProps> = ({
