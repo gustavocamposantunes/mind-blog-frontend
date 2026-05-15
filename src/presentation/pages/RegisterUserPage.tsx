@@ -1,6 +1,6 @@
 import { UserPlus } from 'lucide-react'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { AuthForm } from '../components/atoms'
@@ -74,6 +74,8 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
           type="firstName"
           id="firstName"
           placeholder="Digite seu nome"
+          labelClassName="text-white"
+          inputClassName="text-white placeholder:text-white/35"
           onChange={(event) => {
             setRegisterUserParams({
               ...registerUserParams,
@@ -87,6 +89,8 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
           type="lastName"
           id="lastName"
           placeholder="Digite seu sobrenome"
+          labelClassName="text-white"
+          inputClassName="text-white placeholder:text-white/35"
           onChange={(event) => {
             setRegisterUserParams({
               ...registerUserParams,
@@ -100,6 +104,8 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
           type="email"
           id="email"
           placeholder="Digite seu email"
+          labelClassName="text-white"
+          inputClassName="text-white placeholder:text-white/35"
           onChange={(event) => {
             setRegisterUserParams({
               ...registerUserParams,
@@ -113,6 +119,8 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
           type="password"
           id="password"
           placeholder="Digite sua senha"
+          labelClassName="text-white"
+          inputClassName="text-white placeholder:text-white/35"
           onChange={(event) => {
             setRegisterUserParams({
               ...registerUserParams,
@@ -127,6 +135,8 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
           type="password"
           id="password-confirmation"
           placeholder="Confirme sua senha"
+          labelClassName="text-white"
+          inputClassName="text-white placeholder:text-white/35"
           onChange={(event) => {
             setRegisterUserParams({
               ...registerUserParams,
@@ -142,14 +152,10 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
           }
         />
 
-        <Button className="mt-4 w-full py-6" type="submit">
+        <Button className="mt-4 w-full py-6 text-white" type="submit">
           Criar Conta
           <UserPlus />
         </Button>
-
-        <Link to="/" className="text-center mt-4">
-          Continuar sem login
-        </Link>
       </AuthForm>
     </RegisterUserTemplate>
   )
