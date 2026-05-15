@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import logoDark from '../../assets/logo-dark.svg'
 import { MenuItem } from '../atoms/MenuItem'
+import ThemeToggle from '../atoms/ThemeToggle'
 
 import type { ReactNode } from 'react'
 
@@ -34,6 +35,9 @@ export const Header: React.FC<IHeader> = ({ children }) => {
           </MenuItem>
 
           {children}
+          <li className="pl-4">
+            <ThemeToggle />
+          </li>
         </ul>
       </nav>
     </header>
