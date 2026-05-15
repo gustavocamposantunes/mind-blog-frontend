@@ -1,5 +1,7 @@
 import { HttpStatusCode, type HttpPostClient } from '../../protocols'
 
+import { buildAuthenticateUserModel } from './build-authenticate-user-model'
+
 import type { HttpRemoteResponse } from '../../protocols/http/http-remote-response'
 import type { AuthenticateUserModel } from '@/domain/models'
 import type {
@@ -37,7 +39,7 @@ export class RemoteAuthenticateUser implements AuthenticateUserUseCase {
       case HttpStatusCode.ok:
         return {
           statusCode: status,
-          data: data as AuthenticateUserModel,
+          data: buildAuthenticateUserModel(extractAccessToken(data)),
         }
       case HttpStatusCode.unauthorized:
         throw new InvalidCredentialsError()
@@ -49,4 +51,20 @@ export class RemoteAuthenticateUser implements AuthenticateUserUseCase {
         throw new UnexpectedError()
     }
   }
+}
+
+const extractAccessToken = (data: unknown): string => {
+  if (typeof data === 'string') {
+    return data
+  }
+
+  if (data && typeof data === 'object') {
+    const accessToken = (data as { accessToken?: unknown }).accessToken
+
+    if (typeof accessToken === 'string') {
+      return accessToken
+    }
+  }
+
+  throw new UnexpectedError()
 }

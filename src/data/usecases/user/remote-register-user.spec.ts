@@ -18,11 +18,19 @@ type SutTypes = {
 
 const makeSut = (url = faker.internet.url()): SutTypes => {
   const httpPostClientSpy = new HttpPostClientSpy()
+  const authenticateUserModel = mockAuthenticateUserModel()
+  httpPostClientSpy.response = {
+    status: 201,
+    data: {
+      accessToken: authenticateUserModel.accessToken,
+    },
+  }
   const sut = new RemoteRegisterUser(url, httpPostClientSpy)
 
   return {
     sut,
     httpPostClientSpy,
+    authenticateUserModel,
   }
 }
 
@@ -75,14 +83,8 @@ describe('RemoteRegisterUser', () => {
   })
 
   it('should returns a valid AuthenticateUserModel on success', async () => {
-    const { sut, httpPostClientSpy } = makeSut()
+    const { sut, authenticateUserModel } = makeSut()
     const registerUserParams = mockRegisterUser()
-    const authenticateUserModel = mockAuthenticateUserModel()
-
-    httpPostClientSpy.response = {
-      status: 201,
-      data: authenticateUserModel,
-    }
 
     const response = await sut.register(registerUserParams)
 

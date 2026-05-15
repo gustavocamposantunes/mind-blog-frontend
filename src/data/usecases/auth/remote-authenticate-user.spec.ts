@@ -18,14 +18,19 @@ import {
 
 const makeSut = (url = faker.internet.url()) => {
   const httpPostClientSpy = new HttpPostClientSpy()
+  const authenticateUserModel = mockAuthenticateUserModel()
   httpPostClientSpy.response = {
     status: HttpStatusCode.ok,
+    data: {
+      accessToken: authenticateUserModel.accessToken,
+    },
   }
   const sut = new RemoteAuthenticateUser(url, httpPostClientSpy)
 
   return {
     sut,
     httpPostClientSpy,
+    authenticateUserModel,
   }
 }
 
@@ -93,14 +98,8 @@ describe('RemoteAuthenticateUser', () => {
   })
 
   it('should returns a valid AuthenticateUserModel on success', async () => {
-    const { sut, httpPostClientSpy } = makeSut()
+    const { sut, authenticateUserModel } = makeSut()
     const authenticationParams = mockAuthenticationParams()
-    const authenticateUserModel = mockAuthenticateUserModel()
-
-    httpPostClientSpy.response = {
-      status: 200,
-      data: authenticateUserModel,
-    }
 
     const response = await sut.auth(authenticationParams)
 

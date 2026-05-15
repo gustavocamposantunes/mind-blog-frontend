@@ -1,4 +1,5 @@
 import { HttpStatusCode, type HttpPostClient } from '../../protocols'
+import { buildAuthenticateUserModel } from '../auth/build-authenticate-user-model'
 
 import type { AuthenticateUserModel } from '@/domain/models'
 import type {
@@ -35,7 +36,7 @@ export class RemoteRegisterUser implements RegisterUserUseCase {
       case HttpStatusCode.created:
         return {
           statusCode: status,
-          data: data as AuthenticateUserModel,
+          data: buildAuthenticateUserModel(extractAccessToken(data)),
         }
       case HttpStatusCode.serverError:
         throw new InternalServerError()
@@ -45,4 +46,20 @@ export class RemoteRegisterUser implements RegisterUserUseCase {
         throw new UnexpectedError()
     }
   }
+}
+
+const extractAccessToken = (data: unknown): string => {
+  if (typeof data === 'string') {
+    return data
+  }
+
+  if (data && typeof data === 'object') {
+    const accessToken = (data as { accessToken?: unknown }).accessToken
+
+    if (typeof accessToken === 'string') {
+      return accessToken
+    }
+  }
+
+  throw new UnexpectedError()
 }
