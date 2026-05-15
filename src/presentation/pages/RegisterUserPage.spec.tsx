@@ -54,6 +54,14 @@ describe('RegisterUserPage', () => {
     fireEvent.click(submitButton)
   }
 
+  const typeStrongPassword = () => {
+    const password = screen.getByPlaceholderText(/digite sua senha/i)
+
+    fireEvent.change(password, {
+      target: { value: 'SenhaForte#2026' },
+    })
+  }
+
   it('should render a toast.error when submit fails', async () => {
     const registerUserSpy = new RegisterUserSpy()
 
@@ -81,6 +89,18 @@ describe('RegisterUserPage', () => {
     )
 
     expect(errorAssistiveText).toBeTruthy()
+  })
+
+  it('should render password strength feedback when typing a password', async () => {
+    makeSut()
+
+    typeStrongPassword()
+
+    const passwordStrength = await screen.findByText(/força da senha/i)
+    const strongLabel = await screen.findByText(/muito forte/i)
+
+    expect(passwordStrength).toBeTruthy()
+    expect(strongLabel).toBeTruthy()
   })
 
   it('should redirect to HomePage when submit successfull', async () => {

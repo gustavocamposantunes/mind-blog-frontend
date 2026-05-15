@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { AuthForm } from '../components/atoms'
-import { TextField } from '../components/molecules'
+import { PasswordStrength, TextField } from '../components/molecules'
 import { RegisterUserTemplate } from '../components/templates'
 import { Button } from '../components/ui/button'
 import { useRegisterUser } from '../hooks'
@@ -120,6 +120,7 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
             })
           }}
         />
+        <PasswordStrength password={registerUserParams.password} />
         <TextField
           className="mt-8"
           label="Confirmar Senha"
