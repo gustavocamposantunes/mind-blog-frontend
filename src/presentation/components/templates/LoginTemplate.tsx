@@ -1,7 +1,7 @@
-import { Github, Linkedin, Moon, Twitter } from 'lucide-react'
+import { Github, Linkedin, Twitter } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-import logoLight from '../../assets/logo-light.svg'
+import { BrandLogo, ThemeToggle } from '../atoms'
 import { Separator } from '../ui/separator'
 
 import type { ReactNode } from 'react'
@@ -11,45 +11,45 @@ interface ILoginTemplate {
 }
 
 export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
-  <main className="login-page min-h-screen bg-[#0b1016] text-white flex flex-col">
-    <header className="flex items-center justify-between border-b border-white/10 px-6 py-4 md:px-10 lg:px-14">
+  <main className="login-page min-h-screen bg-background text-foreground flex flex-col transition-colors">
+    <header className="flex items-center justify-between border-b border-border px-6 py-4 md:px-10 lg:px-14">
       <Link to="/" className="flex items-center gap-3">
-        <img src={logoLight} alt="Mind Blog" className="h-9 w-auto" />
+        <BrandLogo className="items-start" />
       </Link>
 
-      <nav className="flex items-center gap-6 text-sm text-white">
-        <Link className="text-white transition-colors hover:text-white" to="/">
+      <nav className="flex items-center gap-6 text-sm text-foreground">
+        <Link className="text-foreground transition-colors hover:text-foreground" to="/">
           Home
         </Link>
         <Link
-          className="text-white transition-colors hover:text-white"
+          className="text-foreground transition-colors hover:text-foreground"
           to="/articles"
         >
           Artigos
         </Link>
-        <span className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-white">
-          <Moon className="h-4 w-4 text-white" aria-hidden="true" />
+        <span>
+          <ThemeToggle />
         </span>
       </nav>
     </header>
 
     <section className="flex flex-1 items-center justify-center px-4 py-12 md:px-6 lg:px-8">
       <div className="w-full max-w-[420px] text-center">
-        <img src={logoLight} alt="Mind Blog" className="mx-auto h-11 w-auto" />
+        <BrandLogo className="mx-auto items-center" />
         <h1 className="mt-8 text-3xl font-semibold tracking-tight md:text-4xl">
           Entrar na Plataforma
         </h1>
-        <p className="mt-3 text-sm text-white">
+        <p className="mt-3 text-sm text-foreground/80">
           Acesse sua conta para gerenciar seus artigos
         </p>
 
-        <div className="mt-8 border border-white/10 bg-white/[0.03] p-5 text-left shadow-2xl shadow-black/30 backdrop-blur-sm md:p-6">
+        <div className="mt-8 border border-border bg-card/70 p-5 text-left shadow-2xl shadow-black/10 backdrop-blur-sm md:p-6">
           {children}
 
-          <Separator className="my-8 bg-white/10" />
+          <Separator className="my-8 bg-border" />
 
           <Link
-            className="block text-center text-sm font-semibold text-white transition-colors hover:text-white"
+            className="block text-center text-sm font-semibold text-foreground transition-colors hover:text-foreground"
             to="/register"
           >
             Não tem uma conta? Criar conta
@@ -58,11 +58,11 @@ export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
       </div>
     </section>
 
-    <footer className="border-t border-white/10 px-6 py-8 md:px-10 lg:px-14">
+    <footer className="border-t border-border px-6 py-8 md:px-10 lg:px-14">
       <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-xs">
-          <img src={logoLight} alt="Mind Blog" className="h-9 w-auto" />
-          <p className="mt-3 text-sm leading-6 text-white">
+          <BrandLogo className="items-start" />
+          <p className="mt-3 text-sm leading-6 text-foreground/80">
             Seu portal de tecnologia com artigos, tutoriais e novidades do mundo
             tech.
           </p>
@@ -70,11 +70,11 @@ export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
 
         <div className="flex flex-col gap-6 sm:flex-row sm:gap-12">
           <div>
-            <h2 className="text-sm font-semibold text-white">Navegação</h2>
-            <ul className="mt-3 space-y-2 text-sm text-white">
+            <h2 className="text-sm font-semibold text-foreground">Navegação</h2>
+            <ul className="mt-3 space-y-2 text-sm text-foreground/80">
               <li>
                 <Link
-                  className="text-white transition-colors hover:text-white"
+                  className="text-foreground/80 transition-colors hover:text-foreground"
                   to="/"
                 >
                   Home
@@ -82,7 +82,7 @@ export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
               </li>
               <li>
                 <Link
-                  className="text-white transition-colors hover:text-white"
+                  className="text-foreground/80 transition-colors hover:text-foreground"
                   to="/articles"
                 >
                   Artigos
@@ -90,7 +90,7 @@ export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
               </li>
               <li>
                 <Link
-                  className="text-white transition-colors hover:text-white"
+                  className="text-foreground/80 transition-colors hover:text-foreground"
                   to="/dashboard"
                 >
                   Dashboard
@@ -100,35 +100,35 @@ export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
           </div>
 
           <div>
-            <h2 className="text-sm font-semibold text-white">Redes Sociais</h2>
-            <div className="mt-3 flex items-center gap-3 text-white">
+            <h2 className="text-sm font-semibold text-foreground">Redes Sociais</h2>
+            <div className="mt-3 flex items-center gap-3 text-foreground">
               <button
                 type="button"
-                className="text-white transition-colors hover:text-white bg-transparent border-0 p-0"
+                className="text-foreground transition-colors hover:text-foreground bg-transparent border-0 p-0"
                 aria-label="LinkedIn"
               >
-                <Linkedin className="h-4 w-4 text-white" />
+                <Linkedin className="h-4 w-4 text-foreground" />
               </button>
               <button
                 type="button"
-                className="text-white transition-colors hover:text-white bg-transparent border-0 p-0"
+                className="text-foreground transition-colors hover:text-foreground bg-transparent border-0 p-0"
                 aria-label="GitHub"
               >
-                <Github className="h-4 w-4 text-white" />
+                <Github className="h-4 w-4 text-foreground" />
               </button>
               <button
                 type="button"
-                className="text-white transition-colors hover:text-white bg-transparent border-0 p-0"
+                className="text-foreground transition-colors hover:text-foreground bg-transparent border-0 p-0"
                 aria-label="Twitter"
               >
-                <Twitter className="h-4 w-4 text-white" />
+                <Twitter className="h-4 w-4 text-foreground" />
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="mt-8 border-t border-white/10 pt-6 text-center text-xs text-white">
+      <div className="mt-8 border-t border-border pt-6 text-center text-xs text-foreground/80">
         © 2025 TechBlog. Todos os direitos reservados.
       </div>
     </footer>

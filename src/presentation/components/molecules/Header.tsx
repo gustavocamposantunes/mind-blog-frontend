@@ -1,8 +1,7 @@
 import { House, Newspaper } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-import logoDark from '../../assets/logo-dark.svg'
-import { MenuItem } from '../atoms/MenuItem'
+import { BrandLogo, MenuItem } from '../atoms'
 import ThemeToggle from '../atoms/ThemeToggle'
 
 import type { ReactNode } from 'react'
@@ -19,7 +18,7 @@ export const Header: React.FC<IHeader> = ({ children }) => {
   return (
     <header className="w-full flex flex-col md:flex-row items-center justify-between px-[5%] pt-4">
       <Link to="/">
-        <img src={logoDark} alt="logo" />
+        <BrandLogo className="items-center" />
       </Link>
       <nav className="flex pt-6 wraṕ">
         <ul className="flex gap-4 items-center flex-wrap justify-center">

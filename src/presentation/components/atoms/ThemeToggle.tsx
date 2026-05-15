@@ -10,9 +10,13 @@ export const ThemeToggle: React.FC = () => {
     <button
       aria-label="Toggle theme"
       onClick={toggle}
-      className="p-2 rounded-md hover:bg-accent/10"
+      className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-transparent p-0"
     >
-      {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+      {theme === 'dark' ? (
+        <Moon className="h-4 w-4 text-white" aria-hidden="true" />
+      ) : (
+        <Sun className="h-4 w-4 text-black" aria-hidden="true" />
+      )}
     </button>
   )
 }
