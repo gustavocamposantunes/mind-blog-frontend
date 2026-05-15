@@ -68,7 +68,9 @@ describe('LoginPage', () => {
   it('should redirect to ForgotPasswordPage when forgot password link is clicked', () => {
     makeSut()
 
-    const forgotPasswordLink = screen.getByText(/esqueceu a senha\?/i)
+    const forgotPasswordLink = screen.getByRole('link', {
+      name: /esqueceu a senha\?/i,
+    })
 
     fireEvent.click(forgotPasswordLink)
 
@@ -81,20 +83,13 @@ describe('LoginPage', () => {
   it('should redirect to RegisterUserPage when register user link is clicked', () => {
     makeSut()
 
-    const registerUserLink = screen.getByText(/novo usuário\? clique aqui/i)
+    const registerUserLink = screen.getByRole('link', {
+      name: /não tem uma conta\? criar conta/i,
+    })
 
     fireEvent.click(registerUserLink)
 
     expect(registerUserLink.getAttribute('href')).toBeTruthy()
     expect(registerUserLink.getAttribute('href')).toContain('/register')
-  })
-
-  it('should redirect to HomePage when user clicks to continue without login', () => {
-    makeSut()
-
-    const continueWithoutLoginLink = screen.getByText(/continuar sem login/i)
-
-    expect(continueWithoutLoginLink.getAttribute('href')).toBeTruthy()
-    expect(continueWithoutLoginLink.getAttribute('href')).toContain('/')
   })
 })
