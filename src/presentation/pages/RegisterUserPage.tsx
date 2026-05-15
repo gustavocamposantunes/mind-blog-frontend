@@ -152,7 +152,11 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
           }
         />
 
-        <Button className="mt-4 w-full py-6 text-white" type="submit">
+        <Button
+          className="mt-4 w-full py-6 text-white"
+          type="submit"
+          style={{ backgroundColor: '#07B6D5' }}
+        >
           Criar Conta
           <UserPlus />
         </Button>
