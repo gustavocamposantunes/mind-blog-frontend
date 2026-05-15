@@ -52,6 +52,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
           type="email"
           id="email"
           placeholder="Digite seu email"
+          labelClassName="text-white"
+          inputClassName="text-white placeholder:text-white/35"
           value={authParams.email}
           onChange={(event) => {
             setAuthParams({
@@ -66,6 +68,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
           type="password"
           id="password"
           placeholder="Digite sua senha"
+          labelClassName="text-white"
+          inputClassName="text-white placeholder:text-white/35"
           value={authParams.password}
           onChange={(event) => {
             setAuthParams({
@@ -75,18 +79,19 @@ export const LoginPage: React.FC<LoginPageProps> = ({ authenticateUser }) => {
           }}
         />
 
-        <Link to="/forgot-password" className="text-end mt-4">
-          Esqueceu a senha?
-        </Link>
+        <div className="mt-4 flex justify-end">
+          <Link
+            to="/forgot-password"
+            className="text-sm font-medium text-white transition-colors hover:text-white"
+          >
+            Esqueceu a senha?
+          </Link>
+        </div>
 
-        <Button className="mt-4 w-full py-6" type="submit">
+        <Button className="mt-4 w-full py-6 text-white" type="submit">
           Entrar
           <LogIn />
         </Button>
-
-        <Link to="/" className="text-center mt-4">
-          Continuar sem login
-        </Link>
       </AuthForm>
     </LoginTemplate>
   )
