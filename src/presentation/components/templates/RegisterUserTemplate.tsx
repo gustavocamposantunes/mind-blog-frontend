@@ -40,7 +40,7 @@ export const RegisterUserTemplate: React.FC<IRegisterUserTemplate> = ({
 
     <section className="flex flex-1 items-center justify-center px-4 py-12 md:px-6 lg:px-8">
       <div className="w-full max-w-[420px] text-center">
-        <BrandLogo className="mx-auto items-center" />
+        <BrandLogo centered className="mx-auto" />
         <h1 className="mt-8 text-3xl font-semibold tracking-tight md:text-4xl">
           Criar Conta
         </h1>
