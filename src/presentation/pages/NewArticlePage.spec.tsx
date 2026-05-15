@@ -36,12 +36,18 @@ describe('NewArticlePage', () => {
   const setupSubmit = () => {
     const titleInput = screen.getByLabelText(/título/i)
     const contentInput = screen.getByLabelText(/texto/i)
+    const categoryInput = screen.getByLabelText(/categoria/i)
+    const tagsInput = screen.getByLabelText(/tags/i)
 
     const submitButton = screen.getByRole('button', { name: /salvar/i })
 
     fireEvent.change(titleInput, { target: { value: faker.lorem.sentence() } })
     fireEvent.change(contentInput, {
       target: { value: faker.lorem.paragraph() },
+    })
+    fireEvent.change(categoryInput, { target: { value: 'tecnologia' } })
+    fireEvent.change(tagsInput, {
+      target: { value: 'react, typescript, frontend' },
     })
 
     fireEvent.click(submitButton)
@@ -82,6 +88,21 @@ describe('NewArticlePage', () => {
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith('/articles?page=1&limit=12')
+    })
+  })
+
+  it('should submit category and parsed tags in register payload', async () => {
+    const { registerArticleSpy } = makeSut()
+
+    setupSubmit()
+
+    await waitFor(() => {
+      expect(registerArticleSpy.registerPostParams.category).toBe('tecnologia')
+      expect(registerArticleSpy.registerPostParams.tags).toEqual([
+        'react',
+        'typescript',
+        'frontend',
+      ])
     })
   })
 

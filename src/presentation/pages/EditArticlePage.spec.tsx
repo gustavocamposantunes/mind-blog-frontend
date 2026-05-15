@@ -127,6 +127,24 @@ describe('EditArticlePage', () => {
       )
     })
 
+    it('should render category and tags inputs filled', async () => {
+      const { getArticleByIdSpy } = makeSut()
+
+      const categoryInput = await screen.findByTestId('input-category')
+      const tagsInput = await screen.findByTestId('input-tags')
+
+      await screen.findByText('Artigo carregado com sucesso')
+
+      expect(categoryInput).toHaveProperty(
+        'value',
+        getArticleByIdSpy.data.category,
+      )
+      expect(tagsInput).toHaveProperty(
+        'value',
+        getArticleByIdSpy.data.tags.join(', '),
+      )
+    })
+
     it('should render the article image', async () => {
       const { getArticleByIdSpy } = makeSut()
 
@@ -255,6 +273,41 @@ describe('EditArticlePage', () => {
         id: updateArticleSpy.params.id,
         title: newTitle,
         content: newContent,
+      })
+    })
+
+    it('should send category and tags when these fields are changed', async () => {
+      const updateArticleSpy = new UpdateArticleSpy()
+      mockId = updateArticleSpy.params.id
+      vi.spyOn(updateArticleSpy, 'update').mockResolvedValueOnce({
+        statusCode: 200,
+        data: mockArticle(),
+      })
+
+      makeSut(undefined, updateArticleSpy)
+
+      await screen.findByText('Artigo carregado com sucesso')
+
+      const categoryInput = await screen.findByTestId('input-category')
+      const tagsInput = await screen.findByTestId('input-tags')
+
+      fireEvent.change(categoryInput, {
+        target: { value: 'science' },
+      })
+
+      fireEvent.change(tagsInput, {
+        target: { value: 'ai, ml' },
+      })
+
+      const submitButton = screen.getByRole('button', { name: /salvar/i })
+      fireEvent.click(submitButton)
+
+      await screen.findByText('Artigo atualizado com sucesso')
+
+      expect(updateArticleSpy.update).toHaveBeenCalledWith('', {
+        id: updateArticleSpy.params.id,
+        category: 'science',
+        tags: ['ai', 'ml'],
       })
     })
   })

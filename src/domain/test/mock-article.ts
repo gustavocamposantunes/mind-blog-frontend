@@ -19,6 +19,8 @@ export const mockRegisterArticleParams = (): RegisterArticleParams => ({
   title: faker.lorem.sentence(),
   content: faker.lorem.paragraphs(),
   image: faker.image.urlLoremFlickr({ category: 'nature' }),
+  category: faker.word.sample(),
+  tags: [faker.word.sample(), faker.word.sample()],
   author_id: faker.number.int(),
 })
 
@@ -26,6 +28,8 @@ export const mockUpdateArticleParams = (): UpdateArticleParams => ({
   id: faker.number.int(),
   title: faker.lorem.sentence(),
   content: faker.lorem.paragraph(10),
+  category: faker.word.sample(),
+  tags: [faker.word.sample(), faker.word.sample()],
 })
 
 export const mockArticle = (
@@ -42,6 +46,8 @@ export const mockArticle = (
     width: 1400,
     height: 700,
   }),
+  category: faker.word.sample(),
+  tags: [faker.word.sample(), faker.word.sample()],
   author: {
     id: author_id,
     firstName: faker.person.fullName(),

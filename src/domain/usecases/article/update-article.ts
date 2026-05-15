@@ -6,6 +6,8 @@ export type UpdateArticleParams = {
   title?: string
   content?: string
   image?: string
+  category?: string
+  tags?: string[]
 }
 
 export interface UpdateArticleUseCase {

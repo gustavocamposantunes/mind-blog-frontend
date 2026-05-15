@@ -12,6 +12,7 @@ import { useGetArticleById, useUpdateArticle } from '../hooks'
 import { useAuthStore } from '../store'
 import { buildUpdateArticlePayload } from '../utils/buildUpdateArticlePayload'
 import { getBase64FromInputFile } from '../utils/getBase64FromInputFile'
+import { parseTags } from '../utils/parse-tags'
 
 import type {
   GetArticleByIdUseCase,
@@ -31,10 +32,14 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
     title: string
     content: string
     image?: string
+    category: string
+    tagsInput: string
   }>({
     title: '',
     content: '',
     image: '',
+    category: '',
+    tagsInput: '',
   })
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
@@ -58,6 +63,8 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
         title: data?.title,
         content: data?.content,
         image: data?.image,
+        category: data?.category,
+        tagsInput: data.tags.join(', '),
       })
       toast.success('Artigo carregado com sucesso')
       hasShownSuccessToast.current = true
@@ -78,8 +85,16 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
           title: data.title,
           content: data.content,
           image: data.image,
+          category: data.category,
+          tags: data.tags,
         },
-        editArticleParams,
+        {
+          title: editArticleParams.title,
+          content: editArticleParams.content,
+          image: editArticleParams.image,
+          category: editArticleParams.category,
+          tags: parseTags(editArticleParams.tagsInput),
+        },
       )
 
       if (Object.keys(payload).length === 1) {
@@ -166,6 +181,38 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
                 setEditArticleParams({
                   ...editArticleParams,
                   content: e.target.value,
+                })
+              }
+            />
+          </div>
+
+          <div className="grid w-full gap-1.5">
+            <Label htmlFor="category">Categoria</Label>
+            <Input
+              placeholder="Edite a categoria"
+              id="category"
+              data-testid="input-category"
+              value={editArticleParams.category}
+              onChange={(e) =>
+                setEditArticleParams({
+                  ...editArticleParams,
+                  category: e.target.value,
+                })
+              }
+            />
+          </div>
+
+          <div className="grid w-full gap-1.5">
+            <Label htmlFor="tags">Tags</Label>
+            <Input
+              placeholder="Ex: react, typescript, frontend"
+              id="tags"
+              data-testid="input-tags"
+              value={editArticleParams.tagsInput}
+              onChange={(e) =>
+                setEditArticleParams({
+                  ...editArticleParams,
+                  tagsInput: e.target.value,
                 })
               }
             />

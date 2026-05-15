@@ -5,6 +5,8 @@ export type RegisterArticleParams = {
   title: string
   content: string
   image?: string
+  category: string
+  tags: string[]
   author_id: number
 }
 

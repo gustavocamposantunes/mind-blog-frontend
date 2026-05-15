@@ -8,6 +8,7 @@ import { useResponsiveLimit } from '../hooks'
 import { useRegisterArticle } from '../hooks/useRegisterArticle'
 import { useAuthStore } from '../store/auth-store'
 import { getBase64FromInputFile } from '../utils/getBase64FromInputFile'
+import { parseTags } from '../utils/parse-tags'
 
 import type { RegisterArticleUseCase } from '@/domain/usecases'
 
@@ -30,6 +31,8 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
     title: '',
     content: '',
     image: '',
+    category: '',
+    tagsInput: '',
   })
 
   const { mutate } = useRegisterArticle(registerArticle, accessToken)
@@ -39,7 +42,11 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
 
     mutate(
       {
-        ...registerArticleParams,
+        title: registerArticleParams.title,
+        content: registerArticleParams.content,
+        image: registerArticleParams.image,
+        category: registerArticleParams.category,
+        tags: parseTags(registerArticleParams.tagsInput),
         author_id: Number(user.id),
       },
       {
@@ -112,6 +119,36 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
                 setRegisterArticleParams({
                   ...registerArticleParams,
                   content: event.target.value,
+                })
+              }
+            />
+          </div>
+
+          <div className="grid w-full gap-1.5">
+            <Label htmlFor="category">Categoria</Label>
+            <Input
+              placeholder="Adicione uma categoria"
+              id="category"
+              value={registerArticleParams.category}
+              onChange={(event) =>
+                setRegisterArticleParams({
+                  ...registerArticleParams,
+                  category: event.target.value,
+                })
+              }
+            />
+          </div>
+
+          <div className="grid w-full gap-1.5">
+            <Label htmlFor="tags">Tags</Label>
+            <Input
+              placeholder="Ex: react, typescript, frontend"
+              id="tags"
+              value={registerArticleParams.tagsInput}
+              onChange={(event) =>
+                setRegisterArticleParams({
+                  ...registerArticleParams,
+                  tagsInput: event.target.value,
                 })
               }
             />

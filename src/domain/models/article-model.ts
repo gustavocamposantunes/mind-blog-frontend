@@ -9,6 +9,8 @@ export type ArticleModel = {
   title: string
   content: string
   image?: string
+  category: string
+  tags: string[]
   author: AuthorModel
   favouriteCount: number
   favourited: boolean

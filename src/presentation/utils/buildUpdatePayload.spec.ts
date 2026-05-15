@@ -8,6 +8,8 @@ describe('buildUpdateArticlePayload', () => {
     title: 'Original Title',
     content: 'Original Content',
     image: 'original.png',
+    category: 'tech',
+    tags: ['javascript', 'typescript'],
   }
 
   it('should return only changed fields along with the id', () => {
@@ -15,6 +17,8 @@ describe('buildUpdateArticlePayload', () => {
       title: 'New Title',
       content: 'Original Content',
       image: 'original.png',
+      category: 'tech',
+      tags: ['javascript', 'typescript'],
     }
 
     const result = buildUpdateArticlePayload(id, original, edited)
@@ -30,6 +34,8 @@ describe('buildUpdateArticlePayload', () => {
       title: 'New Title',
       content: 'New Content',
       image: 'new-image.jpg',
+      category: 'design',
+      tags: ['ui', 'ux'],
     }
 
     const result = buildUpdateArticlePayload(id, original, edited)
@@ -39,6 +45,8 @@ describe('buildUpdateArticlePayload', () => {
       title: 'New Title',
       content: 'New Content',
       image: 'new-image.jpg',
+      category: 'design',
+      tags: ['ui', 'ux'],
     })
   })
 
@@ -52,6 +60,34 @@ describe('buildUpdateArticlePayload', () => {
     })
   })
 
+  it('should detect when category changes', () => {
+    const edited = {
+      ...original,
+      category: 'science',
+    }
+
+    const result = buildUpdateArticlePayload(id, original, edited)
+
+    expect(result).toEqual({
+      id,
+      category: 'science',
+    })
+  })
+
+  it('should detect when tags change', () => {
+    const edited = {
+      ...original,
+      tags: ['python', 'react'],
+    }
+
+    const result = buildUpdateArticlePayload(id, original, edited)
+
+    expect(result).toEqual({
+      id,
+      tags: ['python', 'react'],
+    })
+  })
+
   it('should handle undefined image correctly', () => {
     const originalWithUndefinedImage = {
       ...original,
@@ -62,6 +98,8 @@ describe('buildUpdateArticlePayload', () => {
       title: original.title,
       content: original.content,
       image: 'new.png',
+      category: original.category,
+      tags: original.tags,
     }
 
     const result = buildUpdateArticlePayload(
