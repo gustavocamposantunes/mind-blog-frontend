@@ -27,6 +27,7 @@ const meta = {
     ),
   ],
 } satisfies Meta<typeof MenuItem>
+
 export default meta
 type Story = StoryObj<typeof meta>
 
