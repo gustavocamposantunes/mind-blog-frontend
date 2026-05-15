@@ -211,23 +211,39 @@ p {
 .register-page button,
 .register-page li,
 .register-page input,
-.register-page svg {
+.register-page svg,
+.login-page h1,
+.login-page h2,
+.login-page h3,
+.login-page h4,
+.login-page p,
+.login-page span,
+.login-page label,
+.login-page a,
+.login-page button,
+.login-page li,
+.login-page input,
+.login-page svg {
   color: #fff;
 }
 
-.register-page a:hover {
+.register-page a:hover,
+.login-page a:hover {
   color: #fff;
 }
 
-.register-page button {
+.register-page button,
+.login-page button {
   background-color: #07b6d5;
 }
 
-.register-page button:hover {
+.register-page button:hover,
+.login-page button:hover {
   background-color: #07b6d5;
   border-color: #07b6d5;
 }
 
-.register-page input::placeholder {
+.register-page input::placeholder,
+.login-page input::placeholder {
   color: rgba(255, 255, 255, 0.35);
 }
