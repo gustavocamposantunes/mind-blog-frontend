@@ -31,7 +31,7 @@ export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
           Artigos
         </Link>
         <span>
-          <ThemeToggle />
+          <ThemeToggle variant="auth" />
         </span>
       </nav>
     </header>
@@ -109,24 +109,27 @@ export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
             <div className="mt-3 flex items-center gap-3 text-foreground">
               <button
                 type="button"
-                className="text-foreground transition-colors hover:text-foreground bg-transparent border-0 p-0"
+                className="border-0 bg-transparent p-0 text-primary transition-colors hover:text-primary/80"
                 aria-label="LinkedIn"
+                style={{ backgroundColor: 'transparent' }}
               >
-                <Linkedin className="h-4 w-4 text-foreground" />
+                <Linkedin className="h-4 w-4 text-current" />
               </button>
               <button
                 type="button"
-                className="text-foreground transition-colors hover:text-foreground bg-transparent border-0 p-0"
+                className="border-0 bg-transparent p-0 text-primary transition-colors hover:text-primary/80"
                 aria-label="GitHub"
+                style={{ backgroundColor: 'transparent' }}
               >
-                <Github className="h-4 w-4 text-foreground" />
+                <Github className="h-4 w-4 text-current" />
               </button>
               <button
                 type="button"
-                className="text-foreground transition-colors hover:text-foreground bg-transparent border-0 p-0"
+                className="border-0 bg-transparent p-0 text-primary transition-colors hover:text-primary/80"
                 aria-label="Twitter"
+                style={{ backgroundColor: 'transparent' }}
               >
-                <Twitter className="h-4 w-4 text-foreground" />
+                <Twitter className="h-4 w-4 text-current" />
               </button>
             </div>
           </div>
