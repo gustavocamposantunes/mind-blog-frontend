@@ -199,3 +199,26 @@ p {
     @apply bg-background text-foreground;
   }
 }
+
+.register-page h1,
+.register-page h2,
+.register-page h3,
+.register-page h4,
+.register-page p,
+.register-page span,
+.register-page label,
+.register-page a,
+.register-page button,
+.register-page li,
+.register-page input,
+.register-page svg {
+  color: #fff;
+}
+
+.register-page a:hover {
+  color: #fff;
+}
+
+.register-page input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
