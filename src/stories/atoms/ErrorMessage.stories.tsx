@@ -14,6 +14,7 @@ const meta = {
     error: new UnexpectedError(),
   },
 } satisfies Meta<typeof ErrorMessage>
+
 export default meta
 type Story = StoryObj<typeof meta>
 
