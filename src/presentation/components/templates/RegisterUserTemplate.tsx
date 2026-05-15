@@ -106,27 +106,27 @@ export const RegisterUserTemplate: React.FC<IRegisterUserTemplate> = ({
           <div>
             <h2 className="text-sm font-semibold text-white">Redes Sociais</h2>
             <div className="mt-3 flex items-center gap-3 text-white">
-              <a
-                href="#"
-                className="text-white transition-colors hover:text-white"
+              <button
+                type="button"
+                className="text-white transition-colors hover:text-white bg-transparent border-0 p-0"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-4 w-4 text-white" />
-              </a>
-              <a
-                href="#"
-                className="text-white transition-colors hover:text-white"
+              </button>
+              <button
+                type="button"
+                className="text-white transition-colors hover:text-white bg-transparent border-0 p-0"
                 aria-label="GitHub"
               >
                 <Github className="h-4 w-4 text-white" />
-              </a>
-              <a
-                href="#"
-                className="text-white transition-colors hover:text-white"
+              </button>
+              <button
+                type="button"
+                className="text-white transition-colors hover:text-white bg-transparent border-0 p-0"
                 aria-label="Twitter"
               >
                 <Twitter className="h-4 w-4 text-white" />
-              </a>
+              </button>
             </div>
           </div>
         </div>
