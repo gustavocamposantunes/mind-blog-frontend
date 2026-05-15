@@ -11,6 +11,7 @@ const meta = {
   tags: ['autodocs'],
   decorators: [(Story) => <section className="w-4xl">{Story()}</section>],
 } satisfies Meta<typeof CustomSkeleton>
+
 export default meta
 type Story = StoryObj<typeof meta>
 
