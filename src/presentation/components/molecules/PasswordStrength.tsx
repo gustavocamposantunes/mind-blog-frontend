@@ -23,11 +23,11 @@ const getPasswordScore = (password: string) => {
 const strengthLabels = ['Muito fraca', 'Fraca', 'Média', 'Forte', 'Muito forte']
 
 const strengthStyles = [
-  'bg-stone-200',
-  'bg-red-500',
-  'bg-amber-500',
-  'bg-yellow-500',
-  'bg-emerald-500',
+  'bg-white/15',
+  'bg-red-400',
+  'bg-amber-400',
+  'bg-yellow-300',
+  'bg-emerald-400',
 ]
 
 export const PasswordStrength: React.FC<PasswordStrengthProps> = ({
@@ -37,21 +37,12 @@ export const PasswordStrength: React.FC<PasswordStrengthProps> = ({
 
   return (
     <div
-      className="grid gap-2 rounded-md border border-stone-200 bg-stone-50 px-3 py-2"
+      className="grid gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2"
       aria-live="polite"
     >
       <div className="flex items-center justify-between gap-3">
-        <span className="text-sm font-medium text-stone-700">
-          Força da senha
-        </span>
-        <span
-          className={cn('text-sm font-semibold', {
-            'text-red-600': strength <= 1,
-            'text-amber-600': strength === 2,
-            'text-yellow-600': strength === 3,
-            'text-emerald-600': strength === 4,
-          })}
-        >
+        <span className="text-sm font-medium text-white">Força da senha</span>
+        <span className="text-sm font-semibold text-white">
           {strengthLabels[strength]}
         </span>
       </div>
@@ -61,14 +52,14 @@ export const PasswordStrength: React.FC<PasswordStrengthProps> = ({
           <span
             key={index}
             className={cn(
-              'h-2 flex-1 rounded-full bg-stone-200 transition-colors',
+              'h-2 flex-1 rounded-full bg-white/10 transition-colors',
               index < strength && strengthStyles[strength],
             )}
           />
         ))}
       </div>
 
-      <p className="text-xs text-stone-500">
+      <p className="text-xs text-white">
         Use 8+ caracteres, letras maiúsculas, números e símbolos.
       </p>
     </div>
