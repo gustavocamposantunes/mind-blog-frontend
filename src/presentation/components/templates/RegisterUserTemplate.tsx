@@ -53,7 +53,7 @@ export const RegisterUserTemplate: React.FC<IRegisterUserTemplate> = ({
           <Separator className="my-8 bg-white/10" />
 
           <Link
-            className="block text-center text-sm text-white transition-colors hover:text-white"
+            className="block text-center text-sm font-semibold text-white transition-colors hover:text-white"
             to="/login"
           >
             Já tem cadastro? Clique aqui
