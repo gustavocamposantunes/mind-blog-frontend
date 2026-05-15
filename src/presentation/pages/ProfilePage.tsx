@@ -8,7 +8,7 @@ import { Label } from '../components/ui/label'
 import { useGetProfile, useUpdateProfile } from '../hooks'
 import { useAuthStore } from '../store/auth-store'
 import { buildUpdateProfilePayload } from '../utils/buildUpdateProfilePayload'
-import { toBase64 } from '../utils/toBase64'
+import { getBase64FromInputFile } from '../utils/getBase64FromInputFile'
 
 import type { GetProfileUseCase } from '@/domain/usecases'
 import type { UpdateProfileUseCase } from '@/domain/usecases/user/update-profile.usecase'
@@ -100,13 +100,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 id="picture"
                 type="file"
                 onChange={async (e) => {
-                  const file = e.target.files?.[0]
-                  if (file) {
-                    const base64 = await toBase64(file)
-                    setProfileParams({
-                      ...profileParams,
+                  const base64 = await getBase64FromInputFile(e)
+                  if (base64) {
+                    setProfileParams((previous) => ({
+                      ...previous,
                       image: base64,
-                    })
+                    }))
                   }
                 }}
               />

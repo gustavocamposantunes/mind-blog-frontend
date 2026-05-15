@@ -11,7 +11,7 @@ import { Textarea } from '../components/ui/textarea'
 import { useGetArticleById, useUpdateArticle } from '../hooks'
 import { useAuthStore } from '../store'
 import { buildUpdateArticlePayload } from '../utils/buildUpdateArticlePayload'
-import { toBase64 } from '../utils/toBase64'
+import { getBase64FromInputFile } from '../utils/getBase64FromInputFile'
 
 import type {
   GetArticleByIdUseCase,
@@ -48,7 +48,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
       toast.error('Erro ao buscar artigo')
       navigate('/')
     }
-  }, [error])
+  }, [error, navigate])
 
   const hasShownSuccessToast = useRef(false)
 
@@ -117,13 +117,12 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
                 type="file"
                 data-testid="input-picture"
                 onChange={async (e) => {
-                  const file = e.target.files?.[0]
-                  if (file) {
-                    const base64 = await toBase64(file)
-                    setEditArticleParams({
-                      ...editArticleParams,
+                  const base64 = await getBase64FromInputFile(e)
+                  if (base64) {
+                    setEditArticleParams((previous) => ({
+                      ...previous,
                       image: base64,
-                    })
+                    }))
                   }
                 }}
               />

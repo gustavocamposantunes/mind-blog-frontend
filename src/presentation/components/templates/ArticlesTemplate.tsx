@@ -19,12 +19,9 @@ export const ArticlesTemplate: React.FC<IArticlesTemplate> = ({
     <section className="grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
       {isLoading ? (
         <>
-          <CustomSkeleton />
-          <CustomSkeleton />
-          <CustomSkeleton />
-          <CustomSkeleton />
-          <CustomSkeleton />
-          <CustomSkeleton />
+          {Array.from({ length: 6 }).map((_, index) => (
+            <CustomSkeleton key={`article-skeleton-${index}`} />
+          ))}
         </>
       ) : error ? (
         <ErrorMessage error={error} />

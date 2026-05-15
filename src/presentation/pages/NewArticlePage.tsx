@@ -7,7 +7,7 @@ import { Input } from '../components/ui/input'
 import { useResponsiveLimit } from '../hooks'
 import { useRegisterArticle } from '../hooks/useRegisterArticle'
 import { useAuthStore } from '../store/auth-store'
-import { toBase64 } from '../utils/toBase64'
+import { getBase64FromInputFile } from '../utils/getBase64FromInputFile'
 
 import type { RegisterArticleUseCase } from '@/domain/usecases'
 
@@ -66,13 +66,12 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
                 id="picture"
                 type="file"
                 onChange={async (e) => {
-                  const file = e.target.files?.[0]
-                  if (file) {
-                    const base64 = await toBase64(file)
-                    setRegisterArticleParams({
-                      ...registerArticleParams,
+                  const base64 = await getBase64FromInputFile(e)
+                  if (base64) {
+                    setRegisterArticleParams((previous) => ({
+                      ...previous,
                       image: base64,
-                    })
+                    }))
                   }
                 }}
               />
