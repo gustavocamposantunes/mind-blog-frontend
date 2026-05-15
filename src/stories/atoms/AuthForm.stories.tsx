@@ -32,6 +32,7 @@ const meta = {
     ),
   },
 } satisfies Meta<typeof AuthForm>
+
 export default meta
 type Story = StoryObj<typeof meta>
 
