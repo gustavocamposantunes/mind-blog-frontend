@@ -18,7 +18,10 @@ export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
       </Link>
 
       <nav className="flex items-center gap-6 text-sm text-foreground">
-        <Link className="text-foreground transition-colors hover:text-foreground" to="/">
+        <Link
+          className="text-foreground transition-colors hover:text-foreground"
+          to="/"
+        >
           Home
         </Link>
         <Link
@@ -100,7 +103,9 @@ export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
           </div>
 
           <div>
-            <h2 className="text-sm font-semibold text-foreground">Redes Sociais</h2>
+            <h2 className="text-sm font-semibold text-foreground">
+              Redes Sociais
+            </h2>
             <div className="mt-3 flex items-center gap-3 text-foreground">
               <button
                 type="button"

@@ -14,7 +14,9 @@ export const useThemeStore = create<ThemeStore>((set) => ({
   setTheme: (t) => {
     try {
       localStorage.setItem('theme', t)
-    } catch (e) {}
+    } catch {
+      void 0
+    }
     if (typeof document !== 'undefined') {
       if (t === 'dark') document.documentElement.classList.add('dark')
       else document.documentElement.classList.remove('dark')
@@ -26,7 +28,9 @@ export const useThemeStore = create<ThemeStore>((set) => ({
       const t: Theme = s.theme === 'dark' ? 'light' : 'dark'
       try {
         localStorage.setItem('theme', t)
-      } catch (e) {}
+      } catch {
+        void 0
+      }
       if (typeof document !== 'undefined') {
         if (t === 'dark') document.documentElement.classList.add('dark')
         else document.documentElement.classList.remove('dark')
@@ -38,7 +42,9 @@ export const useThemeStore = create<ThemeStore>((set) => ({
     try {
       const stored = localStorage.getItem('theme') as Theme | null
       if (stored) t = stored
-    } catch (e) {}
+    } catch {
+      void 0
+    }
     if (typeof document !== 'undefined') {
       if (t === 'dark') document.documentElement.classList.add('dark')
       else document.documentElement.classList.remove('dark')

@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ToastContainer, Bounce } from 'react-toastify'
-import { useThemeStore } from '@/presentation/store/theme-store'
 
 import { PrivateRoute } from './private-route'
 
@@ -30,6 +29,7 @@ import {
 } from '@/presentation/pages'
 import { EditArticlePage } from '@/presentation/pages/EditArticlePage'
 import { useAuthStore } from '@/presentation/store/auth-store'
+import { useThemeStore } from '@/presentation/store/theme-store'
 
 export const Router = () => {
   const hydrate = useAuthStore((state) => state.hydrate)
