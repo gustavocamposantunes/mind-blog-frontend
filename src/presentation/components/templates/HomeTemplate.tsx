@@ -1,4 +1,5 @@
 import { Footer } from '../molecules'
+
 import { PageTemplate } from './PageTemplate'
 
 import type React from 'react'

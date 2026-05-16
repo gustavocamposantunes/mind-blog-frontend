@@ -31,7 +31,10 @@ export const ArticlesFilters: React.FC<ArticlesFiltersProps> = ({
     <div className="space-y-4 mb-6">
       <div className="flex flex-col gap-4 md:flex-row md:gap-4 md:items-end">
         <div className="flex-1">
-          <label htmlFor="title-search" className="text-sm font-medium text-foreground block mb-2">
+          <label
+            htmlFor="title-search"
+            className="text-sm font-medium text-foreground block mb-2"
+          >
             Buscar por Título
           </label>
           <div className="relative">
@@ -49,7 +52,10 @@ export const ArticlesFilters: React.FC<ArticlesFiltersProps> = ({
 
         {categories.length > 0 && (
           <div className="flex-1">
-            <label htmlFor="category-filter" className="text-sm font-medium text-foreground block mb-2">
+            <label
+              htmlFor="category-filter"
+              className="text-sm font-medium text-foreground block mb-2"
+            >
               Categoria
             </label>
             <select

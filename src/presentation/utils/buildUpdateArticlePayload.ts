@@ -1,6 +1,9 @@
 import type { ArticleModel } from '@/domain/models'
 
-type EditableFields = Pick<ArticleModel, 'title' | 'content' | 'image' | 'category' | 'tags'>
+type EditableFields = Pick<
+  ArticleModel,
+  'title' | 'content' | 'image' | 'category' | 'tags'
+>
 
 export function buildUpdateArticlePayload(
   id: number,
@@ -12,8 +15,12 @@ export function buildUpdateArticlePayload(
     title: edited.title !== original.title ? edited.title : undefined,
     content: edited.content !== original.content ? edited.content : undefined,
     image: edited.image !== original.image ? edited.image : undefined,
-    category: edited.category !== original.category ? edited.category : undefined,
-    tags: JSON.stringify(edited.tags) !== JSON.stringify(original.tags) ? edited.tags : undefined,
+    category:
+      edited.category !== original.category ? edited.category : undefined,
+    tags:
+      JSON.stringify(edited.tags) !== JSON.stringify(original.tags)
+        ? edited.tags
+        : undefined,
   }
 
   return Object.fromEntries(

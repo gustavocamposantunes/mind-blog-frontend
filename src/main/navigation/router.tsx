@@ -45,9 +45,7 @@ export const Router = () => {
         <Routes>
           <Route
             path="/"
-            element={
-              <HomePage listArticles={makeRemoteListArticles()} />
-            }
+            element={<HomePage listArticles={makeRemoteListArticles()} />}
           />
           <Route
             path="/articles"

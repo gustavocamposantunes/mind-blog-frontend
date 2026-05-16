@@ -1,8 +1,17 @@
 import { PencilIcon, TrashIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
-import { ArticlesViewToggle, FavoriteButton, CustomSkeleton, ErrorMessage } from '../components/atoms'
-import { ArticlesFilters, PublishedByInfo, Footer } from '../components/molecules'
+import {
+  ArticlesViewToggle,
+  FavoriteButton,
+  CustomSkeleton,
+  ErrorMessage,
+} from '../components/atoms'
+import {
+  ArticlesFilters,
+  PublishedByInfo,
+  Footer,
+} from '../components/molecules'
 import { ArticleListCard, CustomCard } from '../components/organism'
 import { Button } from '../components/ui/button'
 import {
@@ -79,6 +88,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
 
   const isLoggedIn = !!accessToken
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderArticleCard = (props: any) => {
     const isCurrentUser = user.id === props.author.id
     let currentUserArticleAction
@@ -191,9 +201,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
           ) : error ? (
             <ErrorMessage error={error} />
           ) : (
-            <>
-              {data?.articles.map((props) => renderArticleCard(props))}
-            </>
+            <>{data?.articles.map((props) => renderArticleCard(props))}</>
           )}
         </section>
 

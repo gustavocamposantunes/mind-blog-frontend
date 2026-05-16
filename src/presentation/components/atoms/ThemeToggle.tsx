@@ -27,7 +27,11 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       aria-label="Toggle theme"
       onClick={toggle}
       className={buttonClassName}
-      style={isAuthVariant ? { backgroundColor: theme === 'light' ? '#fff' : undefined } : undefined}
+      style={
+        isAuthVariant
+          ? { backgroundColor: theme === 'light' ? '#fff' : undefined }
+          : undefined
+      }
     >
       {theme === 'dark' ? (
         <Moon className="h-4 w-4 text-current" aria-hidden="true" />

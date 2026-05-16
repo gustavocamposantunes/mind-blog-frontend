@@ -118,9 +118,7 @@ describe('HomePage', () => {
     it('should render the recent articles swiper after load', async () => {
       makeSut()
 
-      const recentSwiper = await screen.findByTestId(
-        'recent-articles-swiper',
-      )
+      const recentSwiper = await screen.findByTestId('recent-articles-swiper')
 
       expect(recentSwiper).toBeInTheDocument()
     })
