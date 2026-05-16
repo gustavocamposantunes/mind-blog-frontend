@@ -4,6 +4,8 @@ import type { ArticleListModel } from '@/domain/models'
 export type ListArticleParams = {
   page: number
   limit: number
+  title?: string
+  category?: string
 }
 
 export interface ListArticlesUseCase {

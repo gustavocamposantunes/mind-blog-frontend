@@ -1,6 +1,7 @@
 export * from './useAuthenticateUser'
 export * from './useGetProfile'
 export * from './useArticlesList'
+export * from './useArticlesFilters'
 export * from './useDeleteArticle'
 export * from './useFavouriteArticle'
 export * from './useGetArticleById'

@@ -1,10 +1,9 @@
-import { ArrowUpRight, Github, Linkedin, Twitter } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { ErrorMessage, FavouriteSkeleton } from '../components/atoms'
-import { BrandLogo } from '../components/atoms/BrandLogo'
 import { PublishedByInfo } from '../components/molecules'
 import { CustomCard } from '../components/organism/CustomCard'
 import { Button } from '../components/ui/button'
@@ -232,84 +231,6 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
           <Link to="/register">Criar Conta Gratuita</Link>
         </Button>
       </section>
-
-      <footer className="border-t border-border px-6 py-10 md:px-10 lg:px-14">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-          <div className="max-w-xs">
-            <BrandLogo className="items-start" />
-            <p className="mt-3 text-sm leading-6 text-foreground/70">
-              Seu portal de tecnologia com artigos, tutoriais e novidades do
-              mundo tech.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-6 sm:flex-row sm:gap-12">
-            <div>
-              <h2 className="text-sm font-semibold text-foreground">
-                Navegacao
-              </h2>
-              <ul className="mt-3 space-y-2 text-sm text-foreground/70">
-                <li>
-                  <Link
-                    className="text-foreground/70 transition-colors hover:text-foreground"
-                    to="/"
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="text-foreground/70 transition-colors hover:text-foreground"
-                    to={`/articles?page=1&limit=${limit}`}
-                  >
-                    Artigos
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="text-foreground/70 transition-colors hover:text-foreground"
-                    to="/dashboard"
-                  >
-                    Dashboard
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="text-sm font-semibold text-foreground">
-                Redes Sociais
-              </h2>
-              <div className="mt-3 flex items-center gap-3 text-foreground">
-                <button
-                  type="button"
-                  className="border-0 bg-transparent p-0 text-primary transition-colors hover:text-primary/80"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="h-4 w-4 text-current" />
-                </button>
-                <button
-                  type="button"
-                  className="border-0 bg-transparent p-0 text-primary transition-colors hover:text-primary/80"
-                  aria-label="Twitter"
-                >
-                  <Twitter className="h-4 w-4 text-current" />
-                </button>
-                <button
-                  type="button"
-                  className="border-0 bg-transparent p-0 text-primary transition-colors hover:text-primary/80"
-                  aria-label="Github"
-                >
-                  <Github className="h-4 w-4 text-current" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p className="mt-10 text-center text-xs text-foreground/50">
-          @ 2026 MindBlog. Todos os direitos reservados.
-        </p>
-      </footer>
     </HomeTemplate>
   )
 }

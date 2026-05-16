@@ -1,3 +1,4 @@
+import { Footer } from '../molecules'
 import { PageTemplate } from './PageTemplate'
 
 import type React from 'react'
@@ -8,7 +9,10 @@ interface IHomeTemplate {
 }
 
 export const HomeTemplate: React.FC<IHomeTemplate> = ({ children }) => (
-  <PageTemplate>
-    <section className="space-y-16 pb-16">{children}</section>
-  </PageTemplate>
+  <div className="flex flex-col min-h-screen bg-background">
+    <PageTemplate>
+      <section className="space-y-16 pb-16">{children}</section>
+    </PageTemplate>
+    <Footer />
+  </div>
 )

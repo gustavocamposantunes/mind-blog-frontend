@@ -94,7 +94,7 @@ export const RegisterUserTemplate: React.FC<IRegisterUserTemplate> = ({
             <div className="mt-3 flex items-center gap-3 text-foreground">
               <button
                 type="button"
-                className="border-0 bg-transparent p-0 text-primary transition-colors hover:text-primary/80"
+                className="border-0 bg-transparent p-0 text-white transition-colors hover:text-white/80"
                 aria-label="LinkedIn"
                 style={{ backgroundColor: 'transparent' }}
               >
@@ -102,7 +102,7 @@ export const RegisterUserTemplate: React.FC<IRegisterUserTemplate> = ({
               </button>
               <button
                 type="button"
-                className="border-0 bg-transparent p-0 text-primary transition-colors hover:text-primary/80"
+                className="border-0 bg-transparent p-0 text-white transition-colors hover:text-white/80"
                 aria-label="GitHub"
                 style={{ backgroundColor: 'transparent' }}
               >
@@ -110,7 +110,7 @@ export const RegisterUserTemplate: React.FC<IRegisterUserTemplate> = ({
               </button>
               <button
                 type="button"
-                className="border-0 bg-transparent p-0 text-primary transition-colors hover:text-primary/80"
+                className="border-0 bg-transparent p-0 text-white transition-colors hover:text-white/80"
                 aria-label="Twitter"
                 style={{ backgroundColor: 'transparent' }}
               >

@@ -2,44 +2,9 @@ import { Github, Linkedin, Twitter } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { BrandLogo } from '../atoms'
-import { Header } from '../molecules'
-import { Separator } from '../ui/separator'
 
-import type { ReactNode } from 'react'
-
-interface ILoginTemplate {
-  children: ReactNode
-}
-
-export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
-  <main className="login-page min-h-screen bg-background text-foreground flex flex-col transition-colors">
-    <Header />
-
-    <section className="flex flex-1 items-center justify-center px-4 py-12 md:px-6 lg:px-8">
-      <div className="w-full max-w-[420px] text-center">
-        <BrandLogo centered className="mx-auto" />
-        <h1 className="mt-8 text-3xl font-semibold tracking-tight md:text-4xl">
-          Entrar na Plataforma
-        </h1>
-        <p className="mt-3 text-sm text-foreground/80">
-          Acesse sua conta para gerenciar seus artigos
-        </p>
-
-        <div className="mt-8 border border-border bg-card/70 p-5 text-left shadow-2xl shadow-black/10 backdrop-blur-sm md:p-6">
-          {children}
-
-          <Separator className="my-8 bg-border" />
-
-          <Link
-            className="block text-center text-sm font-semibold text-foreground transition-colors hover:text-foreground"
-            to="/register"
-          >
-            Não tem uma conta? Criar conta
-          </Link>
-        </div>
-      </div>
-    </section>
-
+export const Footer: React.FC = () => {
+  return (
     <footer className="border-t border-border px-6 py-8 md:px-10 lg:px-14">
       <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-xs">
@@ -73,9 +38,9 @@ export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
               <li>
                 <Link
                   className="text-foreground/80 transition-colors hover:text-foreground"
-                  to="/dashboard"
+                  to="/profile"
                 >
-                  Dashboard
+                  Perfil
                 </Link>
               </li>
             </ul>
@@ -115,9 +80,9 @@ export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
         </div>
       </div>
 
-      <div className="mt-8 border-t border-border pt-6 text-center text-xs text-foreground/80">
-        © 2025 TechBlog. Todos os direitos reservados.
+      <div className="mt-8 border-t border-border pt-8 text-center text-sm text-foreground/60">
+        <p>&copy; 2025 Mind Blog. Todos os direitos reservados.</p>
       </div>
     </footer>
-  </main>
-)
+  )
+}
