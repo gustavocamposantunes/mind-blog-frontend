@@ -6,9 +6,11 @@ import { UnexpectedError } from '@/domain/errors'
 import { mockArticlesList } from '@/domain/test'
 import { cleanup, screen } from '@/presentation/test/test-utils'
 
+const mockNavigate = vi.fn()
+
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
-  useNavigate: () => vi.fn(),
+  useNavigate: () => mockNavigate,
 }))
 
 vi.mock('react-responsive', async () => {
@@ -122,6 +124,28 @@ describe('HomePage', () => {
       const recentSwiper = await screen.findByTestId('recent-articles-swiper')
 
       expect(recentSwiper).toBeInTheDocument()
+    })
+
+    it('should render the fallback block when an article has no image', async () => {
+      const articlesList = mockArticlesList()
+      articlesList.articles[0].image = ''
+
+      makeSut(new ListArticlesSpy(articlesList))
+
+      const recentSwiper = await screen.findByTestId('recent-articles-swiper')
+
+      expect(recentSwiper).toBeInTheDocument()
+    })
+
+    it('should navigate to the article page when a featured card is clicked', async () => {
+      const { listArticlesSpy } = makeSut()
+
+      const articleId = listArticlesSpy.articlesList.articles[0].id
+      const featuredCard = await screen.findByTestId(`custom-card-${articleId}`)
+
+      featuredCard.click()
+
+      expect(mockNavigate).toHaveBeenCalledWith(`/articles/${articleId}`)
     })
   })
 })

@@ -35,17 +35,21 @@ describe('NewArticlePage', () => {
 
   const setupSubmit = () => {
     const titleInput = screen.getByLabelText(/título/i)
-    const contentInput = screen.getByLabelText(/texto/i)
+    const resumeInput = screen.getByLabelText(/resumo/i)
+    const contentInput = screen.getByLabelText(/conteúdo/i)
     const categoryInput = screen.getByLabelText(/categoria/i)
     const tagsInput = screen.getByLabelText(/tags/i)
 
-    const submitButton = screen.getByRole('button', { name: /salvar/i })
+    const submitButton = screen.getByRole('button', { name: /publicar artigo/i })
 
     fireEvent.change(titleInput, { target: { value: faker.lorem.sentence() } })
+    fireEvent.change(resumeInput, {
+      target: { value: faker.lorem.paragraph() },
+    })
     fireEvent.change(contentInput, {
       target: { value: faker.lorem.paragraph() },
     })
-    fireEvent.change(categoryInput, { target: { value: 'tecnologia' } })
+    fireEvent.change(categoryInput, { target: { value: 'Tecnologia' } })
     fireEvent.change(tagsInput, {
       target: { value: 'react, typescript, frontend' },
     })
@@ -72,13 +76,25 @@ describe('NewArticlePage', () => {
   it('should redirect to /articles when cancel button is clicked', async () => {
     makeSut()
 
-    const cancelButton = screen.getByRole('button', { name: /salvar/i })
+    const cancelButton = screen.getByRole('button', { name: /cancelar/i })
 
     fireEvent.click(cancelButton)
 
     await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith('/articles?page=1&limit=12')
+      expect(mockNavigate).toHaveBeenCalledWith('/articles')
     })
+  })
+
+  it('should redirect to /articles when the back button is clicked', async () => {
+    makeSut()
+
+    const backButton = screen.getByRole('button', {
+      name: /voltar ao dashboard/i,
+    })
+
+    fireEvent.click(backButton)
+
+    expect(mockNavigate).toHaveBeenCalledWith('/articles')
   })
 
   it('should redirect to /articles when submit is successfull', async () => {
@@ -97,7 +113,7 @@ describe('NewArticlePage', () => {
     setupSubmit()
 
     await waitFor(() => {
-      expect(registerArticleSpy.registerPostParams.category).toBe('tecnologia')
+      expect(registerArticleSpy.registerPostParams.category).toBe('Tecnologia')
       expect(registerArticleSpy.registerPostParams.tags).toEqual([
         'react',
         'typescript',
@@ -110,7 +126,7 @@ describe('NewArticlePage', () => {
     makeSut()
 
     const file = new File(['image content'], 'image.png', { type: 'image/png' })
-    const inputFile = screen.getByLabelText(/inserir imagem/i)
+    const inputFile = screen.getByLabelText(/imagem de capa/i)
 
     fireEvent.change(inputFile, { target: { files: [file] } })
 

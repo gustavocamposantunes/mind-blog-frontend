@@ -106,4 +106,41 @@ describe('RemoteAuthenticateUser', () => {
     expect(response.statusCode).toBe(200)
     expect(response.data).toEqual(authenticateUserModel)
   })
+
+  it('should build the model when HttpPostClient returns a string token', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    const authenticationParams = mockAuthenticationParams()
+    const payload = btoa(
+      JSON.stringify({
+        sub: 1,
+        email: 'john@example.com',
+        firstName: 'John',
+        lastName: 'Doe',
+      }),
+    )
+
+    httpPostClientSpy.response = {
+      status: HttpStatusCode.ok,
+      data: `header.${payload}.signature`,
+    }
+
+    const response = await sut.auth(authenticationParams)
+
+    expect(response.statusCode).toBe(200)
+    expect(response.data.accessToken).toBe(`header.${payload}.signature`)
+  })
+
+  it('should throw UnexpectedError when the returned payload cannot be extracted', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    const authenticationParams = mockAuthenticationParams()
+
+    httpPostClientSpy.response = {
+      status: HttpStatusCode.ok,
+      data: { foo: 'bar' },
+    }
+
+    await expect(sut.auth(authenticationParams)).rejects.toThrow(
+      new UnexpectedError(),
+    )
+  })
 })

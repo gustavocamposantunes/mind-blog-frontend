@@ -70,9 +70,15 @@ describe('EditArticlePage', () => {
     })
 
     it('should render an skeleton group when the article is not loaded yet', async () => {
-      makeSut()
+      const getArticleByIdSpy = new GetArticleByIdSpy()
 
-      await screen.findByTestId('skeleton-group')
+      vi.spyOn(getArticleByIdSpy, 'getById').mockImplementation(
+        () => new Promise(() => {}),
+      )
+
+      makeSut(getArticleByIdSpy)
+
+      expect(await screen.findByTestId('skeleton-group')).toBeInTheDocument()
     })
 
     it('should render the form header', async () => {

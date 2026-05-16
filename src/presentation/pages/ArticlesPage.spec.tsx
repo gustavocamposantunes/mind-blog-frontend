@@ -73,14 +73,12 @@ describe('ArticlesPage', () => {
 
     setSearchParamsMock = vi.fn((newParams: unknown) => {
       if (newParams instanceof URLSearchParams) {
+        currentParams = {}
         newParams.forEach((value, key) => {
           currentParams[key] = value
         })
       } else if (typeof newParams === 'object' && newParams !== null) {
-        currentParams = {
-          ...currentParams,
-          ...(newParams as Record<string, string>),
-        }
+        currentParams = { ...(newParams as Record<string, string>) }
       }
     })
     useSearchParamsMock.mockImplementation(() => [
@@ -180,6 +178,91 @@ describe('ArticlesPage', () => {
       fireEvent.click(customCard)
 
       expect(mockNavigate).toHaveBeenCalledWith(`/articles/${articleId}`)
+    })
+
+    it('should update the filters and switch to list view', async () => {
+      const { listArticlesListSpy, rerender } = makeSut()
+      const firstArticle = listArticlesListSpy.articlesList.articles[0]
+
+      const titleFilter = await screen.findByLabelText(/buscar por título/i)
+      const categoryFilter = screen.getByLabelText(/^categoria$/i)
+
+      fireEvent.change(titleFilter, {
+        target: { value: 'react' },
+      })
+
+      fireEvent.change(categoryFilter, {
+        target: { value: 'IA' },
+      })
+
+      rerender()
+
+      const clearButton = await screen.findByRole('button', { name: /limpar/i })
+
+      fireEvent.click(clearButton)
+
+      rerender()
+
+      const listViewButton = screen.getByTitle('Visualização em listagem')
+      fireEvent.click(listViewButton)
+
+      rerender()
+
+      await screen.findByTestId(`article-list-card-${firstArticle.id}`)
+
+      expect(currentParams.page).toBe('1')
+      expect(currentParams.view).toBe('list')
+      expect(currentParams.title).toBeUndefined()
+      expect(currentParams.category).toBeUndefined()
+    })
+
+    it('should remove title and category filters when inputs are cleared', async () => {
+      const { rerender } = makeSut()
+
+      const titleFilter = await screen.findByLabelText(/buscar por título/i)
+      const categoryFilter = screen.getByLabelText(/^categoria$/i)
+
+      fireEvent.change(titleFilter, {
+        target: { value: 'react' },
+      })
+      rerender()
+
+      fireEvent.change(titleFilter, {
+        target: { value: '' },
+      })
+      rerender()
+
+      fireEvent.change(categoryFilter, {
+        target: { value: 'IA' },
+      })
+      rerender()
+
+      fireEvent.change(categoryFilter, {
+        target: { value: '' },
+      })
+      rerender()
+
+      expect(currentParams.title).toBeUndefined()
+      expect(currentParams.category).toBeUndefined()
+      expect(currentParams.page).toBe('1')
+    })
+
+    it('should default page to 1 when the page query param is missing', async () => {
+      currentParams = { limit: '10' }
+
+      const { rerender } = makeSut()
+
+      const titleFilter = await screen.findByLabelText(/buscar por título/i)
+
+      fireEvent.change(titleFilter, {
+        target: { value: 'react' },
+      })
+
+      rerender()
+
+      expect(currentParams.page).toBe('1')
+      expect(currentParams.limit).toBeTruthy()
+      expect(currentParams.title).toBe('react')
     })
   })
 

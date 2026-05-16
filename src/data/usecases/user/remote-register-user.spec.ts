@@ -91,4 +91,41 @@ describe('RemoteRegisterUser', () => {
     expect(response.statusCode).toBe(201)
     expect(response.data).toEqual(authenticateUserModel)
   })
+
+  it('should build the model when HttpPostClient returns a string token', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    const registerUserParams = mockRegisterUser()
+    const payload = btoa(
+      JSON.stringify({
+        sub: 1,
+        email: 'john@example.com',
+        firstName: 'John',
+        lastName: 'Doe',
+      }),
+    )
+
+    httpPostClientSpy.response = {
+      status: 201,
+      data: `header.${payload}.signature`,
+    }
+
+    const response = await sut.register(registerUserParams)
+
+    expect(response.statusCode).toBe(201)
+    expect(response.data.accessToken).toBe(`header.${payload}.signature`)
+  })
+
+  it('should throw UnexpectedError when the returned payload cannot be extracted', async () => {
+    const { sut, httpPostClientSpy } = makeSut()
+    const registerUserParams = mockRegisterUser()
+
+    httpPostClientSpy.response = {
+      status: 201,
+      data: { foo: 'bar' },
+    }
+
+    await expect(sut.register(registerUserParams)).rejects.toThrow(
+      new UnexpectedError(),
+    )
+  })
 })
