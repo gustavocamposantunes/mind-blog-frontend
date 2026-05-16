@@ -9,6 +9,6 @@ interface IHomeTemplate {
 
 export const HomeTemplate: React.FC<IHomeTemplate> = ({ children }) => (
   <PageTemplate>
-    <section className="grid gap-4 xl:grid-cols-3 pb-8">{children}</section>
+    <section className="space-y-16 pb-16">{children}</section>
   </PageTemplate>
 )

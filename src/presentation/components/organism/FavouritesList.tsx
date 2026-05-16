@@ -34,6 +34,7 @@ export function FavouritesList({
           ranking={`0${index + 1}`}
           title={props.title}
           description={props.content}
+          category={props.category}
           onClick={() => {
             navigate(`/articles/${props.id}`)
           }}

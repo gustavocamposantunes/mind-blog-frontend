@@ -1,7 +1,8 @@
 import { Github, Linkedin, Twitter } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-import { BrandLogo, ThemeToggle } from '../atoms'
+import { BrandLogo } from '../atoms'
+import { Header } from '../molecules'
 import { Separator } from '../ui/separator'
 
 import type { ReactNode } from 'react'
@@ -12,29 +13,7 @@ interface ILoginTemplate {
 
 export const LoginTemplate: React.FC<ILoginTemplate> = ({ children }) => (
   <main className="login-page min-h-screen bg-background text-foreground flex flex-col transition-colors">
-    <header className="flex items-center justify-between border-b border-border px-6 py-4 md:px-10 lg:px-14">
-      <Link to="/" className="flex items-center gap-3">
-        <BrandLogo className="items-start" />
-      </Link>
-
-      <nav className="flex items-center gap-6 text-sm text-foreground">
-        <Link
-          className="text-foreground transition-colors hover:text-foreground"
-          to="/"
-        >
-          Home
-        </Link>
-        <Link
-          className="text-foreground transition-colors hover:text-foreground"
-          to="/articles"
-        >
-          Artigos
-        </Link>
-        <span>
-          <ThemeToggle variant="auth" />
-        </span>
-      </nav>
-    </header>
+    <Header />
 
     <section className="flex flex-1 items-center justify-center px-4 py-12 md:px-6 lg:px-8">
       <div className="w-full max-w-[420px] text-center">

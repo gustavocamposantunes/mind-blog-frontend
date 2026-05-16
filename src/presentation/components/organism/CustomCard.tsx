@@ -13,10 +13,12 @@ interface ICustomCard {
   onClick(): void
   headerImageSrc?: string
   imageClassName?: string
+  className?: string
   title: string
   description: string
   footer: ReactNode
   ranking?: string
+  category?: string
 }
 
 export const CustomCard: React.FC<ICustomCard> = ({
@@ -24,10 +26,12 @@ export const CustomCard: React.FC<ICustomCard> = ({
   onClick,
   headerImageSrc,
   imageClassName,
+  className,
   title,
   description,
   footer,
   ranking,
+  category,
 }) => {
   let rankingImage
   if (ranking)
@@ -39,7 +43,7 @@ export const CustomCard: React.FC<ICustomCard> = ({
 
   return (
     <Card
-      className="pt-0 cursor-pointer hover:shadow-lg transition-shadow"
+      className={`pt-0 cursor-pointer hover:shadow-lg transition-shadow ${className ?? ''}`.trim()}
       key={id}
       onClick={onClick}
       data-testid={`custom-card-${id}`}
@@ -54,6 +58,11 @@ export const CustomCard: React.FC<ICustomCard> = ({
           />
           {rankingImage}
         </div>
+        {category ? (
+          <span className="px-6 pt-4 text-xs font-semibold uppercase tracking-wide text-primary/80">
+            {category}
+          </span>
+        ) : null}
         <CardTitle className="px-6" data-testid="header-title">
           {title}
         </CardTitle>

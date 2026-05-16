@@ -109,6 +109,7 @@ button:focus-visible {
 
 .action-btn {
   width: 100px;
+  color: #ffffff !important;
 }
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);

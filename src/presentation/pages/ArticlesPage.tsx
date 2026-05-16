@@ -109,6 +109,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
             imageClassName="min-h-[200px] lg:min-h-[250px] xl:min-h-[275px]"
             title={props.title}
             description={props.content}
+            category={props.category}
             onClick={() => {
               navigate(`/articles/${props.id}`)
             }}

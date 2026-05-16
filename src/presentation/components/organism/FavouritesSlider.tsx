@@ -50,14 +50,14 @@ export const FavouritesSlider: React.FC<IFavouritesSlider> = ({
       data-testid="favourites-slider"
     >
       {articles?.map(({ ...props }) => (
-        <SwiperSlide>
+        <SwiperSlide key={props.id}>
           <CustomCard
-            key={props.id}
             id={String(props.id)}
             headerImageSrc={props.image}
             imageClassName="h-64 object-cover md:h-96 lg:h-[32rem]"
             title={props.title}
             description={props.content}
+            category={props.category}
             onClick={() => {
               navigate(`/articles/${props.id}`)
             }}

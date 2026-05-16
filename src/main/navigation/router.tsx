@@ -12,7 +12,6 @@ import {
   makeRemoteRegisterArticle,
   makeRemoteGetProfile,
   makeRemoteUpdateProfile,
-  makeRemoteGetNews,
   makeRemoteFavouriteArticle,
   makeRemoteUpdateArticle,
   makeRemoteDeleteArticle,
@@ -47,10 +46,7 @@ export const Router = () => {
           <Route
             path="/"
             element={
-              <HomePage
-                listArticles={makeRemoteListArticles()}
-                getNews={makeRemoteGetNews()}
-              />
+              <HomePage listArticles={makeRemoteListArticles()} />
             }
           />
           <Route

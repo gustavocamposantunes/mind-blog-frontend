@@ -1,7 +1,5 @@
-import { LogIn, NotebookText } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
-import { MenuItem } from '../atoms'
 import { Header } from '../molecules'
 import { UserDropdownMenu } from '../organism'
 import { Button } from '../ui/button'
@@ -23,27 +21,23 @@ export const PageTemplate: React.FC<IPageTemplate> = ({ children }) => {
   return (
     <>
       <Header>
-        <ul>
-          {isLoggedIn ? (
-            <MenuItem
-              iconStart={<NotebookText />}
-              className="border-l-2 border-l-stone-700 pl-6"
-              redirect="/article/new"
-            >
-              Publicar
-            </MenuItem>
-          ) : (
-            <MenuItem
-              iconStart={<LogIn />}
-              className="border-l-2 border-l-stone-700 pl-6"
-              redirect="/login"
-            >
-              Entrar
-            </MenuItem>
-          )}
-        </ul>
         {isLoggedIn ? (
-          <span className="ml-8">
+          <Link
+            className="rounded-full border border-border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-colors hover:border-primary/60"
+            to="/article/new"
+          >
+            Publicar
+          </Link>
+        ) : (
+          <Link
+            className="rounded-full border border-border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-colors hover:border-primary/60"
+            to="/login"
+          >
+            Entrar
+          </Link>
+        )}
+        {isLoggedIn ? (
+          <span>
             <UserDropdownMenu
               user={user}
               onProfileNavigate={() => navigate('/profile')}
@@ -56,7 +50,7 @@ export const PageTemplate: React.FC<IPageTemplate> = ({ children }) => {
         ) : (
           <Button
             onClick={() => navigate('/register')}
-            className="action-btn ml-6"
+            className="action-btn text-white"
           >
             Registrar
           </Button>

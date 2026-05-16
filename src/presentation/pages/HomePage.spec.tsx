@@ -1,9 +1,9 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
 
-import { GetNewsSpy, ListArticlesSpy, renderHomePageWithRouter } from '../test'
+import { ListArticlesSpy, renderHomePageWithRouter } from '../test'
 
 import { UnexpectedError } from '@/domain/errors'
-import { mockMostFavouritedsArticlesList } from '@/domain/test'
+import { mockArticlesList } from '@/domain/test'
 import { cleanup, screen } from '@/presentation/test/test-utils'
 
 vi.mock('react-router-dom', async () => ({
@@ -22,18 +22,15 @@ const useMediaQueryMock = vi.mocked(
 )
 
 type SutTypes = {
-  getNewsSpy: GetNewsSpy
   listArticlesSpy: ListArticlesSpy
 }
 
 const makeSut = (
-  getNewsSpy = new GetNewsSpy(),
-  listArticlesSpy = new ListArticlesSpy(mockMostFavouritedsArticlesList()),
+  listArticlesSpy = new ListArticlesSpy(mockArticlesList()),
 ): SutTypes => {
-  renderHomePageWithRouter(getNewsSpy, listArticlesSpy)
+  renderHomePageWithRouter(listArticlesSpy)
 
   return {
-    getNewsSpy,
     listArticlesSpy,
   }
 }
@@ -74,92 +71,58 @@ describe('HomePage', () => {
       const listArticlesSpy = new ListArticlesSpy()
 
       const error = new UnexpectedError()
-      vi.spyOn(listArticlesSpy, 'listAll').mockRejectedValueOnce(error)
+      vi.spyOn(listArticlesSpy, 'listAll').mockRejectedValue(error)
 
-      makeSut(undefined, listArticlesSpy)
+      makeSut(listArticlesSpy)
 
       return {
         error,
       }
     }
 
-    describe(`Favourites Slider`, () => {
-      it('should render a error message if Favourites Slider fails', async () => {
-        const { error } = setupListArticlesError()
+    it('should render a error message if featured articles fail', async () => {
+      const { error } = setupListArticlesError()
 
-        const [errorMessage] = await screen.findAllByTestId('error-message')
+      const errorMessages = await screen.findAllByTestId('error-message')
 
-        expect(errorMessage).toBeInTheDocument()
-        expect(errorMessage.textContent).toBe(error.message)
-      })
-
-      it('should render a slider skeleton before render the Favourites Slider', async () => {
-        makeSut()
-
-        const skeletonSlider = await screen.findByTestId('skeleton-slider')
-
-        expect(skeletonSlider).toBeInTheDocument()
-      })
-
-      it('should render a favourites slider after loaded', async () => {
-        makeSut()
-
-        const favouritesSlider = await screen.findByTestId('favourites-slider')
-
-        expect(favouritesSlider).toBeInTheDocument()
-      })
-    })
-    describe('Most Favourited Articles', () => {
-      it('should render a error message if most favouriteds articles fails', async () => {
-        const { error } = setupListArticlesError()
-
-        const errorMessageList = await screen.findAllByTestId('error-message')
-        const errorMessage = errorMessageList[1]
-
-        expect(errorMessage).toBeInTheDocument()
-        expect(errorMessage.textContent).toBe(error.message)
-      })
-
-      it('should render skeletons while the most favouriteds is loading', async () => {
-        makeSut()
-
-        const skeletons = await screen.findAllByTestId('skeleton-favourits')
-
-        expect(skeletons.length).toBe(3)
-      })
-
-      it('should render the most favouriteds after load', async () => {
-        const { listArticlesSpy } = makeSut()
-
-        await screen.findAllByTestId(
-          `custom-card-${listArticlesSpy.articlesList.articles[0].id}`,
-        )
-
-        listArticlesSpy.articlesList.articles.map(({ id }) => {
-          const cardsArticle = screen.getAllByTestId(`custom-card-${id}`)
-          const cardArticle = cardsArticle[1]
-          expect(cardArticle).toBeInTheDocument()
-        })
-      })
+      expect(errorMessages.length).toBeGreaterThanOrEqual(1)
+      expect(errorMessages[0].textContent).toBe(error.message)
     })
 
-    describe('News', () => {
-      it('should render a skeleton while promise is pending', () => {
-        makeSut()
+    it('should render skeletons while featured articles are loading', async () => {
+      makeSut()
 
-        const skeletonNews = screen.getByTestId('skeleton-news')
+      const skeletons = await screen.findAllByTestId('skeleton-favourits')
 
-        expect(skeletonNews).toBeTruthy()
-      })
+      expect(skeletons.length).toBe(3)
+    })
 
-      it('should render a list of articles after load', async () => {
-        makeSut()
+    it('should render featured cards after load', async () => {
+      const { listArticlesSpy } = makeSut()
 
-        const listArticles = await screen.findByTestId('list-news')
+      await screen.findAllByTestId(
+        `custom-card-${listArticlesSpy.articlesList.articles[0].id}`,
+      )
+    })
+  })
 
-        expect(listArticles).toBeTruthy()
-        expect(listArticles.querySelectorAll('article').length).toBe(7)
-      })
+  describe('Recent Articles', () => {
+    it('should render a slider skeleton while recent articles are loading', () => {
+      makeSut()
+
+      const skeletonRecent = screen.getByTestId('skeleton-recent')
+
+      expect(skeletonRecent).toBeTruthy()
+    })
+
+    it('should render the recent articles swiper after load', async () => {
+      makeSut()
+
+      const recentSwiper = await screen.findByTestId(
+        'recent-articles-swiper',
+      )
+
+      expect(recentSwiper).toBeInTheDocument()
     })
   })
 })
