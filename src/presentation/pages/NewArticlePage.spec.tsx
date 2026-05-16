@@ -40,7 +40,9 @@ describe('NewArticlePage', () => {
     const categoryInput = screen.getByLabelText(/categoria/i)
     const tagsInput = screen.getByLabelText(/tags/i)
 
-    const submitButton = screen.getByRole('button', { name: /publicar artigo/i })
+    const submitButton = screen.getByRole('button', {
+      name: /publicar artigo/i,
+    })
 
     fireEvent.change(titleInput, { target: { value: faker.lorem.sentence() } })
     fireEvent.change(resumeInput, {
