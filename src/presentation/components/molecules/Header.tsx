@@ -8,7 +8,7 @@ import type { ReactNode } from 'react'
 import { useResponsiveLimit } from '@/presentation/hooks/useResponsiveLimit'
 
 interface IHeader {
-  children: ReactNode
+  children?: ReactNode
 }
 
 export const Header: React.FC<IHeader> = ({ children }) => {
