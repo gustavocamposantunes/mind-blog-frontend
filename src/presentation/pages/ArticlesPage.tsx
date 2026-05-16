@@ -7,7 +7,6 @@ import {
   CustomSkeleton,
   ErrorMessage,
 } from '../components/atoms'
-import { useResponsivePagination } from '../hooks'
 import {
   ArticlesFilters,
   PublishedByInfo,
@@ -15,6 +14,7 @@ import {
 } from '../components/molecules'
 import { ArticleListCard, CustomCard } from '../components/organism'
 import { Button } from '../components/ui/button'
+import { useResponsivePagination } from '../hooks'
 import {
   useArticlesList,
   useArticlesFilters,
@@ -32,9 +32,6 @@ import type { DeleteArticleByIdUseCase } from '@/domain/usecases/article/delete-
 import { CustomPagination } from '@/presentation/components/organism'
 import { PageTemplate } from '@/presentation/components/templates'
 
-  // ensure responsive pagination keeps URL params in sync
-  useResponsivePagination()
-
 type ArticlessPageProps = {
   listArticles: ListArticlesUseCase
   favouriteArticle: FavouriteArticleUseCase
@@ -49,6 +46,9 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   favouriteArticle,
   deleteArticle,
 }) => {
+  // ensure responsive pagination keeps URL params in sync
+  useResponsivePagination()
+
   const navigate = useNavigate()
   const { user, accessToken } = useAuthStore()
   const {

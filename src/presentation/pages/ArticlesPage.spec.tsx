@@ -77,7 +77,6 @@ describe('ArticlesPage', () => {
           currentParams[key] = value
         })
       } else if (typeof newParams === 'object' && newParams !== null) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         currentParams = {
           ...currentParams,
           ...(newParams as Record<string, string>),
