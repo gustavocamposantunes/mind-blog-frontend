@@ -71,10 +71,17 @@ describe('ArticlesPage', () => {
 
     currentParams = { page: '1', limit: '10' }
 
-    setSearchParamsMock = vi.fn((newParams: Record<string, string>) => {
-      currentParams = {
-        ...currentParams,
-        ...newParams,
+    setSearchParamsMock = vi.fn((newParams: unknown) => {
+      if (newParams instanceof URLSearchParams) {
+        newParams.forEach((value, key) => {
+          currentParams[key] = value
+        })
+      } else if (typeof newParams === 'object' && newParams !== null) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        currentParams = {
+          ...currentParams,
+          ...(newParams as Record<string, string>),
+        }
       }
     })
     useSearchParamsMock.mockImplementation(() => [
@@ -536,9 +543,10 @@ describe('ArticlesPage', () => {
 
       const { listArticlesListSpy } = makeSut()
 
-      const articlesLink = screen.getByRole('link', {
-        name: /artigos/i,
-      })
+      const articlesLinks = screen.getAllByRole('link', { name: /artigos/i })
+      const articlesLink = articlesLinks.find((l) =>
+        l.getAttribute('href')?.includes('limit='),
+      ) as HTMLAnchorElement
 
       expect(articlesLink).toHaveAttribute(
         'href',

@@ -54,9 +54,10 @@ describe('HomePage', () => {
 
         makeSut()
 
-        const articlesLink = screen.getByRole('link', {
-          name: /artigos/i,
-        })
+        const articlesLinks = screen.getAllByRole('link', { name: /artigos/i })
+        const articlesLink = articlesLinks.find((l) =>
+          l.getAttribute('href')?.includes('limit='),
+        ) as HTMLAnchorElement
 
         expect(articlesLink).toHaveAttribute(
           'href',

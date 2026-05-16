@@ -7,6 +7,7 @@ import {
   CustomSkeleton,
   ErrorMessage,
 } from '../components/atoms'
+import { useResponsivePagination } from '../hooks'
 import {
   ArticlesFilters,
   PublishedByInfo,
@@ -30,6 +31,9 @@ import type { DeleteArticleByIdUseCase } from '@/domain/usecases/article/delete-
 
 import { CustomPagination } from '@/presentation/components/organism'
 import { PageTemplate } from '@/presentation/components/templates'
+
+  // ensure responsive pagination keeps URL params in sync
+  useResponsivePagination()
 
 type ArticlessPageProps = {
   listArticles: ListArticlesUseCase
