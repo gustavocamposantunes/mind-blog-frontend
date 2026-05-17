@@ -129,7 +129,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
       <CustomCard
         key={props.id}
         {...commonProps}
-        imageClassName="min-h-[200px] lg:min-h-[250px] xl:min-h-[275px]"
+        imageClassName="h-52 w-full object-cover"
       />
     )
   }

@@ -3,7 +3,11 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { ArticlesViewToggle, CustomSkeleton } from '../components/atoms'
-import { DeleteArticleModal, PublishedByInfo } from '../components/molecules'
+import {
+  DeleteArticleModal,
+  Footer,
+  PublishedByInfo,
+} from '../components/molecules'
 import { ArticleListCard, CustomCard } from '../components/organism'
 import { Button } from '../components/ui/button'
 import { useResponsivePagination } from '../hooks'
@@ -40,6 +44,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   deleteArticle,
 }) => {
   useResponsivePagination()
+  const dashboardPageLimit = 5
 
   const navigate = useNavigate()
   const { user, accessToken } = useAuthStore()
@@ -53,6 +58,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
   const { data, isLoading, error, refetch } = useArticlesList(listArticles, {
     ...pageParams,
+    limit: dashboardPageLimit,
     userId: user.id,
   })
 
@@ -92,7 +98,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     ]
   }, [articles, data?.total])
 
-  const totalPages = data ? Math.ceil(data.total / currentLimit) : 0
+  const totalPages = data ? Math.ceil(data.total / dashboardPageLimit) : 0
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -227,7 +233,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                       <CustomCard
                         key={article.id}
                         {...commonProps}
-                        imageClassName="min-h-[200px] lg:min-h-[250px]"
+                        imageClassName="h-52 w-full object-cover"
                       />
                     )
                   })}
@@ -280,6 +286,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           </aside>
         </section>
       </PageTemplate>
+
+      <div className="mt-10">
+        <Footer />
+      </div>
 
       <DeleteArticleModal
         isOpen={!!selectedArticle}

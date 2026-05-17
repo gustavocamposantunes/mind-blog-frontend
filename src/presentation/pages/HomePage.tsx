@@ -33,7 +33,7 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
     data: dataFeatured,
   } = useArticlesList(listArticles, {
     page: 1,
-    limit: 4,
+    limit: 6,
   })
   const {
     error: errorRecent,
@@ -130,7 +130,8 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
                 key={article.id}
                 id={String(article.id)}
                 headerImageSrc={article.image}
-                imageClassName="h-52 object-cover"
+                className="h-full"
+                imageClassName="h-52 w-full object-cover"
                 title={article.title}
                 description={article.content}
                 category={article.category}
