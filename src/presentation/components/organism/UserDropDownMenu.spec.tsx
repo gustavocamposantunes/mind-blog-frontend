@@ -29,19 +29,21 @@ describe('UserDropDownMenu', () => {
 
   it('renders user name and avatar', async () => {
     makeSut()
+    // open dropdown to reveal name in header
+    await userEvent.click(screen.getByTestId('dropdown-trigger'))
     expect(
-      screen.getByText(`${mockUser.firstName} ${mockUser.lastName}`),
+      await screen.findByText(`${mockUser.firstName} ${mockUser.lastName}`),
     ).toBeInTheDocument()
 
-    const avatarFallback = screen.getByText('JD')
-    expect(avatarFallback).toBeInTheDocument()
+    const avatarFallbacks = screen.getAllByText('JD')
+    expect(avatarFallbacks.length).toBeGreaterThanOrEqual(1)
   })
 
   it('opens dropdown on trigger click', async () => {
     makeSut()
     await userEvent.click(screen.getByTestId('dropdown-trigger'))
     expect(await screen.findByText('Dashboard')).toBeInTheDocument()
-    expect(await screen.findByText('Desconectar')).toBeInTheDocument()
+    expect(await screen.findByText('Sair')).toBeInTheDocument()
   })
 
   it('calls onProfileNavigate when "Dashboard" is clicked', async () => {
@@ -52,11 +54,11 @@ describe('UserDropDownMenu', () => {
     expect(onProfileNavigate).toHaveBeenCalled()
   })
 
-  it('calls onLogout when "Desconectar" is clicked', async () => {
+  it('calls onLogout when "Sair" is clicked', async () => {
     const onLogout = vi.fn()
     makeSut({ onLogout })
     await userEvent.click(screen.getByTestId('dropdown-trigger'))
-    await userEvent.click(await screen.findByText('Desconectar'))
+    await userEvent.click(await screen.findByText('Sair'))
     expect(onLogout).toHaveBeenCalled()
   })
 })

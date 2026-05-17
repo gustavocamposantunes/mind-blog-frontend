@@ -1,4 +1,4 @@
-import { ChevronDown, LogOut, UserPen } from 'lucide-react'
+import { ChevronDown, LogOut, LayoutDashboard, Settings } from 'lucide-react'
 
 import { CustomAvatar } from '../molecules'
 import {
@@ -6,12 +6,14 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '../ui/dropdown-menu'
 
 interface IUserDropDownMenu {
   user: {
     firstName: string
     lastName: string
+    email?: string
     image?: string
   }
   onProfileNavigate(): void
@@ -28,20 +30,40 @@ export const UserDropdownMenu: React.FC<IUserDropDownMenu> = ({
     <DropdownMenu>
       <DropdownMenuTrigger
         data-testid="dropdown-trigger"
-        className="bg-white! flex items-center justify-center rounded-full p-1 text-stone-700 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2"
+        className="flex items-center gap-2 rounded-md p-1 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-stone-500"
       >
-        <h2 className="">{user.firstName + ' ' + user.lastName}</h2>
-        <ChevronDown className="ml-2 h-4 w-4" />
         <CustomAvatar src={user.image} fallbackText={fallback} />
+        <ChevronDown className="ml-1 h-4 w-4" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-48">
+
+      <DropdownMenuContent className="w-56">
+        <div className="px-3 py-3 flex items-center gap-3">
+          <div className="flex-shrink-0">
+            <CustomAvatar src={user.image} fallbackText={fallback} />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-medium">{user.firstName + ' ' + user.lastName}</span>
+            {user.email && (
+              <span className="text-xs text-muted-foreground">{user.email}</span>
+            )}
+          </div>
+        </div>
+
+        <DropdownMenuSeparator />
+
         <DropdownMenuItem onClick={onProfileNavigate}>
-          <UserPen />
+          <LayoutDashboard />
           Dashboard
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={onLogout}>
+
+        <DropdownMenuItem onClick={() => {}}>
+          <Settings />
+          Configurações
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onClick={onLogout} data-variant="destructive">
           <LogOut />
-          Desconectar
+          Sair
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -9,9 +9,10 @@ import { useResponsiveLimit } from '@/presentation/hooks/useResponsiveLimit'
 
 interface IHeader {
   children?: ReactNode
+  rightActions?: ReactNode
 }
 
-export const Header: React.FC<IHeader> = ({ children }) => {
+export const Header: React.FC<IHeader> = ({ children, rightActions }) => {
   const limit = useResponsiveLimit()
 
   return (
@@ -34,9 +35,11 @@ export const Header: React.FC<IHeader> = ({ children }) => {
           Artigos
         </Link>
         {children}
-        <span>
+
+        <div className="flex items-center gap-2">
+          {rightActions}
           <ThemeToggle variant="auth" />
-        </span>
+        </div>
       </nav>
     </header>
   )

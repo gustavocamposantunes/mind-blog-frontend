@@ -20,7 +20,20 @@ export const PageTemplate: React.FC<IPageTemplate> = ({ children }) => {
 
   return (
     <>
-      <Header>
+      <Header
+        rightActions={
+          isLoggedIn ? (
+            <UserDropdownMenu
+              user={user}
+              onProfileNavigate={() => navigate('/dashboard')}
+              onLogout={() => {
+                clearCurrentUser()
+                navigate('/')
+              }}
+            />
+          ) : null
+        }
+      >
         {isLoggedIn ? (
           <Link
             className="rounded-full border border-border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-colors hover:border-primary/60"
@@ -36,18 +49,7 @@ export const PageTemplate: React.FC<IPageTemplate> = ({ children }) => {
             Entrar
           </Link>
         )}
-        {isLoggedIn ? (
-          <span>
-            <UserDropdownMenu
-              user={user}
-              onProfileNavigate={() => navigate('/dashboard')}
-              onLogout={() => {
-                clearCurrentUser()
-                navigate('/')
-              }}
-            />
-          </span>
-        ) : (
+        {!isLoggedIn && (
           <Button
             onClick={() => navigate('/register')}
             className="action-btn text-white"
