@@ -42,3 +42,8 @@ Para fim de manutenibilidade o projeto conta com alguns scripts para verificar e
 * Se quiser apenas verificar as atualizações: `pnpm run check`
 * Para atualizar todos os pacotes: `pnpm run check:update`
 * O modo interativo permite selecionar os pacotes que quer atualizar: `pnpm run check:interactive`
+
+# Links
+
+- Frontend (deploy): https://mind-blog-frontend.vercel.app/
+- Backend Swagger: https://mind-blog-api.onrender.com/api/docs
