@@ -39,6 +39,19 @@ describe('UserDropDownMenu', () => {
     expect(avatarFallbacks.length).toBeGreaterThanOrEqual(1)
   })
 
+  it('falls back to email when fullName is missing', async () => {
+    makeSut({
+      user: {
+        email: 'john.doe@example.com',
+        image: 'avatar.png',
+      },
+    })
+
+    await userEvent.click(screen.getByTestId('dropdown-trigger'))
+
+    expect(screen.getAllByText('john.doe@example.com')).toHaveLength(2)
+  })
+
   it('opens dropdown on trigger click', async () => {
     makeSut()
     await userEvent.click(screen.getByTestId('dropdown-trigger'))

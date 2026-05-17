@@ -26,7 +26,9 @@ export const UserDropdownMenu: React.FC<IUserDropDownMenu> = ({
   onSettingsNavigate,
   onLogout,
 }) => {
-  const fallback = user.fullName
+  const fullName = user.fullName ?? ''
+  const displayName = fullName || user.email || 'Usuário'
+  const fallback = (fullName || user.email || 'U')
     .split(' ')
     .map((n) => n[0])
     .join('')
@@ -48,7 +50,7 @@ export const UserDropdownMenu: React.FC<IUserDropDownMenu> = ({
             <CustomAvatar src={user.image} fallbackText={fallback} />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-medium">{user.fullName}</span>
+            <span className="text-sm font-medium">{displayName}</span>
             {user.email && (
               <span className="text-xs text-muted-foreground">
                 {user.email}
