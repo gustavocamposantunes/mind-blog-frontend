@@ -8,9 +8,12 @@ import {
 } from '../test'
 import { cleanup, fireEvent, screen, waitFor } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
+import { toast } from 'react-toastify'
 
 import { UnexpectedError } from '@/domain/errors'
+import { InternalServerError } from '@/domain/errors'
 import { mockArticlesList, mockAuthenticateUserModel } from '@/domain/test'
+
 
 let useSearchParamsMock = vi.fn()
 
@@ -110,10 +113,29 @@ describe('ArticlesPage', () => {
 
       makeSut(listArticlesListSpy)
 
-      const errorMessage = await screen.findByTestId('error-message')
+      const skeletons = await screen.findAllByTestId('custom-skeleton')
 
-      expect(errorMessage).toBeInTheDocument()
-      expect(errorMessage.textContent).toBe(error.message)
+      expect(skeletons.length).toBe(6)
+      expect(screen.queryByTestId('error-message')).toBeNull()
+      expect(error.message).toBe('Erro inesperado')
+    })
+
+    it('should show a toast when list error is internal server error', async () => {
+      const listArticlesListSpy = new ListArticlesSpy()
+
+      const toastErrorSpy = vi.spyOn(toast, 'error').mockImplementation(() => {
+        return undefined
+      })
+
+      vi.spyOn(listArticlesListSpy, 'listAll').mockRejectedValueOnce(
+        new InternalServerError(),
+      )
+
+      makeSut(listArticlesListSpy)
+
+      await screen.findAllByTestId('custom-skeleton')
+
+      expect(toastErrorSpy).toHaveBeenCalledWith('Erro interno do servidor')
     })
 
     it('should render the articles', async () => {

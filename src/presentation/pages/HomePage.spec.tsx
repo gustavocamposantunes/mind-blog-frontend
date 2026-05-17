@@ -1,10 +1,13 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest'
+import { toast } from 'react-toastify'
 
 import { ListArticlesSpy, renderHomePageWithRouter } from '../test'
 
 import { UnexpectedError } from '@/domain/errors'
+import { InternalServerError } from '@/domain/errors'
 import { mockArticlesList } from '@/domain/test'
 import { cleanup, screen } from '@/presentation/test/test-utils'
+
 
 const mockNavigate = vi.fn()
 
@@ -86,10 +89,29 @@ describe('HomePage', () => {
     it('should render a error message if featured articles fail', async () => {
       const { error } = setupListArticlesError()
 
-      const errorMessages = await screen.findAllByTestId('error-message')
+      const skeletons = await screen.findAllByTestId('skeleton-favourits')
 
-      expect(errorMessages.length).toBeGreaterThanOrEqual(1)
-      expect(errorMessages[0].textContent).toBe(error.message)
+      expect(skeletons.length).toBe(3)
+      expect(screen.queryByTestId('error-message')).toBeNull()
+      expect(error.message).toBe('Erro inesperado')
+    })
+
+    it('should show a toast when featured error is internal server error', async () => {
+      const listArticlesSpy = new ListArticlesSpy()
+
+      const toastErrorSpy = vi.spyOn(toast, 'error').mockImplementation(() => {
+        return undefined
+      })
+
+      vi.spyOn(listArticlesSpy, 'listAll').mockRejectedValue(
+        new InternalServerError(),
+      )
+
+      makeSut(listArticlesSpy)
+
+      await screen.findAllByTestId('skeleton-favourits')
+
+      expect(toastErrorSpy).toHaveBeenCalledWith('Erro interno do servidor')
     })
 
     it('should render skeletons while featured articles are loading', async () => {

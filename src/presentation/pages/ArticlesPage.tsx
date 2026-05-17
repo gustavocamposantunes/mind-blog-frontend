@@ -1,11 +1,12 @@
+import { useEffect, useRef } from 'react'
 import { PencilIcon, TrashIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import {
   ArticlesViewToggle,
   FavoriteButton,
   CustomSkeleton,
-  ErrorMessage,
 } from '../components/atoms'
 import {
   ArticlesFilters,
@@ -66,6 +67,14 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     listArticles,
     pageParams,
   )
+  const errorToastShown = useRef(false)
+
+  useEffect(() => {
+    if (error?.message === 'Erro interno do servidor' && !errorToastShown.current) {
+      toast.error(error.message)
+      errorToastShown.current = true
+    }
+  }, [error])
 
   const { favoriteById } = useFavouriteArticle(favouriteArticle, accessToken)
 
@@ -196,14 +205,12 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
         </div>
 
         <section className={`${gridOrListClass} mb-16`}>
-          {isLoading ? (
+          {isLoading || error ? (
             <>
               {Array.from({ length: 6 }).map((_, index) => (
                 <CustomSkeleton key={`article-skeleton-${index}`} />
               ))}
             </>
-          ) : error ? (
-            <ErrorMessage error={error} />
           ) : (
             <>{data?.articles.map((props) => renderArticleCard(props))}</>
           )}

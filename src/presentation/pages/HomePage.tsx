@@ -1,14 +1,16 @@
+import { useEffect, useRef } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import { ErrorMessage, FavouriteSkeleton } from '../components/atoms'
+import { FavouriteSkeleton } from '../components/atoms'
 import { PublishedByInfo } from '../components/molecules'
 import { CustomCard } from '../components/organism/CustomCard'
 import { Button } from '../components/ui/button'
 import { Skeleton } from '../components/ui/skeleton'
 import { useArticlesList, useResponsiveLimit } from '../hooks'
+import { toast } from 'react-toastify'
 
 import type { ListArticlesUseCase } from '@/domain/usecases'
 
@@ -23,6 +25,8 @@ type HomePageProps = {
 export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
   const navigate = useNavigate()
   const limit = useResponsiveLimit()
+  const featuredErrorToastShown = useRef(false)
+  const recentErrorToastShown = useRef(false)
   const {
     error: errorFeatured,
     isLoading: isLoadingFeatured,
@@ -39,6 +43,28 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
     page: 1,
     limit: 6,
   })
+
+  useEffect(() => {
+    if (
+      errorFeatured &&
+      errorFeatured.message === 'Erro interno do servidor' &&
+      !featuredErrorToastShown.current
+    ) {
+      toast.error(errorFeatured.message)
+      featuredErrorToastShown.current = true
+    }
+  }, [errorFeatured])
+
+  useEffect(() => {
+    if (
+      errorRecent &&
+      errorRecent.message === 'Erro interno do servidor' &&
+      !recentErrorToastShown.current
+    ) {
+      toast.error(errorRecent.message)
+      recentErrorToastShown.current = true
+    }
+  }, [errorRecent])
 
   return (
     <HomeTemplate>
@@ -95,8 +121,7 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
           </Link>
         </div>
 
-        {errorFeatured ? <ErrorMessage error={errorFeatured} /> : null}
-        {isLoadingFeatured ? (
+        {isLoadingFeatured || errorFeatured ? (
           <FavouriteSkeleton />
         ) : (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -135,8 +160,7 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
           </p>
         </div>
 
-        {errorRecent ? <ErrorMessage error={errorRecent} /> : null}
-        {isLoadingRecent ? (
+        {isLoadingRecent || errorRecent ? (
           <Skeleton className="h-72 w-full" data-testid="skeleton-recent" />
         ) : (
           <Swiper
