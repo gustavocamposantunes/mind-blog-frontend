@@ -42,9 +42,13 @@ export const UserDropdownMenu: React.FC<IUserDropDownMenu> = ({
             <CustomAvatar src={user.image} fallbackText={fallback} />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-medium">{user.firstName + ' ' + user.lastName}</span>
+            <span className="text-sm font-medium">
+              {user.firstName + ' ' + user.lastName}
+            </span>
             {user.email && (
-              <span className="text-xs text-muted-foreground">{user.email}</span>
+              <span className="text-xs text-muted-foreground">
+                {user.email}
+              </span>
             )}
           </div>
         </div>
