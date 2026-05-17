@@ -5,7 +5,7 @@ import {
   ListArticlesSpy,
   renderDashboardPageWithRouter,
 } from '../test'
-import { cleanup, fireEvent, screen, waitFor } from '../test/test-utils'
+import { cleanup, fireEvent, screen, waitFor, within } from '../test/test-utils'
 
 import { mockAuthenticateUserModel } from '@/domain/test'
 
@@ -59,12 +59,13 @@ describe('DashboardPage', () => {
 
     fireEvent.click(deleteBtn)
 
-    expect(await screen.findByRole('dialog')).toBeInTheDocument()
+    const dialog = await screen.findByRole('dialog')
+    expect(dialog).toBeInTheDocument()
     expect(
       screen.getByText(/tem certeza que deseja excluir/i),
     ).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('button', { name: /excluir/i }))
+    fireEvent.click(within(dialog).getByRole('button', { name: /excluir/i }))
 
     await waitFor(() => {
       expect(
