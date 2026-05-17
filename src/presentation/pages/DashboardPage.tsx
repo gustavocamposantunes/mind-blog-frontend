@@ -1,5 +1,5 @@
 import { PencilIcon, TrashIcon } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { ArticlesViewToggle, CustomSkeleton } from '../components/atoms'
@@ -68,13 +68,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     },
   })
 
-  useEffect(() => {
-    if (error) {
-      setSelectedArticle(null)
-    }
-  }, [error])
-
-  const articles = data?.articles ?? []
+  const articles = useMemo(() => data?.articles ?? [], [data?.articles])
 
   const metrics = useMemo(() => {
     const totalLikes = articles.reduce(

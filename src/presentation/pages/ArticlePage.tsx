@@ -1,5 +1,5 @@
 import { Heart, PencilIcon } from 'lucide-react'
-import { useEffect, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { Article } from '../components/organism'
@@ -18,6 +18,38 @@ type ArticlePageProps = {
   favouriteArticle: FavouriteArticleUseCase
 }
 
+type FavouriteToggleButtonProps = {
+  articleId: number
+  initialFavourite: boolean
+  favoriteById: (articleId: number, favourite: () => boolean) => Promise<void>
+}
+
+const FavouriteToggleButton: React.FC<FavouriteToggleButtonProps> = ({
+  articleId,
+  initialFavourite,
+  favoriteById,
+}) => {
+  const [toogleFavourite, setToogleFavourite] = useState(initialFavourite)
+
+  return (
+    <Heart
+      data-testid="favourite-toogle"
+      className="cursor-pointer"
+      fill={toogleFavourite ? 'red' : 'white'}
+      color={toogleFavourite ? 'red' : undefined}
+      onClick={() => {
+        favoriteById(articleId, () => {
+          const previousFavourite = toogleFavourite
+
+          setToogleFavourite((currentFavourite) => !currentFavourite)
+
+          return previousFavourite
+        })
+      }}
+    />
+  )
+}
+
 export const ArticlePage: React.FC<ArticlePageProps> = ({
   getArticletById,
   favouriteArticle,
@@ -29,14 +61,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
     getArticletById,
     String(id),
   )
-
-  const [toogleFavourite, setToogleFavourite] = useState(data?.favourited)
-
-  useEffect(() => {
-    if (data) {
-      setToogleFavourite(data.favourited)
-    }
-  }, [data])
+  const { favoriteById } = useFavouriteArticle(favouriteArticle, accessToken)
 
   let toogleFavouriteSlot: ReactNode | undefined = undefined
   let toogleEditSlot: ReactNode | undefined = undefined
@@ -47,18 +72,11 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
         className="text-stone-500 flex gap-2 font-bold"
         data-testid="favourite-count"
       >
-        <Heart
-          data-testid="favourite-toogle"
-          className="cursor-pointer"
-          fill={toogleFavourite ? 'red' : 'white'}
-          color={toogleFavourite ? 'red' : undefined}
-          onClick={() => {
-            favoriteById(data.id, () => {
-              setToogleFavourite(!toogleFavourite)
-
-              return !!toogleFavourite
-            })
-          }}
+        <FavouriteToggleButton
+          key={data.id}
+          articleId={data.id}
+          initialFavourite={data.favourited}
+          favoriteById={favoriteById}
         />
         {data.favouriteCount}
       </span>
@@ -70,8 +88,6 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
       </Link>
     )
   }
-
-  const { favoriteById } = useFavouriteArticle(favouriteArticle, accessToken)
 
   return (
     <ArticleTemplate isLoading={isLoading} error={error}>

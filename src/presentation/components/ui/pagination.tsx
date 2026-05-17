@@ -6,7 +6,8 @@ import {
 import * as React from 'react'
 
 import { cn } from '@/main/lib/utils'
-import { Button, buttonVariants } from '@/presentation/components/ui/button'
+import { Button } from '@/presentation/components/ui/button'
+import { buttonVariants } from '@/presentation/components/ui/button-variants'
 
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   return (
