@@ -53,25 +53,22 @@ export const Footer: React.FC = () => {
             <div className="mt-3 flex items-center gap-3 text-foreground">
               <button
                 type="button"
-                className="border-0 bg-transparent p-0 text-white transition-colors hover:text-white/80"
+                className="border-0 bg-transparent p-0 text-foreground/80 transition-colors hover:text-foreground"
                 aria-label="LinkedIn"
-                style={{ backgroundColor: 'transparent' }}
               >
                 <Linkedin className="h-4 w-4 text-current" />
               </button>
               <button
                 type="button"
-                className="border-0 bg-transparent p-0 text-white transition-colors hover:text-white/80"
+                className="border-0 bg-transparent p-0 text-foreground/80 transition-colors hover:text-foreground"
                 aria-label="GitHub"
-                style={{ backgroundColor: 'transparent' }}
               >
                 <Github className="h-4 w-4 text-current" />
               </button>
               <button
                 type="button"
-                className="border-0 bg-transparent p-0 text-white transition-colors hover:text-white/80"
+                className="border-0 bg-transparent p-0 text-foreground/80 transition-colors hover:text-foreground"
                 aria-label="Twitter"
-                style={{ backgroundColor: 'transparent' }}
               >
                 <Twitter className="h-4 w-4 text-current" />
               </button>
