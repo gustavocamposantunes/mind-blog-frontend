@@ -109,6 +109,8 @@ button:focus-visible {
 
 .action-btn {
   width: 100px;
+  background-color: var(--primary);
+  border-color: var(--primary);
   color: #ffffff !important;
 }
 @theme inline {
