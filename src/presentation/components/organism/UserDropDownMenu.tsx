@@ -38,7 +38,7 @@ export const UserDropdownMenu: React.FC<IUserDropDownMenu> = ({
     <DropdownMenu>
       <DropdownMenuTrigger
         data-testid="dropdown-trigger"
-        className="flex items-center gap-2 rounded-md p-1 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-stone-500"
+        className="!bg-background flex items-center gap-2 rounded-md p-1 hover:bg-stone-100 focus:outline-none focus:ring-2 focus:ring-stone-500"
       >
         <CustomAvatar src={user.image} fallbackText={fallback} />
         <ChevronDown className="ml-1 h-4 w-4" />
