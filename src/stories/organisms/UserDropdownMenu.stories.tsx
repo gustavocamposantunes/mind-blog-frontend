@@ -14,6 +14,7 @@ const meta = {
     user: mockAuthenticateUserModel().user,
     onLogout: () => {},
     onProfileNavigate: () => {},
+    onSettingsNavigate: () => {},
   },
 } satisfies Meta<typeof UserDropdownMenu>
 export default meta
