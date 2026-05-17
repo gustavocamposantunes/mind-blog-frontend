@@ -48,7 +48,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
   const navigate = useNavigate()
   const { user, accessToken } = useAuthStore()
-  const { currentPage, currentLimit, currentView, updateFilters, pageParams } =
+  const { currentPage, currentView, updateFilters, pageParams } =
     useArticlesFilters()
 
   const [selectedArticle, setSelectedArticle] = useState<{
@@ -103,7 +103,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <PageTemplate>
-        <section className="mb-10 flex flex-col gap-6 rounded-3xl border border-border bg-gradient-to-br from-background via-background to-card/40 px-6 py-8 shadow-xl shadow-black/10 md:px-10">
+        <section className="mb-10 flex flex-col gap-6 rounded-3xl border border-border bg-linear-to-br from-background via-background to-card/40 px-6 py-8 shadow-xl shadow-black/10 md:px-10">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary/70">
