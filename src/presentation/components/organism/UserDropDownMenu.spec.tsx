@@ -31,9 +31,7 @@ describe('UserDropDownMenu', () => {
     makeSut()
     // open dropdown to reveal name in header
     await userEvent.click(screen.getByTestId('dropdown-trigger'))
-    expect(
-      await screen.findByText(mockUser.fullName),
-    ).toBeInTheDocument()
+    expect(await screen.findByText(mockUser.fullName)).toBeInTheDocument()
 
     const avatarFallbacks = screen.getAllByText('JD')
     expect(avatarFallbacks.length).toBeGreaterThanOrEqual(1)
