@@ -15,7 +15,7 @@ export class HttpPostClientSpy implements HttpPostClient {
   url?: string
   body?: object
   headers?: Record<string, string>
-  response: HttpResponse = {
+  response: HttpResponse<object | string> = {
     status: HttpStatusCode.created,
   }
 
@@ -24,7 +24,7 @@ export class HttpPostClientSpy implements HttpPostClient {
     this.body = params.body
     this.headers = params.headers
 
-    return this.response
+    return this.response as HttpResponse
   }
 }
 
@@ -32,7 +32,7 @@ export class HttpPutClientSpy implements HttpPutClient {
   url?: string
   body?: object
   headers?: Record<string, string>
-  response: HttpResponse = {
+  response: HttpResponse<object | string> = {
     status: HttpStatusCode.ok,
   }
 
@@ -41,7 +41,7 @@ export class HttpPutClientSpy implements HttpPutClient {
     this.body = params.body
     this.headers = params.headers
 
-    return this.response
+    return this.response as HttpResponse
   }
 }
 
@@ -49,7 +49,7 @@ export class HttpGetClientSpy implements HttpGetClient {
   url?: string
   queryParams?: Record<string, string | number | boolean | undefined>
   headers?: Record<string, string>
-  response: HttpResponse = {
+  response: HttpResponse<object | string> = {
     status: HttpStatusCode.ok,
     data: {},
   }
@@ -59,7 +59,7 @@ export class HttpGetClientSpy implements HttpGetClient {
     this.queryParams = params.queryParams
     this.headers = params.headers
 
-    return this.response
+    return this.response as HttpResponse
   }
 }
 
@@ -67,7 +67,7 @@ export class HttpDeleteClientSpy implements HttpDeleteClient {
   url?: string
   body?: object
   headers?: Record<string, string>
-  response: HttpResponse = {
+  response: HttpResponse<object | string> = {
     status: HttpStatusCode.ok,
   }
 
@@ -76,6 +76,6 @@ export class HttpDeleteClientSpy implements HttpDeleteClient {
     this.body = params.body
     this.headers = params.headers
 
-    return this.response
+    return this.response as HttpResponse
   }
 }

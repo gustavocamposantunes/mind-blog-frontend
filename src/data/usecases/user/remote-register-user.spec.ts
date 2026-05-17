@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest'
 
 import { RemoteRegisterUser } from './remote-register-user'
 
+import type { AuthenticateUserModel } from '@/domain/models'
+
 import { HttpPostClientSpy } from '@/data/test/mock-http-client'
 import {
   BadRequestError,
@@ -14,6 +16,7 @@ import { mockAuthenticateUserModel, mockRegisterUser } from '@/domain/test'
 type SutTypes = {
   sut: RemoteRegisterUser
   httpPostClientSpy: HttpPostClientSpy
+  authenticateUserModel: AuthenticateUserModel
 }
 
 const makeSut = (url = faker.internet.url()): SutTypes => {
@@ -112,7 +115,7 @@ describe('RemoteRegisterUser', () => {
     const response = await sut.register(registerUserParams)
 
     expect(response.statusCode).toBe(201)
-    expect(response.data.accessToken).toBe(`header.${payload}.signature`)
+    expect(response.data?.accessToken).toBe(`header.${payload}.signature`)
   })
 
   it('should throw UnexpectedError when the returned payload cannot be extracted', async () => {

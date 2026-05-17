@@ -123,9 +123,7 @@ describe('ArticlesPage', () => {
     it('should show a toast when list error is internal server error', async () => {
       const listArticlesListSpy = new ListArticlesSpy()
 
-      const toastErrorSpy = vi.spyOn(toast, 'error').mockImplementation(() => {
-        return undefined
-      })
+      const toastErrorSpy = vi.spyOn(toast, 'error').mockReturnValue('toast-id')
 
       vi.spyOn(listArticlesListSpy, 'listAll').mockRejectedValueOnce(
         new InternalServerError(),

@@ -127,7 +127,7 @@ describe('RemoteAuthenticateUser', () => {
     const response = await sut.auth(authenticationParams)
 
     expect(response.statusCode).toBe(200)
-    expect(response.data.accessToken).toBe(`header.${payload}.signature`)
+    expect(response.data?.accessToken).toBe(`header.${payload}.signature`)
   })
 
   it('should throw UnexpectedError when the returned payload cannot be extracted', async () => {

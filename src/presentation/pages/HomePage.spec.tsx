@@ -99,9 +99,7 @@ describe('HomePage', () => {
     it('should show a toast when featured error is internal server error', async () => {
       const listArticlesSpy = new ListArticlesSpy()
 
-      const toastErrorSpy = vi.spyOn(toast, 'error').mockImplementation(() => {
-        return undefined
-      })
+      const toastErrorSpy = vi.spyOn(toast, 'error').mockReturnValue('toast-id')
 
       vi.spyOn(listArticlesSpy, 'listAll').mockRejectedValue(
         new InternalServerError(),
