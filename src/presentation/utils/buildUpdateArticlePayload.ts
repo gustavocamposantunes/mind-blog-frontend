@@ -2,7 +2,7 @@ import type { ArticleModel } from '@/domain/models'
 
 type EditableFields = Pick<
   ArticleModel,
-  'title' | 'content' | 'image' | 'category' | 'tags'
+  'title' | 'resume' | 'content' | 'image' | 'category' | 'tags'
 >
 
 export function buildUpdateArticlePayload(
@@ -13,6 +13,7 @@ export function buildUpdateArticlePayload(
   const payload = {
     id,
     title: edited.title !== original.title ? edited.title : undefined,
+    resume: edited.resume !== original.resume ? edited.resume : undefined,
     content: edited.content !== original.content ? edited.content : undefined,
     image: edited.image !== original.image ? edited.image : undefined,
     category:

@@ -4,6 +4,7 @@ import type { ArticleModel } from '@/domain/models'
 export type UpdateArticleParams = {
   id: number
   title?: string
+  resume?: string
   content?: string
   image?: string
   category?: string

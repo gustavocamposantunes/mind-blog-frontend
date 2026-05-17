@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react'
 
 import { CustomAvatar } from '../molecules'
+import { MarkdownRenderer } from './MarkdownRenderer'
 
 import { formatDateToShortMonth } from '@/presentation/utils/dateFormatter'
 
@@ -47,9 +48,9 @@ export const Article: React.FC<IArticle> = ({
         </span>
       </div>
       <img className="mt-5 w-full" src={image} alt={title} />
-      <p data-testid="article-content" className="p-4 text-lg">
-        {content}
-      </p>
+      <div data-testid="article-content" className="p-4 text-lg">
+        <MarkdownRenderer content={content} />
+      </div>
     </article>
   )
 }

@@ -123,7 +123,7 @@ describe('ArticlesPage', () => {
         listArticlesListSpy.articlesList.articles[0].title,
       )
       const firstArticleContent = await screen.findByText(
-        listArticlesListSpy.articlesList.articles[0].content,
+        listArticlesListSpy.articlesList.articles[0].resume,
       )
       const firstArticleDate = await screen.findAllByTestId('published-by-info')
       const firstArticleImage = (await screen.findByAltText(

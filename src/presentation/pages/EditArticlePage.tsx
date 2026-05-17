@@ -8,6 +8,7 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Skeleton } from '../components/ui/skeleton'
 import { Textarea } from '../components/ui/textarea'
+import { MarkdownRenderer } from '../components/organism'
 import { useGetArticleById, useUpdateArticle } from '../hooks'
 import { useAuthStore } from '../store'
 import { buildUpdateArticlePayload } from '../utils/buildUpdateArticlePayload'
@@ -30,12 +31,14 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
 }) => {
   const [editArticleParams, setEditArticleParams] = useState<{
     title: string
+    resume: string
     content: string
     image?: string
     category: string
     tagsInput: string
   }>({
     title: '',
+    resume: '',
     content: '',
     image: '',
     category: '',
@@ -61,6 +64,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
     if (data && !hasShownSuccessToast.current) {
       setEditArticleParams({
         title: data?.title,
+        resume: data?.resume,
         content: data?.content,
         image: data?.image,
         category: data?.category,
@@ -83,6 +87,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
         Number(id),
         {
           title: data.title,
+          resume: data.resume,
           content: data.content,
           image: data.image,
           category: data.category,
@@ -90,6 +95,7 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
         },
         {
           title: editArticleParams.title,
+          resume: editArticleParams.resume,
           content: editArticleParams.content,
           image: editArticleParams.image,
           category: editArticleParams.category,
@@ -169,10 +175,36 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
           </div>
 
           <div className="grid w-full gap-1.5">
-            <Label htmlFor="content">Conteúdo</Label>
+            <Label htmlFor="resume">Resumo</Label>
+            <Textarea
+              className="min-h-[120px]"
+              placeholder="Edite o resumo"
+              id="resume"
+              name="resume"
+              data-testid="textarea-resume"
+              value={editArticleParams.resume}
+              onChange={(e) =>
+                setEditArticleParams({
+                  ...editArticleParams,
+                  resume: e.target.value,
+                })
+              }
+            />
+          </div>
+
+          <div className="grid w-full gap-1.5">
+            <div className="flex items-center justify-between gap-3">
+              <Label htmlFor="content">Conteúdo</Label>
+              <span className="text-xs text-foreground/50">
+                Markdown habilitado
+              </span>
+            </div>
+            <p className="text-xs text-foreground/50">
+              Ajuste o conteúdo usando Markdown para manter a formatação.
+            </p>
             <Textarea
               className="min-h-[400px]"
-              placeholder="Edite o conteúdo"
+              placeholder="Edite o conteúdo em Markdown"
               id="content"
               name="content"
               data-testid="textarea-content"
@@ -184,6 +216,15 @@ export const EditArticlePage: React.FC<EditArticlePageProps> = ({
                 })
               }
             />
+            <div className="rounded-lg border border-border bg-background/60 p-4">
+              <div className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-foreground/50">
+                Pré-visualização
+              </div>
+              <MarkdownRenderer
+                content={editArticleParams.content}
+                emptyMessage="O conteúdo editado aparecerá aqui em Markdown."
+              />
+            </div>
           </div>
 
           <div className="grid w-full gap-1.5">

@@ -6,6 +6,7 @@ describe('buildUpdateArticlePayload', () => {
   const id = 123
   const original = {
     title: 'Original Title',
+    resume: 'Original Resume',
     content: 'Original Content',
     image: 'original.png',
     category: 'tech',
@@ -15,6 +16,7 @@ describe('buildUpdateArticlePayload', () => {
   it('should return only changed fields along with the id', () => {
     const edited = {
       title: 'New Title',
+      resume: 'Original Resume',
       content: 'Original Content',
       image: 'original.png',
       category: 'tech',
@@ -32,6 +34,7 @@ describe('buildUpdateArticlePayload', () => {
   it('should return all changed fields along with the id', () => {
     const edited = {
       title: 'New Title',
+      resume: 'New Resume',
       content: 'New Content',
       image: 'new-image.jpg',
       category: 'design',
@@ -43,6 +46,7 @@ describe('buildUpdateArticlePayload', () => {
     expect(result).toEqual({
       id,
       title: 'New Title',
+        resume: 'New Resume',
       content: 'New Content',
       image: 'new-image.jpg',
       category: 'design',
@@ -96,6 +100,7 @@ describe('buildUpdateArticlePayload', () => {
 
     const edited = {
       title: original.title,
+      resume: original.resume,
       content: original.content,
       image: 'new.png',
       category: original.category,

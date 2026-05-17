@@ -141,11 +141,10 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     ]
 
     const commonProps = {
-      key: props.id,
       id: String(props.id),
       headerImageSrc: props.image,
       title: props.title,
-      description: props.content,
+      description: props.resume ?? props.content,
       category: props.category,
       onClick: () => {
         navigate(`/articles/${props.id}`)
@@ -154,11 +153,12 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     }
 
     if (currentView === 'list') {
-      return <ArticleListCard {...commonProps} />
+      return <ArticleListCard key={props.id} {...commonProps} />
     }
 
     return (
       <CustomCard
+        key={props.id}
         {...commonProps}
         imageClassName="min-h-[200px] lg:min-h-[250px] xl:min-h-[275px]"
       />

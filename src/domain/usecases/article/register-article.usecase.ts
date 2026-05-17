@@ -3,6 +3,7 @@ import type { ArticleModel } from '@/domain/models'
 
 export type RegisterArticleParams = {
   title: string
+  resume?: string
   content: string
   image?: string
   category: string

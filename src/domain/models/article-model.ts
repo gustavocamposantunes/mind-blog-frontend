@@ -7,6 +7,7 @@ export type AuthorModel = {
 export type ArticleModel = {
   id: number
   title: string
+  resume: string
   content: string
   image?: string
   category: string

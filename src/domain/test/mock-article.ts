@@ -17,6 +17,7 @@ export const mockArticlesPaginationQueryParams = (
 
 export const mockRegisterArticleParams = (): RegisterArticleParams => ({
   title: faker.lorem.sentence(),
+  resume: faker.lorem.paragraph(),
   content: faker.lorem.paragraphs(),
   image: faker.image.urlLoremFlickr({ category: 'nature' }),
   category: faker.word.sample(),
@@ -27,6 +28,7 @@ export const mockRegisterArticleParams = (): RegisterArticleParams => ({
 export const mockUpdateArticleParams = (): UpdateArticleParams => ({
   id: faker.number.int(),
   title: faker.lorem.sentence(),
+  resume: faker.lorem.paragraph(),
   content: faker.lorem.paragraph(10),
   category: faker.word.sample(),
   tags: [faker.word.sample(), faker.word.sample()],
@@ -40,6 +42,7 @@ export const mockArticle = (
 ): ArticleModel => ({
   id: faker.number.int(),
   title: faker.lorem.sentence(),
+  resume: faker.lorem.paragraph(),
   content: faker.lorem.paragraphs(withContent ? 50 : 1),
   image: faker.image.urlLoremFlickr({
     category: 'nature',

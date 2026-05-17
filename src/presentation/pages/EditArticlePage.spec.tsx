@@ -120,6 +120,19 @@ describe('EditArticlePage', () => {
       )
     })
 
+    it('should render the resume input filled', async () => {
+      const { getArticleByIdSpy } = makeSut()
+
+      const textAreaResume = await screen.findByTestId('textarea-resume')
+
+      await screen.findByText('Artigo carregado com sucesso')
+
+      expect(textAreaResume).toHaveProperty(
+        'value',
+        getArticleByIdSpy.data.resume,
+      )
+    })
+
     it('should render the content input filled', async () => {
       const { getArticleByIdSpy } = makeSut()
 
@@ -219,6 +232,7 @@ describe('EditArticlePage', () => {
       const textAreaContent = await screen.findByTestId('textarea-content')
 
       const newContent = faker.lorem.paragraph(3)
+      const newResume = faker.lorem.paragraph()
 
       const newTitle = faker.lorem.sentence()
 
@@ -230,12 +244,19 @@ describe('EditArticlePage', () => {
         target: { value: newContent },
       })
 
+      const textAreaResume = await screen.findByTestId('textarea-resume')
+
+      fireEvent.change(textAreaResume, {
+        target: { value: newResume },
+      })
+
       const submitButton = screen.getByRole('button', { name: /salvar/i })
 
       fireEvent.click(submitButton)
 
       return {
         newTitle,
+        newResume,
         newContent,
       }
     }
@@ -271,13 +292,14 @@ describe('EditArticlePage', () => {
 
       makeSut(undefined, updateArticleSpy)
 
-      const { newTitle, newContent } = await setupUpdateArticleSubmit()
+      const { newTitle, newResume, newContent } = await setupUpdateArticleSubmit()
 
       await screen.findByText('Artigo atualizado com sucesso')
 
       expect(updateArticleSpy.update).toHaveBeenCalledWith('', {
         id: updateArticleSpy.params.id,
         title: newTitle,
+        resume: newResume,
         content: newContent,
       })
     })

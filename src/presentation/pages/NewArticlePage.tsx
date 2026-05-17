@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { MarkdownRenderer } from '../components/organism/MarkdownRenderer'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { useResponsiveLimit } from '../hooks'
@@ -44,6 +45,7 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
     mutate(
       {
         title: registerArticleParams.title,
+        resume: registerArticleParams.resume,
         content: registerArticleParams.content,
         image: registerArticleParams.image,
         category: registerArticleParams.category,
@@ -209,32 +211,21 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
 
             {/* Conteúdo */}
             <div className="grid w-full gap-2">
-              <Label htmlFor="content" className="text-sm font-semibold">
-                Conteúdo do Artigo *
-              </Label>
-              <div className="flex gap-2 mb-2 pb-2 border-b border-border">
-                <button
-                  type="button"
-                  className="px-3 py-1 text-sm hover:bg-background rounded"
-                >
-                  <strong>B</strong>
-                </button>
-                <button
-                  type="button"
-                  className="px-3 py-1 text-sm hover:bg-background rounded italic"
-                >
-                  I
-                </button>
-                <button
-                  type="button"
-                  className="px-3 py-1 text-sm hover:bg-background rounded underline"
-                >
-                  U
-                </button>
+              <div className="flex items-center justify-between gap-3">
+                <Label htmlFor="content" className="text-sm font-semibold">
+                  Conteúdo do Artigo *
+                </Label>
+                <span className="text-xs text-foreground/50">
+                  Escreva em Markdown
+                </span>
               </div>
+              <p className="text-xs text-foreground/50">
+                Use `#` para títulos, `**negrito**`, listas e links no corpo do
+                artigo.
+              </p>
               <Textarea
                 className="min-h-[400px] resize-none"
-                placeholder="Escreva seu artigo aqui..."
+                placeholder="Escreva seu artigo em Markdown..."
                 id="content"
                 value={registerArticleParams.content}
                 onChange={(event) =>
@@ -244,6 +235,15 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
                   })
                 }
               />
+              <div className="rounded-lg border border-border bg-background/60 p-4">
+                <div className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-foreground/50">
+                  Pré-visualização
+                </div>
+                <MarkdownRenderer
+                  content={registerArticleParams.content}
+                  emptyMessage="Digite o conteúdo do artigo em Markdown para ver a pré-visualização."
+                />
+              </div>
             </div>
 
             {/* Botões */}

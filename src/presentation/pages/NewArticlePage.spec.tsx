@@ -116,6 +116,7 @@ describe('NewArticlePage', () => {
 
     await waitFor(() => {
       expect(registerArticleSpy.registerPostParams.category).toBe('Tecnologia')
+      expect(registerArticleSpy.registerPostParams.resume).toBeTruthy()
       expect(registerArticleSpy.registerPostParams.tags).toEqual([
         'react',
         'typescript',
