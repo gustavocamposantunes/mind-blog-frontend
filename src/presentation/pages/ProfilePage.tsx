@@ -92,11 +92,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         onSubmit={onSubmit}
       >
         {/* Header */}
-        <div className="border-b pb-6">
-          <h1 className="text-3xl font-bold text-stone-950">
+        <div className="border-b border-border pb-6">
+          <h1 className="text-3xl font-bold text-foreground">
             Configurações do Perfil
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
+          <p className="mt-1 text-sm text-muted-foreground">
             Gerencie suas informações pessoais
           </p>
         </div>
@@ -106,19 +106,19 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           <div className="flex flex-col items-center gap-4">
             {profileParams.image && (
               <img
-                className="w-32 h-32 rounded-full object-cover border-4 border-stone-200"
+                className="h-32 w-32 rounded-full border-4 border-border object-cover"
                 src={profileParams.image}
                 alt="foto de perfil"
                 data-testid="selected-image"
               />
             )}
             {!profileParams.image && (
-              <div className="w-32 h-32 rounded-full bg-stone-200 flex items-center justify-center">
-                <span className="text-stone-400 text-sm">Sem foto</span>
+              <div className="flex h-32 w-32 items-center justify-center rounded-full bg-muted">
+                <span className="text-sm text-muted-foreground">Sem foto</span>
               </div>
             )}
             <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="picture" className="text-center text-stone-600">
+              <Label htmlFor="picture" className="text-center text-foreground">
                 Adicionar uma imagem de perfil
               </Label>
               <Input
@@ -141,9 +141,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         </section>
 
         {/* Profile Information */}
-        <section className="flex flex-col gap-6 border-t border-b py-6">
+        <section className="flex flex-col gap-6 border-border border-t border-b py-6">
           <div className="grid w-full items-center gap-1.5">
-            <Label htmlFor="fullName" className="text-stone-950 font-semibold">
+            <Label htmlFor="fullName" className="font-semibold text-foreground">
               Nome Completo
             </Label>
             <Input
@@ -158,12 +158,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   fullName: e.target.value,
                 })
               }
-              className="text-stone-950"
+              className="text-foreground"
             />
           </div>
 
           <div className="grid w-full items-center gap-1.5">
-            <Label htmlFor="email" className="text-stone-950 font-semibold">
+            <Label htmlFor="email" className="font-semibold text-foreground">
               E-mail
             </Label>
             <Input
@@ -171,9 +171,9 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               id="email"
               value={data?.email || ''}
               disabled
-              className="text-stone-500 bg-stone-100"
+              className="bg-muted text-muted-foreground"
             />
-            <p className="text-xs text-stone-500">
+            <p className="text-xs text-muted-foreground">
               E-mail não pode ser alterado
             </p>
           </div>
@@ -182,23 +182,23 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         {/* Account Information */}
         {data && (
           <section className="flex flex-col gap-4">
-            <h2 className="text-sm font-semibold text-stone-950 uppercase">
+            <h2 className="text-sm font-semibold uppercase text-foreground">
               Informações da conta
             </h2>
             <div className="grid grid-cols-2 gap-6">
               <div className="flex flex-col gap-2">
-                <span className="text-xs font-medium text-stone-500 uppercase">
+                <span className="text-xs font-medium uppercase text-muted-foreground">
                   Tipo de conta
                 </span>
-                <span className="text-sm font-semibold text-stone-950">
+                <span className="text-sm font-semibold text-foreground">
                   Usuário
                 </span>
               </div>
               <div className="flex flex-col gap-2">
-                <span className="text-xs font-medium text-stone-500 uppercase">
+                <span className="text-xs font-medium uppercase text-muted-foreground">
                   Membro desde
                 </span>
-                <span className="text-sm font-semibold text-stone-950">
+                <span className="text-sm font-semibold text-foreground">
                   {formatDate(data.createdAt)}
                 </span>
               </div>

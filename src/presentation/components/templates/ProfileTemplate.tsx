@@ -1,4 +1,5 @@
 import { ErrorMessage } from '../atoms'
+import { Footer } from '../molecules'
 
 import { PageTemplate } from './PageTemplate'
 
@@ -13,7 +14,10 @@ export const ProfileTemplate: React.FC<IProfileTemplate> = ({
   children,
   error,
 }) => (
-  <PageTemplate>
-    {error ? <ErrorMessage error={error} /> : children}
-  </PageTemplate>
+  <div className="flex min-h-screen flex-col bg-background">
+    <PageTemplate>
+      {error ? <ErrorMessage error={error} /> : children}
+    </PageTemplate>
+    <Footer />
+  </div>
 )
