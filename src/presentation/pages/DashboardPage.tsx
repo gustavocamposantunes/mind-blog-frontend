@@ -174,20 +174,27 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   {articles.map((article) => {
                     const actions = (
                       <span
-                        className="flex gap-2"
+                        className="flex items-center gap-1 rounded-full border border-border/80 bg-background/80 p-1"
                         key={`${article.id}-actions`}
                       >
                         <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
                           onClick={(event) => {
                             event.stopPropagation()
                             navigate(`/article/edit/${article.id}`)
                           }}
-                          className="bg-blue-600!"
+                          className="h-8 w-8 text-primary hover:bg-primary/10 hover:text-primary"
+                          aria-label={`Editar artigo ${article.title}`}
                           data-testid={`edit-btn-${article.id}`}
                         >
                           <PencilIcon />
                         </Button>
                         <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
                           onClick={(event) => {
                             event.stopPropagation()
                             setSelectedArticle({
@@ -195,7 +202,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                               title: article.title,
                             })
                           }}
-                          className="bg-red-600!"
+                          className="h-8 w-8 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                          aria-label={`Excluir artigo ${article.title}`}
                           data-testid={`delete-btn-${article.id}`}
                         >
                           <TrashIcon />
