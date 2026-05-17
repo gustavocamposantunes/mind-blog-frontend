@@ -14,8 +14,7 @@ describe('buildAuthenticateUserModel', () => {
       JSON.stringify({
         sub: 1,
         email: 'john@example.com',
-        firstName: 'John',
-        lastName: 'Doe',
+        fullName: 'John Doe',
         image: 'avatar.png',
       }),
     )
@@ -27,8 +26,7 @@ describe('buildAuthenticateUserModel', () => {
       user: {
         id: 1,
         email: 'john@example.com',
-        firstName: 'John',
-        lastName: 'Doe',
+        fullName: 'John Doe',
         image: 'avatar.png',
       },
     })
@@ -39,8 +37,7 @@ describe('buildAuthenticateUserModel', () => {
       JSON.stringify({
         sub: 7,
         email: 'plain@example.com',
-        firstName: 'Plain',
-        lastName: 'Token',
+        fullName: 'Plain Token',
       }),
     )
 
@@ -51,8 +48,7 @@ describe('buildAuthenticateUserModel', () => {
       user: {
         id: 7,
         email: 'plain@example.com',
-        firstName: 'Plain',
-        lastName: 'Token',
+        fullName: 'Plain Token',
         image: undefined,
       },
     })
@@ -85,8 +81,7 @@ describe('buildAuthenticateUserModel', () => {
       JSON.stringify({
         sub: 42,
         email: 'buffer@example.com',
-        firstName: 'Buffer',
-        lastName: 'Branch',
+        fullName: 'Buffer Branch',
       }),
     )
     const originalAtob = globalThis.atob

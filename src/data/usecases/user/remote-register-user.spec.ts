@@ -102,8 +102,7 @@ describe('RemoteRegisterUser', () => {
       JSON.stringify({
         sub: 1,
         email: 'john@example.com',
-        firstName: 'John',
-        lastName: 'Doe',
+        fullName: 'John Doe',
       }),
     )
 

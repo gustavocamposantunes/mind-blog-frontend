@@ -4,29 +4,26 @@ import { buildUpdateProfilePayload } from './buildUpdateProfilePayload'
 
 describe('buildUpdateProfilePayload', () => {
   const original = {
-    firstName: 'Original Firstname',
-    lastName: 'Original LastName',
+    fullName: 'Original Full Name',
     image: 'Original Image',
   }
 
-  it('should retur only changed fields', () => {
+  it('should return only changed fields', () => {
     const edited = {
-      firstName: 'New Firstname',
-      lastName: 'Original LastName',
+      fullName: 'New Full Name',
       image: 'Original Image',
     }
 
     const result = buildUpdateProfilePayload(original, edited)
 
     expect(result).toEqual({
-      firstName: 'New Firstname',
+      fullName: 'New Full Name',
     })
   })
 
   it('should return all changed fields', () => {
     const edited = {
-      firstName: 'New Firstname',
-      lastName: 'New LastName',
+      fullName: 'New Full Name',
       image: 'New Image',
     }
 

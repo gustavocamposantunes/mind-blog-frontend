@@ -6,8 +6,7 @@ import type { AuthParams } from '../usecases'
 type AccessTokenPayload = {
   sub: number
   email: string
-  firstName: string
-  lastName: string
+  fullName: string
   image?: string
 }
 
@@ -33,8 +32,7 @@ export const mockAuthenticationParams = (): AuthParams => ({
 const mockUser = (): AuthenticateUserModel['user'] => ({
   id: 5,
   email: faker.internet.email(),
-  firstName: faker.person.firstName(),
-  lastName: faker.person.lastName(),
+  fullName: faker.person.fullName(),
   image: faker.image.avatar(),
 })
 
@@ -45,8 +43,7 @@ export const mockAuthenticateUserModel = (): AuthenticateUserModel => {
     accessToken: buildAccessToken({
       sub: user.id,
       email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      fullName: user.fullName,
       image: user.image,
     }),
     user,

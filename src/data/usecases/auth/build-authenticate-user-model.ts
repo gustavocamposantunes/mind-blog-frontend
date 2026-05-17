@@ -29,8 +29,7 @@ const decodeAccessTokenPayload = (accessToken: string) => {
     return JSON.parse(decodedPayload) as {
       sub: number | string
       email: string
-      firstName: string
-      lastName: string
+      fullName: string
       image?: string
     }
   } catch {
@@ -48,8 +47,7 @@ export const buildAuthenticateUserModel = (
     user: {
       id: Number(payload.sub),
       email: payload.email,
-      firstName: payload.firstName,
-      lastName: payload.lastName,
+      fullName: payload.fullName,
       image: payload.image,
     },
   }

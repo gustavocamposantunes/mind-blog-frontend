@@ -31,16 +31,14 @@ describe('RegisterUserPage', () => {
   beforeEach(cleanup)
 
   const setupSubmit = (missMatchPassowrd?: string) => {
-    const firstName = screen.getByPlaceholderText(/digite seu nome/i)
-    const lastName = screen.getByPlaceholderText(/digite seu sobrenome/i)
+    const fullName = screen.getByPlaceholderText(/digite seu nome completo/i)
     const emailInput = screen.getByPlaceholderText(/digite seu email/i)
     const password = screen.getByPlaceholderText(/digite sua senha/i)
     const passwordConfirmation =
       screen.getByPlaceholderText(/confirme sua senha/i)
 
     const fakePassowrd = faker.internet.password()
-    fireEvent.change(firstName, { target: { value: faker.person.firstName() } })
-    fireEvent.change(lastName, { target: { value: faker.person.lastName() } })
+    fireEvent.change(fullName, { target: { value: faker.person.fullName() } })
     fireEvent.change(emailInput, { target: { value: faker.internet.email() } })
     fireEvent.change(password, {
       target: { value: missMatchPassowrd ?? fakePassowrd },

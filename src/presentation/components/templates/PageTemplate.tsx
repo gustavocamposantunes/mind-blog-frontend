@@ -26,6 +26,7 @@ export const PageTemplate: React.FC<IPageTemplate> = ({ children }) => {
             <UserDropdownMenu
               user={user}
               onProfileNavigate={() => navigate('/dashboard')}
+              onSettingsNavigate={() => navigate('/profile')}
               onLogout={() => {
                 clearCurrentUser()
                 navigate('/')

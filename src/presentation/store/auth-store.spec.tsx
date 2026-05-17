@@ -4,8 +4,7 @@ import { useAuthStore } from './auth-store'
 
 const mockUser = {
   id: 1,
-  firstName: 'John',
-  lastName: 'Doe',
+  fullName: 'John Doe',
   email: 'john.doe@example.com',
   image: '',
 }
@@ -39,8 +38,7 @@ describe('useAuthStore', () => {
     expect(accessToken).toBe('')
     expect(user).toEqual({
       id: 0,
-      firstName: '',
-      lastName: '',
+      fullName: '',
       email: '',
       image: '',
     })

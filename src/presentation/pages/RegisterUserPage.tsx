@@ -24,8 +24,7 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
 
   const [passwordMismatchError, setPasswordMismatchError] = useState(false)
   const [registerUserParams, setRegisterUserParams] = useState({
-    firstName: '',
-    lastName: '',
+    fullName: '',
     email: '',
     password: '',
     passwordConfirmation: '',
@@ -46,8 +45,7 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
 
     mutate(
       {
-        firstName: registerUserParams.firstName,
-        lastName: registerUserParams.lastName,
+        fullName: registerUserParams.fullName,
         email: registerUserParams.email,
         password: registerUserParams.password,
       },
@@ -70,31 +68,16 @@ export const RegisterUserPage: React.FC<RegisterUserProps> = ({
       <AuthForm onSubmit={onSubmit}>
         <TextField
           className="mt-8"
-          label="Nome"
-          type="firstName"
-          id="firstName"
-          placeholder="Digite seu nome"
+          label="Nome Completo"
+          type="text"
+          id="fullName"
+          placeholder="Digite seu nome completo"
           labelClassName="text-white"
           inputClassName="text-white placeholder:text-white/35"
           onChange={(event) => {
             setRegisterUserParams({
               ...registerUserParams,
-              firstName: event.target.value,
-            })
-          }}
-        />
-        <TextField
-          className="mt-8"
-          label="Sobrenome"
-          type="lastName"
-          id="lastName"
-          placeholder="Digite seu sobrenome"
-          labelClassName="text-white"
-          inputClassName="text-white placeholder:text-white/35"
-          onChange={(event) => {
-            setRegisterUserParams({
-              ...registerUserParams,
-              lastName: event.target.value,
+              fullName: event.target.value,
             })
           }}
         />

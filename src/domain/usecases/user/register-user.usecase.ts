@@ -2,8 +2,7 @@ import type { AuthenticateUserModel } from '../../models'
 import type { HttpRemoteResponse } from '@/data/protocols'
 
 export type RegisterUserParams = {
-  firstName: string
-  lastName: string
+  fullName: string
   email: string
   password: string
 }

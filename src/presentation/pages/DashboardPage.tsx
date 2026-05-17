@@ -104,7 +104,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 Dashboard
               </p>
               <h1 className="mt-3 text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
-                Bem-vindo de volta, {user.firstName}
+                Bem-vindo de volta, {user.fullName}
               </h1>
               <p className="mt-2 max-w-2xl text-sm text-foreground/70 md:text-base">
                 Acompanhe as interações nos seus artigos, edite conteúdos e

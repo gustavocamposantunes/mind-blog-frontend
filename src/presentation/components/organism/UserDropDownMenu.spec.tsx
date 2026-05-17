@@ -6,8 +6,7 @@ import { UserDropdownMenu } from './UserDropDownMenu'
 import { cleanup, render, screen } from '@/presentation/test/test-utils'
 
 const mockUser = {
-  firstName: 'John',
-  lastName: 'Doe',
+  fullName: 'John Doe',
   image: 'avatar.png',
 }
 
@@ -21,6 +20,7 @@ describe('UserDropDownMenu', () => {
       <UserDropdownMenu
         user={mockUser}
         onProfileNavigate={vi.fn()}
+        onSettingsNavigate={vi.fn()}
         onLogout={vi.fn()}
         {...props}
       />,
@@ -32,7 +32,7 @@ describe('UserDropDownMenu', () => {
     // open dropdown to reveal name in header
     await userEvent.click(screen.getByTestId('dropdown-trigger'))
     expect(
-      await screen.findByText(`${mockUser.firstName} ${mockUser.lastName}`),
+      await screen.findByText(mockUser.fullName),
     ).toBeInTheDocument()
 
     const avatarFallbacks = screen.getAllByText('JD')
@@ -52,6 +52,14 @@ describe('UserDropDownMenu', () => {
     await userEvent.click(screen.getByTestId('dropdown-trigger'))
     await userEvent.click(await screen.findByText('Dashboard'))
     expect(onProfileNavigate).toHaveBeenCalled()
+  })
+
+  it('calls onSettingsNavigate when "Configurações" is clicked', async () => {
+    const onSettingsNavigate = vi.fn()
+    makeSut({ onSettingsNavigate })
+    await userEvent.click(screen.getByTestId('dropdown-trigger'))
+    await userEvent.click(await screen.findByText('Configurações'))
+    expect(onSettingsNavigate).toHaveBeenCalled()
   })
 
   it('calls onLogout when "Sair" is clicked', async () => {

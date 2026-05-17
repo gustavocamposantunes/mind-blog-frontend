@@ -64,11 +64,9 @@ describe('ProfilePage', () => {
 
       await screen.findByText('Perfil carregado com sucesso')
 
-      const inputName = screen.getByTestId('input-first-name')
-      const inputLastName = screen.getByTestId('input-last-name')
+      const inputFullName = screen.getByTestId('input-fullName')
 
-      expect(inputName).toHaveProperty('value', getProfileSpy.user.firstName)
-      expect(inputLastName).toHaveProperty('value', getProfileSpy.user.lastName)
+      expect(inputFullName).toHaveProperty('value', getProfileSpy.user.fullName)
     })
   })
 
@@ -78,7 +76,7 @@ describe('ProfilePage', () => {
         type: 'image/png',
       })
 
-      const inputFile = screen.getByLabelText(/inserir imagem de perfil/i)
+      const inputFile = screen.getByLabelText(/adicionar uma imagem de perfil/i)
 
       fireEvent.change(inputFile, { target: { files: [file] } })
 
@@ -164,13 +162,10 @@ describe('ProfilePage', () => {
       makeSut(undefined, updateProfileSpy)
 
       await screen.findByText('Perfil carregado com sucesso')
-      const inputFirstName = screen.getByTestId('input-first-name')
-      const inputLastName = screen.getByTestId('input-last-name')
+      const inputFullName = screen.getByTestId('input-fullName')
 
-      const firstName = faker.person.firstName()
-      const lastName = faker.person.lastName()
-      fireEvent.change(inputFirstName, { target: { value: firstName } })
-      fireEvent.change(inputLastName, { target: { value: lastName } })
+      const fullName = faker.person.fullName()
+      fireEvent.change(inputFullName, { target: { value: fullName } })
 
       submitForm()
 
@@ -179,8 +174,7 @@ describe('ProfilePage', () => {
       expect(updateProfileSpy.update).toHaveBeenCalledWith(
         mockAuthStore.accessToken,
         {
-          firstName,
-          lastName,
+          fullName,
         },
       )
     })

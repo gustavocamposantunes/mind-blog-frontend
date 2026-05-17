@@ -1,16 +1,14 @@
 import type { UserModel } from '@/domain/models'
 
-type EditableFields = Pick<UserModel, 'firstName' | 'lastName' | 'image'>
+type EditableFields = Pick<UserModel, 'fullName' | 'image'>
 
 export function buildUpdateProfilePayload(
   original: EditableFields,
   edited: EditableFields,
 ) {
   const payload = {
-    firstName:
-      edited.firstName !== original.firstName ? edited.firstName : undefined,
-    lastName:
-      edited.lastName !== original.lastName ? edited.lastName : undefined,
+    fullName:
+      edited.fullName !== original.fullName ? edited.fullName : undefined,
     image: edited.image !== original.image ? edited.image : undefined,
   }
 

@@ -11,21 +11,27 @@ import {
 
 interface IUserDropDownMenu {
   user: {
-    firstName: string
-    lastName: string
+    fullName: string
     email?: string
     image?: string
   }
   onProfileNavigate(): void
+  onSettingsNavigate(): void
   onLogout(): void
 }
 
 export const UserDropdownMenu: React.FC<IUserDropDownMenu> = ({
   user,
   onProfileNavigate,
+  onSettingsNavigate,
   onLogout,
 }) => {
-  const fallback = `${user.firstName[0]}${user.lastName[0]}`
+  const fallback = user.fullName
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -42,9 +48,7 @@ export const UserDropdownMenu: React.FC<IUserDropDownMenu> = ({
             <CustomAvatar src={user.image} fallbackText={fallback} />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-medium">
-              {user.firstName + ' ' + user.lastName}
-            </span>
+            <span className="text-sm font-medium">{user.fullName}</span>
             {user.email && (
               <span className="text-xs text-muted-foreground">
                 {user.email}
@@ -60,7 +64,7 @@ export const UserDropdownMenu: React.FC<IUserDropDownMenu> = ({
           Dashboard
         </DropdownMenuItem>
 
-        <DropdownMenuItem onClick={() => {}}>
+        <DropdownMenuItem onClick={onSettingsNavigate}>
           <Settings />
           Configurações
         </DropdownMenuItem>
