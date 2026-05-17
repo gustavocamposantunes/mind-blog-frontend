@@ -51,20 +51,24 @@ export const Footer: React.FC = () => {
               Redes Sociais
             </h2>
             <div className="mt-3 flex items-center gap-3 text-foreground">
-              <button
-                type="button"
+              <a
+                href="https://www.linkedin.com/in/gustavo-antunes-347853163/"
+                target="_blank"
+                rel="noreferrer"
                 className="border-0 bg-transparent p-0 text-foreground/80 transition-colors hover:text-foreground"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-4 w-4 text-current" />
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="https://github.com/gustavocamposantunes"
+                target="_blank"
+                rel="noreferrer"
                 className="border-0 bg-transparent p-0 text-foreground/80 transition-colors hover:text-foreground"
                 aria-label="GitHub"
               >
                 <Github className="h-4 w-4 text-current" />
-              </button>
+              </a>
               <button
                 type="button"
                 className="border-0 bg-transparent p-0 text-foreground/80 transition-colors hover:text-foreground"
