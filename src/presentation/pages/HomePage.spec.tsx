@@ -6,7 +6,7 @@ import { ListArticlesSpy, renderHomePageWithRouter } from '../test'
 import { UnexpectedError } from '@/domain/errors'
 import { InternalServerError } from '@/domain/errors'
 import { mockArticlesList } from '@/domain/test'
-import { cleanup, screen } from '@/presentation/test/test-utils'
+import { cleanup, screen, waitFor } from '@/presentation/test/test-utils'
 
 const mockNavigate = vi.fn()
 
@@ -108,7 +108,9 @@ describe('HomePage', () => {
 
       await screen.findAllByTestId('skeleton-favourits')
 
-      expect(toastErrorSpy).toHaveBeenCalledWith('Erro interno do servidor')
+      await waitFor(() => {
+        expect(toastErrorSpy).toHaveBeenCalledWith('Erro interno do servidor')
+      })
     })
 
     it('should render skeletons while featured articles are loading', async () => {

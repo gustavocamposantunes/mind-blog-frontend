@@ -132,7 +132,9 @@ describe('ArticlesPage', () => {
 
       await screen.findAllByTestId('custom-skeleton')
 
-      expect(toastErrorSpy).toHaveBeenCalledWith('Erro interno do servidor')
+      await waitFor(() => {
+        expect(toastErrorSpy).toHaveBeenCalledWith('Erro interno do servidor')
+      })
     })
 
     it('should render the articles', async () => {
@@ -297,6 +299,7 @@ describe('ArticlesPage', () => {
     const setupFavouriteError = async () => {
       const favouriteArticleSpy = new FavouriteArticleSpy()
       const mockedError = new UnexpectedError()
+      const toastErrorSpy = vi.spyOn(toast, 'error').mockReturnValue('toast-id')
       vi.spyOn(favouriteArticleSpy, 'favorite').mockRejectedValueOnce(
         mockedError,
       )
@@ -308,22 +311,25 @@ describe('ArticlesPage', () => {
 
       return {
         mockedError,
+        toastErrorSpy,
         favoriteBtn,
       }
     }
 
     it('should render a toast.error when heart icon is clicked and returns an error from api', async () => {
-      const { mockedError } = await setupFavouriteError()
+      const { mockedError, toastErrorSpy } = await setupFavouriteError()
 
-      const error = await screen.findByText(mockedError.message)
-
-      expect(error).toBeTruthy()
+      await waitFor(() => {
+        expect(toastErrorSpy).toHaveBeenCalledWith(mockedError.message)
+      })
     })
 
     it('should mantain the heart icon fill white if an error occur', async () => {
-      const { mockedError } = await setupFavouriteError()
+      const { mockedError, toastErrorSpy } = await setupFavouriteError()
 
-      await screen.findByText(mockedError.message)
+      await waitFor(() => {
+        expect(toastErrorSpy).toHaveBeenCalledWith(mockedError.message)
+      })
 
       const [favoriteIcon] = screen.getAllByTestId('favorite-icon')
 
@@ -392,6 +398,7 @@ describe('ArticlesPage', () => {
     it('should render a toast.error when article is not deleted correctly', async () => {
       const deleteArticleSpy = new DeleteArticleSpy()
       const mockedError = new UnexpectedError()
+      const toastErrorSpy = vi.spyOn(toast, 'error').mockReturnValue('toast-id')
 
       vi.spyOn(deleteArticleSpy, 'deleteById').mockRejectedValueOnce(
         mockedError,
@@ -403,9 +410,9 @@ describe('ArticlesPage', () => {
 
       fireEvent.click(deleteBtn)
 
-      const error = await screen.findByText(mockedError.message)
-
-      expect(error).toBeInTheDocument()
+      await waitFor(() => {
+        expect(toastErrorSpy).toHaveBeenCalledWith(mockedError.message)
+      })
     })
 
     it('should render a toast.success when article is deleted', async () => {

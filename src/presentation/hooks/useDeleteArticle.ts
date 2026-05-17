@@ -10,7 +10,7 @@ export const useDeleteArticle = (
     onSuccess: () => void
   },
 ) => {
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: async ({
       articleId,
       token,
@@ -24,23 +24,21 @@ export const useDeleteArticle = (
     },
   })
 
-  const deleteById = (articleId: number) => {
-    mutate(
-      {
+  const deleteById = async (articleId: number) => {
+    try {
+      await mutateAsync({
         articleId,
         token: accessToken,
-      },
-      {
-        onError: (error) => toast.error(error.message),
-        onSuccess: () => {
-          if (options?.onSuccess) {
-            options.onSuccess()
-          }
-          toast.success('Artigo deletado com sucesso')
-        },
-      },
-    )
+      })
+
+      if (options?.onSuccess) {
+        options.onSuccess()
+      }
+      toast.success('Artigo deletado com sucesso')
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Erro inesperado')
+    }
   }
 
-  return { mutate, deleteById }
+  return { mutateAsync, deleteById }
 }

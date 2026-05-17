@@ -7,7 +7,7 @@ export const useFavouriteArticle = (
   favouriteArticle: FavouriteArticleUseCase,
   accessToken: string,
 ) => {
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: async ({
       articleId,
       token,
@@ -21,23 +21,21 @@ export const useFavouriteArticle = (
     },
   })
 
-  const favoriteById = (articleId: number, favourite: () => boolean) => {
-    mutate(
-      {
+  const favoriteById = async (articleId: number, favourite: () => boolean) => {
+    try {
+      await mutateAsync({
         articleId,
         token: accessToken,
-      },
-      {
-        onError: (error) => toast.error(error.message),
-        onSuccess: () => {
-          const isFavourited = favourite()
-          toast.info(
-            `Artigo ${isFavourited ? 'removido dos' : 'adicionado aos'} favoritos`,
-          )
-        },
-      },
-    )
+      })
+
+      const isFavourited = favourite()
+      toast.info(
+        `Artigo ${isFavourited ? 'removido dos' : 'adicionado aos'} favoritos`,
+      )
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Erro inesperado')
+    }
   }
 
-  return { mutate, favoriteById }
+  return { mutateAsync, favoriteById }
 }
