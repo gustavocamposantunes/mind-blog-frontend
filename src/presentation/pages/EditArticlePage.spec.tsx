@@ -292,7 +292,8 @@ describe('EditArticlePage', () => {
 
       makeSut(undefined, updateArticleSpy)
 
-      const { newTitle, newResume, newContent } = await setupUpdateArticleSubmit()
+      const { newTitle, newResume, newContent } =
+        await setupUpdateArticleSubmit()
 
       await screen.findByText('Artigo atualizado com sucesso')
 

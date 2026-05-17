@@ -46,7 +46,7 @@ describe('buildUpdateArticlePayload', () => {
     expect(result).toEqual({
       id,
       title: 'New Title',
-        resume: 'New Resume',
+      resume: 'New Resume',
       content: 'New Content',
       image: 'new-image.jpg',
       category: 'design',

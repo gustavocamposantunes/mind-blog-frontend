@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react'
 
 import { CustomAvatar } from '../molecules'
+
 import { MarkdownRenderer } from './MarkdownRenderer'
 
 import { formatDateToShortMonth } from '@/presentation/utils/dateFormatter'

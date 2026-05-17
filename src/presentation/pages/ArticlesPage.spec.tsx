@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify'
 import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest'
 
 import {
@@ -8,12 +9,10 @@ import {
 } from '../test'
 import { cleanup, fireEvent, screen, waitFor } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
-import { toast } from 'react-toastify'
 
 import { UnexpectedError } from '@/domain/errors'
 import { InternalServerError } from '@/domain/errors'
 import { mockArticlesList, mockAuthenticateUserModel } from '@/domain/test'
-
 
 let useSearchParamsMock = vi.fn()
 

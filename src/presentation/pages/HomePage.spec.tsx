@@ -1,5 +1,5 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest'
 import { toast } from 'react-toastify'
+import { describe, expect, it, vi, beforeEach } from 'vitest'
 
 import { ListArticlesSpy, renderHomePageWithRouter } from '../test'
 
@@ -7,7 +7,6 @@ import { UnexpectedError } from '@/domain/errors'
 import { InternalServerError } from '@/domain/errors'
 import { mockArticlesList } from '@/domain/test'
 import { cleanup, screen } from '@/presentation/test/test-utils'
-
 
 const mockNavigate = vi.fn()
 

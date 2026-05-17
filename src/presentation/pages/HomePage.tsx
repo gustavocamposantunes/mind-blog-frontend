@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
 import { ArrowUpRight } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
@@ -10,7 +11,6 @@ import { CustomCard } from '../components/organism/CustomCard'
 import { Button } from '../components/ui/button'
 import { Skeleton } from '../components/ui/skeleton'
 import { useArticlesList, useResponsiveLimit } from '../hooks'
-import { toast } from 'react-toastify'
 
 import type { ListArticlesUseCase } from '@/domain/usecases'
 

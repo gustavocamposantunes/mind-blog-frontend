@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react'
 import { PencilIcon, TrashIcon } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -70,7 +70,10 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   const errorToastShown = useRef(false)
 
   useEffect(() => {
-    if (error?.message === 'Erro interno do servidor' && !errorToastShown.current) {
+    if (
+      error?.message === 'Erro interno do servidor' &&
+      !errorToastShown.current
+    ) {
       toast.error(error.message)
       errorToastShown.current = true
     }
