@@ -1,25 +1,25 @@
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 
-import { ArticlesPage } from '../pages'
+import { DashboardPage } from '../pages'
 
 import { render } from './test-utils'
 
-import type { FavouriteArticleSpy } from './mock-favourite-article'
+import type { DeleteArticleSpy } from './mock-delete-article-by-id'
 import type { ListArticlesSpy } from './mock-list-articles'
 
-export const renderArticlesPageWithRouter = (
+export const renderDashboardPageWithRouter = (
   listArticlesSpy: ListArticlesSpy,
-  favouriteArticleSpy: FavouriteArticleSpy,
+  deleteArticleSpy: DeleteArticleSpy,
 ) => {
-  const ArticlesMemoryRouter = () => (
-    <MemoryRouter initialEntries={['/articles']}>
+  const DashboardMemoryRouter = () => (
+    <MemoryRouter initialEntries={['/dashboard?page=1&limit=10']}>
       <Routes>
         <Route
-          path="/articles"
+          path="/dashboard"
           element={
-            <ArticlesPage
+            <DashboardPage
               listArticles={listArticlesSpy}
-              favouriteArticle={favouriteArticleSpy}
+              deleteArticle={deleteArticleSpy}
             />
           }
         />
@@ -32,9 +32,10 @@ export const renderArticlesPageWithRouter = (
       </Routes>
     </MemoryRouter>
   )
-  const { rerender } = render(<ArticlesMemoryRouter />)
+
+  const { rerender } = render(<DashboardMemoryRouter />)
 
   return {
-    rerender: () => rerender(<ArticlesMemoryRouter />),
+    rerender: () => rerender(<DashboardMemoryRouter />),
   }
 }

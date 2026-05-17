@@ -6,6 +6,7 @@ export type ListArticleParams = {
   limit: number
   title?: string
   category?: string
+  userId?: number
 }
 
 export interface ListArticlesUseCase {

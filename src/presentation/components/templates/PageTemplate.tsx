@@ -40,7 +40,7 @@ export const PageTemplate: React.FC<IPageTemplate> = ({ children }) => {
           <span>
             <UserDropdownMenu
               user={user}
-              onProfileNavigate={() => navigate('/profile')}
+              onProfileNavigate={() => navigate('/dashboard')}
               onLogout={() => {
                 clearCurrentUser()
                 navigate('/')

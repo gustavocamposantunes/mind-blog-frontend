@@ -2,7 +2,6 @@ import { toast } from 'react-toastify'
 import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest'
 
 import {
-  DeleteArticleSpy,
   FavouriteArticleSpy,
   ListArticlesSpy,
   renderArticlesPageWithRouter,
@@ -43,25 +42,21 @@ const useMediaQueryMock = vi.mocked(
 type SutTypes = {
   listArticlesListSpy: ListArticlesSpy
   favouriteArticleSpy: FavouriteArticleSpy
-  deleteArticleSpy: DeleteArticleSpy
   rerender: () => void
 }
 
 const makeSut = (
   listArticlesListSpy = new ListArticlesSpy(),
   favouriteArticleSpy = new FavouriteArticleSpy(),
-  deleteArticleSpy = new DeleteArticleSpy(),
 ): SutTypes => {
   const { rerender } = renderArticlesPageWithRouter(
     listArticlesListSpy,
     favouriteArticleSpy,
-    deleteArticleSpy,
   )
 
   return {
     listArticlesListSpy,
     favouriteArticleSpy,
-    deleteArticleSpy,
     rerender,
   }
 }
@@ -164,30 +159,6 @@ describe('ArticlesPage', () => {
       expect(firstArticleImage.src).toEqual(
         listArticlesListSpy.articlesList.articles[0].image,
       )
-    })
-
-    it('should render the pencil icon when an article is from the auth user', async () => {
-      const { listArticlesListSpy } = makeSut()
-
-      await screen.findByTestId(
-        `custom-card-${listArticlesListSpy.articlesList.articles[1].id}`,
-      )
-
-      const pencilIcon = await screen.findByTestId('pencil-icon')
-
-      expect(pencilIcon).toBeTruthy()
-    })
-
-    it('should redirect to the article edit page when the edit btn is clicked', async () => {
-      const { listArticlesListSpy } = makeSut()
-
-      const articleId = listArticlesListSpy.articlesList.articles[1].id
-
-      const editBtn = await screen.findByTestId('edit-btn')
-
-      fireEvent.click(editBtn)
-
-      expect(mockNavigate).toHaveBeenCalledWith(`/article/edit/${articleId}`)
     })
 
     it('should call navigate with article/id when card is clicked', async () => {
@@ -383,67 +354,6 @@ describe('ArticlesPage', () => {
           .then((el) => el)
           .catch(() => null),
       ).toBeFalsy()
-    })
-  })
-
-  describe('Delete', () => {
-    it('should render a delete icon on article', async () => {
-      makeSut()
-
-      const deleteIcon = await screen.findAllByTestId('delete-icon')
-
-      expect(deleteIcon).toBeTruthy()
-    })
-
-    it('should render a toast.error when article is not deleted correctly', async () => {
-      const deleteArticleSpy = new DeleteArticleSpy()
-      const mockedError = new UnexpectedError()
-      const toastErrorSpy = vi.spyOn(toast, 'error').mockReturnValue('toast-id')
-
-      vi.spyOn(deleteArticleSpy, 'deleteById').mockRejectedValueOnce(
-        mockedError,
-      )
-
-      makeSut(undefined, undefined, deleteArticleSpy)
-
-      const [deleteBtn] = await screen.findAllByTestId('delete-btn')
-
-      fireEvent.click(deleteBtn)
-
-      await waitFor(() => {
-        expect(toastErrorSpy).toHaveBeenCalledWith(mockedError.message)
-      })
-    })
-
-    it('should render a toast.success when article is deleted', async () => {
-      makeSut()
-
-      const [deleteBtn] = await screen.findAllByTestId('delete-btn')
-
-      fireEvent.click(deleteBtn)
-
-      const message = await screen.findByText('Artigo deletado com sucesso')
-
-      expect(message).toBeInTheDocument()
-    })
-
-    it('should reload the articles list after an article is deleted', async () => {
-      const listArticlesListSpy = new ListArticlesSpy()
-      const listAllSpy = vi.spyOn(listArticlesListSpy, 'listAll')
-      const { rerender } = makeSut(listArticlesListSpy)
-
-      await screen.findAllByTestId(
-        'custom-card-' + listArticlesListSpy.articlesList.articles[0].id,
-      )
-      expect(listAllSpy).toHaveBeenCalledTimes(1)
-
-      const [deleteBtn] = await screen.findAllByTestId('delete-btn')
-      fireEvent.click(deleteBtn)
-      rerender()
-
-      await waitFor(() => {
-        expect(listAllSpy).toHaveBeenCalledTimes(2)
-      })
     })
   })
 

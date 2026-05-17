@@ -40,15 +40,15 @@ describe('UserDropDownMenu', () => {
   it('opens dropdown on trigger click', async () => {
     makeSut()
     await userEvent.click(screen.getByTestId('dropdown-trigger'))
-    expect(await screen.findByText('Perfil')).toBeInTheDocument()
+    expect(await screen.findByText('Dashboard')).toBeInTheDocument()
     expect(await screen.findByText('Desconectar')).toBeInTheDocument()
   })
 
-  it('calls onProfileNavigate when "Perfil" is clicked', async () => {
+  it('calls onProfileNavigate when "Dashboard" is clicked', async () => {
     const onProfileNavigate = vi.fn()
     makeSut({ onProfileNavigate })
     await userEvent.click(screen.getByTestId('dropdown-trigger'))
-    await userEvent.click(await screen.findByText('Perfil'))
+    await userEvent.click(await screen.findByText('Dashboard'))
     expect(onProfileNavigate).toHaveBeenCalled()
   })
 

@@ -19,6 +19,7 @@ import {
 import {
   ArticlesPage,
   ArticlePage,
+  DashboardPage,
   RegisterUserPage,
   LoginPage,
   NewArticlePage,
@@ -53,8 +54,18 @@ export const Router = () => {
               <ArticlesPage
                 listArticles={makeRemoteListArticles()}
                 favouriteArticle={makeRemoteFavouriteArticle()}
-                deleteArticle={makeRemoteDeleteArticle()}
               />
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <DashboardPage
+                  listArticles={makeRemoteListArticles()}
+                  deleteArticle={makeRemoteDeleteArticle()}
+                />
+              </PrivateRoute>
             }
           />
           <Route

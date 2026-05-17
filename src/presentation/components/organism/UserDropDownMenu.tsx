@@ -37,7 +37,7 @@ export const UserDropdownMenu: React.FC<IUserDropDownMenu> = ({
       <DropdownMenuContent className="w-48">
         <DropdownMenuItem onClick={onProfileNavigate}>
           <UserPen />
-          Perfil
+          Dashboard
         </DropdownMenuItem>
         <DropdownMenuItem onClick={onLogout}>
           <LogOut />

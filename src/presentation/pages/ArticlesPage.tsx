@@ -1,4 +1,3 @@
-import { PencilIcon, TrashIcon } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -14,12 +13,10 @@ import {
   Footer,
 } from '../components/molecules'
 import { ArticleListCard, CustomCard } from '../components/organism'
-import { Button } from '../components/ui/button'
 import { useResponsivePagination } from '../hooks'
 import {
   useArticlesList,
   useArticlesFilters,
-  useDeleteArticle,
   useFavouriteArticle,
 } from '../hooks'
 import { useAuthStore } from '../store'
@@ -28,7 +25,6 @@ import type {
   FavouriteArticleUseCase,
   ListArticlesUseCase,
 } from '@/domain/usecases'
-import type { DeleteArticleByIdUseCase } from '@/domain/usecases/article/delete-article-by-id.usecase'
 
 import { CustomPagination } from '@/presentation/components/organism'
 import { PageTemplate } from '@/presentation/components/templates'
@@ -36,7 +32,6 @@ import { PageTemplate } from '@/presentation/components/templates'
 type ArticlessPageProps = {
   listArticles: ListArticlesUseCase
   favouriteArticle: FavouriteArticleUseCase
-  deleteArticle: DeleteArticleByIdUseCase
 }
 
 // Extracted categories - in a real app, this would come from an API
@@ -45,7 +40,6 @@ const ARTICLE_CATEGORIES = ['IA', 'DevOps', 'Desenvolvimento', 'Tecnologia']
 export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   listArticles,
   favouriteArticle,
-  deleteArticle,
 }) => {
   // ensure responsive pagination keeps URL params in sync
   useResponsivePagination()
@@ -63,10 +57,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     pageParams,
   } = useArticlesFilters()
 
-  const { data, isLoading, error, refetch } = useArticlesList(
-    listArticles,
-    pageParams,
-  )
+  const { data, isLoading, error } = useArticlesList(listArticles, pageParams)
   const errorToastShown = useRef(false)
 
   useEffect(() => {
@@ -81,19 +72,13 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
 
   const { favoriteById } = useFavouriteArticle(favouriteArticle, accessToken)
 
-  const { deleteById } = useDeleteArticle(deleteArticle, accessToken, {
-    onSuccess: () => {
-      refetch()
-    },
-  })
-
   let paginationComponent
   if (!isLoading && data) {
     const isGridView = currentView === 'grid'
     paginationComponent = (
       <CustomPagination
         currentPage={currentPage}
-        totalPages={data?.total / currentLimit}
+        totalPages={Math.ceil((data?.total ?? 0) / currentLimit)}
         className={isGridView ? 'lg:col-span-2 xl:col-span-3 mt-4' : 'mt-4'}
         changePage={(page: number) => {
           updateFilters({ page })
@@ -107,33 +92,6 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderArticleCard = (props: any) => {
     const isCurrentUser = user.id === props.author.id
-    let currentUserArticleAction
-    if (isCurrentUser && isLoggedIn) {
-      currentUserArticleAction = (
-        <>
-          <Button
-            onClick={(e) => {
-              e.stopPropagation()
-              navigate(`/article/edit/${props.id}`)
-            }}
-            className="bg-blue-600!"
-            data-testid="edit-btn"
-          >
-            <PencilIcon data-testid="pencil-icon" />
-          </Button>
-          <Button
-            onClick={(e) => {
-              e.stopPropagation()
-              deleteById(props.id)
-            }}
-            className="bg-red-600!"
-            data-testid="delete-btn"
-          >
-            <TrashIcon data-testid="delete-icon" />
-          </Button>
-        </>
-      )
-    }
 
     const footer = [
       <PublishedByInfo
@@ -143,7 +101,6 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
         key={props.id + props.author.firstName}
       />,
       <span className="flex gap-2" key={props.id + 'actions'}>
-        {currentUserArticleAction}
         <FavoriteButton
           isFavorited={props.favourited}
           isCurrentUserAndLoggedIn={!isCurrentUser && isLoggedIn}

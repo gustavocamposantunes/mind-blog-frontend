@@ -1,5 +1,6 @@
 export * from './ArticlesFilters'
 export * from './AuthSection'
+export * from './DeleteArticleModal'
 export * from './CustomAvatar'
 export * from './Footer'
 export * from './FormHeader'
