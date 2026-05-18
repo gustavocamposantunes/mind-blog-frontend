@@ -1,4 +1,5 @@
 import { Card } from '../ui/card'
+import { MarkdownRenderer } from './MarkdownRenderer'
 
 import type { ReactNode } from 'react'
 
@@ -10,6 +11,8 @@ interface IArticleListCard {
   description: string
   footer: ReactNode
   category?: string
+  className?: string
+  testIdPrefix?: string
 }
 
 export const ArticleListCard: React.FC<IArticleListCard> = ({
@@ -20,13 +23,15 @@ export const ArticleListCard: React.FC<IArticleListCard> = ({
   description,
   footer,
   category,
+  className,
+  testIdPrefix = 'article-list-card',
 }) => {
   return (
     <Card
-      className="cursor-pointer hover:shadow-lg transition-shadow flex flex-row gap-4 overflow-hidden p-6"
+      className={`cursor-pointer hover:shadow-lg transition-shadow flex flex-row gap-4 overflow-hidden p-6 ${className ?? ''}`.trim()}
       key={id}
       onClick={onClick}
-      data-testid={`article-list-card-${id}`}
+      data-testid={`${testIdPrefix}-${id}`}
     >
       <div className="flex flex-col flex-1 gap-4 min-w-0">
         {category && (
@@ -38,9 +43,9 @@ export const ArticleListCard: React.FC<IArticleListCard> = ({
           <h3 className="text-lg font-semibold text-foreground line-clamp-2 mb-2">
             {title}
           </h3>
-          <p className="text-sm text-foreground/70 line-clamp-3">
-            {description}
-          </p>
+          <div className="text-sm text-foreground/70 line-clamp-3">
+            <MarkdownRenderer content={description} />
+          </div>
         </div>
         <div className="flex items-center justify-between gap-4">
           <div className="flex-1">

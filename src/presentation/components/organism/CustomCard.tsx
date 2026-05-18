@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/card'
+import { MarkdownRenderer } from './MarkdownRenderer'
 
 import type { ReactNode } from 'react'
 
@@ -68,7 +69,12 @@ export const CustomCard: React.FC<ICustomCard> = ({
         </CardTitle>
       </CardHeader>
       <CardContent data-testid="custom-card-content">
-        <p data-testid="card-description">{description}</p>
+        <div
+          data-testid="card-description"
+          className="text-sm text-foreground/70"
+        >
+          <MarkdownRenderer content={description} />
+        </div>
       </CardContent>
       <CardFooter
         className="flex justify-between mt-auto"

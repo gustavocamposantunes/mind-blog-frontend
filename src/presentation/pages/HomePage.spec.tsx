@@ -125,7 +125,7 @@ describe('HomePage', () => {
       const { listArticlesSpy } = makeSut()
 
       await screen.findAllByTestId(
-        `custom-card-${listArticlesSpy.articlesList.articles[0].id}`,
+        `home-featured-article-card-${listArticlesSpy.articlesList.articles[0].id}`,
       )
     })
   })
@@ -162,7 +162,9 @@ describe('HomePage', () => {
       const { listArticlesSpy } = makeSut()
 
       const articleId = listArticlesSpy.articlesList.articles[0].id
-      const featuredCard = await screen.findByTestId(`custom-card-${articleId}`)
+      const featuredCard = await screen.findByTestId(
+        `home-featured-article-card-${articleId}`,
+      )
 
       featuredCard.click()
 

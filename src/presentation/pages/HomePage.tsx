@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { FavouriteSkeleton } from '../components/atoms'
 import { PublishedByInfo } from '../components/molecules'
-import { CustomCard } from '../components/organism/CustomCard'
+import { Card } from '../components/ui/card'
 import { Button } from '../components/ui/button'
 import { Skeleton } from '../components/ui/skeleton'
 import { useArticlesList, useResponsiveLimit } from '../hooks'
@@ -20,6 +20,79 @@ import 'swiper/css'
 
 type HomePageProps = {
   listArticles: ListArticlesUseCase
+}
+
+type HomeArticleCardProps = {
+  id: string
+  title: string
+  category?: string
+  image?: string
+  excerpt: string
+  onClick(): void
+  footer: React.ReactNode
+  testId: string
+}
+
+const MAX_EXCERPT_LENGTH = 120
+
+const getHomeArticleExcerpt = (text: string) => {
+  const normalized = text.replace(/\s+/g, ' ').trim()
+
+  if (normalized.length <= MAX_EXCERPT_LENGTH) {
+    return normalized
+  }
+
+  return `${normalized.slice(0, MAX_EXCERPT_LENGTH).trimEnd()}...`
+}
+
+const HomeArticleCard: React.FC<HomeArticleCardProps> = ({
+  id,
+  title,
+  category,
+  image,
+  excerpt,
+  onClick,
+  footer,
+  testId,
+}) => {
+  return (
+    <Card
+      key={id}
+      onClick={onClick}
+      data-testid={testId}
+      className="group h-full cursor-pointer overflow-hidden rounded-3xl border-border bg-card/70 shadow-lg shadow-black/10 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl"
+    >
+      <div className="flex h-full flex-col overflow-hidden">
+        <div className="h-48 w-full overflow-hidden bg-muted">
+          {image ? (
+            <img
+              src={image}
+              alt={title}
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : null}
+        </div>
+
+        <div className="flex flex-1 flex-col gap-4 p-5">
+          {category ? (
+            <span className="text-xs font-semibold uppercase tracking-wide text-primary/80">
+              {category}
+            </span>
+          ) : null}
+
+          <h3 className="line-clamp-2 text-xl font-semibold leading-tight text-foreground">
+            {title}
+          </h3>
+
+          <p className="line-clamp-3 text-sm leading-6 text-foreground/70">
+            {excerpt}
+          </p>
+
+          <div className="mt-auto text-xs text-foreground/70">{footer}</div>
+        </div>
+      </div>
+    </Card>
+  )
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
@@ -68,7 +141,7 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
 
   return (
     <HomeTemplate>
-      <section className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-background via-background to-card/40 px-6 py-16 shadow-2xl shadow-black/10 md:px-12">
+      <section className="relative overflow-hidden rounded-3xl border border-border bg-linear-to-br from-background via-background to-card/40 px-6 py-16 shadow-2xl shadow-black/10 md:px-12">
         <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/20 blur-3xl" />
         <div className="absolute -bottom-28 -left-20 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
         <div className="relative mx-auto max-w-3xl text-center">
@@ -85,7 +158,7 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button
               asChild
-              className="action-btn min-w-[190px] px-6 text-white"
+              className="action-btn min-w-47.5 px-6 text-white"
             >
               <Link to={`/articles?page=1&limit=${limit}`}>
                 Explorar Artigos
@@ -94,7 +167,7 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
             <Button
               asChild
               variant="outline"
-              className="min-w-[190px] border-border px-6"
+              className="min-w-47.5 border-border px-6"
             >
               <Link to="/article/new">Comecar a Escrever</Link>
             </Button>
@@ -126,14 +199,13 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {dataFeatured?.articles.map((article) => (
-              <CustomCard
+              <HomeArticleCard
                 key={article.id}
                 id={String(article.id)}
-                headerImageSrc={article.image}
-                className="h-full"
-                imageClassName="h-52 w-full object-cover"
+                testId={`home-featured-article-card-${article.id}`}
+                image={article.image}
                 title={article.title}
-                description={article.content}
+                excerpt={getHomeArticleExcerpt(article.resume || article.content)}
                 category={article.category}
                 onClick={() => {
                   navigate(`/articles/${article.id}`)
@@ -178,46 +250,31 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
           >
             {dataRecent?.articles.map((article) => (
               <SwiperSlide key={article.id}>
-                <Link to={`/articles/${article.id}`} className="block h-full">
-                  <article className="h-full overflow-hidden rounded-2xl border border-border bg-card/60 shadow-xl shadow-black/10 transition-transform hover:-translate-y-1">
-                    <div className="h-40 w-full overflow-hidden">
-                      {article.image ? (
-                        <img
-                          src={article.image}
-                          alt={article.title}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <div className="h-full w-full bg-muted" />
-                      )}
-                    </div>
-                    <div className="flex h-full flex-col gap-3 p-5">
-                      <span className="text-xs font-semibold uppercase tracking-wide text-primary/80">
-                        {article.category}
-                      </span>
-                      <h3 className="text-base font-semibold text-foreground">
-                        {article.title}
-                      </h3>
-                      <p className="text-sm text-foreground/70">
-                        {article.content}
-                      </p>
-                      <div className="mt-auto text-xs text-foreground/70">
-                        <PublishedByInfo
-                          avatar={article.author.avatar}
-                          author={article.author.firstName}
-                          publishedAt={article.publishedAt}
-                        />
-                      </div>
-                    </div>
-                  </article>
-                </Link>
+                <HomeArticleCard
+                  id={String(article.id)}
+                  testId={`home-recent-article-card-${article.id}`}
+                  image={article.image}
+                  title={article.title}
+                  excerpt={getHomeArticleExcerpt(article.resume || article.content)}
+                  category={article.category}
+                  onClick={() => {
+                    navigate(`/articles/${article.id}`)
+                  }}
+                  footer={
+                    <PublishedByInfo
+                      avatar={article.author.avatar}
+                      author={article.author.firstName}
+                      publishedAt={article.publishedAt}
+                    />
+                  }
+                />
               </SwiperSlide>
             ))}
           </Swiper>
         )}
       </section>
 
-      <section className="rounded-3xl border border-border bg-gradient-to-r from-card/70 via-background to-card/70 px-6 py-12 text-center md:px-12">
+      <section className="rounded-3xl border border-border bg-linear-to-r from-card/70 via-background to-card/70 px-6 py-12 text-center md:px-12">
         <div className="mx-auto max-w-2xl">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-border text-primary">
             <span className="text-lg">@</span>
@@ -251,7 +308,7 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
         </p>
         <Button
           asChild
-          className="action-btn mt-6 min-w-[220px] px-6 text-white"
+          className="action-btn mt-6 min-w-55 px-6 text-white"
         >
           <Link to="/register">Criar Conta Gratuita</Link>
         </Button>
