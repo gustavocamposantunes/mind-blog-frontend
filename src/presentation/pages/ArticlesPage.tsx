@@ -12,7 +12,8 @@ import {
   PublishedByInfo,
   Footer,
 } from '../components/molecules'
-import { ArticleListCard, CustomCard } from '../components/organism'
+import { ArticleListCard } from '../components/organism'
+import { Card } from '../components/ui/card'
 import { useResponsivePagination } from '../hooks'
 import {
   useArticlesList,
@@ -36,6 +37,64 @@ type ArticlessPageProps = {
 
 // Extracted categories - in a real app, this would come from an API
 const ARTICLE_CATEGORIES = ['IA', 'DevOps', 'Desenvolvimento', 'Tecnologia']
+
+type FeaturedArticleCardProps = {
+  id: string
+  title: string
+  category?: string
+  image?: string
+  excerpt: string
+  onClick(): void
+  footer: React.ReactNode
+}
+
+const FeaturedArticleCard: React.FC<FeaturedArticleCardProps> = ({
+  id,
+  title,
+  category,
+  image,
+  excerpt,
+  onClick,
+  footer,
+}) => {
+  return (
+    <Card
+      onClick={onClick}
+      data-testid={`custom-card-${id}`}
+      className="group h-full cursor-pointer overflow-hidden rounded-3xl border-border bg-card/70 shadow-lg shadow-black/10 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl"
+    >
+      <div className="flex h-full flex-col overflow-hidden">
+        <div className="h-48 w-full overflow-hidden bg-muted">
+          {image ? (
+            <img
+              src={image}
+              alt={title}
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : null}
+        </div>
+
+        <div className="flex flex-1 flex-col gap-4 p-5">
+          {category ? (
+            <span className="text-xs font-semibold uppercase tracking-wide text-primary/80">
+              {category}
+            </span>
+          ) : null}
+
+          <h3 className="line-clamp-2 text-xl font-semibold leading-tight text-foreground">
+            {title}
+          </h3>
+
+          <p className="line-clamp-3 text-sm leading-6 text-foreground/70">
+            {excerpt}
+          </p>
+
+          <div className="mt-auto text-xs text-foreground/70">{footer}</div>
+        </div>
+      </div>
+    </Card>
+  )
+}
 
 export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   listArticles,
@@ -92,6 +151,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderArticleCard = (props: any) => {
     const isCurrentUser = user.id === props.author.id
+    const description = props.resume ?? props.content
 
     const footer = [
       <PublishedByInfo
@@ -113,7 +173,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
       id: String(props.id),
       headerImageSrc: props.image,
       title: props.title,
-      description: props.resume ?? props.content,
+      description,
       category: props.category,
       onClick: () => {
         navigate(`/articles/${props.id}`)
@@ -126,10 +186,15 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     }
 
     return (
-      <CustomCard
+      <FeaturedArticleCard
         key={props.id}
-        {...commonProps}
-        imageClassName="h-52 w-full object-cover"
+        id={commonProps.id}
+        title={commonProps.title}
+        image={props.image}
+        excerpt={description}
+        category={commonProps.category}
+        onClick={commonProps.onClick}
+        footer={commonProps.footer}
       />
     )
   }
@@ -137,7 +202,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   const gridOrListClass =
     currentView === 'list'
       ? 'flex flex-col gap-4'
-      : 'grid lg:grid-cols-2 xl:grid-cols-3 gap-4'
+      : 'grid gap-6 md:grid-cols-2 xl:grid-cols-3'
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
