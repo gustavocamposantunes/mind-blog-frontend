@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { UnexpectedError } from '@/domain/errors'
+import { UnexpectedError, NotFoundError } from '@/domain/errors'
 import { ErrorMessage } from '@/presentation/components/atoms'
 
 const meta = {
@@ -10,12 +10,27 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  args: {
-    error: new UnexpectedError(),
-  },
 } satisfies Meta<typeof ErrorMessage>
 
 export default meta
 type Story = StoryObj<typeof meta>
+
+export const UnexpectedErrorExample: Story = {
+  args: {
+    error: new UnexpectedError(),
+  },
+}
+
+export const NotFoundErrorExample: Story = {
+  args: {
+    error: new NotFoundError('Artigo não encontrado'),
+  },
+}
+
+export const CustomError: Story = {
+  args: {
+    error: new Error('Erro ao conectar com o servidor'),
+  },
+}
 
 export const Default: Story = {}

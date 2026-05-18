@@ -9,11 +9,28 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  args: {
-    src: 'https://github.com/shadcn.png',
-  },
 } satisfies Meta<typeof CustomAvatar>
+
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const WithImage: Story = {
+  args: {
+    src: 'https://github.com/shadcn.png',
+  },
+}
+
+export const WithoutImage: Story = {
+  args: {
+    src: undefined,
+  },
+}
+
+export const DifferentSize: Story = {
+  render: () => (
+    <div className="flex gap-4 items-center">
+      <CustomAvatar src="https://github.com/shadcn.png" />
+      <CustomAvatar src="https://github.com/gustavocamposantunes.png" />
+    </div>
+  ),
+}
