@@ -156,10 +156,7 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
             tecnologicas.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button
-              asChild
-              className="action-btn min-w-47.5 px-6 text-white"
-            >
+            <Button asChild className="action-btn min-w-47.5 px-6 text-white">
               <Link to={`/articles?page=1&limit=${limit}`}>
                 Explorar Artigos
               </Link>
@@ -205,7 +202,9 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
                 testId={`home-featured-article-card-${article.id}`}
                 image={article.image}
                 title={article.title}
-                excerpt={getHomeArticleExcerpt(article.resume || article.content)}
+                excerpt={getHomeArticleExcerpt(
+                  article.resume || article.content,
+                )}
                 category={article.category}
                 onClick={() => {
                   navigate(`/articles/${article.id}`)
@@ -255,7 +254,9 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
                   testId={`home-recent-article-card-${article.id}`}
                   image={article.image}
                   title={article.title}
-                  excerpt={getHomeArticleExcerpt(article.resume || article.content)}
+                  excerpt={getHomeArticleExcerpt(
+                    article.resume || article.content,
+                  )}
                   category={article.category}
                   onClick={() => {
                     navigate(`/articles/${article.id}`)
@@ -306,10 +307,7 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
           Junte-se a nossa comunidade de escritores e compartilhe suas
           experiencias e conhecimentos em tecnologia.
         </p>
-        <Button
-          asChild
-          className="action-btn mt-6 min-w-55 px-6 text-white"
-        >
+        <Button asChild className="action-btn mt-6 min-w-55 px-6 text-white">
           <Link to="/register">Criar Conta Gratuita</Link>
         </Button>
       </section>

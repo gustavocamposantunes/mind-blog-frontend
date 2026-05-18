@@ -1,9 +1,15 @@
 import { Link, MemoryRouter } from 'react-router-dom'
-import { describe, expect, it, vi, beforeEach } from 'vitest'
+import { describe, expect, it, beforeEach } from 'vitest'
 
 import { Header } from './Header'
 
-import { cleanup, fireEvent, render, screen, waitFor } from '@/presentation/test/test-utils'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@/presentation/test/test-utils'
 
 describe('Header', () => {
   beforeEach(() => {
