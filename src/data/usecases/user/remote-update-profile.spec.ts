@@ -27,7 +27,7 @@ describe('RemoteUpdateProfile', () => {
     const { sut, httpPutClientSpy } = makeSut(url)
     const token = faker.string.uuid()
     const body = {
-      image: faker.image.urlLoremFlickr(),
+      image: faker.image.url(),
       name: faker.person.fullName(),
     }
 
@@ -47,7 +47,7 @@ describe('RemoteUpdateProfile', () => {
     }
 
     const promise = sut.update(faker.string.uuid(), {
-      image: faker.image.urlLoremFlickr(),
+      image: faker.image.url(),
     })
 
     await expect(promise).rejects.toThrow(new InternalServerError())
@@ -60,7 +60,7 @@ describe('RemoteUpdateProfile', () => {
     }
 
     const promise = sut.update(faker.string.uuid(), {
-      image: faker.image.urlLoremFlickr(),
+      image: faker.image.url(),
     })
 
     await expect(promise).rejects.toThrow(new UnexpectedError())
@@ -76,7 +76,7 @@ describe('RemoteUpdateProfile', () => {
     }
 
     const response = await sut.update(faker.string.uuid(), {
-      image: faker.image.urlLoremFlickr(),
+      image: faker.image.url(),
     })
 
     expect(response.statusCode).toBe(200)

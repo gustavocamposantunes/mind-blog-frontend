@@ -19,7 +19,7 @@ const makeSut = (
   articleId = faker.string.uuid(),
   onClick = () => {},
   data = {
-    headerImageSrc: faker.image.urlLoremFlickr(),
+    headerImageSrc: faker.image.url(),
     title: faker.lorem.sentence(),
     description: faker.lorem.paragraph(10),
     footer: <span></span>,

@@ -7,7 +7,7 @@ export const mockUser = (): UserModel => ({
   id: faker.number.int(),
   fullName: faker.person.fullName(),
   email: faker.internet.email(),
-  image: faker.image.urlLoremFlickr(),
+  image: faker.image.url(),
   createdAt: faker.date.anytime().toISOString(),
   updatedAt: faker.date.anytime().toISOString(),
 })
