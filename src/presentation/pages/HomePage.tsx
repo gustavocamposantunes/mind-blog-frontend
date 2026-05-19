@@ -211,8 +211,8 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
                 }}
                 footer={
                   <PublishedByInfo
-                    avatar={article.author.avatar}
-                    author={article.author.firstName}
+                    avatar={article.author.image}
+                    author={article.author.fullName}
                     publishedAt={article.publishedAt}
                   />
                 }
@@ -263,8 +263,8 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
                   }}
                   footer={
                     <PublishedByInfo
-                      avatar={article.author.avatar}
-                      author={article.author.firstName}
+                      avatar={article.author.image}
+                      author={article.author.fullName}
                       publishedAt={article.publishedAt}
                     />
                   }

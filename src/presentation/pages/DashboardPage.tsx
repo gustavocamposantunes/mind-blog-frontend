@@ -207,8 +207,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
                     const footer = [
                       <PublishedByInfo
-                        avatar={article.author.avatar}
-                        author={article.author.firstName}
+                        avatar={article.author.image}
+                        author={article.author.fullName}
                         publishedAt={article.publishedAt}
                         key={`${article.id}-published`}
                       />,

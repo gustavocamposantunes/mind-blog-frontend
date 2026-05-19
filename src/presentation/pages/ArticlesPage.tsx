@@ -155,10 +155,10 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
 
     const footer = [
       <PublishedByInfo
-        avatar={props.author.avatar}
-        author={props.author.firstName}
+        avatar={props.author.image}
+        author={props.author.fullName}
         publishedAt={props.publishedAt}
-        key={props.id + props.author.firstName}
+        key={props.id + props.author.fullName + 'info'}
       />,
       <span className="flex gap-2" key={props.id + 'actions'}>
         <FavoriteButton

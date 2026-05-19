@@ -33,16 +33,36 @@ export const Article: React.FC<IArticle> = ({
     publishedAt || new Date().toISOString(),
   )
 
+  const getInitials = (name?: string) =>
+    (name || '')
+      .split(' ')
+      .filter(Boolean)
+      .map((n) => n[0])
+      .slice(0, 2)
+      .join('')
+      .toUpperCase()
+
   return (
     <article>
       <div className="flex flex-col gap-4 pb-6 border-b border-[#cecece]">
         <h1 className="text-2xl lg:text-4xl">{title}</h1>
         <span className="flex justify-between items-center">
           <span className="flex gap-2 items-center">
-            <CustomAvatar src={author?.avatar} />
-            <p data-testid="published-at">
-              Por <b>{author?.firstName}</b> - {formatterdDate}
-            </p>
+            {author ? (
+              <>
+                <CustomAvatar
+                  src={author.avatar}
+                  fallbackText={getInitials(author.firstName)}
+                />
+                <p data-testid="published-at">
+                  Por <b>{author.firstName}</b> - {formatterdDate}
+                </p>
+              </>
+            ) : (
+              <p data-testid="published-at">
+                Por <b>Desconhecido</b> - {formatterdDate}
+              </p>
+            )}
           </span>
           {toogleFavouriteSlot}
           {toogleEditSlot}

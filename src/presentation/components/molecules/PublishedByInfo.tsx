@@ -7,7 +7,7 @@ import { formatDateToShortMonth } from '@/presentation/utils/dateFormatter'
 
 interface IPublishedByInfo {
   avatar?: string
-  author: string
+  author?: string
   publishedAt: string
 }
 
@@ -16,6 +16,17 @@ export const PublishedByInfo: React.FC<IPublishedByInfo> = ({
   author,
   publishedAt,
 }) => {
+  const getInitials = (name?: string) => {
+    if (!name) return '??'
+    return name
+      .split(' ')
+      .filter(Boolean)
+      .map((n) => n[0])
+      .slice(0, 2)
+      .join('')
+      .toUpperCase()
+  }
+
   const formattedDate = formatDateToShortMonth(publishedAt)
   return (
     <div className="flex items-center gap-2">
@@ -25,10 +36,10 @@ export const PublishedByInfo: React.FC<IPublishedByInfo> = ({
           src={avatar}
           alt="avatar image"
         />
-        <AvatarFallback>CN</AvatarFallback>
+        <AvatarFallback>{getInitials(author)}</AvatarFallback>
       </Avatar>
       <span data-testid="published-by-info">
-        Por {author} - {formattedDate}
+        Por {author ?? 'Desconhecido'} - {formattedDate}
       </span>
     </div>
   )

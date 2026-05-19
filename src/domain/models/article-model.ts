@@ -1,7 +1,7 @@
 export type AuthorModel = {
   id: number
-  firstName: string
-  avatar?: string
+  fullName: string
+  image?: string
 }
 
 export type ArticleModel = {
