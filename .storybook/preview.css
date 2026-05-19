@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Irish+Grover&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+html,
+body,
+#storybook-root,
+#storybook-docs {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(7, 182, 213, 0.12), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.08), transparent 30%),
+    linear-gradient(180deg, #f8fbfd 0%, #ffffff 55%, #f3f7fb 100%);
+  color: #0f172a;
+}
+
+#storybook-root,
+#storybook-docs {
+  padding: 24px;
+}
+
+.storybook-shell {
+  min-height: calc(100vh - 48px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.irish-grove-font {
+  font-family: 'Irish Grover', system-ui, cursive;
+}

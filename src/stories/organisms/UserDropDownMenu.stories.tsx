@@ -17,6 +17,7 @@ const meta = {
     onSettingsNavigate: () => {},
   },
 } satisfies Meta<typeof UserDropdownMenu>
+
 export default meta
 type Story = StoryObj<typeof meta>
 
