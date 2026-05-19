@@ -19,7 +19,7 @@ export const mockRegisterArticleParams = (): RegisterArticleParams => ({
   title: faker.lorem.sentence(),
   resume: faker.lorem.paragraph(),
   content: faker.lorem.paragraphs(),
-  image: faker.image.urlLoremFlickr({ category: 'nature' }),
+  image: faker.image.url({ width: 1400, height: 700 }),
   category: faker.word.sample(),
   tags: [faker.word.sample(), faker.word.sample()],
   author_id: faker.number.int(),
@@ -44,8 +44,7 @@ export const mockArticle = (
   title: faker.lorem.sentence(),
   resume: faker.lorem.paragraph(),
   content: faker.lorem.paragraphs(withContent ? 50 : 1),
-  image: faker.image.urlLoremFlickr({
-    category: 'nature',
+  image: faker.image.url({
     width: 1400,
     height: 700,
   }),
@@ -53,8 +52,8 @@ export const mockArticle = (
   tags: [faker.word.sample(), faker.word.sample()],
   author: {
     id: author_id,
-    firstName: faker.person.fullName(),
-    avatar: faker.image.avatar(),
+    fullName: faker.person.fullName(),
+    image: faker.image.avatar(),
   },
   favouriteCount,
   favourited,
