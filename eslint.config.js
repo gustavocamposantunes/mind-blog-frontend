@@ -9,7 +9,7 @@ import prettierPlugin from 'eslint-plugin-prettier'
 import prettierConfig from 'eslint-config-prettier'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 
-export default tseslint.config({ ignores: ['dist', 'coverage'] }, {
+export default tseslint.config({ ignores: ['dist', 'coverage', 'storybook-static'] }, {
   extends: [js.configs.recommended, ...tseslint.configs.recommended, prettierConfig],
   files: ['**/*.{ts,tsx}'],
   languageOptions: {

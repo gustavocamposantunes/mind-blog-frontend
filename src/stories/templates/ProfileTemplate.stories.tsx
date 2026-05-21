@@ -34,8 +34,11 @@ export const Default: Story = {
 
         <div className="bg-muted rounded-lg p-6 space-y-4">
           <div>
-            <label className="text-sm font-medium">Nome</label>
+            <label htmlFor="profile-name" className="text-sm font-medium">
+              Nome
+            </label>
             <input
+              id="profile-name"
               type="text"
               defaultValue="João Silva"
               className="w-full border rounded px-4 py-2 mt-1"
@@ -43,8 +46,11 @@ export const Default: Story = {
           </div>
 
           <div>
-            <label className="text-sm font-medium">E-mail</label>
+            <label htmlFor="profile-email" className="text-sm font-medium">
+              E-mail
+            </label>
             <input
+              id="profile-email"
               type="email"
               defaultValue="joao@example.com"
               className="w-full border rounded px-4 py-2 mt-1"
