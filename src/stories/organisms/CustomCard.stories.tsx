@@ -19,7 +19,8 @@ type Story = StoryObj<typeof meta>
 const mockCardData = {
   id: '1',
   title: 'Entendendo TypeScript',
-  description: 'TypeScript adiciona tipagem estática ao JavaScript, ajudando a catch erros em tempo de desenvolvimento.',
+  description:
+    'TypeScript adiciona tipagem estática ao JavaScript, ajudando a catch erros em tempo de desenvolvimento.',
   category: 'Desenvolvimento',
   headerImageSrc: 'https://via.placeholder.com/500x300',
   onClick: () => console.log('Card clicked'),

@@ -47,7 +47,9 @@ export const WithError: Story = {
     placeholder: 'Digite aqui',
     type: 'text',
     id: 'field',
-    error: <span className="text-red-500 text-sm">Este campo é obrigatório</span>,
+    error: (
+      <span className="text-red-500 text-sm">Este campo é obrigatório</span>
+    ),
   },
 }
 

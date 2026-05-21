@@ -41,7 +41,8 @@ export const Default: Story = {
           O Storybook agora mostra os estados base dos componentes de interface.
         </p>
         <p>
-          Use este card como base para composições mais ricas em páginas e listas.
+          Use este card como base para composições mais ricas em páginas e
+          listas.
         </p>
       </CardContent>
       <CardFooter className="justify-between text-sm">

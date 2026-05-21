@@ -19,7 +19,8 @@ const mockArticles: ArticleModel[] = [
   {
     id: 1,
     title: 'React Avançado',
-    content: 'Explore técnicas avançadas de React para criar aplicações escaláveis e performáticas.',
+    content:
+      'Explore técnicas avançadas de React para criar aplicações escaláveis e performáticas.',
     image: 'https://via.placeholder.com/800x400',
     category: 'Desenvolvimento',
     publishedAt: new Date().toISOString(),
@@ -32,7 +33,8 @@ const mockArticles: ArticleModel[] = [
   {
     id: 2,
     title: 'Node.js em Produção',
-    content: 'Aprenda a deployar e manter aplicações Node.js em produção com segurança e performance.',
+    content:
+      'Aprenda a deployar e manter aplicações Node.js em produção com segurança e performance.',
     image: 'https://via.placeholder.com/800x400',
     category: 'Backend',
     publishedAt: new Date(Date.now() - 86400000).toISOString(),
@@ -45,7 +47,8 @@ const mockArticles: ArticleModel[] = [
   {
     id: 3,
     title: 'CSS Grid: O Futuro do Layout',
-    content: 'Dominie CSS Grid e crie layouts complexos e responsivos com facilidade.',
+    content:
+      'Dominie CSS Grid e crie layouts complexos e responsivos com facilidade.',
     image: 'https://via.placeholder.com/800x400',
     category: 'Frontend',
     publishedAt: new Date(Date.now() - 172800000).toISOString(),

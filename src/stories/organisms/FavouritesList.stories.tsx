@@ -19,7 +19,8 @@ const mockArticles: ArticleModel[] = [
   {
     id: 1,
     title: 'React Hooks: Um Guia Completo',
-    content: 'Hooks foram introduzidos no React 16.8 e revolucionaram a forma como escrevemos componentes.',
+    content:
+      'Hooks foram introduzidos no React 16.8 e revolucionaram a forma como escrevemos componentes.',
     image: 'https://via.placeholder.com/400x300',
     category: 'Desenvolvimento',
     publishedAt: new Date().toISOString(),
@@ -32,7 +33,8 @@ const mockArticles: ArticleModel[] = [
   {
     id: 2,
     title: 'TypeScript: Tipagem Segura',
-    content: 'TypeScript adiciona tipagem estática ao JavaScript, melhorando a segurança do código.',
+    content:
+      'TypeScript adiciona tipagem estática ao JavaScript, melhorando a segurança do código.',
     image: 'https://via.placeholder.com/400x300',
     category: 'Desenvolvimento',
     publishedAt: new Date(Date.now() - 86400000).toISOString(),
