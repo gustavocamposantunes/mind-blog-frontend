@@ -43,6 +43,14 @@ Para fim de manutenibilidade o projeto conta com alguns scripts para verificar e
 * Para atualizar todos os pacotes: `pnpm run check:update`
 * O modo interativo permite selecionar os pacotes que quer atualizar: `pnpm run check:interactive`
 
+## Testes
+O projeto conta com scripts para executar testes e gerar cobertura:
+* Executar a suíte de testes: `pnpm test`
+* Executar os testes com cobertura: `pnpm test:coverage`
+
+## Storybook
+Confira o resumo dos storybooks e as melhorias documentadas no [Storybook Summary](./STORYBOOK_SUMMARY.md).
+
 # Links
 
 - Frontend (deploy): https://mind-blog-frontend.vercel.app/
