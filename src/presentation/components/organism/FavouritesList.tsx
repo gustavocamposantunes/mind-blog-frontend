@@ -40,8 +40,8 @@ export function FavouritesList({
           }}
           footer={
             <PublishedByInfo
-              avatar={props.author.avatar}
-              author={props.author.firstName}
+              avatar={props.author.image}
+              author={props.author.fullName}
               publishedAt={props.publishedAt}
             />
           }

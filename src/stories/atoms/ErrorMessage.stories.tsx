@@ -33,4 +33,8 @@ export const CustomError: Story = {
   },
 }
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: {
+    error: new UnexpectedError(),
+  },
+}

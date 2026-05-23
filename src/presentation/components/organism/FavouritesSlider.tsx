@@ -64,8 +64,8 @@ export const FavouritesSlider: React.FC<IFavouritesSlider> = ({
             footer={
               <>
                 <PublishedByInfo
-                  avatar={props.author.avatar}
-                  author={props.author.firstName}
+                  avatar={props.author.image}
+                  author={props.author.fullName}
                   publishedAt={props.publishedAt}
                 />
                 <Button className="orange-btn action-btn uppercase">
