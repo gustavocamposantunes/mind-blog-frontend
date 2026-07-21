@@ -70,4 +70,10 @@ describe('HTTP use case response helpers', () => {
       UnexpectedError,
     )
   })
+
+  it('maps unmapped numeric status codes to unexpected errors', () => {
+    const status = 418
+
+    expect(() => throwMappedHttpError(status)).toThrow(UnexpectedError)
+  })
 })

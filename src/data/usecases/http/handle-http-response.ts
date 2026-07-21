@@ -21,7 +21,7 @@ export const buildRemoteResponse = <Data>(
 })
 
 export const throwMappedHttpError = (
-  status: HttpStatusCode,
+  status: number,
   options: MappedHttpErrorOptions = {},
 ): never => {
   if (status === HttpStatusCode.serverError) {
