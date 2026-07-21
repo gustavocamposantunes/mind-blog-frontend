@@ -57,6 +57,7 @@ export const Article: React.FC<IArticle> = ({
                 <p data-testid="published-at">
                   Por <b>{author.firstName}</b> - {formatterdDate}
                 </p>
+                {toogleFavouriteSlot}
               </>
             ) : (
               <p data-testid="published-at">
@@ -64,7 +65,6 @@ export const Article: React.FC<IArticle> = ({
               </p>
             )}
           </span>
-          {toogleFavouriteSlot}
           {toogleEditSlot}
         </span>
       </div>

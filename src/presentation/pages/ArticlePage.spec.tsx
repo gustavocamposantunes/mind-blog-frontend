@@ -154,6 +154,15 @@ describe('ArticlePage', () => {
       )
     })
 
+    it('should render the favourite icon next to the author info', async () => {
+      makeSut()
+
+      const articleDate = await screen.findByTestId('published-at')
+      const favouriteCount = await screen.findByTestId('favourite-count')
+
+      expect(articleDate.parentElement).toContainElement(favouriteCount)
+    })
+
     it('should load article details with logged user id', async () => {
       const { getArticleByIdSpy } = makeSut()
 
