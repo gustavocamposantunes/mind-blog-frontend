@@ -1,5 +1,6 @@
 export * from './ArticlesViewToggle'
 export * from './AuthForm'
+export * from './AccessibilityToolbar'
 export * from './CustomSkeleton'
 export * from './ErrorMessage'
 export * from './FavoriteButton'

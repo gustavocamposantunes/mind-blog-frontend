@@ -4,6 +4,7 @@ import { ToastContainer, Bounce } from 'react-toastify'
 
 import { PrivateRoute } from './private-route'
 
+import { AccessibilityToolbar } from '@/presentation/components/atoms'
 import { useAuthStore } from '@/presentation/store/auth-store'
 import { useThemeStore } from '@/presentation/store/theme-store'
 
@@ -204,6 +205,7 @@ export const Router = () => {
 
   return (
     <>
+      <AccessibilityToolbar />
       <BrowserRouter>
         <Suspense fallback={<RouteLoadingFallback />}>
           <Routes>
