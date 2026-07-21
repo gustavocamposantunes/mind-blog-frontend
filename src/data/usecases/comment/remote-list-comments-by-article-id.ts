@@ -1,7 +1,5 @@
-import type { ArticleModel } from '@/domain/models'
-import type { GetArticleByIdUseCase } from '@/domain/usecases'
-
-import { normalizeArticle } from './normalize-article'
+import type { CommentModel } from '@/domain/models'
+import type { ListCommentsByArticleIdUseCase } from '@/domain/usecases'
 
 import {
   type HttpGetClient,
@@ -14,7 +12,9 @@ import {
   UnexpectedError,
 } from '@/domain/errors'
 
-export class RemoteGetArticleById implements GetArticleByIdUseCase {
+export class RemoteListCommentsByArticleId
+  implements ListCommentsByArticleIdUseCase
+{
   private readonly url: string
   private readonly httpClient: HttpGetClient
 
@@ -22,22 +22,19 @@ export class RemoteGetArticleById implements GetArticleByIdUseCase {
     this.url = url
     this.httpClient = httpClient
   }
-  async getById(
-    id: string,
-    userId?: number,
-  ): Promise<HttpRemoteResponse<ArticleModel>> {
+
+  async listByArticleId(
+    articleId: number,
+  ): Promise<HttpRemoteResponse<CommentModel[]>> {
     const { status, data } = await this.httpClient.get({
-      url: `${this.url}/${id}`,
-      queryParams: {
-        userId,
-      },
+      url: `${this.url}/${articleId}/comments`,
     })
 
     switch (status) {
       case HttpStatusCode.ok:
         return {
           statusCode: status,
-          data: normalizeArticle(data as ArticleModel),
+          data: data as CommentModel[],
         }
       case HttpStatusCode.notFound:
         throw new NotFoundError()

@@ -1,6 +1,8 @@
 import type { ArticleListModel } from '@/domain/models'
 import type { ListArticleParams, ListArticlesUseCase } from '@/domain/usecases'
 
+import { normalizeArticleList } from './normalize-article'
+
 import {
   type HttpGetClient,
   type HttpRemoteResponse,
@@ -32,7 +34,7 @@ export class RemoteListArticles implements ListArticlesUseCase {
       case HttpStatusCode.ok:
         return {
           statusCode: status,
-          data: data as ArticleListModel,
+          data: normalizeArticleList(data as ArticleListModel),
         }
       case HttpStatusCode.notFound:
         throw new NotFoundError()

@@ -52,6 +52,7 @@ export const WithFavoriteButton: Story = {
     ...mockArticleData,
     toogleFavouriteSlot: (
       <FavoriteButton
+        articleId={1}
         isFavorited={false}
         isCurrentUserAndLoggedIn={true}
         favoriteById={() => {}}

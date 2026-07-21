@@ -87,4 +87,30 @@ describe('RemoteGetArticleById', () => {
     expect(response.statusCode).toBe(200)
     expect(response.data).toEqual(articleData)
   })
+
+  it('should normalize favoritesCount to favouriteCount when HttpGetClient returns 200', async () => {
+    const { sut, httpClientSpy } = makeSut()
+    const articleId = faker.string.uuid()
+    const articleData = {
+      id: articleId,
+      title: faker.lorem.sentence(),
+      content: faker.lorem.paragraphs(),
+      favoritesCount: 12,
+      favourited: true,
+    }
+    httpClientSpy.response = {
+      status: 200,
+      data: articleData,
+    }
+
+    const response = await sut.getById(articleId)
+
+    expect(response.data).toEqual({
+      id: articleId,
+      title: articleData.title,
+      content: articleData.content,
+      favouriteCount: articleData.favoritesCount,
+      favourited: true,
+    })
+  })
 })

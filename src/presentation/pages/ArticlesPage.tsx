@@ -162,6 +162,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
       />,
       <span className="flex gap-2" key={props.id + 'actions'}>
         <FavoriteButton
+          articleId={props.id}
           isFavorited={props.favourited}
           isCurrentUserAndLoggedIn={!isCurrentUser && isLoggedIn}
           favoriteById={favoriteById}

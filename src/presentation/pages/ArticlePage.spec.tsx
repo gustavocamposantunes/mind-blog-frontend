@@ -9,6 +9,7 @@ import { cleanup, fireEvent, screen } from '../test/test-utils'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
 
 import { UnexpectedError } from '@/domain/errors'
+import type { CommentModel } from '@/domain/models'
 import { mockAuthenticateUserModel } from '@/domain/test'
 
 vi.mock('react-router-dom', async () => ({
@@ -25,17 +26,71 @@ vi.mock('../store/auth-store', async () => ({
 type SutTypes = {
   getArticleByIdSpy: GetArticleByIdSpy
   favouriteArticleSpy: FavouriteArticleSpy
+  listCommentsByArticleIdSpy: ListCommentsByArticleIdSpy
+  commentArticleSpy: CommentArticleSpy
+}
+
+class ListCommentsByArticleIdSpy {
+  articleId?: number
+  comments: CommentModel[] = [
+    {
+      id: 1,
+      article_id: 2,
+      user_id: 3,
+      content: 'This post helped me understand the topic.',
+      createdAt: '2026-07-20T12:00:00.000Z',
+      updatedAt: '2026-07-20T12:00:00.000Z',
+      user: {
+        id: 3,
+        fullName: 'Ana Souza',
+        image: '',
+      },
+    },
+  ]
+
+  async listByArticleId(articleId: number) {
+    this.articleId = articleId
+
+    return {
+      statusCode: 200,
+      data: this.comments,
+    }
+  }
+}
+
+class CommentArticleSpy {
+  params?: { article_id: number; content: string }
+  token?: string
+
+  async comment(params: { article_id: number; content: string }, token: string) {
+    this.params = params
+    this.token = token
+
+    return {
+      statusCode: 201,
+      data: undefined,
+    }
+  }
 }
 
 const makeSut = (
   getArticleByIdSpy = new GetArticleByIdSpy(),
   favouriteArticleSpy = new FavouriteArticleSpy(),
+  listCommentsByArticleIdSpy = new ListCommentsByArticleIdSpy(),
+  commentArticleSpy = new CommentArticleSpy(),
 ): SutTypes => {
-  renderArticlePageWithRouter(getArticleByIdSpy, favouriteArticleSpy)
+  renderArticlePageWithRouter(
+    getArticleByIdSpy,
+    favouriteArticleSpy,
+    listCommentsByArticleIdSpy,
+    commentArticleSpy,
+  )
 
   return {
     getArticleByIdSpy,
     favouriteArticleSpy,
+    listCommentsByArticleIdSpy,
+    commentArticleSpy,
   }
 }
 
@@ -94,6 +149,14 @@ describe('ArticlePage', () => {
       expect(favouriteCount.textContent).toBe(
         getArticleByIdSpy.data.favouriteCount.toString(),
       )
+    })
+
+    it('should load article details with logged user id', async () => {
+      const { getArticleByIdSpy } = makeSut()
+
+      await screen.findByText(getArticleByIdSpy.data.title)
+
+      expect(getArticleByIdSpy.userId).toBe(mockAuthStore.user.id)
     })
 
     it('should don´t render the favourite toogle if user is not logged in', async () => {
@@ -253,6 +316,62 @@ describe('ArticlePage', () => {
       await screen.findByText('Artigo removido dos favoritos')
 
       expect(favouriteToogle.getAttribute('fill')).toBe('white')
+    })
+  })
+
+  describe('Comments', () => {
+    it('should list article comments', async () => {
+      const { getArticleByIdSpy, listCommentsByArticleIdSpy } = makeSut()
+
+      const comment = await screen.findByText(
+        listCommentsByArticleIdSpy.comments[0].content,
+      )
+
+      expect(comment).toBeTruthy()
+      expect(
+        screen.getByText(listCommentsByArticleIdSpy.comments[0].user.fullName),
+      ).toBeTruthy()
+      expect(listCommentsByArticleIdSpy.articleId).toBe(
+        getArticleByIdSpy.data.id,
+      )
+    })
+
+    it('should submit a comment for the current article when user is logged in', async () => {
+      const { getArticleByIdSpy, commentArticleSpy } = makeSut()
+
+      const commentInput = await screen.findByLabelText('Comentário')
+      fireEvent.change(commentInput, {
+        target: { value: 'This is a useful comment.' },
+      })
+
+      fireEvent.click(screen.getByRole('button', { name: 'Comentar' }))
+
+      await screen.findByText('Comentário publicado')
+
+      expect(commentArticleSpy.params).toEqual({
+        article_id: getArticleByIdSpy.data.id,
+        content: 'This is a useful comment.',
+      })
+      expect(commentArticleSpy.token).toBe(mockAuthStore.accessToken)
+    })
+
+    it('should not render the comment form when user is not logged in', async () => {
+      mockAuthStore = {
+        accessToken: '',
+        user: {
+          id: 0,
+          fullName: '',
+          email: '',
+        },
+      }
+      makeSut()
+
+      await screen.findByTestId('article-content')
+
+      expect(screen.queryByLabelText('Comentário')).not.toBeInTheDocument()
+      expect(
+        screen.queryByRole('button', { name: 'Comentar' }),
+      ).not.toBeInTheDocument()
     })
   })
 })

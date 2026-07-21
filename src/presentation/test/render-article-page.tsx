@@ -10,6 +10,8 @@ import type { GetArticleByIdSpy } from './mock-get-article-by-id'
 export const renderArticlePageWithRouter = (
   getArticleByIdSpy: GetArticleByIdSpy,
   favouriteArticleSpy: FavouriteArticleSpy,
+  listCommentsByArticleIdSpy?: any,
+  commentArticleSpy?: any,
 ) => {
   render(
     <MemoryRouter initialEntries={['/article/:id']}>
@@ -20,6 +22,8 @@ export const renderArticlePageWithRouter = (
             <ArticlePage
               getArticletById={getArticleByIdSpy}
               favouriteArticle={favouriteArticleSpy}
+              listCommentsByArticleId={listCommentsByArticleIdSpy}
+              commentArticle={commentArticleSpy}
             />
           }
         />

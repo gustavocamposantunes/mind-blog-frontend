@@ -1,12 +1,12 @@
-import type { FavouriteModel } from '@/domain/models'
-import type { FavouriteArticleUseCase } from '@/domain/usecases'
-
-import { normalizeFavourite } from './normalize-article'
+import type {
+  CommentArticleParams,
+  CommentArticleUseCase,
+} from '@/domain/usecases'
 
 import {
-  HttpStatusCode,
   type HttpPostClient,
   type HttpRemoteResponse,
+  HttpStatusCode,
 } from '@/data/protocols'
 import {
   InternalServerError,
@@ -14,7 +14,7 @@ import {
   UnexpectedError,
 } from '@/domain/errors'
 
-export class RemoteFavouriteArticle implements FavouriteArticleUseCase {
+export class RemoteCommentArticle implements CommentArticleUseCase {
   private readonly url: string
   private readonly httpClient: HttpPostClient
 
@@ -23,15 +23,13 @@ export class RemoteFavouriteArticle implements FavouriteArticleUseCase {
     this.httpClient = httpClient
   }
 
-  async favorite(
-    articleId: number,
+  async comment(
+    params: CommentArticleParams,
     token: string,
-  ): Promise<HttpRemoteResponse<FavouriteModel>> {
-    const { status, data } = await this.httpClient.post({
+  ): Promise<HttpRemoteResponse<void>> {
+    const { status } = await this.httpClient.post({
       url: this.url,
-      body: {
-        articleId,
-      },
+      body: params,
       headers: {
         ...(token && { Authorization: `Bearer ${token}` }),
       },
@@ -41,11 +39,12 @@ export class RemoteFavouriteArticle implements FavouriteArticleUseCase {
       case HttpStatusCode.created:
         return {
           statusCode: status,
-          data: normalizeFavourite(data as FavouriteModel),
+          data: undefined,
         }
       case HttpStatusCode.serverError:
         throw new InternalServerError()
       case HttpStatusCode.forbidden:
+      case HttpStatusCode.unauthorized:
         throw new InvalidCredentialsError()
       default:
         throw new UnexpectedError()

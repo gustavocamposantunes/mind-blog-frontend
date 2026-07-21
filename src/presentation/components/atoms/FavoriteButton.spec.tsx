@@ -16,6 +16,7 @@ type SutTypes = {
 const makeSut = (
   isFavorited = false,
   isCurrentUserAndLoggedIn = true,
+  articleId = 10,
 ): SutTypes => {
   const mockFavoriteById = vi
     .fn()
@@ -24,6 +25,7 @@ const makeSut = (
     })
   render(
     <FavoriteButton
+      articleId={articleId}
       isFavorited={isFavorited}
       favoriteById={mockFavoriteById}
       isCurrentUserAndLoggedIn={isCurrentUserAndLoggedIn}
@@ -71,12 +73,16 @@ describe('FavoriteButton', () => {
   })
 
   it('should call favoriteById on click', () => {
-    const { mockFavoriteById } = makeSut()
+    const articleId = 123
+    const { mockFavoriteById } = makeSut(false, true, articleId)
 
     const favoriteBtn = screen.getByTestId('favorite-btn')
     fireEvent.click(favoriteBtn)
 
-    expect(mockFavoriteById).toHaveBeenCalledOnce()
+    expect(mockFavoriteById).toHaveBeenCalledWith(
+      articleId,
+      expect.any(Function),
+    )
   })
 
   it('should not render if article is not from current user and logged in', () => {

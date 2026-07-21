@@ -87,4 +87,36 @@ describe('RemoteListArticles', () => {
     expect(response.statusCode).toBe(200)
     expect(response.data).toEqual(articleList)
   })
+
+  it('should normalize favoritesCount to favouriteCount for listed articles', async () => {
+    const { sut, httpClientSpy } = makeSut()
+    const articleList = {
+      articles: [
+        {
+          id: faker.number.int(),
+          title: faker.lorem.sentence(),
+          content: faker.lorem.paragraph(),
+          favoritesCount: 7,
+          favourited: true,
+        },
+      ],
+      limit: 10,
+      page: 1,
+      total: 1,
+    }
+    httpClientSpy.response = {
+      status: 200,
+      data: articleList,
+    }
+
+    const response = await sut.listAll(mockArticlesPaginationQueryParams())
+
+    expect(response.data?.articles[0]).toEqual({
+      id: articleList.articles[0].id,
+      title: articleList.articles[0].title,
+      content: articleList.articles[0].content,
+      favouriteCount: articleList.articles[0].favoritesCount,
+      favourited: true,
+    })
+  })
 })

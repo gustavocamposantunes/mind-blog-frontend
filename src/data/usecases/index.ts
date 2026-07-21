@@ -1,4 +1,5 @@
 export * from './article/remote-favourite-article'
+export * from './comment'
 export * from './auth/remote-authenticate-user'
 export * from './article/remote-get-article-by-id'
 export * from './article/remote-list-articles'
