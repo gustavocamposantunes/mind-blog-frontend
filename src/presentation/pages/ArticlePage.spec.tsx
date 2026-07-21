@@ -154,13 +154,18 @@ describe('ArticlePage', () => {
       )
     })
 
-    it('should render the favourite icon next to the author info', async () => {
+    it('should render the favourite icon on the right side of the author metadata row', async () => {
       makeSut()
 
-      const articleDate = await screen.findByTestId('published-at')
+      const metadataRow = await screen.findByTestId('article-meta-row')
+      const authorInfo = await screen.findByTestId('article-author-info')
+      const articleActions = await screen.findByTestId('article-actions')
       const favouriteCount = await screen.findByTestId('favourite-count')
 
-      expect(articleDate.parentElement).toContainElement(favouriteCount)
+      expect(metadataRow).toContainElement(authorInfo)
+      expect(metadataRow).toContainElement(articleActions)
+      expect(authorInfo).not.toContainElement(favouriteCount)
+      expect(articleActions).toContainElement(favouriteCount)
     })
 
     it('should load article details with logged user id', async () => {

@@ -46,18 +46,23 @@ export const Article: React.FC<IArticle> = ({
     <article>
       <div className="flex flex-col gap-4 pb-6 border-b border-[#cecece]">
         <h1 className="text-2xl lg:text-4xl">{title}</h1>
-        <span className="flex justify-between items-center">
-          <span className="flex gap-2 items-center">
+        <span
+          className="flex items-center justify-between gap-4"
+          data-testid="article-meta-row"
+        >
+          <span
+            className="flex min-w-0 items-center gap-2"
+            data-testid="article-author-info"
+          >
             {author ? (
               <>
                 <CustomAvatar
                   src={author.avatar}
                   fallbackText={getInitials(author.firstName)}
                 />
-                <p data-testid="published-at">
+                <p className="min-w-0" data-testid="published-at">
                   Por <b>{author.firstName}</b> - {formatterdDate}
                 </p>
-                {toogleFavouriteSlot}
               </>
             ) : (
               <p data-testid="published-at">
@@ -65,7 +70,13 @@ export const Article: React.FC<IArticle> = ({
               </p>
             )}
           </span>
-          {toogleEditSlot}
+          <span
+            className="flex shrink-0 items-center gap-3"
+            data-testid="article-actions"
+          >
+            {toogleFavouriteSlot}
+            {toogleEditSlot}
+          </span>
         </span>
       </div>
       <img className="mt-5 w-full" src={image} alt={title} />
