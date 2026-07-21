@@ -12,8 +12,6 @@ import {
   PublishedByInfo,
   Footer,
 } from '../components/molecules'
-import { ArticleListCard } from '../components/organism'
-import { Card } from '../components/ui/card'
 import { useResponsivePagination } from '../hooks'
 import {
   useArticlesList,
@@ -22,6 +20,7 @@ import {
 } from '../hooks'
 import { useAuthStore } from '../store'
 
+import type { ArticleModel } from '@/domain/models'
 import type {
   FavouriteArticleUseCase,
   ListArticlesUseCase,
@@ -29,72 +28,14 @@ import type {
 
 import { CustomPagination } from '@/presentation/components/organism'
 import { PageTemplate } from '@/presentation/components/templates'
+import { ResponsiveArticleCard } from '@/presentation/pages/components'
 
 type ArticlessPageProps = {
   listArticles: ListArticlesUseCase
   favouriteArticle: FavouriteArticleUseCase
 }
 
-// Extracted categories - in a real app, this would come from an API
 const ARTICLE_CATEGORIES = ['IA', 'DevOps', 'Desenvolvimento', 'Tecnologia']
-
-type FeaturedArticleCardProps = {
-  id: string
-  title: string
-  category?: string
-  image?: string
-  excerpt: string
-  onClick(): void
-  footer: React.ReactNode
-}
-
-const FeaturedArticleCard: React.FC<FeaturedArticleCardProps> = ({
-  id,
-  title,
-  category,
-  image,
-  excerpt,
-  onClick,
-  footer,
-}) => {
-  return (
-    <Card
-      onClick={onClick}
-      data-testid={`custom-card-${id}`}
-      className="group h-full cursor-pointer overflow-hidden rounded-3xl border-border bg-card/70 shadow-lg shadow-black/10 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl"
-    >
-      <div className="flex h-full flex-col overflow-hidden">
-        <div className="h-48 w-full overflow-hidden bg-muted">
-          {image ? (
-            <img
-              src={image}
-              alt={title}
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          ) : null}
-        </div>
-
-        <div className="flex flex-1 flex-col gap-4 p-5">
-          {category ? (
-            <span className="text-xs font-semibold uppercase tracking-wide text-primary/80">
-              {category}
-            </span>
-          ) : null}
-
-          <h3 className="line-clamp-2 text-xl font-semibold leading-tight text-foreground">
-            {title}
-          </h3>
-
-          <p className="line-clamp-3 text-sm leading-6 text-foreground/70">
-            {excerpt}
-          </p>
-
-          <div className="mt-auto text-xs text-foreground/70">{footer}</div>
-        </div>
-      </div>
-    </Card>
-  )
-}
 
 export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   listArticles,
@@ -148,22 +89,21 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
 
   const isLoggedIn = !!accessToken
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const renderArticleCard = (props: any) => {
-    const isCurrentUser = user.id === props.author.id
-    const description = props.resume ?? props.content
+  const renderArticleCard = (article: ArticleModel) => {
+    const isCurrentUser = user.id === article.author.id
+    const description = article.resume ?? article.content
 
     const footer = [
       <PublishedByInfo
-        avatar={props.author.image}
-        author={props.author.fullName}
-        publishedAt={props.publishedAt}
-        key={props.id + props.author.fullName + 'info'}
+        avatar={article.author.image}
+        author={article.author.fullName}
+        publishedAt={article.publishedAt}
+        key={article.id + article.author.fullName + 'info'}
       />,
-      <span className="flex gap-2" key={props.id + 'actions'}>
+      <span className="flex gap-2" key={article.id + 'actions'}>
         <FavoriteButton
-          articleId={props.id}
-          isFavorited={props.favourited}
+          articleId={article.id}
+          isFavorited={article.favourited}
           isCurrentUserAndLoggedIn={!isCurrentUser && isLoggedIn}
           favoriteById={favoriteById}
         />
@@ -171,31 +111,22 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
     ]
 
     const commonProps = {
-      id: String(props.id),
-      headerImageSrc: props.image,
-      title: props.title,
+      id: String(article.id),
+      headerImageSrc: article.image,
+      title: article.title,
       description,
-      category: props.category,
+      category: article.category,
       onClick: () => {
-        navigate(`/articles/${props.id}`)
+        navigate(`/articles/${article.id}`)
       },
       footer,
     }
 
-    if (currentView === 'list') {
-      return <ArticleListCard key={props.id} {...commonProps} />
-    }
-
     return (
-      <FeaturedArticleCard
-        key={props.id}
-        id={commonProps.id}
-        title={commonProps.title}
-        image={props.image}
-        excerpt={description}
-        category={commonProps.category}
-        onClick={commonProps.onClick}
-        footer={commonProps.footer}
+      <ResponsiveArticleCard
+        key={article.id}
+        {...commonProps}
+        view={currentView}
       />
     )
   }

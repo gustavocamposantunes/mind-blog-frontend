@@ -7,7 +7,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { FavouriteSkeleton } from '../components/atoms'
 import { PublishedByInfo } from '../components/molecules'
-import { Card } from '../components/ui/card'
 import { Button } from '../components/ui/button'
 import { Skeleton } from '../components/ui/skeleton'
 import { useArticlesList, useResponsiveLimit } from '../hooks'
@@ -15,22 +14,12 @@ import { useArticlesList, useResponsiveLimit } from '../hooks'
 import type { ListArticlesUseCase } from '@/domain/usecases'
 
 import { HomeTemplate } from '@/presentation/components/templates'
+import { FeaturedArticleCard } from '@/presentation/pages/components'
 
 import 'swiper/css'
 
 type HomePageProps = {
   listArticles: ListArticlesUseCase
-}
-
-type HomeArticleCardProps = {
-  id: string
-  title: string
-  category?: string
-  image?: string
-  excerpt: string
-  onClick(): void
-  footer: React.ReactNode
-  testId: string
 }
 
 const MAX_EXCERPT_LENGTH = 120
@@ -43,56 +32,6 @@ const getHomeArticleExcerpt = (text: string) => {
   }
 
   return `${normalized.slice(0, MAX_EXCERPT_LENGTH).trimEnd()}...`
-}
-
-const HomeArticleCard: React.FC<HomeArticleCardProps> = ({
-  id,
-  title,
-  category,
-  image,
-  excerpt,
-  onClick,
-  footer,
-  testId,
-}) => {
-  return (
-    <Card
-      key={id}
-      onClick={onClick}
-      data-testid={testId}
-      className="group h-full cursor-pointer overflow-hidden rounded-3xl border-border bg-card/70 shadow-lg shadow-black/10 transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl"
-    >
-      <div className="flex h-full flex-col overflow-hidden">
-        <div className="h-48 w-full overflow-hidden bg-muted">
-          {image ? (
-            <img
-              src={image}
-              alt={title}
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          ) : null}
-        </div>
-
-        <div className="flex flex-1 flex-col gap-4 p-5">
-          {category ? (
-            <span className="text-xs font-semibold uppercase tracking-wide text-primary/80">
-              {category}
-            </span>
-          ) : null}
-
-          <h3 className="line-clamp-2 text-xl font-semibold leading-tight text-foreground">
-            {title}
-          </h3>
-
-          <p className="line-clamp-3 text-sm leading-6 text-foreground/70">
-            {excerpt}
-          </p>
-
-          <div className="mt-auto text-xs text-foreground/70">{footer}</div>
-        </div>
-      </div>
-    </Card>
-  )
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
@@ -196,7 +135,7 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {dataFeatured?.articles.map((article) => (
-              <HomeArticleCard
+              <FeaturedArticleCard
                 key={article.id}
                 id={String(article.id)}
                 testId={`home-featured-article-card-${article.id}`}
@@ -249,7 +188,7 @@ export const HomePage: React.FC<HomePageProps> = ({ listArticles }) => {
           >
             {dataRecent?.articles.map((article) => (
               <SwiperSlide key={article.id}>
-                <HomeArticleCard
+                <FeaturedArticleCard
                   id={String(article.id)}
                   testId={`home-recent-article-card-${article.id}`}
                   image={article.image}
