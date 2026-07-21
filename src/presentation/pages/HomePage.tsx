@@ -5,15 +5,15 @@ import { toast } from 'react-toastify'
 import { Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import { FavouriteSkeleton } from '../components/atoms'
-import { PublishedByInfo } from '../components/molecules'
+import { FavouriteSkeleton } from '../components/atoms/FavouriteSkeleton'
+import { PublishedByInfo } from '../components/molecules/PublishedByInfo'
 import { Button } from '../components/ui/button'
 import { Skeleton } from '../components/ui/skeleton'
 import { useArticlesList, useResponsiveLimit } from '../hooks'
 
 import type { ListArticlesUseCase } from '@/domain/usecases'
 
-import { HomeTemplate } from '@/presentation/components/templates'
+import { HomeTemplate } from '@/presentation/components/templates/HomeTemplate'
 import { FeaturedArticleCard } from '@/presentation/pages/components'
 
 import 'swiper/css'

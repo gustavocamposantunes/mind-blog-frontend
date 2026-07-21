@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { ProfileTemplate } from '../components/templates'
+import { ProfileTemplate } from '../components/templates/ProfileTemplate'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { useGetProfile, useUpdateProfile } from '../hooks'

@@ -2,16 +2,12 @@ import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import {
-  ArticlesViewToggle,
-  FavoriteButton,
-  CustomSkeleton,
-} from '../components/atoms'
-import {
-  ArticlesFilters,
-  PublishedByInfo,
-  Footer,
-} from '../components/molecules'
+import { ArticlesViewToggle } from '../components/atoms/ArticlesViewToggle'
+import { CustomSkeleton } from '../components/atoms/CustomSkeleton'
+import { FavoriteButton } from '../components/atoms/FavoriteButton'
+import { ArticlesFilters } from '../components/molecules/ArticlesFilters'
+import { Footer } from '../components/molecules/Footer'
+import { PublishedByInfo } from '../components/molecules/PublishedByInfo'
 import { useResponsivePagination } from '../hooks'
 import {
   useArticlesList,
@@ -26,8 +22,8 @@ import type {
   ListArticlesUseCase,
 } from '@/domain/usecases'
 
-import { CustomPagination } from '@/presentation/components/organism'
-import { PageTemplate } from '@/presentation/components/templates'
+import { CustomPagination } from '@/presentation/components/organism/CustomPagination'
+import { PageTemplate } from '@/presentation/components/templates/PageTemplate'
 import { ResponsiveArticleCard } from '@/presentation/pages/components'
 
 type ArticlessPageProps = {

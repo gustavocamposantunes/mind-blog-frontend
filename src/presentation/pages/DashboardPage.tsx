@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { DeleteArticleModal, Footer } from '../components/molecules'
+import { DeleteArticleModal } from '../components/molecules/DeleteArticleModal'
+import { Footer } from '../components/molecules/Footer'
 import { useResponsivePagination } from '../hooks'
 import { useArticlesFilters, useArticlesList, useDeleteArticle } from '../hooks'
 import { useAuthStore } from '../store'
@@ -14,7 +15,7 @@ import {
 import type { ListArticlesUseCase } from '@/domain/usecases'
 import type { DeleteArticleByIdUseCase } from '@/domain/usecases/article/delete-article-by-id.usecase'
 
-import { PageTemplate } from '@/presentation/components/templates'
+import { PageTemplate } from '@/presentation/components/templates/PageTemplate'
 
 type DashboardPageProps = {
   listArticles: ListArticlesUseCase

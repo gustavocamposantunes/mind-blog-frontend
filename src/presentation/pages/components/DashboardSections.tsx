@@ -1,14 +1,15 @@
 import { PencilIcon, TrashIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-import { ArticlesViewToggle, CustomSkeleton } from '../../components/atoms'
-import { PublishedByInfo } from '../../components/molecules'
-import { ArticleListCard, CustomCard } from '../../components/organism'
+import { ArticlesViewToggle } from '../../components/atoms/ArticlesViewToggle'
+import { CustomSkeleton } from '../../components/atoms/CustomSkeleton'
+import { PublishedByInfo } from '../../components/molecules/PublishedByInfo'
+import { ArticleListCard } from '../../components/organism/ArticleListCard'
+import { CustomCard } from '../../components/organism/CustomCard'
+import { CustomPagination } from '../../components/organism/CustomPagination'
 import { Button } from '../../components/ui/button'
 
 import type { ArticleModel } from '@/domain/models'
-
-import { CustomPagination } from '@/presentation/components/organism'
 
 type ViewMode = 'grid' | 'list'
 

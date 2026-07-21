@@ -13,7 +13,7 @@ import { parseTags } from '../utils/parse-tags'
 
 import type { RegisterArticleUseCase } from '@/domain/usecases'
 
-import { PageTemplate } from '@/presentation/components/templates'
+import { PageTemplate } from '@/presentation/components/templates/PageTemplate'
 import { Label } from '@/presentation/components/ui/label'
 import { Textarea } from '@/presentation/components/ui/textarea'
 

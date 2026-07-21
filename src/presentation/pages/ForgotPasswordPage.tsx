@@ -1,7 +1,7 @@
 import { Mail } from 'lucide-react'
 
-import { AuthForm } from '../components/atoms'
-import { TextField } from '../components/molecules'
+import { AuthForm } from '../components/atoms/AuthForm'
+import { TextField } from '../components/molecules/TextField'
 import { ForgotPasswordTemplate } from '../components/templates/ForgotPasswordTemplate'
 
 import { Button } from '@/presentation/components/ui/button'

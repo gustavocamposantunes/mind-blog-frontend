@@ -2,8 +2,8 @@ import { Menu, X } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-import { BrandLogo } from '../atoms'
 import ThemeToggle from '../atoms/ThemeToggle'
+import { BrandLogo } from '../atoms/BrandLogo'
 
 import { useResponsiveLimit } from '@/presentation/hooks/useResponsiveLimit'
 

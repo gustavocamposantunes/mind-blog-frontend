@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import { BrandLogo } from '../atoms'
+import { BrandLogo } from '../atoms/BrandLogo'
 
 export const Footer: React.FC = () => {
   return (

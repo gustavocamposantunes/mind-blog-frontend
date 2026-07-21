@@ -1,4 +1,4 @@
-import { Footer } from '../molecules'
+import { Footer } from '../molecules/Footer'
 
 import { PageTemplate } from './PageTemplate'
 

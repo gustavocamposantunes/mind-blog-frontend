@@ -1,4 +1,4 @@
-import { NewArticle } from '../molecules'
+import { NewArticle } from '../molecules/NewArticle'
 import { Skeleton } from '../ui/skeleton'
 
 import type { New } from '@/domain/models'

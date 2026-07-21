@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import { AuthSection } from '../molecules'
+import { AuthSection } from '../molecules/AuthSection'
 import { Separator } from '../ui/separator'
 
 import { AuthTemplate } from './AuthTemplate'

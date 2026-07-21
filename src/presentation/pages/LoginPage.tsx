@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { AuthForm } from '../components/atoms/AuthForm'
-import { TextField } from '../components/molecules'
+import { TextField } from '../components/molecules/TextField'
 import { LoginTemplate } from '../components/templates/LoginTemplate'
 import { useAuthenticateUser } from '../hooks'
 import { useAuthStore } from '../store/auth-store'

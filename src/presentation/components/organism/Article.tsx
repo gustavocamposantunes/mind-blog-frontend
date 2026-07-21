@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 
-import { CustomAvatar } from '../molecules'
+import { CustomAvatar } from '../molecules/CustomAvatar'
 
 import { MarkdownRenderer } from './MarkdownRenderer'
 

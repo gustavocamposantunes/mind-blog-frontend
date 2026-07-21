@@ -1,6 +1,6 @@
 import { ChevronDown, LogOut, LayoutDashboard, Settings } from 'lucide-react'
 
-import { CustomAvatar } from '../molecules'
+import { CustomAvatar } from '../molecules/CustomAvatar'
 import {
   DropdownMenu,
   DropdownMenuContent,

@@ -1,4 +1,5 @@
-import { CustomSkeleton, ErrorMessage } from '../atoms'
+import { CustomSkeleton } from '../atoms/CustomSkeleton'
+import { ErrorMessage } from '../atoms/ErrorMessage'
 
 import { PageTemplate } from './PageTemplate'
 

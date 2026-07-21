@@ -1,5 +1,5 @@
-import { ErrorMessage } from '../atoms'
-import { Footer } from '../molecules'
+import { ErrorMessage } from '../atoms/ErrorMessage'
+import { Footer } from '../molecules/Footer'
 
 import { PageTemplate } from './PageTemplate'
 

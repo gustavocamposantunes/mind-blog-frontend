@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 
-import { BrandLogo } from '../atoms'
-import { Footer, Header } from '../molecules'
+import { BrandLogo } from '../atoms/BrandLogo'
+import { Footer } from '../molecules/Footer'
+import { Header } from '../molecules/Header'
 import { Separator } from '../ui/separator'
 
 import type { ReactNode } from 'react'

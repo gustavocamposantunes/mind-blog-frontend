@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom'
 import { Autoplay, Parallax } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import { ErrorMessage } from '../atoms'
-import { PublishedByInfo } from '../molecules'
+import { ErrorMessage } from '../atoms/ErrorMessage'
+import { PublishedByInfo } from '../molecules/PublishedByInfo'
 import { Button } from '../ui/button'
 import { Skeleton } from '../ui/skeleton'
 

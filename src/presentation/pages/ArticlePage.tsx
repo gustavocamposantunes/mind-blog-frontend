@@ -2,8 +2,8 @@ import { Heart, PencilIcon } from 'lucide-react'
 import { useState, type FormEvent, type ReactNode } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-import { Article } from '../components/organism'
-import { CustomAvatar } from '../components/molecules'
+import { CustomAvatar } from '../components/molecules/CustomAvatar'
+import { Article } from '../components/organism/Article'
 import { Button } from '../components/ui/button'
 import { Textarea } from '../components/ui/textarea'
 import { useComments, useFavouriteArticle, useGetArticleById } from '../hooks'
@@ -18,7 +18,7 @@ import type {
   ListCommentsByArticleIdUseCase,
 } from '@/domain/usecases'
 
-import { ArticleTemplate } from '@/presentation/components/templates'
+import { ArticleTemplate } from '@/presentation/components/templates/ArticleTemplate'
 
 type ArticlePageProps = {
   getArticletById: GetArticleByIdUseCase

@@ -1,4 +1,4 @@
-import { BrandLogo } from '../atoms'
+import { BrandLogo } from '../atoms/BrandLogo'
 
 import type { ReactNode } from 'react'
 

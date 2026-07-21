@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 
-import { ErrorMessage, FavouriteSkeleton } from '../atoms'
-import { PublishedByInfo } from '../molecules'
+import { ErrorMessage } from '../atoms/ErrorMessage'
+import { FavouriteSkeleton } from '../atoms/FavouriteSkeleton'
+import { PublishedByInfo } from '../molecules/PublishedByInfo'
 
 import { CustomCard } from './CustomCard'
 

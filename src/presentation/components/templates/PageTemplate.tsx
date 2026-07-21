@@ -1,7 +1,7 @@
 import { useNavigate, Link } from 'react-router-dom'
 
-import { Header } from '../molecules'
-import { UserDropdownMenu } from '../organism'
+import { Header } from '../molecules/Header'
+import { UserDropdownMenu } from '../organism/UserDropDownMenu'
 import { Button } from '../ui/button'
 
 import type { ReactNode } from 'react'

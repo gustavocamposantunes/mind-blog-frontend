@@ -1,4 +1,4 @@
-import { ArticleListCard } from '@/presentation/components/organism'
+import { ArticleListCard } from '@/presentation/components/organism/ArticleListCard'
 import { Card } from '@/presentation/components/ui/card'
 
 import type { ReactNode } from 'react'
