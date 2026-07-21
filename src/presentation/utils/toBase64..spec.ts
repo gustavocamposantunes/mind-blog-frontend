@@ -1,26 +1,27 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 import { toBase64 } from './toBase64'
 
+type FileReaderMock = {
+  readAsDataURL: (file: File) => void
+  onload: ((event: ProgressEvent<FileReader>) => void) | null
+  onerror: ((event: ProgressEvent<FileReader>) => void) | null
+  result: string | ArrayBuffer | null
+}
+
 describe('toBase64', () => {
-  let mockFileReader: {
-    readAsDataURL: (file: File) => void
-    onload: ((this: FileReader, ev: ProgressEvent<FileReader>) => void) | null
-    onerror: ((this: FileReader, ev: ProgressEvent<FileReader>) => void) | null
-    result: string | ArrayBuffer | null
-  }
+  let mockFileReader: FileReaderMock
 
   beforeEach(() => {
     mockFileReader = {
-      readAsDataURL: vi.fn(function (this: any, _file: File) {
+      readAsDataURL: vi.fn(function (this: FileReaderMock, file: File) {
+        void file
         // Simula comportamento assíncrono
         setTimeout(() => {
           this.result = 'data:image/png;base64,ZmFrZS1pbWFnZS1kYXRh'
           this.onload?.({
             target: { result: this.result },
-          } as ProgressEvent<FileReader>)
+          } as unknown as ProgressEvent<FileReader>)
         }, 0)
       }),
       onload: null,
@@ -47,9 +48,11 @@ describe('toBase64', () => {
   it('should reject if file reading fails', async () => {
     const file = new File(['fail'], 'fail.png', { type: 'image/png' })
 
-    mockFileReader.readAsDataURL = vi.fn(function (this: any) {
+    mockFileReader.readAsDataURL = vi.fn(function (this: FileReaderMock) {
       setTimeout(() => {
-        this.onerror?.({ target: { error: new Error('read error') } } as any)
+        this.onerror?.({
+          target: { error: new Error('read error') },
+        } as unknown as ProgressEvent<FileReader>)
       }, 0)
     })
 
