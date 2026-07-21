@@ -13,7 +13,7 @@ type MappedHttpErrorOptions = {
 }
 
 export const buildRemoteResponse = <Data>(
-  statusCode: HttpStatusCode,
+  statusCode: number,
   data: Data,
 ): HttpRemoteResponse<Data> => ({
   statusCode,

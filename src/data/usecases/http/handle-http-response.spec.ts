@@ -21,6 +21,13 @@ describe('HTTP use case response helpers', () => {
     })
   })
 
+  it('builds a remote response with numeric statusCode and data', () => {
+    expect(buildRemoteResponse(202, { id: 1 })).toEqual({
+      statusCode: 202,
+      data: { id: 1 },
+    })
+  })
+
   it('maps server errors', () => {
     expect(() => throwMappedHttpError(HttpStatusCode.serverError)).toThrow(
       InternalServerError,
