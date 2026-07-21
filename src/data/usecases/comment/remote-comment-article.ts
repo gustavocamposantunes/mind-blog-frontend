@@ -8,11 +8,7 @@ import {
   type HttpRemoteResponse,
   HttpStatusCode,
 } from '@/data/protocols'
-import {
-  InternalServerError,
-  InvalidCredentialsError,
-  UnexpectedError,
-} from '@/domain/errors'
+import { buildRemoteResponse, throwMappedHttpError } from '@/data/usecases/http'
 
 export class RemoteCommentArticle implements CommentArticleUseCase {
   private readonly url: string
@@ -35,19 +31,10 @@ export class RemoteCommentArticle implements CommentArticleUseCase {
       },
     })
 
-    switch (status) {
-      case HttpStatusCode.created:
-        return {
-          statusCode: status,
-          data: undefined,
-        }
-      case HttpStatusCode.serverError:
-        throw new InternalServerError()
-      case HttpStatusCode.forbidden:
-      case HttpStatusCode.unauthorized:
-        throw new InvalidCredentialsError()
-      default:
-        throw new UnexpectedError()
+    if (status === HttpStatusCode.created) {
+      return buildRemoteResponse(status, undefined)
     }
+
+    return throwMappedHttpError(status, { credentials: true })
   }
 }

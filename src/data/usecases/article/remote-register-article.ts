@@ -9,7 +9,7 @@ import {
   type HttpPostClient,
   type HttpRemoteResponse,
 } from '@/data/protocols'
-import { InternalServerError, UnexpectedError } from '@/domain/errors'
+import { buildRemoteResponse, throwMappedHttpError } from '@/data/usecases/http'
 
 export class RemoteRegisterArticle implements RegisterArticleUseCase {
   private readonly url: string
@@ -32,16 +32,10 @@ export class RemoteRegisterArticle implements RegisterArticleUseCase {
       },
     })
 
-    switch (status) {
-      case HttpStatusCode.created:
-        return {
-          statusCode: status,
-          data: data as ArticleModel,
-        }
-      case HttpStatusCode.serverError:
-        throw new InternalServerError()
-      default:
-        throw new UnexpectedError()
+    if (status === HttpStatusCode.created) {
+      return buildRemoteResponse(status, data as ArticleModel)
     }
+
+    return throwMappedHttpError(status)
   }
 }

@@ -8,11 +8,7 @@ import {
   type HttpRemoteResponse,
   HttpStatusCode,
 } from '@/data/protocols'
-import {
-  InternalServerError,
-  NotFoundError,
-  UnexpectedError,
-} from '@/domain/errors'
+import { buildRemoteResponse, throwMappedHttpError } from '@/data/usecases/http'
 
 export class RemoteListArticles implements ListArticlesUseCase {
   private readonly url: string
@@ -30,18 +26,13 @@ export class RemoteListArticles implements ListArticlesUseCase {
       queryParams: params,
     })
 
-    switch (status) {
-      case HttpStatusCode.ok:
-        return {
-          statusCode: status,
-          data: normalizeArticleList(data as ArticleListModel),
-        }
-      case HttpStatusCode.notFound:
-        throw new NotFoundError()
-      case HttpStatusCode.serverError:
-        throw new InternalServerError()
-      default:
-        throw new UnexpectedError()
+    if (status === HttpStatusCode.ok) {
+      return buildRemoteResponse(
+        status,
+        normalizeArticleList(data as ArticleListModel),
+      )
     }
+
+    return throwMappedHttpError(status, { notFound: true })
   }
 }

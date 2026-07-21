@@ -6,11 +6,7 @@ import {
   type HttpRemoteResponse,
   HttpStatusCode,
 } from '@/data/protocols'
-import {
-  InternalServerError,
-  NotFoundError,
-  UnexpectedError,
-} from '@/domain/errors'
+import { buildRemoteResponse, throwMappedHttpError } from '@/data/usecases/http'
 
 export class RemoteListCommentsByArticleId implements ListCommentsByArticleIdUseCase {
   private readonly url: string
@@ -28,18 +24,10 @@ export class RemoteListCommentsByArticleId implements ListCommentsByArticleIdUse
       url: `${this.url}/${articleId}/comments`,
     })
 
-    switch (status) {
-      case HttpStatusCode.ok:
-        return {
-          statusCode: status,
-          data: data as CommentModel[],
-        }
-      case HttpStatusCode.notFound:
-        throw new NotFoundError()
-      case HttpStatusCode.serverError:
-        throw new InternalServerError()
-      default:
-        throw new UnexpectedError()
+    if (status === HttpStatusCode.ok) {
+      return buildRemoteResponse(status, data as CommentModel[])
     }
+
+    return throwMappedHttpError(status, { notFound: true })
   }
 }

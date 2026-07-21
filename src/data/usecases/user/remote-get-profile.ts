@@ -7,7 +7,7 @@ import {
 import type { UserModel } from '@/domain/models'
 import type { GetProfileUseCase } from '@/domain/usecases'
 
-import { InternalServerError, UnexpectedError } from '@/domain/errors'
+import { buildRemoteResponse, throwMappedHttpError } from '@/data/usecases/http'
 
 export class RemoteGetProfile implements GetProfileUseCase {
   private readonly url: string
@@ -26,16 +26,10 @@ export class RemoteGetProfile implements GetProfileUseCase {
       },
     })
 
-    switch (status) {
-      case HttpStatusCode.ok:
-        return Promise.resolve({
-          statusCode: status,
-          data: data as UserModel,
-        })
-      case HttpStatusCode.serverError:
-        throw new InternalServerError()
-      default:
-        throw new UnexpectedError()
+    if (status === HttpStatusCode.ok) {
+      return buildRemoteResponse(status, data as UserModel)
     }
+
+    return throwMappedHttpError(status)
   }
 }
