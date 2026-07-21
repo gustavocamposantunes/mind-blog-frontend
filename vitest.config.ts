@@ -20,6 +20,7 @@ export default defineConfig({
         'src/domain/models',
         'src/domain/usecases',
         'src/data/protocols/cache',
+        'src/data/protocols/http',
         'src/data/protocols/http/mock-http-response.ts',
         '**/EditArticlePage.tsx',
         'src/presentation/hooks/useGetNews.ts',
