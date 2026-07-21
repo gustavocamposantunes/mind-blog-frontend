@@ -134,6 +134,25 @@ describe('ProfilePage', () => {
       await screen.findByText('Nenhuma alteração realizada, atualize o perfil!')
     })
 
+    it('should ignore submit when profile data is not loaded', async () => {
+      const getProfileSpy = new GetProfileSpy()
+      const updateProfileSpy = new UpdateProfileSpy()
+
+      vi.spyOn(getProfileSpy, 'getProfile').mockResolvedValueOnce({
+        statusCode: 200,
+        data: undefined,
+      })
+      vi.spyOn(updateProfileSpy, 'update')
+
+      makeSut(getProfileSpy, updateProfileSpy)
+
+      submitForm()
+
+      await waitFor(() => {
+        expect(updateProfileSpy.update).not.toHaveBeenCalled()
+      })
+    })
+
     it('should render a toast.error if update fails', async () => {
       const updateProfileSpy = new UpdateProfileSpy()
 

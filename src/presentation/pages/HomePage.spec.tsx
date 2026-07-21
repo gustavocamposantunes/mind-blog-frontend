@@ -170,5 +170,18 @@ describe('HomePage', () => {
 
       expect(mockNavigate).toHaveBeenCalledWith(`/articles/${articleId}`)
     })
+
+    it('should navigate to the article page when a recent card is clicked', async () => {
+      const { listArticlesSpy } = makeSut()
+
+      const articleId = listArticlesSpy.articlesList.articles[0].id
+      const recentCard = await screen.findByTestId(
+        `home-recent-article-card-${articleId}`,
+      )
+
+      recentCard.click()
+
+      expect(mockNavigate).toHaveBeenCalledWith(`/articles/${articleId}`)
+    })
   })
 })

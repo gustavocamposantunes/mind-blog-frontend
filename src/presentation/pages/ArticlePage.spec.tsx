@@ -372,6 +372,19 @@ describe('ArticlePage', () => {
       expect(commentArticleSpy.token).toBe(mockAuthStore.accessToken)
     })
 
+    it('should ignore comment submit when content has less than five characters', async () => {
+      const { commentArticleSpy } = makeSut()
+
+      const commentInput = await screen.findByLabelText('Comentário')
+      fireEvent.change(commentInput, {
+        target: { value: 'Hey' },
+      })
+
+      fireEvent.submit(commentInput.closest('form') as HTMLFormElement)
+
+      expect(commentArticleSpy.params).toBeUndefined()
+    })
+
     it('should not render the comment form when user is not logged in', async () => {
       mockAuthStore = {
         accessToken: '',
