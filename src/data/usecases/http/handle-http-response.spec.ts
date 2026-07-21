@@ -35,6 +35,12 @@ describe('HTTP use case response helpers', () => {
     ).toThrow(NotFoundError)
   })
 
+  it('maps not found errors to unexpected errors when not enabled', () => {
+    expect(() => throwMappedHttpError(HttpStatusCode.notFound)).toThrow(
+      UnexpectedError,
+    )
+  })
+
   it('maps unauthorized and forbidden errors when enabled', () => {
     expect(() =>
       throwMappedHttpError(HttpStatusCode.unauthorized, {
@@ -47,6 +53,16 @@ describe('HTTP use case response helpers', () => {
         credentials: true,
       }),
     ).toThrow(InvalidCredentialsError)
+  })
+
+  it('maps unauthorized and forbidden errors to unexpected errors when not enabled', () => {
+    expect(() => throwMappedHttpError(HttpStatusCode.unauthorized)).toThrow(
+      UnexpectedError,
+    )
+
+    expect(() => throwMappedHttpError(HttpStatusCode.forbidden)).toThrow(
+      UnexpectedError,
+    )
   })
 
   it('maps unknown status codes to unexpected errors', () => {
