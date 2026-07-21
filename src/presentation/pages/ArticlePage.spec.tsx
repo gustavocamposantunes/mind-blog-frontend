@@ -62,7 +62,10 @@ class CommentArticleSpy {
   params?: { article_id: number; content: string }
   token?: string
 
-  async comment(params: { article_id: number; content: string }, token: string) {
+  async comment(
+    params: { article_id: number; content: string },
+    token: string,
+  ) {
     this.params = params
     this.token = token
 

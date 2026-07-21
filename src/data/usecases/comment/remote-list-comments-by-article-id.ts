@@ -12,9 +12,7 @@ import {
   UnexpectedError,
 } from '@/domain/errors'
 
-export class RemoteListCommentsByArticleId
-  implements ListCommentsByArticleIdUseCase
-{
+export class RemoteListCommentsByArticleId implements ListCommentsByArticleIdUseCase {
   private readonly url: string
   private readonly httpClient: HttpGetClient
 

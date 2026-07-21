@@ -6,12 +6,16 @@ import { render } from './test-utils'
 
 import type { FavouriteArticleSpy } from './mock-favourite-article'
 import type { GetArticleByIdSpy } from './mock-get-article-by-id'
+import type {
+  CommentArticleUseCase,
+  ListCommentsByArticleIdUseCase,
+} from '@/domain/usecases'
 
 export const renderArticlePageWithRouter = (
   getArticleByIdSpy: GetArticleByIdSpy,
   favouriteArticleSpy: FavouriteArticleSpy,
-  listCommentsByArticleIdSpy?: any,
-  commentArticleSpy?: any,
+  listCommentsByArticleIdSpy: ListCommentsByArticleIdUseCase,
+  commentArticleSpy: CommentArticleUseCase,
 ) => {
   render(
     <MemoryRouter initialEntries={['/article/:id']}>
