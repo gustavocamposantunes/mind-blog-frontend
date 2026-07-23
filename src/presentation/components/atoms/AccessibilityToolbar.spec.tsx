@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { AccessibilityToolbar } from './AccessibilityToolbar'
 
@@ -15,6 +15,10 @@ describe('AccessibilityToolbar', () => {
     localStorage.clear()
     document.documentElement.className = ''
     document.body.innerHTML = ''
+    Object.defineProperty(window, 'VLibras', {
+      configurable: true,
+      value: undefined,
+    })
   })
 
   it('should render the accessibility actions', () => {
@@ -76,5 +80,29 @@ describe('AccessibilityToolbar', () => {
 
     expect(scripts).toHaveLength(1)
     expect(document.querySelector('[vw]')).toBeInTheDocument()
+  })
+
+  it('should initialize and open the VLibras widget when the script loads', () => {
+    render(<AccessibilityToolbar />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Ativar VLibras' }))
+
+    const widget = vi.fn()
+    Object.defineProperty(window, 'VLibras', {
+      configurable: true,
+      value: { Widget: widget },
+    })
+
+    const accessButton =
+      document.querySelector<HTMLElement>('[vw-access-button]')
+    const accessButtonClick = vi.spyOn(accessButton!, 'click')
+    const script = document.querySelector<HTMLScriptElement>(
+      'script[src="https://vlibras.gov.br/app/vlibras-plugin.js"]',
+    )
+
+    script?.dispatchEvent(new Event('load'))
+
+    expect(widget).toHaveBeenCalledWith('https://vlibras.gov.br/app')
+    expect(accessButtonClick).toHaveBeenCalled()
   })
 })

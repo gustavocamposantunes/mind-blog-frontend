@@ -47,8 +47,10 @@ const applyColorVisionMode = (mode: ColorVisionMode) => {
 }
 
 const ensureVlibrasContainer = () => {
-  if (document.querySelector('[vw]')) {
-    return
+  const existingContainer = document.querySelector<HTMLElement>('[vw]')
+
+  if (existingContainer) {
+    return existingContainer
   }
 
   const container = document.createElement('div')
@@ -68,13 +70,21 @@ const ensureVlibrasContainer = () => {
   pluginWrapper.appendChild(pluginTopWrapper)
   container.append(accessButton, pluginWrapper)
   document.body.appendChild(container)
+
+  return container
 }
 
 const initializeVlibras = () => {
   const vlibrasWindow = window as VlibrasWindow
+  const container = ensureVlibrasContainer()
 
   if (vlibrasWindow.VLibras?.Widget) {
-    new vlibrasWindow.VLibras.Widget('https://vlibras.gov.br/app')
+    if (container.dataset.vlibrasWidgetInitialized !== 'true') {
+      new vlibrasWindow.VLibras.Widget('https://vlibras.gov.br/app')
+      container.dataset.vlibrasWidgetInitialized = 'true'
+    }
+
+    container.querySelector<HTMLElement>('[vw-access-button]')?.click()
   }
 }
 
