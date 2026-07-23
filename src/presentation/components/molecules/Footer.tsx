@@ -99,7 +99,7 @@ export const Footer: React.FC = () => {
       </div>
 
       <div className="mt-8 border-t border-border pt-8 text-center text-sm text-foreground/60">
-        <p>&copy; 2025 Mind Blog. Todos os direitos reservados.</p>
+        <p>&copy; 2026 Mind Blog. Todos os direitos reservados.</p>
       </div>
     </footer>
   )
