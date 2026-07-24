@@ -14,7 +14,7 @@ import {
   useArticlesFilters,
   useFavouriteArticle,
 } from '../hooks'
-import { useAuthStore } from '../store'
+import { getUserFromAccessToken, useAuthStore } from '../store'
 
 import type { ArticleModel } from '@/domain/models'
 import type {
@@ -41,7 +41,8 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   useResponsivePagination()
 
   const navigate = useNavigate()
-  const { user, accessToken } = useAuthStore()
+  const { accessToken } = useAuthStore()
+  const user = getUserFromAccessToken(accessToken)
   const {
     currentPage,
     currentLimit,
@@ -86,7 +87,7 @@ export const ArticlesPage: React.FC<ArticlessPageProps> = ({
   const isLoggedIn = !!accessToken
 
   const renderArticleCard = (article: ArticleModel) => {
-    const isCurrentUser = user.id === article.author.id
+    const isCurrentUser = user?.id === article.author.id
     const description = article.resume ?? article.content
 
     const footer = [

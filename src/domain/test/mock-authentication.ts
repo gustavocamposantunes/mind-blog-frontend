@@ -29,7 +29,7 @@ export const mockAuthenticationParams = (): AuthParams => ({
   password: faker.internet.password(),
 })
 
-const mockUser = (): AuthenticateUserModel['user'] => ({
+export const mockAccessTokenUser = () => ({
   id: 5,
   email: faker.internet.email(),
   fullName: faker.person.fullName(),
@@ -37,7 +37,7 @@ const mockUser = (): AuthenticateUserModel['user'] => ({
 })
 
 export const mockAuthenticateUserModel = (): AuthenticateUserModel => {
-  const user = mockUser()
+  const user = mockAccessTokenUser()
 
   return {
     accessToken: buildAccessToken({
@@ -46,6 +46,5 @@ export const mockAuthenticateUserModel = (): AuthenticateUserModel => {
       fullName: user.fullName,
       image: user.image,
     }),
-    user,
   }
 }

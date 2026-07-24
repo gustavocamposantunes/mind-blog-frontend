@@ -11,6 +11,7 @@ import { formatDateToShortMonth } from '../utils/dateFormatter'
 import { UnexpectedError } from '@/domain/errors'
 import type { CommentModel } from '@/domain/models'
 import { mockAuthenticateUserModel } from '@/domain/test'
+import { getUserFromAccessToken } from '@/data/usecases/auth/access-token-user'
 
 vi.mock('react-router-dom', async () => ({
   ...(await vi.importActual('react-router-dom')),
@@ -19,7 +20,15 @@ vi.mock('react-router-dom', async () => ({
 
 let mockAuthStore = mockAuthenticateUserModel()
 
-vi.mock('../store/auth-store', async () => ({
+const getMockAuthUser = () =>
+  getUserFromAccessToken(mockAuthStore.accessToken) ?? {
+    id: 0,
+    fullName: '',
+    email: '',
+  }
+
+vi.mock('../store', async () => ({
+  ...(await vi.importActual('../store')),
   useAuthStore: () => mockAuthStore,
 }))
 
@@ -173,17 +182,12 @@ describe('ArticlePage', () => {
 
       await screen.findByText(getArticleByIdSpy.data.title)
 
-      expect(getArticleByIdSpy.userId).toBe(mockAuthStore.user.id)
+      expect(getArticleByIdSpy.userId).toBe(getMockAuthUser().id)
     })
 
     it('should don´t render the favourite toogle if user is not logged in', async () => {
       mockAuthStore = {
         accessToken: '',
-        user: {
-          id: 0,
-          fullName: '',
-          email: '',
-        },
       }
 
       const { getArticleByIdSpy } = makeSut()
@@ -198,7 +202,7 @@ describe('ArticlePage', () => {
     it('should don´t render the favourite toogle if logged user is the author', async () => {
       const getArticleByIdSpy = new GetArticleByIdSpy(
         false,
-        mockAuthStore.user.id,
+        getMockAuthUser().id,
       )
       makeSut(getArticleByIdSpy)
 
@@ -212,7 +216,7 @@ describe('ArticlePage', () => {
     it('should render a toogle edit if logged user is the author', async () => {
       const getArticleByIdSpy = new GetArticleByIdSpy(
         false,
-        mockAuthStore.user.id,
+        getMockAuthUser().id,
       )
       makeSut(getArticleByIdSpy)
 
@@ -224,7 +228,7 @@ describe('ArticlePage', () => {
     it('should redirect to the EditArticlePage if toogle edit is clicked', async () => {
       const getArticleByIdSpy = new GetArticleByIdSpy(
         false,
-        mockAuthStore.user.id,
+        getMockAuthUser().id,
       )
       makeSut(getArticleByIdSpy)
 
@@ -388,11 +392,6 @@ describe('ArticlePage', () => {
     it('should not render the comment form when user is not logged in', async () => {
       mockAuthStore = {
         accessToken: '',
-        user: {
-          id: 0,
-          fullName: '',
-          email: '',
-        },
       }
       makeSut()
 

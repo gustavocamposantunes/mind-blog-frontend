@@ -21,6 +21,12 @@ vi.mock('react-router-dom', async () => ({
 const mockAuthStore = mockAuthenticateUserModel()
 
 vi.mock('../store/auth-store', async () => ({
+  ...(await vi.importActual('../store/auth-store')),
+  useAuthStore: () => mockAuthStore,
+}))
+
+vi.mock('@/presentation/store', async () => ({
+  ...(await vi.importActual('@/presentation/store')),
   useAuthStore: () => mockAuthStore,
 }))
 

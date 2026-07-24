@@ -5,7 +5,7 @@ import { DeleteArticleModal } from '../components/molecules/DeleteArticleModal'
 import { Footer } from '../components/molecules/Footer'
 import { useResponsivePagination } from '../hooks'
 import { useArticlesFilters, useArticlesList, useDeleteArticle } from '../hooks'
-import { useAuthStore } from '../store'
+import { getUserFromAccessToken, useAuthStore } from '../store'
 import {
   DashboardArticlesSection,
   DashboardHeroSection,
@@ -44,7 +44,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const dashboardPageLimit = 5
 
   const navigate = useNavigate()
-  const { user, accessToken } = useAuthStore()
+  const { accessToken } = useAuthStore()
+  const user = getUserFromAccessToken(accessToken)
   const { currentPage, currentView, updateFilters, pageParams } =
     useArticlesFilters()
 
@@ -56,7 +57,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const { data, isLoading, error, refetch } = useArticlesList(listArticles, {
     ...pageParams,
     limit: dashboardPageLimit,
-    userId: user.id,
+    userId: user?.id,
   })
 
   const { deleteById } = useDeleteArticle(deleteArticle, accessToken, {
@@ -94,7 +95,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <PageTemplate>
-        <DashboardHeroSection userFullName={user.fullName} metrics={metrics} />
+        <DashboardHeroSection
+          userFullName={user?.fullName ?? ''}
+          metrics={metrics}
+        />
 
         <section className="grid gap-6 xl:grid-cols-[minmax(0,1.7fr)_minmax(320px,0.9fr)]">
           <DashboardArticlesSection

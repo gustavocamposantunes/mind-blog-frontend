@@ -25,7 +25,8 @@ vi.mock('react-router-dom', async () => ({
 
 useSearchParamsMock = vi.fn()
 
-vi.mock('../store/auth-store', async () => ({
+vi.mock('../store', async () => ({
+  ...(await vi.importActual('../store')),
   useAuthStore: () => mockAuthenticateUserModel(),
 }))
 

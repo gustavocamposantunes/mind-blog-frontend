@@ -40,15 +40,9 @@ const decodeAccessTokenPayload = (accessToken: string) => {
 export const buildAuthenticateUserModel = (
   accessToken: string,
 ): AuthenticateUserModel => {
-  const payload = decodeAccessTokenPayload(accessToken)
+  decodeAccessTokenPayload(accessToken)
 
   return {
     accessToken,
-    user: {
-      id: Number(payload.sub),
-      email: payload.email,
-      fullName: payload.fullName,
-      image: payload.image,
-    },
   }
 }

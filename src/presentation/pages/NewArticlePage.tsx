@@ -7,7 +7,7 @@ import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { useResponsiveLimit } from '../hooks'
 import { useRegisterArticle } from '../hooks/useRegisterArticle'
-import { useAuthStore } from '../store/auth-store'
+import { getUserFromAccessToken, useAuthStore } from '../store/auth-store'
 import { getBase64FromInputFile } from '../utils/getBase64FromInputFile'
 import { parseTags } from '../utils/parse-tags'
 
@@ -26,7 +26,8 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
 }) => {
   const navigate = useNavigate()
   const limit = useResponsiveLimit()
-  const { user, accessToken } = useAuthStore()
+  const { accessToken } = useAuthStore()
+  const user = getUserFromAccessToken(accessToken)
 
   const [registerArticleParams, setRegisterArticleParams] = useState({
     title: '',
@@ -50,7 +51,7 @@ export const NewArticlePage: React.FC<NewArticlePageProps> = ({
         image: registerArticleParams.image,
         category: registerArticleParams.category,
         tags: parseTags(registerArticleParams.tagsInput),
-        author_id: Number(user.id),
+        author_id: Number(user?.id),
       },
       {
         onSuccess: () => {

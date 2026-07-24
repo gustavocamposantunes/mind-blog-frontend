@@ -3,17 +3,12 @@ import { create } from 'zustand'
 import type { AuthenticateUserModel } from '@/domain/models/authenticate-user-model'
 
 import { LocalManageUserSession } from '@/data/usecases/auth/local-manage-user-session'
+export { getUserFromAccessToken } from '@/data/usecases/auth/access-token-user'
 
 const manageUserSession = new LocalManageUserSession()
 
 type AuthState = {
   accessToken: string
-  user: {
-    id: number
-    fullName: string
-    email: string
-    image?: string
-  }
 }
 
 export type AuthStore = AuthState & {
@@ -25,19 +20,17 @@ export type AuthStore = AuthState & {
 
 export const useAuthStore = create<AuthStore>((set) => ({
   accessToken: '',
-  user: { id: 0, fullName: '', email: '', image: '' },
   isHydrated: false,
 
   setCurrentUser: (account) => {
     manageUserSession.set(account)
-    set({ accessToken: account.accessToken, user: account.user })
+    set({ accessToken: account.accessToken })
   },
 
   clearCurrentUser: () => {
     manageUserSession.clear()
     set({
       accessToken: '',
-      user: { id: 0, fullName: '', email: '', image: '' },
     })
   },
 
@@ -46,7 +39,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
     if (account) {
       set({
         accessToken: account.accessToken,
-        user: account.user,
         isHydrated: true,
       })
     } else {

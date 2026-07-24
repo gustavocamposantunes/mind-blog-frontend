@@ -23,12 +23,6 @@ describe('buildAuthenticateUserModel', () => {
 
     expect(result).toEqual({
       accessToken: `header.${payload}.signature`,
-      user: {
-        id: 1,
-        email: 'john@example.com',
-        fullName: 'John Doe',
-        image: 'avatar.png',
-      },
     })
   })
 
@@ -45,12 +39,6 @@ describe('buildAuthenticateUserModel', () => {
 
     expect(result).toEqual({
       accessToken: payload,
-      user: {
-        id: 7,
-        email: 'plain@example.com',
-        fullName: 'Plain Token',
-        image: undefined,
-      },
     })
   })
 
@@ -94,8 +82,7 @@ describe('buildAuthenticateUserModel', () => {
     try {
       const result = buildAuthenticateUserModel(`header.${payload}.signature`)
 
-      expect(result.user.id).toBe(42)
-      expect(result.user.email).toBe('buffer@example.com')
+      expect(result.accessToken).toBe(`header.${payload}.signature`)
     } finally {
       Object.defineProperty(globalThis, 'atob', {
         configurable: true,

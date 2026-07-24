@@ -7,7 +7,7 @@ import { Article } from '../components/organism/Article'
 import { Button } from '../components/ui/button'
 import { Textarea } from '../components/ui/textarea'
 import { useComments, useFavouriteArticle, useGetArticleById } from '../hooks'
-import { useAuthStore } from '../store'
+import { getUserFromAccessToken, useAuthStore } from '../store'
 import { formatDateToShortMonth } from '../utils/dateFormatter'
 
 import type { CommentModel } from '@/domain/models'
@@ -152,13 +152,14 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
   listCommentsByArticleId,
   commentArticle,
 }) => {
-  const { accessToken, user } = useAuthStore()
+  const { accessToken } = useAuthStore()
+  const user = getUserFromAccessToken(accessToken)
 
   const { id } = useParams<{ id: string }>()
   const { data, isLoading, error } = useGetArticleById(
     getArticletById,
     String(id),
-    accessToken ? user.id : undefined,
+    accessToken ? user?.id : undefined,
   )
   const { favoriteById } = useFavouriteArticle(favouriteArticle, accessToken)
   const { commentsQuery, commentMutation } = useComments(
@@ -171,7 +172,7 @@ export const ArticlePage: React.FC<ArticlePageProps> = ({
   let toogleFavouriteSlot: ReactNode | undefined = undefined
   let toogleEditSlot: ReactNode | undefined = undefined
 
-  if (accessToken && data && user.id !== data.author.id) {
+  if (accessToken && data && user?.id !== data.author.id) {
     toogleFavouriteSlot = (
       <span
         className="text-stone-500 flex gap-2 font-bold"

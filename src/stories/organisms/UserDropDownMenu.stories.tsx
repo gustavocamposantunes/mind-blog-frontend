@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { mockAuthenticateUserModel } from '@/domain/test'
+import { getUserFromAccessToken } from '@/presentation/store'
 import { UserDropdownMenu } from '@/presentation/components/organism'
+
+const user = getUserFromAccessToken(mockAuthenticateUserModel().accessToken)
 
 const meta = {
   title: 'Organisms/UserDropdownMenu',
@@ -11,7 +14,11 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
-    user: mockAuthenticateUserModel().user,
+    user: user ?? {
+      id: 0,
+      fullName: '',
+      email: '',
+    },
     onLogout: () => {},
     onProfileNavigate: () => {},
     onSettingsNavigate: () => {},

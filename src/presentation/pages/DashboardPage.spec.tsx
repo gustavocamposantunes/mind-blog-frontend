@@ -12,6 +12,7 @@ import {
   mockArticlesList,
   mockAuthenticateUserModel,
 } from '@/domain/test'
+import { getUserFromAccessToken } from '@/data/usecases/auth/access-token-user'
 
 const mockNavigate = vi.fn()
 let searchParams = new URLSearchParams('page=1&limit=10')
@@ -23,7 +24,8 @@ vi.mock('react-router-dom', async () => ({
   useSearchParams: () => [searchParams, setSearchParamsMock],
 }))
 
-vi.mock('../store/auth-store', async () => ({
+vi.mock('../store', async () => ({
+  ...(await vi.importActual('../store')),
   useAuthStore: () => mockAuthenticateUserModel(),
 }))
 
@@ -159,11 +161,12 @@ describe('DashboardPage', () => {
   it('updates filters when changing dashboard page', async () => {
     useMediaQueryMock.mockReturnValue(true)
     const articleList = mockArticlesList()
+    const user = getUserFromAccessToken(mockAuthenticateUserModel().accessToken)
     articleList.articles = Array.from({ length: 7 }, () => ({
       ...mockArticle(),
       author: {
         ...mockArticle().author,
-        id: mockAuthenticateUserModel().user.id,
+        id: user?.id,
       },
     }))
     articleList.total = articleList.articles.length

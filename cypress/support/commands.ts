@@ -32,7 +32,6 @@ export const testUser: TestUser = {
 Cypress.Commands.add('loginAsTestUser', () => {
   const account = {
     accessToken: buildAccessToken(testUser),
-    user: testUser,
   }
 
   cy.window().then((window) => {

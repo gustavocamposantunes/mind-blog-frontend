@@ -6,7 +6,7 @@ import { Button } from '../ui/button'
 
 import type { ReactNode } from 'react'
 
-import { useAuthStore } from '@/presentation/store'
+import { getUserFromAccessToken, useAuthStore } from '@/presentation/store'
 
 interface IPageTemplate {
   children: ReactNode
@@ -14,9 +14,10 @@ interface IPageTemplate {
 
 export const PageTemplate: React.FC<IPageTemplate> = ({ children }) => {
   const navigate = useNavigate()
-  const { accessToken, clearCurrentUser, user } = useAuthStore()
+  const { accessToken, clearCurrentUser } = useAuthStore()
+  const user = getUserFromAccessToken(accessToken)
 
-  const isLoggedIn = !!accessToken
+  const isLoggedIn = !!accessToken && !!user
 
   return (
     <>
