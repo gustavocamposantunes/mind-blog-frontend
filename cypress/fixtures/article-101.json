@@ -1,0 +1,18 @@
+{
+  "id": 101,
+  "title": "Arquitetura limpa no front-end",
+  "resume": "Como separar responsabilidades em uma aplicação React.",
+  "content": "# Arquitetura limpa\n\nConteúdo técnico sobre camadas no front-end.",
+  "image": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+  "category": "Desenvolvimento",
+  "tags": ["react", "arquitetura"],
+  "author": {
+    "id": 8,
+    "fullName": "Grace Hopper",
+    "image": ""
+  },
+  "favouriteCount": 12,
+  "favourited": false,
+  "publishedAt": "2026-07-20T10:00:00.000Z",
+  "updatedAt": "2026-07-20T10:00:00.000Z"
+}

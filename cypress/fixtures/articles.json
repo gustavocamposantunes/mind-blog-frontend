@@ -1,0 +1,43 @@
+{
+  "articles": [
+    {
+      "id": 101,
+      "title": "Arquitetura limpa no front-end",
+      "resume": "Como separar responsabilidades em uma aplicação React.",
+      "content": "# Arquitetura limpa\n\nConteúdo técnico sobre camadas no front-end.",
+      "image": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+      "category": "Desenvolvimento",
+      "tags": ["react", "arquitetura"],
+      "author": {
+        "id": 8,
+        "fullName": "Grace Hopper",
+        "image": ""
+      },
+      "favouriteCount": 12,
+      "favourited": false,
+      "publishedAt": "2026-07-20T10:00:00.000Z",
+      "updatedAt": "2026-07-20T10:00:00.000Z"
+    },
+    {
+      "id": 102,
+      "title": "Observabilidade para produtos digitais",
+      "resume": "Métricas e logs úteis para times de produto.",
+      "content": "Observabilidade ajuda a diagnosticar problemas reais.",
+      "image": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
+      "category": "DevOps",
+      "tags": ["devops"],
+      "author": {
+        "id": 5,
+        "fullName": "Ada Lovelace",
+        "image": ""
+      },
+      "favouriteCount": 7,
+      "favourited": true,
+      "publishedAt": "2026-07-21T10:00:00.000Z",
+      "updatedAt": "2026-07-21T10:00:00.000Z"
+    }
+  ],
+  "total": 2,
+  "limit": 6,
+  "page": 1
+}

@@ -8,6 +8,15 @@ import svgr from 'vite-plugin-svgr'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [tailwindcss(), react(), svgr()],
+  server: {
+    watch: {
+      ignored: [
+        '**/coverage/**',
+        '**/cypress/screenshots/**',
+        '**/cypress/videos/**',
+      ],
+    },
+  },
   resolve: {
     tsconfigPaths: true,
     alias: {
