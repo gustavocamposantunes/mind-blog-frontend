@@ -8,40 +8,23 @@ Este documento documenta todas as melhorias realizadas nos storybooks do projeto
 
 ## 📊 Estatísticas
 
-- **Total de Storybooks**: 40
-- **Novos Storybooks Criados**: 19
+- **Total de Storybooks**: 50
+- **Storybooks de componentes da aplicação**: 40
+- **Storybooks de componentes UI base**: 10
+- **Storybooks adicionados que estavam fora da lista**: 4
 - **Storybooks Melhorados**: 8
 
 ---
 
-## ✨ Novos Storybooks Criados
+## ✨ Storybooks Adicionados que Estavam Fora da Lista
 
 ### Atoms (1)
-- `ArticlesViewToggle.stories.tsx` - Toggle entre visualização em grid e lista
+- `AccessibilityToolbar.stories.tsx` - Barra lateral de acessibilidade com seletor de modo de visualização e acionador VLibras
 
-### Molecules (6)
-- `ArticlesFilters.stories.tsx` - Filtros de busca e categoria
-- `AuthSection.stories.tsx` - Seção autenticação com título e descrição
-- `DeleteArticleModal.stories.tsx` - Modal de confirmação de exclusão
-- `Footer.stories.tsx` - Rodapé da aplicação
-- `PasswordStrength.stories.tsx` - Indicador de força de senha
-- `PublishedByInfo.stories.tsx` - Informações de publicação (autor e data)
-
-### Organisms (6)
-- `Article.stories.tsx` - Artigo completo com conteúdo markdown
-- `ArticleListCard.stories.tsx` - Card compacto para listas de artigos
-- `CustomCard.stories.tsx` - Card customizado com ranking opcional
-- `MarkdownRenderer.stories.tsx` - Renderizador de markdown
-- `FavouritesList.stories.tsx` - Lista de artigos favoritados
-- `FavouritesSlider.stories.tsx` - Slider de artigos em destaque
-
-### Templates (6)
-- `AuthTemplate.stories.tsx` - Template de autenticação
-- `HomeTemplate.stories.tsx` - Template da página inicial
-- `PageTemplate.stories.tsx` - Template padrão com header/footer
-- `ProfileTemplate.stories.tsx` - Template de perfil de usuário
-- `ArticlesTemplate.stories.tsx` - Template para grid de artigos
-- `ArticlesListTemplate.stories.tsx` - Template para lista de artigos
+### UI (3)
+- `Label.stories.tsx` - Rótulos de formulário em estados padrão, obrigatório e desabilitado
+- `Separator.stories.tsx` - Separador horizontal e vertical
+- `Skeleton.stories.tsx` - Skeleton base em linha, composição com avatar e card de artigo
 
 ---
 
@@ -67,7 +50,8 @@ Este documento documenta todas as melhorias realizadas nos storybooks do projeto
 
 ```
 src/stories/
-├── atoms/ (9 storybooks)
+├── atoms/ (10 storybooks)
+│   ├── AccessibilityToolbar.stories.tsx ✨ NOVO
 │   ├── ArticlesViewToggle.stories.tsx ✨ NOVO
 │   ├── AuthForm.stories.tsx
 │   ├── BrandLogo.stories.tsx
@@ -77,7 +61,7 @@ src/stories/
 │   ├── FavouriteSkeleton.stories.tsx
 │   ├── MenuItem.stories.tsx
 │   └── ThemeToggle.stories.tsx 🔧 MELHORADO
-├── molecules/ (12 storybooks)
+├── molecules/ (11 storybooks)
 │   ├── ArticlesFilters.stories.tsx ✨ NOVO
 │   ├── AuthSection.stories.tsx ✨ NOVO
 │   ├── CustomAvatar.stories.tsx 🔧 MELHORADO
@@ -98,18 +82,29 @@ src/stories/
 │   ├── FavouritesSlider.stories.tsx ✨ NOVO
 │   ├── MarkdownRenderer.stories.tsx ✨ NOVO
 │   ├── News.stories.tsx 🔧 MELHORADO
-│   └── UserDropdownMenu.stories.tsx
-└── templates/ (10 storybooks)
-    ├── ArticlesListTemplate.stories.tsx ✨ NOVO
-    ├── ArticlesTemplate.stories.tsx ✨ NOVO
-    ├── ArticleTemplate.stories.tsx
-    ├── AuthTemplate.stories.tsx ✨ NOVO
-    ├── ForgotPasswordTemplate.stories.tsx
-    ├── HomeTemplate.stories.tsx ✨ NOVO
-    ├── LoginTemplate.stories.tsx
-    ├── PageTemplate.stories.tsx ✨ NOVO
-    ├── ProfileTemplate.stories.tsx ✨ NOVO
-    └── RegisterUser.stories.tsx
+│   └── UserDropDownMenu.stories.tsx
+├── templates/ (10 storybooks)
+│   ├── ArticlesListTemplate.stories.tsx ✨ NOVO
+│   ├── ArticlesTemplate.stories.tsx ✨ NOVO
+│   ├── ArticleTemplate.stories.tsx
+│   ├── AuthTemplate.stories.tsx ✨ NOVO
+│   ├── ForgotPasswordTemplate.stories.tsx
+│   ├── HomeTemplate.stories.tsx ✨ NOVO
+│   ├── LoginTemplate.stories.tsx
+│   ├── PageTemplate.stories.tsx ✨ NOVO
+│   ├── ProfileTemplate.stories.tsx ✨ NOVO
+│   └── RegisterUserTemplate.stories.tsx
+└── ui/ (10 storybooks)
+    ├── Avatar.stories.tsx
+    ├── Button.stories.tsx
+    ├── Card.stories.tsx
+    ├── DropdownMenu.stories.tsx
+    ├── Input.stories.tsx
+    ├── Label.stories.tsx ✨ NOVO
+    ├── Pagination.stories.tsx
+    ├── Separator.stories.tsx ✨ NOVO
+    ├── Skeleton.stories.tsx ✨ NOVO
+    └── Textarea.stories.tsx
 ```
 
 ---
@@ -143,7 +138,7 @@ export const VariantName: Story = {
 
 ## 💡 Características dos Storybooks Criados
 
-✅ **Cobertura Completa**: Todos os componentes principais agora têm storybooks
+✅ **Cobertura Completa**: Todos os componentes principais e componentes UI base em uso agora têm storybooks
 ✅ **Múltiplas Variantes**: Cada componente possui pelo menos 2-3 variantes/estados
 ✅ **Props Documentadas**: Uso de argTypes para controle visual
 ✅ **Layout Responsivo**: Suporte a diferentes layouts (centered, padded, fullscreen)
@@ -176,5 +171,5 @@ Os storybooks estarão disponíveis em `http://localhost:6006`
 
 ---
 
-**Data de Atualização**: May 17, 2026
-**Total de Linhas de Código Adicionadas**: ~2000+ linhas
+**Data de Atualização**: July 23, 2026
+**Total de Linhas de Código Adicionadas**: ~2100+ linhas
