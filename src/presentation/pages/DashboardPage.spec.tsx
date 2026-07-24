@@ -166,7 +166,7 @@ describe('DashboardPage', () => {
       ...mockArticle(),
       author: {
         ...mockArticle().author,
-        id: user?.id,
+        id: user!.id,
       },
     }))
     articleList.total = articleList.articles.length
